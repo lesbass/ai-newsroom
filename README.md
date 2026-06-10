@@ -32,6 +32,19 @@ npm run preview
 4. Open a PR; CI runs build + link + mobile checks.
 5. Merge to `main`; Cloudflare Pages deploys automatically.
 
+## Deployment
+
+The site deploys to **Cloudflare Pages** on every push to `main`.
+
+| Setting          | Value                         |
+|------------------|-------------------------------|
+| Build command    | `npm run build`               |
+| Build output     | `dist/`                       |
+| Node version     | 20                            |
+| Framework preset | Astro (auto-detected)         |
+
+`public/_headers` and `public/_redirects` are copied into the build output and honoured by Cloudflare Pages.
+
 ## Quality rules
 
 - Never publish claims without dated source links.
