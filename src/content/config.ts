@@ -10,6 +10,13 @@ const articles = defineCollection({
     author: z.string().default('AI Newsroom'),
     tags: z.array(z.string()).default([]),
     canonicalURL: z.string().optional(),
+    sources: z.array(z.object({
+      title: z.string(),
+      url: z.string().url(),
+      date: z.coerce.date().optional(),
+      type: z.enum(['primary', 'secondary']).default('primary'),
+    })).default([]),
+    highRiskClaims: z.boolean().default(false),
   }),
 });
 

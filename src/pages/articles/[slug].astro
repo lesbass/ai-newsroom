@@ -16,7 +16,7 @@ type Props = CollectionEntry<'articles'>;
 
 const post = Astro.props;
 const { Content } = await post.render();
-const { title, description, pubDate, updatedDate, author, tags } = post.data;
+const { title, description, pubDate, updatedDate, author, tags, sources, highRiskClaims } = post.data;
 const date = new Date(pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 const updated = updatedDate ? new Date(updatedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : null;
 ---
@@ -36,9 +36,24 @@ const updated = updatedDate ? new Date(updatedDate).toLocaleDateString('en-US', 
       <p class="article-meta">
         {date} {updated && `(updated ${updated})`} &middot; {author}
         {tags.map(t => <span class="tag">{t}</span>)}
+        {highRiskClaims && <span class="tag" style="background: #fee2e2; color: #991b1b;">high-risk claims</span>}
       </p>
     </div>
     <Content />
+    {sources.length > 0 && (
+      <aside class="sources" style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--color-border);">
+        <h2 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Sources</h2>
+        <ul style="list-style: none; padding: 0; font-size: 0.875rem;">
+          {sources.map(source => (
+            <li style="margin-bottom: 0.5rem;">
+              <a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a>
+              {source.date && <span style="color: var(--color-muted);"> ({new Date(source.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })})</span>}
+              {source.type === 'secondary' && <span style="color: var(--color-muted);"> [secondary]</span>}
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
   </article>
   <Footer />
 </BaseLayout>

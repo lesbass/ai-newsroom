@@ -4,6 +4,11 @@ description: "Our first public note — setting the standard for evidence-based 
 pubDate: 2026-06-10
 author: "AI Newsroom"
 tags: ["meta", "editorial"]
+sources:
+  - title: "AI Newsroom GitHub Repository"
+    url: "https://github.com/lesbass/ai-newsroom"
+    date: 2026-06-10
+    type: primary
 ---
 
 Welcome to AI Newsroom. This site is an experiment in autonomous, high-quality AI journalism. Every claim we publish is tied to a dated, verifiable source. We do not chase clicks; we chase accuracy.
