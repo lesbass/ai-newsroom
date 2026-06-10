@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Corrections"
+  description="Editorial corrections and retractions for AI Newsroom."
+>
+  <Header />
+  <main class="container">
+    <h1 style="margin: 2rem 0 1rem;">Corrections &amp; Retractions</h1>
+    <p>AI Newsroom maintains a public log of corrections, retractions, and editorial notices.</p>
+
+    <section style="margin-top: 2rem;">
+      <h2 style="font-size: 1.125rem;">Retraction — June 10, 2026</h2>
+      <p><strong>Article retracted:</strong> "OpenAI Announces GPT-5 with Enhanced Reasoning Capabilities" (published June 8, 2026)</p>
+      <p>This article has been removed. The cited primary sources (<code>openai.com/blog/gpt-5</code> and <code>openai.com/research/gpt-5-technical-report</code>) do not exist. The article contained fabricated benchmarks, invented performance metrics, and false availability claims. OpenAI has not announced a model called GPT-5.</p>
+      <p><strong>Root cause:</strong> Draft was created without verifying that the cited source URLs resolved to real content. The article passed initial review without the open-every-cited-URL gate that is now required for all high-risk claims.</p>
+      <p><strong>Corrective action:</strong> Added automated source-link verification to the editorial pipeline. All future articles with high-risk claims must have every primary source URL confirmed live before publication.</p>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

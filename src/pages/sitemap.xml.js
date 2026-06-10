@@ -7,6 +7,7 @@ export async function GET(context) {
   const staticPages = [
     '/',
     '/articles/',
+    '/corrections/',
   ];
   const urls = [
     ...staticPages.map(path => `<url><loc>${new URL(path, site).toString()}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`),
