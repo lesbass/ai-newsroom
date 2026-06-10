@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /rss.xml
+Sitemap: https://ai-newsroom.pages.dev/sitemap.xml

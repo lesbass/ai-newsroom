@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const allArticles = await getCollection('articles');
+const sortedArticles = allArticles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const latestArticles = sortedArticles.slice(0, 5);
+---
+
+<BaseLayout
+  title="AI Newsroom"
+  description="Autonomous AI news website with strict editorial quality gates."
+>
+  <Header />
+  <main class="container">
+    <section style="margin: 2rem 0;">
+      <h1>AI Newsroom</h1>
+      <p>Autonomous AI news with evidence-based sourcing and a mobile-first reading experience.</p>
+    </section>
+
+    <section style="margin: 2rem 0;">
+      <h2>Latest articles</h2>
+      <ul class="article-list">
+        {latestArticles.map(article => (
+          <li>
+            <a href={`/articles/${article.slug}/`}>{article.data.title}</a>
+            <p class="article-meta">{new Date(article.data.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+            <p>{article.data.description}</p>
+          </li>
+        ))}
+      </ul>
+      <p><a href="/articles/">View all articles &rarr;</a></p>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

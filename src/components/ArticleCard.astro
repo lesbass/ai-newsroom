@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+}
+
+const { article } = Astro.props;
+const { title, description, pubDate, tags } = article.data;
+const url = `/articles/${article.slug}/`;
+const date = new Date(pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+<li>
+  <a href={url}>{title}</a>
+  <p class="article-meta">{date} {tags.map(t => <span class="tag">{t}</span>)}</p>
+  <p>{description}</p>
+</li>
