@@ -6,3 +6,10 @@ dist
 .env.local
 .astro
 playwright-report
+*.md.tmp
+review-*.md
+plan-*.md
+ceo-comment-*.md
+child-issue-*.md
+final-review-*.md
+FINAL-STATUS-*.md
