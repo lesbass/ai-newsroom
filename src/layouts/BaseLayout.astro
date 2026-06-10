@@ -68,10 +68,13 @@ const jsonLd = article
   <meta property="og:site_name" content="AI Newsroom" />
 
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content={article && image ? 'summary_large_image' : 'summary'} />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   {image && <meta name="twitter:image" content={new URL(image, site).toString()} />}
+
+  {article && pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
+  {article && updatedDate && <meta property="article:modified_time" content={updatedDate.toISOString()} />}
 
   <!-- JSON-LD -->
   <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
@@ -108,6 +111,19 @@ const jsonLd = article
     a { color: var(--color-accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
     img { max-width: 100%; height: auto; display: block; }
+    table {
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid var(--color-border);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+    th { background: var(--color-border); font-weight: 600; }
     pre, code { font-family: var(--font-mono); font-size: 0.95em; }
     pre {
       background: var(--color-border);
@@ -144,7 +160,8 @@ const jsonLd = article
     }
     .nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
     .nav a { font-weight: 600; }
-    .nav-links { display: flex; gap: 1rem; }
+    .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .nav-links a { min-height: 44px; display: inline-flex; align-items: center; }
     .article-list { list-style: none; padding: 0; }
     .article-list li { border-bottom: 1px solid var(--color-border); padding: 1rem 0; }
     .article-list a { font-size: 1.125rem; font-weight: 600; }

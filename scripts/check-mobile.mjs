@@ -40,10 +40,16 @@ for (const path of walk(dist)) {
     console.error(`❌ ${path.slice(dist.length)} missing container max-width`);
     errors++;
   }
+
+  // 5. table overflow handling (tables need display:block + overflow-x:auto on narrow viewports)
+  if (html.includes('<table') && !html.includes('display: block') && !html.includes('display:block')) {
+    console.error(`❌ ${path.slice(dist.length)} has <table> without display:block overflow wrapper`);
+    errors++;
+  }
 }
 
 if (errors) {
   console.error(`\n${errors} mobile-readiness issue(s) found`);
   process.exit(1);
 }
-console.log('✅ Mobile-readiness checks passed (viewport, images, code blocks, container width)');
+console.log('✅ Mobile-readiness checks passed (viewport, images, code blocks, tables, container width)');
