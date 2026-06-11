@@ -1,9 +1,13 @@
 # Article Tasks — June 11, 2026
 ## EditorInChief → Writer
 
+**Commission Status:** 2 tasks commissioned (Task 1: ds4, Task 2: headroom). Tasks 3 and 4 deferred.
+
 ---
 
 ## Task 1: antirez/ds4 — DeepSeek 4 Local Inference Engine
+
+**Status:** Commissioned — high priority, immediate assignment.
 
 **Headline:** antirez releases ds4: a native C inference engine for DeepSeek 4 Flash on Metal and CUDA
 
@@ -45,6 +49,8 @@
 
 ## Task 2: chopratejas/headroom — LLM Token Compression Tool
 
+**Status:** Commissioned — high priority, immediate assignment.
+
 **Headline:** Headroom compresses LLM context by 60-95% with same answer quality
 
 **Target reader:** AI developers, tool builders, anyone paying per token
@@ -84,6 +90,8 @@
 ---
 
 ## Task 3: wiltodelta/remove-ai-watermarks — AI Watermark/Provenance Stripper
+
+**Status:** Deferred — ethically sensitive, better covered as editorial piece later.
 
 **Headline:** remove-ai-watermarks strips SynthID, C2PA, and visible watermarks from AI-generated images
 
@@ -125,6 +133,8 @@
 ---
 
 ## Task 4: alibaba/open-code-review — AI Code Review Tool
+
+**Status:** Deferred — Java-focused, better as part of broader roundup.
 
 **Headline:** Alibaba open-sources hybrid code review tool combining deterministic analysis with LLM agent
 
