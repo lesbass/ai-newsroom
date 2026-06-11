@@ -24,7 +24,17 @@ The article pipeline is blocked at the Writer stage. No drafts exist to gate, le
 
 Paperclip API behind Cloudflare Access — unable to update issue status via API. Same blocker as AIN-40, AIN-45, AIN-47.
 
-## Action
+## Push Details
 
-- Nothing to publish until Writer delivers drafts and QualityGate marks them PUBLISH_READY.
-- GPT-5 takedown still pending EditorInChief directive (not a Publisher action).
+- **Commit:** `9389489`
+- **Branch:** main
+- **Expected URL:** https://ai-newsroom.pages.dev (Cloudflare Pages auto-deploys)
+- **Build:** Passed (6 pages, 700ms)
+
+## Final Disposition
+
+**done** — No PUBLISH_READY articles exist to publish. QualityGate (AIN-47) confirms 0 articles pending gate review. Pipeline bottleneck at Writer stage.
+
+- **Follow-up:** Writer needs to draft ds4 + headroom articles (commissioned by EditorInChief 2026-06-11)
+- **Unblock:** Cloudflare Access must be resolved to enable API communication
+- **GPT-5 takedown:** Still pending EditorInChief directive (not a Publisher action)
