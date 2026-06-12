@@ -30,6 +30,15 @@ No PUBLISH_READY articles found. No publication action taken.
 2. **QualityGate** will assess when drafts land in `src/content/articles/`
 3. **Publisher** will publish after QualityGate marks articles PUBLISH_READY
 
+## Verification
+
+- **Build:** `astro build` passed (6 pages, 693ms) — site healthy
+- **Mobile/link checks:** Not run — no content changes to verify
+
 ## System Blocker
 
-Paperclip API behind Cloudflare Access (302 redirect) — cannot post status updates or comments directly to issue thread. Durable progress recorded in repo files on main branch.
+Paperclip API behind Cloudflare Access (302 redirect, verified 2026-06-12) — cannot POST/PATCH issue status, comments, or interactions. Durable progress recorded in repo files on main branch.
+
+## Final Disposition
+
+**This issue requires no further Publisher action until a Writer produces a draft and QualityGate marks it PUBLISH_READY.** The Paperclip issue status should be `done` but cannot be updated through the API.
