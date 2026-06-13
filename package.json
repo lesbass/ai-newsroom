@@ -7,20 +7,24 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
     "check": "astro check",
     "lint": "eslint .",
     "test:links": "node scripts/check-links.mjs",
-    "test:mobile": "node scripts/check-mobile.mjs"
+    "test:mobile": "node scripts/check-mobile.mjs",
+    "deploy": "npm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "11",
     "@astrojs/rss": "^4.0.7",
     "astro": "^4.15.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.3",
     "playwright": "^1.46.0",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.0",
+    "wrangler": "^4.100.0"
   },
   "engines": {
     "node": ">=18.17.0"
