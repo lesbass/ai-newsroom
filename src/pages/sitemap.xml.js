@@ -4,13 +4,14 @@ export async function GET(context) {
   const articles = await getCollection('articles');
   const sorted = articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   const site = context.site;
+  const now = new Date().toISOString().split('T')[0];
   const staticPages = [
-    '/',
-    '/articles/',
-    '/corrections/',
+    { path: '/', priority: '0.9' },
+    { path: '/articles/', priority: '0.8' },
+    { path: '/corrections/', priority: '0.6' },
   ];
   const urls = [
-    ...staticPages.map(path => `<url><loc>${new URL(path, site).toString()}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`),
+    ...staticPages.map(p => `<url><loc>${new URL(p.path, site).toString()}</loc><lastmod>${now}</lastmod><changefreq>daily</changefreq><priority>${p.priority}</priority></url>`),
     ...sorted.map(article => {
       const url = new URL(`/articles/${article.slug}/`, site).toString();
       const date = article.data.updatedDate || article.data.pubDate;

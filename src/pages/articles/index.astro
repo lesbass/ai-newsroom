@@ -11,10 +11,10 @@ const sorted = articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate
 
 <BaseLayout
   title="Articles"
-  description="All articles from AI Newsroom."
+  description="Evidence-based AI news articles with dated sources and strict editorial quality gates."
 >
   <Header />
-  <main class="container">
+  <main class="container" id="main-content">
     <h1 style="margin: 2rem 0 1rem;">Articles</h1>
     <ul class="article-list">
       {sorted.map(article => <ArticleCard article={article} />)}

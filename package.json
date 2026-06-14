@@ -11,7 +11,9 @@
     "check": "astro check",
     "lint": "eslint .",
     "test:links": "node scripts/check-links.mjs",
-    "test:mobile": "node scripts/check-mobile.mjs"
+    "test:mobile": "node scripts/check-mobile.mjs",
+    "test:seo": "node scripts/check-seo.mjs",
+    "audit": "npm run build && npm run check && npm run test:links && npm run test:mobile && npm run test:seo"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.7",

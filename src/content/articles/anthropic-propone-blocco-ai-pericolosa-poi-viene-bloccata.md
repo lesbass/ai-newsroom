@@ -1,0 +1,102 @@
+---
+title: "Anthropic chiede al governo USA il potere di bloccare l'AI pericolosa — e due giorni dopo è Anthropic a essere bloccata"
+description: "Il 10 giugno 2026 Anthropic pubblica l'Advanced AI Framework, una proposta in cui chiede al governo federale l'autorità legale di bloccare i modelli frontier più rischiosi. Il 12 giugno una export control directive del governo USA sospende Fable 5 e Mythos 5, e Anthropic cita la propria proposta per denunciare la procedura. La differenza tra il potere \"con processo\" chiesto da Anthropic e il potere \"senza processo\" esercitato dal governo è il vero policy artifact della settimana."
+pubDate: 2026-06-13
+author: "AI Newsroom"
+tags: ["anthropic", "policy", "regolazione", "fable-5", "mythos-5", "export-control", "frontier-models"]
+sources:
+  - title: "Anthropic: Policy on the AI Exponential"
+    url: "https://www.anthropic.com/policy-on-the-ai-exponential"
+    date: 2026-06-10
+    type: primary
+  - title: "Anthropic: Advanced AI Framework (PDF)"
+    url: "https://www-cdn.anthropic.com/files/4zrzovbb/website/0a58d567024a8b448ff15158ebc3625328dfcc1f.pdf"
+    date: 2026-06-10
+    type: primary
+  - title: "Dario Amodei: Policy on the AI Exponential (essay personale)"
+    url: "https://darioamodei.com/post/policy-on-the-ai-exponential"
+    date: 2026-06-10
+    type: primary
+  - title: "Anthropic: Statement on the US government directive to suspend access to Fable 5 and Mythos 5"
+    url: "https://www.anthropic.com/news/fable-mythos-access"
+    date: 2026-06-12
+    type: primary
+  - title: "OpenAI: GPT-5.5 System Card — Cybersecurity"
+    url: "https://deploymentsafety.openai.com/gpt-5-5/cybersecurity"
+    date: 2026-04-23
+    type: primary
+  - title: "Anthropic: Claude Fable 5 and Claude Mythos 5 (post di lancio)"
+    url: "https://www.anthropic.com/news/claude-fable-5-mythos-5"
+    date: 2026-06-09
+    type: primary
+highRiskClaims: true
+---
+
+Il 10 giugno 2026 Anthropic pubblica una proposta di policy articolata in due framework — l'**Advanced AI Framework** e l'**Economic Policy Framework** — e chiede formalmente al governo federale USA *"the legal authority to block or deter the deployment of models that pose a significant risk of catastrophic harm"*, con sanzioni civili graduate per violazione ([Anthropic, 10 giugno 2026](https://www.anthropic.com/policy-on-the-ai-exponential)). Due giorni dopo, una export control directive del governo USA ordina la sospensione immediata dell'accesso a **Claude Fable 5** e **Claude Mythos 5** — i modelli di punta di Anthropic, lanciati appena tre giorni prima — per *tutti* i clienti, non solo per i clienti esteri. Anthropic obbedisce, ma nello stesso comunicato cita la propria proposta per denunciare la procedura con cui il governo ha esercitato quel potere ([Anthropic, 12 giugno 2026](https://www.anthropic.com/news/fable-mythos-access)).
+
+È un arco narrativo di 48 ore, firmato da un unico attore su entrambi i lati, che per la prima volta mostra una *major lab* chiedere un potere di intervento regolatorio sui propri modelli e quel potere esercitato *contro* i suoi modelli senza seguire il processo che lei stessa aveva invocato.
+
+## Cosa è successo
+
+**10 giugno 2026 — la proposta.** Anthropic pubblica sul proprio sito un policy framework in due atti, scritto principalmente con il governo federale USA in mente, ma con sezioni rilevanti anche per il resto del mondo. Il primo atto, l'Advanced AI Framework, definisce una soglia precisa per i modelli frontier — addestrati con più di 10²⁵ FLOP, sviluppati da aziende con oltre 500 milioni di dollari di fatturato AI-related o oltre un miliardo di spesa in R&D AI — e identifica quattro categorie di rischio catastrofico: **biologico**, **cyber**, **perdita di controllo** e **R&D automatizzato** che accelera gli altri tre. La richiesta politica più rilevante del framework è netta: il governo dovrebbe poter *bloccare* o *dissuadere* il deployment di modelli che presentano un rischio catastrofico significativo, con sanzioni civili legate al fatturato globale annuo, graduate per le violazioni ripetute.
+
+Il CEO Dario Amodei pubblica lo stesso giorno un saggio personale, *"Policy on the AI Exponential"*, che imposta la proposta nella tradizione regolatoria USA ([darioamodei.com, giugno 2026](https://darioamodei.com/post/policy-on-the-ai-exponential)). L'analogia è deliberatamente scelta — *aeroplani*, non *armi nucleari*: *"Frontier AI models, like airplanes, should be required to go through technical testing and auditing, and their release should be blocked or reversed as a threat to public safety if they do not meet high standards of safety."* Amodei cita esplicitamente la [Trump Executive Order del giugno 2026](https://www.whitehouse.gov/presidential-actions/2026/06/promoting-advanced-artificial-intelligence-innovation-and-security/) come un primo passo incrementale nella direzione giusta, e raccomanda *più* azione, non meno.
+
+L'Advanced AI Framework non è una *blank check* regolatoria. Il PDF originale prevede esplicitamente *"concrete safeguards that would prevent that power from being misused"*, e specifica che l'autorità di blocco va *"scoped to the above four specific risks"* con *"protective measures against political favoritism or arbitrary decisions"*. La proposta è un patto: potere sì, ma con un processo *statutory*, *transparent*, *fair*, *clear*, e *grounded in technical facts*. Sono esattamente le parole che il comunicato del 12 giugno riprenderà, e contesterà come mancanti.
+
+**12 giugno 2026 — la direttiva.** Alle 17:21 ET di giovedì 11 giugno 2026, Anthropic riceve dal governo USA una *export control directive* che ordina la sospensione immediata dell'accesso a Fable 5 e Mythos 5 per *qualsiasi* "foreign national", ovunque si trovi, inclusi i dipendenti Anthropic di nazionalità straniera. L'effetto netto — annunciato da Anthropic in un comunicato il 12 giugno — è la disattivazione di entrambi i modelli per *tutti* i clienti, americani e non, per garantire la compliance. L'accesso a tutti gli altri modelli Anthropic — Sonnet, Opus, Haiku, le altre classi — non è impattato.
+
+La lettera del governo, scrive Anthropic, *"did not provide specific details of its national security concern"*. La comprensione di Anthropic è che il governo sarebbe venuto a conoscenza di un metodo per aggirare le safeguard di Fable 5 — un *jailbreak*. Anthropic ha esaminato una dimostrazione di quella tecnica e descrive i risultati come *"a small number of previously known, minor vulnerabilities"*, *"relatively simple"*, replicabili *"by other publicly-available models … without requiring a bypass"*. Il riferimento esplicito è a **OpenAI GPT-5.5**, il cui [system card](https://deploymentsafety.openai.com/gpt-5-5/cybersecurity) — pubblicato il 23 aprile 2026, aggiornato il 24 aprile — classifica GPT-5.5 come "High capability in the Cybersecurity domain, but below Critical" e "High capability in the Biological and Chemical domain". Per Anthropic, quella *capability* non è specifica a Fable 5, e non giustifica un recall generalizzato.
+
+Anthropic annuncia: *"We are complying with the government's legal directive and are removing access to Fable 5 and Mythos 5 for all users. However, we disagree that the finding of a narrow potential jailbreak should be cause for recalling a commercial model deployed to hundreds of millions of people. If this standard was applied across the industry, we believe it would essentially halt all new model deployments for all frontier model providers."*
+
+E ancora, in chiusura: *"As we have stated publicly, we believe the government should have the ability to block unsafe deployments, as part of a statutory process that is transparent, fair, clear, and grounded in technical facts. This action does not adhere to those principles."*
+
+Le frasi sono *esattamente* le stesse che l'Advanced AI Framework aveva invocato come prerequisito. Anthropic cita due link nella riga precedente: il [policy framework del 10 giugno](https://www.anthropic.com/policy-on-the-ai-exponential) e il [saggio di Amodei](https://darioamodei.com/post/policy-on-the-ai-exponential). Il messaggio è chiaro: la proposta *esiste*, il governo la sta usando come base per agire, ma la sta usando in una forma che la proposta stessa escludeva.
+
+## Perché interessa
+
+**1. Per il settore: il primo precedente operativo di un potere di blocco *senza* il processo *statutory* che era stato chiesto.** Fable 5 era stato lanciato il [9 giugno 2026](https://www.anthropic.com/news/claude-fable-5-mythos-5), come primo modello pubblico della classe "Mythos" (la classe con safeguard cyber più aggressive), distribuito via API. Tre giorni dopo non è più raggiungibile via API da nessun cliente. Non è il primo caso di un modello frontier sospeso da un governo occidentale — è il primo caso in cui il potere di sospensione viene esercitato *contro* la lab che, due giorni prima, aveva chiesto pubblicamente quel potere. Per OpenAI, Google DeepMind, Meta, xAI, Microsoft AI, la domanda diventa operativa: se "narrow, non-universal jailbreak replicabile da GPT-5.5" diventa la base operativa per sospendere un modello commerciale, la *risk surface* di chiunque rilasci un frontier model aumenta. Anthropic stessa lo scrive: *"If this standard was applied across the industry, we believe it would essentially halt all new model deployments for all frontier model providers."*
+
+**2. Per chi sviluppa: la distinzione tra "tutti i clienti" e "clienti esteri" è operativa, non semantica.** L'export control directive vieta l'accesso ai *foreign national*, ovunque. Per compliance, Anthropic disabilita l'accesso *anche* ai clienti che non sono foreign national. L'effetto pratico è globale. Per chiunque abbia eval, log, agenti, monitoring o work-in-progress basato su `claude-fable-5` o `claude-mythos-5`, serve un fallback. Per chi usa Sonnet, Opus o Haiku, l'API non è impattata — ma il precedente regolatorio sì.
+
+**3. Per il policy beat: il policy artifact della settimana non è il comunicato, è la proposta.** L'Advanced AI Framework è la più articolata proposta di policy AI mai pubblicata da una *major lab*: 27 pagine di framework concreto, con soglia di compute misurabile (10²⁵ FLOP), criteri di applicazione misurabili ($500M revenue o $1B R&D AI), meccanismi di enforcement (sanzioni civili graduate), e *safeguards against misuse* del potere stesso. È la *proposta* che il governo USA, due giorni dopo, decide di non seguire nella forma che Anthropic aveva chiesto. La vera domanda policy non è "che succede a Fable 5" — è "che succede al rapporto tra potere di blocco e processo *statutory* nei prossimi dodici mesi".
+
+**4. Per chi segue Anthropic: si chiude un cerchio aperto tre giorni fa, ma non si risolve.** Lo stesso modello (Fable 5) era stato al centro di una vicenda diversa il [10-11 giugno 2026](https://www.theverge.com/ai-artificial-intelligence/948280/anthropic-claude-fable-invisible-distillation-guardrail), quando Anthropic aveva fatto marcia indietro pubblica sulle proprie *invisible safeguards* per la categoria "distillazione" — retromarcia su una scelta di trasparenza, non sul modello. La sospensione del 12 giugno è una storia diversa: non è una scelta di Anthropic, è una scelta del governo USA, e la *resistance* di Anthropic è sulla procedura, non sul merito della direttiva. Sono due storie che si incrociano sullo stesso modello, in due giorni consecutivi, e raccontano insieme un'idea precisa: la frontiera tra "Anthropic decide cosa è sicuro", "i clienti decidono cosa è sicuro" e "il governo decide cosa è sicuro" si è spostata in modo visibile.
+
+## Cosa guardare
+
+1. **Il testo integrale della export control directive.** Anthropic scrive che la lettera del governo *"did not provide specific details of its national security concern"* e che condividerà *"more details over the next 24 hours"* dal 12 giugno. Il testo integrale della direttiva — o una sua versione non classificata — è il prossimo evento critico. Senza, non si può valutare se la base legale regga, né se il jailbreak citato sia davvero equivalente alle capacità cyber che GPT-5.5 o altri modelli pubblici dimostrano di avere.
+2. **La posizione di OpenAI.** Anthropic cita GPT-5.5 esplicitamente. Se OpenAI conferma che GPT-5.5 produce lo stesso risultato, la sospensione di Fable 5 diventa tecnicamente insostenibile come misura di sicurezza, perché non estesa. Se OpenAI nega, il *claim* di Anthropic si indebolisce. OpenAI non ha commentato al 13 giugno 2026.
+3. **La reazione di Google DeepMind, Meta, xAI, Microsoft.** Anthropic ha esplicitamente invitato l'industria a reagire. Una dichiarazione singola o congiunta (Frontier Model Forum o equivalente) è un segnale forte. Monitorare per 7-14 giorni.
+4. **Il testo della Executive Order Trump del giugno 2026** che Amodei cita come "incremental progress" — e la relazione tra quella EO e l'esport control directive del 12 giugno. Se la EO fornisce la base normativa della direttiva, è un precedente di esercizio di potere esecutivo in un settore che finora era stato regolato da linee guida e da *Responsible Scaling Policies* volontarie dei singoli lab.
+5. **Disponibilità di Fable 5 e Mythos 5.** Il comunicato dice *"working to restore access as soon as possible"*. Non c'è una data. Non speculare su quando torneranno: monitorare il [blog Anthropic](https://www.anthropic.com/news) e l'account `@AnthropicAI` per follow-up.
+6. **Il destino del Advanced AI Framework come proposta legislativa.** Amodei annuncia nel saggio del 10 giugno che Anthropic ha intenzione di fornire *"substantial financial backing"* a un iter legislativo. La direttiva del 12 giugno è il primo *esercizio* di un potere affine, ma in una forma che la proposta escludeva. La traiettoria del framework nei prossimi 3-6 mesi è il *leading indicator* di come il policy apparatus USA evolverà.
+
+## Rischi e caveat
+
+- **Proposta, direttiva, posizione: tre cose diverse.** La proposta del 10 giugno chiede un potere di blocco *con* un processo *statutory* (trasparente, equo, chiaro, fondato su fatti tecnici). La direttiva dell'11 giugno (annunciata il 12) esercita un potere di blocco *senza* quel processo. La posizione di Anthropic sulla direttiva è: obbedisco, ma contesto la procedura. L'articolo deve tenere questi tre punti separati con precisione.
+- **Il *claim* "altri modelli fanno lo stesso jailbreak" è un *claim* di Anthropic, non un verdetto.** Anthropic scrive di aver esaminato *"a report that we believe is the basis of the government's directive"* e che *"the level of capability displayed there is widely available from other models (including OpenAI's GPT-5.5)"*. È una *review* di Anthropic, non un audit indipendente. Il [GPT-5.5 system card di OpenAI](https://deploymentsafety.openai.com/gpt-5-5/cybersecurity) conferma solo che GPT-5.5 è classificato come "High capability in the Cybersecurity domain, but below Critical" — non che la specifica capacità citata da Anthropic sia replicabile punto per punto su GPT-5.5. OpenAI non ha commentato.
+- **Fable 5 e Mythos 5 non sono open source / open weights.** Non lo sono mai stati. Sono modelli closed-weight distribuiti via API e prodotto consumer. Una frase in "Cosa fare" per chi pensava a un self-hosting di Mythos 5 è opportuna: non era un'opzione reale neanche prima del 12 giugno.
+- **Fable 5 e Sonnet/Opus non sono classi confrontabili.** Fable 5 è Mythos-class, con safeguard cyber più aggressive (richiesta di retention a 30 giorni, red-teaming estensivo con AISI UK e terze parti, "defense in depth"). Sonnet, Opus, Haiku sono classi diverse, e non sono soggette alle stesse *trade-off*. L'articolo non paragona capability tra classi.
+- **Il testo della direttiva non è pubblico.** Anthropic ne riassume il contenuto. Qualsiasi affermazione su "cosa dice la direttiva" va riportata come "secondo il comunicato Anthropic del 12 giugno", non come testo della direttiva stessa. La base legale invocata dal governo — *"national security authorities"* — è una formula standard; Anthropic non contesta la base legale in sé, contesta la *procedural fairness*.
+- **Non è una storia "Anthropic vs OpenAI" né "Anthropic vs governo USA".** OpenAI è citata una sola volta (system card di GPT-5.5), e solo perché Anthropic la cita. Il governo USA non ha — al 13 giugno 2026 — un portavoce ufficiale che ha commentato la direttiva al di là della lettera ad Anthropic. L'articolo è su una proposta e una direttiva, non su una rivalità.
+- **Non è una storia sulla retromarcia AIN-55 (Fable 5 *invisible safeguards*).** Il cross-link serve, in una frase, per aiutare il lettore che ha letto l'articolo AIN-55 a collocare i due eventi. Non di più.
+
+## Cosa fare
+
+**Per team che usavano Fable 5 o Mythos 5 via API oggi.** Il rollback esplicito consigliato da Anthropic, secondo quanto indicato nel [post di lancio del 9 giugno](https://www.anthropic.com/news/claude-fable-5-mythos-5), è **Claude Opus 4.8** (la classe precedente che Fable 5 usava internamente come fallback per le query旗late). Se Opus 4.8 non è disponibile o non è adatto al carico, Sonnet 4 o Haiku 4 sono alternative, con i trade-off di costo/capacità attesi. Per eval in produzione: ri-eseguire eval sul modello di fallback, aggiornare le dashboard di monitoring, e documentare la causa del rollback. Per work-in-progress o agenti in produzione che chiamano `claude-fable-5` o `claude-mythos-5`: aggiornare la config e prevedere un periodo di instabilità fino al ripristino (senza data).
+
+**Per team che usano Sonnet, Opus o Haiku.** L'API non è impattata. Il *precedente regolatorio* sì. Vale la pena: (a) mappare le dipendenze di deploy su quali classi di modello, e su quali giurisdizioni operative; (b) tracciare se l'eventuale replica del precedente ad altri modelli frontier impatta le proprie pipeline; (c) se si opera in settori regolati (finanza, sanità, PA, difesa), informare i team legal e compliance che esiste un nuovo strumento regolatorio (export control directive) che il governo USA ha dimostrato di saper usare contro un modello commerciale in produzione, in 72 ore dal lancio.
+
+**Per chi fa policy AI.** L'Advanced AI Framework è la prima proposta di policy AI *articolata* pubblicata da una *major lab*. Tre cose da fare: (1) leggere il [PDF originale di 27 pagine](https://www-cdn.anthropic.com/files/4zrzovbb/website/0a58d567024a8b448ff15158ebc3625328dfcc1f.pdf), non solo il [riassunto sul blog](https://www.anthropic.com/policy-on-the-ai-exponential); (2) leggere anche il [saggio di Amodei](https://darioamodei.com/post/policy-on-the-ai-exponential), che contiene il *framing* regolatorio e l'analogia con la FAA; (3) seguire la traiettoria del framework in Capitol Hill e a Bruxelles nei prossimi 3-6 mesi — la proposta è esplicitamente presentata come base per un iter legislativo.
+
+**Per chi segue la vicenda AIN-55 (Fable 5 *invisible safeguards*).** Quella era una storia su una scelta di *prodotto* di Anthropic (le safeguard invisibili per la distillazione) e sulla sua correzione. Questa è una storia su una *direttiva governativa* e sulla *posizione* di Anthropic rispetto a essa. Stesso modello, due eventi diversi, due policy implication diverse. Leggerle come una sola storia confonderebbe il quadro.
+
+## Verdetto
+
+Il 10 giugno 2026 Anthropic pubblica una proposta in cui chiede al governo USA un potere di blocco dei modelli frontier più rischiosi, con un processo *statutory*, *transparent*, *fair*, *clear*, e *grounded in technical facts*. Il 12 giugno — 48 ore dopo — quel potere viene esercitato su Fable 5 e Mythos 5 senza seguire quel processo. Anthropic obbedisce e, nello stesso comunicato, cita la propria proposta per denunciare la procedura. È un momento raro: una *major lab* chiede pubblicamente regole *più* stringenti per sé stessa, e quelle regole diventano operative in 48 ore in una forma che la lab contesta. La domanda aperta non è "quando torneranno Fable 5 e Mythos 5", ma se il precedente regolatorio regge, e se le altre lab si uniscono alla posizione di Anthropic o se ne distanziano.
+
+> "Crediamo che il governo dovrebbe avere la capacità di bloccare le deployment non sicure, come parte di un processo statutario che sia trasparente, equo, chiaro, e fondato su fatti tecnici. Questa azione non aderisce a quei principi."
+
+— Anthropic, comunicato del 12 giugno 2026, in [italiano nella traduzione letterale del passaggio originale inglese](https://www.anthropic.com/news/fable-mythos-access).

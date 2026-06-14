@@ -22,7 +22,7 @@ const jsonLd = article
       headline: title,
       description: description,
       url: pageURL,
-      ...(image && { image: new URL(image, site).toString() }),
+      image: new URL(image || '/favicon.svg', site).toString(),
       datePublished: pubDate ? pubDate.toISOString() : undefined,
       dateModified: updatedDate ? updatedDate.toISOString() : pubDate ? pubDate.toISOString() : undefined,
       author: {
@@ -62,18 +62,19 @@ const jsonLd = article
   <link rel="alternate" type="application/rss+xml" title="AI Newsroom" href="/rss.xml" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content={title} />
+  <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={pageURL} />
   <meta property="og:type" content={article ? 'article' : 'website'} />
-  {image && <meta property="og:image" content={new URL(image, site).toString()} />}
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:image" content={image ? new URL(image, site).toString() : new URL('/favicon.svg', site).toString()} />
   <meta property="og:site_name" content="AI Newsroom" />
 
   <!-- Twitter -->
-  <meta name="twitter:card" content={article && image ? 'summary_large_image' : 'summary'} />
-  <meta name="twitter:title" content={title} />
+  <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+  <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
-  {image && <meta name="twitter:image" content={new URL(image, site).toString()} />}
+  <meta name="twitter:image" content={image ? new URL(image, site).toString() : new URL('/favicon.svg', site).toString()} />
 
   {article && pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
   {article && updatedDate && <meta property="article:modified_time" content={updatedDate.toISOString()} />}
@@ -173,9 +174,31 @@ const jsonLd = article
     .article-header h1 { margin: 0; font-size: 1.75rem; }
     .article-body { font-size: 1.0625rem; }
     .tag { display: inline-block; background: var(--color-border); color: var(--color-muted); padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; margin-right: 0.25rem; }
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      background: var(--color-accent);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      z-index: 100;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
+    @media print {
+      header, footer, .skip-link { display: none; }
+      body { font-size: 12pt; line-height: 1.5; color: #000; background: #fff; }
+      a { color: #000; text-decoration: underline; }
+      pre, code { background: #f5f5f5; border: 1px solid #ccc; }
+      .container { max-width: 100%; padding: 0; }
+    }
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
   <slot />
 </body>
 </html>
