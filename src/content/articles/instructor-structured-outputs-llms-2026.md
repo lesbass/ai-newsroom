@@ -138,6 +138,6 @@ La **roadmap delle release recenti** ([CHANGELOG, 14 giugno 2026](https://github
 ---
 
 **File:** `src/content/articles/instructor-structured-outputs-llms-2026.md`
-**Linked article task:** [AIN-74](/AIN/issues/AIN-74) — `article-task-ain-74.md` (this article implements the AIN-74 commission)
-**Linked radar brief:** [AIN-72](/AIN/issues/AIN-72) — `repo-radar-AIN-72-2026-06-14.md` (candidate: `567-labs/instructor`, accepted)
+**Linked article task:** AIN-74 — `article-task-ain-74.md` (this article implements the AIN-74 commission)
+**Linked radar brief:** AIN-72 — `repo-radar-AIN-72-2026-06-14.md` (candidate: `567-labs/instructor`, accepted)
 **Cross-link:** nessuna sovrapposizione con gli articoli pubblicati (AIN-34 DeepMind Sierra Leone, AIN-66 didilili ai-agents-from-zero, AIN-55 Fable 5, AIN-60/61/62 Anthropic). Nuovo beat: Pydantic + structured outputs.
