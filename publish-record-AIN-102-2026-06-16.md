@@ -4,7 +4,7 @@
 **Article:** OpenAI to acquire Ona: cloud execution backbone for Codex agents
 **Slug:** openai-ona-acquisition-2026
 **QualityGate:** AIN-95 — PUBLISH_READY
-**Commit SHA:** (to be filled after push)
+**Commit SHA:** `592afe7` (`592afe775349763121ef9da1cfda393653a9ffbd`)
 
 ## Files committed
 
