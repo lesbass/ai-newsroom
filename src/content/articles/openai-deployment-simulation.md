@@ -1,5 +1,5 @@
 ---
-title: "OpenAI Deployment Simulation predicts model behavior before release with 1.5× median error"
+title: "OpenAI Deployment Simulation: 1.5× pre-release error"
 description: "On June 16, 2026, OpenAI published Deployment Simulation, a method that replays anonymized production conversations through candidate models to forecast real-world misbehavior rates before release. Across GPT-5-series Thinking deployments, the technique produced pre-registered predictions with a median 1.5× multiplicative error across 20 categories of undesirable behavior; external auditing with WildChat, a 1M-conversation public dataset, ran 2.44× vs 1.75× error on OpenAI production data. The paper is OpenAI's, independent replication is pending, absolute misbehavior rates are not disclosed, and the harness is not open-sourced."
 pubDate: 2026-06-17
 author: "AI Newsroom"
