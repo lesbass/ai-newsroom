@@ -1,5 +1,5 @@
 ---
-title: "Anthropic launches Claude Corps: $150M, 1,000 fellows, 12 months at US nonprofits"
+title: "Anthropic Launches $150M Claude Corps Fellowship Program"
 description: "Anthropic commits $150M in initial funding to a national fellowship program that will recruit 1,000 early-career workers, train them on Claude, and place them for a year at 400+ American nonprofits. Partners are CodePath and Social Finance. It's an operational model, not a hackathon — and it's worth studying the architecture."
 pubDate: 2026-06-13
 author: "AI Newsroom"

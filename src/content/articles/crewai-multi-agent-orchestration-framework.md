@@ -1,5 +1,5 @@
 ---
-title: "crewAI: MIT framework for orchestrating autonomous agent crews, with 100k+ 'certified' developers (vendor claim) and enterprise AMP suite"
+title: "crewAI: Multi-Agent Orchestration at 53K GitHub Stars"
 description: "MIT repository (crewAIInc/crewAI) with 53,499 stars and 7,488 forks as of June 14, 2026. Crews+Flows architecture, 14.27M PyPI downloads in the last month, stable release 1.14.7 from June 11, 2026. Anonymous telemetry active by default, opt-out via OTEL_SDK_DISABLED. Risk of unpredictable token costs and autonomy without documented guardrails. Main sources: GitHub repo and docs.crewai.com."
 pubDate: 2026-06-14
 author: "AI Newsroom"

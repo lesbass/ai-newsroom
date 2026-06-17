@@ -1,5 +1,5 @@
 ---
-title: "DiffusionGemma (Google DeepMind): text at 1,000+ tokens/sec on H100 as open-weights Apache 2.0 model"
+title: "DiffusionGemma: 1,000+ Tokens/Sec Open-Weights Text Gen"
 description: "On June 10, 2026, Google DeepMind releases DiffusionGemma, a 26B/3.8B active model based on Gemma 4 with a text-diffusion approach that denoises 256-token blocks in parallel. Up to 1,000+ tokens/sec on a single H100, ~4x faster than an equivalent autoregressive model, Apache 2.0 license, day-one support on vLLM, Hugging Face Transformers, Unsloth, NeMo. Explicitly labeled as 'experimental': quality is below Gemma 4 AR standard — speed is the point, not peak quality."
 pubDate: 2026-06-15
 author: "AI Newsroom"

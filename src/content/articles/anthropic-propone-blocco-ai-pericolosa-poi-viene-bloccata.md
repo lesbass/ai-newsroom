@@ -1,5 +1,5 @@
 ---
-title: "Anthropic asks the US government for the power to block dangerous AI — and two days later, it's Anthropic that gets blocked"
+title: "Anthropic Seeks AI-Blocking Powers, Gets Blocked Instead"
 description: "On June 10, 2026, Anthropic publishes the Advanced AI Framework, a proposal asking the federal government for legal authority to block the riskiest frontier models. On June 12, a US government export control directive suspends Fable 5 and Mythos 5, and Anthropic cites its own proposal to challenge the process. The difference between the 'with due process' power Anthropic requested and the 'without due process' power the government exercised is the real policy artifact of the week."
 pubDate: 2026-06-13
 author: "AI Newsroom"

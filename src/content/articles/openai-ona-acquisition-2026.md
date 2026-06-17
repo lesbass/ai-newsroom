@@ -1,5 +1,5 @@
 ---
-title: "OpenAI to acquire Ona: cloud execution backbone for Codex agents"
+title: "OpenAI to Acquire Ona: Cloud Runtime for Codex Agents"
 description: "On June 11, 2026, OpenAI announces the acquisition of Ona (formerly Gitpod), a cloud-development-environments platform that already runs secure, customer-controlled execution for 2 million developers. The deal gives Codex — used by 5 million people per week, up 400% year-to-date — a persistent runtime for long-running agents inside the customer's cloud. Until close, both companies remain independent; deal terms, closing date, and headcount were not disclosed."
 pubDate: 2026-06-16
 author: "AI Newsroom"

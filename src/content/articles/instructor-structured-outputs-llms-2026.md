@@ -1,5 +1,5 @@
 ---
-title: "Instructor: structured outputs for LLMs with Pydantic, in Python"
+title: "Instructor: Pydantic Structured Outputs for LLMs"
 description: "MIT Python library (567-labs) for extracting validated JSON from any LLM via Pydantic models. 13.2k stars, 1.1k forks, v1.15.1 with Bedrock SSRF fix, support for OpenAI, Anthropic, Gemini, Cohere, Ollama, Bedrock, and 15+ other providers. v1.15.2 (May 10, 2026) adds sensitive log redaction."
 pubDate: 2026-06-14
 author: "AI Newsroom"

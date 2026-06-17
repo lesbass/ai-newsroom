@@ -1,5 +1,5 @@
 ---
-title: "smolagents (Hugging Face): agents that think in Python code instead of JSON calls"
+title: "smolagents: Hugging Face Agents Code in Python, Not JSON"
 description: "The Hugging Face library for building LLM agents where actions are executable Python snippets, not JSON dictionaries. 27.8k stars, Apache 2.0, latest release v1.26.0 from May 29, 2026. Mandatory sandbox for code execution."
 pubDate: 2026-06-14
 author: "AI Newsroom"

@@ -1,5 +1,5 @@
 ---
-title: "Meta begins operational separation from Manus: Beijing forces first unwind of cross-border AI acquisition"
+title: "Meta Unwinds Manus Deal Under Beijing Cross-Border Order"
 description: "On June 11, 2026, Straits Times and Bloomberg report that Meta has revoked Manus's access to internal systems and barred its employees from using Manus tools, executing the April NDRC order that imposed the dismantling of the $2 billion acquisition announced in December 2025. It's the first time Beijing has forced the unwind of a completed cross-border AI acquisition: the precedent affects every future M&A deal with Chinese founders or IP, and forces rewriting unwind clauses in any deal currently open."
 pubDate: 2026-06-14
 author: "AI Newsroom"

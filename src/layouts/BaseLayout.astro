@@ -15,6 +15,19 @@ const site = 'https://ai-newsroom.pages.dev';
 const fullTitle = title === 'AI Newsroom' ? title : `${title} — AI Newsroom`;
 const pageURL = canonicalURL || new URL(Astro.url.pathname, site).toString();
 
+function truncateDescription(text: string, maxLen = 155): string {
+  if (text.length <= maxLen) return text;
+  const cut = text.slice(0, maxLen);
+  const lastPeriod = cut.lastIndexOf('. ');
+  const lastExcl = cut.lastIndexOf('! ');
+  const lastQuest = cut.lastIndexOf('? ');
+  const lastBreak = Math.max(lastPeriod, lastExcl, lastQuest);
+  if (lastBreak > maxLen * 0.6) return text.slice(0, lastBreak + 1);
+  return cut.slice(0, cut.lastIndexOf(' ')) + '…';
+}
+
+const seoDescription = truncateDescription(description);
+
 const jsonLd = article
   ? {
       '@context': 'https://schema.org',
@@ -54,7 +67,7 @@ const jsonLd = article
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{fullTitle}</title>
-  <meta name="description" content={description} />
+  <meta name="description" content={seoDescription} />
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)" />
   <link rel="canonical" href={pageURL} />
@@ -63,7 +76,7 @@ const jsonLd = article
 
   <!-- Open Graph -->
   <meta property="og:title" content={fullTitle} />
-  <meta property="og:description" content={description} />
+  <meta property="og:description" content={seoDescription} />
   <meta property="og:url" content={pageURL} />
   <meta property="og:type" content={article ? 'article' : 'website'} />
   <meta property="og:locale" content="en_US" />
@@ -73,7 +86,7 @@ const jsonLd = article
   <!-- Twitter -->
   <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
   <meta name="twitter:title" content={fullTitle} />
-  <meta name="twitter:description" content={description} />
+  <meta name="twitter:description" content={seoDescription} />
   <meta name="twitter:image" content={image ? new URL(image, site).toString() : new URL('/favicon.svg', site).toString()} />
 
   {article && pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
