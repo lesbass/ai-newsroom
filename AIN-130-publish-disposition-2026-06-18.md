@@ -34,7 +34,7 @@ The AIN-129 article was committed to main by RepoScout at `128a9e9`. Since Cloud
 
 ## Push
 
-- Commit SHA: `5bfd4ad`
+- Commit SHA: `769b47f`
 - Disposition file: `AIN-130-publish-disposition-2026-06-18.md`
 
 ## Blocker
