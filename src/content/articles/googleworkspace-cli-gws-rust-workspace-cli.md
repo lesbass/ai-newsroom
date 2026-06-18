@@ -1,5 +1,5 @@
 ---
-title: "googleworkspace/cli: Google's first first-party Rust CLI for every Workspace API, with a Gemini extension and Model Armor prompt-injection sanitization"
+title: "Google Workspace CLI (gws): Rust CLI for Workspace APIs"
 description: "googleworkspace/cli (binary: gws) is a first-party Rust CLI for every Workspace API, built dynamically from the Google Discovery Service, with 95 skill directories, a Gemini CLI extension, and an opt-in Model Armor integration that sanitizes API responses for prompt injection. As of 2026-06-18 the repo has 27,134 stars, 1,426 forks, 31,992 weekly npm downloads, and 30 releases from v0.4.4 to v0.22.5 — all in March 2026, with no new release tag in 11 weeks."
 pubDate: 2026-06-18
 author: "AI Newsroom"

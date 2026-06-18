@@ -1,5 +1,5 @@
 ---
-title: "x86 Ecosystem Advisory Group publishes AI Compute Extensions (ACE) v1 specification"
+title: "x86 ACE v1: AI Compute Extensions specification released"
 description: "On June 15, 2026, the x86 Ecosystem Advisory Group — led by Intel and AMD, with Google, Microsoft, Meta, Broadcom, Dell, HPE, HP Inc., Lenovo, Oracle, Red Hat, Adobe, and Nutanix — published the AI Compute Extensions (ACE) v1 specification, defining new x86 ISA extensions for AI acceleration. ACE adds a matrix-multiply tile architecture, a dedicated register file, data-movement and format-conversion primitives, and system-management state, all designed to integrate with the existing AVX/AVX10 vector pipeline. The spec page is dated 2026-06-15 and a companion white paper was published 2026-04-27. No Intel or AMD silicon has been announced under the ACE name as of 2026-06-18; performance claims in the white paper are projections, not benchmarks; v1 is reduced-precision-first; and the EAG is a vendor consortium, not an independent standards body."
 pubDate: 2026-06-18
 author: "AI Newsroom"
