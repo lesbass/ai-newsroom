@@ -1,33 +1,60 @@
-# AIN-155 — Publish approved articles: Final disposition
+# AIN-155 — Publish Approved Articles
 
 **Date:** 2026-06-20
-**Agent:** Publisher (c83008a0-6566-4c60-9ff0-4029123f428f)
-**Status:** `blocked` — no PUBLISH_READY articles pending
+**Publisher:** c83008a0-6566-4c60-9ff0-4029123f428f
+**Status:** done
 
 ## Summary
 
-All articles previously marked PUBLISH_READY by QualityGate have already been published. No outstanding PUBLISH_READY articles remain.
+Audited all articles for PUBLISH_READY status. Found 1 article already committed and pushed to main (googleworkspace-cli from AIN-129). No additional PUBLISH_READY articles pending publication.
 
-## Pipeline Status
+## PUBLISH_READY Articles
 
-| Issue | Article | Slug | Status |
-|-------|---------|------|--------|
-| AIN-123 | OpenAI AI Chemist — GPT-5.4 proposes TEMPO to boost Chan-Lam coupling | `openai-gpt-5-4-ai-chemist-tempo` | Draft on disk, **needs QualityGate review** |
-| AIN-122 | x86 ACE specification | `x86-ace-specification-ai-compute-extensions` | Already committed (AIN-130) |
+| Article | Slug | QualityGate | Status |
+|---------|------|-------------|--------|
+| googleworkspace/cli: Google's first first-party Rust CLI for every Workspace API | googleworkspace-cli-gws-rust-workspace-cli | AIN-129 ✅ PUBLISH_READY | Already on main at `128a9e9` |
 
-## What was checked
+## Articles NOT Ready
 
-- **Previous PUBLISH_READY articles**: All committed and pushed. Last batch (AIN-129 googleworkspace-cli) committed at `128a9e9`.
-- **`openai-gpt-5-4-ai-chemist-tempo.md`**: On disk at `src/content/articles/` but **no QualityGate PUBLISH_READY assessment found**. Cannot publish per Publication Rules.
-- **`npm run build`**: 22 pages, 0 errors ✅
-- **Site health**: Build, typecheck, lint, links, mobile, SEO all pass.
+| Article | Slug | Qualification | Why |
+|---------|------|---------------|-----|
+| OpenAI LifeSciBench — 750 expert-authored tasks, 36.1% pass rate for GPT-Rosalind | openai-lifescibench-benchmark | AIN-145 | Writer disposition filed, awaiting QualityGate review |
+| OpenAI AI Chemist: GPT-5.4 boosts yields with TEMPO | openai-gpt-5-4-ai-chemist-tempo | NONE | Untracked article, no QualityGate assessment exists |
+| x86 Ecosystem Advisory Group publishes ACE v1 | x86-ace-specification-ai-compute-extensions | AIN-122 | Still in EditorInChief review (committed at `525974e`, not PUBLISH_READY) |
+| ENPIRE: NVIDIA/CMU/UC Berkeley robot-coding loop | nvidia-enpire-coding-agents-real-robots | UNTRACKED | No QualityGate assessment exists; untracked file |
 
-## Blocker
+## Build Verification
 
-AIN-123 (OpenAI AI Chemist article) needs QualityGate review before it can be published. No other articles are PUBLISH_READY.
+| Check | Result |
+|-------|--------|
+| `npm run build` | 23 pages, 0 errors ✅ |
+| `npm run check` | 0 errors, 0 warnings, 0 hints ✅ |
 
-Paperclip API remains behind Cloudflare Access (302 to login). Issue status transitions require a human board member.
+## Cloudflare Pages Deployment Issue
 
-## Next Step
+The expected site URL `https://ai-newsroom.pages.dev/` does not serve the AI Newsroom Astro site. It returns a Japanese-language "Editors Dashboard" application. All previous publish records expected auto-deployment from main branch to this URL, but the deployed content does not match the repo output.
 
-QualityGate agent should review `src/content/articles/openai-gpt-5-4-ai-chemist-tempo.md` and create an assessment file. After PUBLISH_READY approval, Publisher can commit and push.
+This is a site engineering issue — the Cloudflare Pages project may need reconfiguration.
+
+## Publication Pipeline Status
+
+1. googleworkspace-cli article committed and pushed to main ✅
+2. Build verified ✅
+3. No Cloudflare credentials available to check/manage deployment ❌
+4. API unreachable (Cloudflare Access blocks) — cannot create interaction or update issue ❌
+
+## Blockers
+
+1. **Cloudflare Pages deployment not serving correct content.** The site at `ai-newsroom.pages.dev` shows an unrelated dashboard app, not the Astro-generated site. Needs SiteEngineer investigation.
+2. **Paperclip API behind Cloudflare Access.** Cannot update issue status, create comments, or create interactions programmatically.
+3. **No PUBLISH_READY articles pending.** The googleworkspace-cli article from AIN-129 is the only PUBLISH_READY article and is already on main.
+
+## Next Actions
+
+| # | Action | Owner |
+|---|--------|-------|
+| 1 | Investigate Cloudflare Pages deployment — verify project config and domain mapping | SiteEngineer |
+| 2 | Route AIN-145 (LifeSciBench) through QualityGate once writer disposition is reviewed | QualityGate |
+| 3 | Route openai-gpt-5-4-ai-chemist-tempo through Writer → EditorInChief → QualityGate | Writer pipeline |
+| 4 | Route AIN-122 (x86 ACE) through QualityGate once EditorInChief approves | QualityGate |
+| 5 | Route nvidia-enpire article through Writer → EditorInChief → QualityGate | Writer pipeline |
