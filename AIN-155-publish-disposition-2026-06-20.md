@@ -1,60 +1,40 @@
-# AIN-155 — Publish Approved Articles
+# AIN-155 — Loop-Breaking Disposition
 
 **Date:** 2026-06-20
 **Publisher:** c83008a0-6566-4c60-9ff0-4029123f428f
-**Status:** done
+**Status:** `blocked` — looping on this issue. Do not re-assign until unblock condition is met.
 
-## Summary
+## The Loop
 
-Audited all articles for PUBLISH_READY status. Found 1 article already committed and pushed to main (googleworkspace-cli from AIN-129). No additional PUBLISH_READY articles pending publication.
+This is the **third** heartbeat on AIN-155. Each heartbeat:
+1. Checks for PUBLISH_READY articles → **none found**
+2. Runs build → **25 pages, 0 errors**
+3. Writes disposition → committed to `main`
+4. Cannot update issue status → **Paperclip API returns HTTP 302 (Cloudflare Access)**
 
-## PUBLISH_READY Articles
+Because step 4 fails, the issue stays `in_progress` and the system wakes Publisher again. This is a non-productive loop.
 
-| Article | Slug | QualityGate | Status |
-|---------|------|-------------|--------|
-| googleworkspace/cli: Google's first first-party Rust CLI for every Workspace API | googleworkspace-cli-gws-rust-workspace-cli | AIN-129 ✅ PUBLISH_READY | Already on main at `128a9e9` |
+## Current State
 
-## Articles NOT Ready
+All PUBLISH_READY articles are already on `main`. The pipeline contains articles that need QualityGate review first (AIN-145 LifeSciBench, openai-gpt-5-4-ai-chemist-tempo draft). No work for Publisher until QualityGate marks something PUBLISH_READY.
 
-| Article | Slug | Qualification | Why |
-|---------|------|---------------|-----|
-| OpenAI LifeSciBench — 750 expert-authored tasks, 36.1% pass rate for GPT-Rosalind | openai-lifescibench-benchmark | AIN-145 | Writer disposition filed, awaiting QualityGate review |
-| OpenAI AI Chemist: GPT-5.4 boosts yields with TEMPO | openai-gpt-5-4-ai-chemist-tempo | NONE | Untracked article, no QualityGate assessment exists |
-| x86 Ecosystem Advisory Group publishes ACE v1 | x86-ace-specification-ai-compute-extensions | AIN-122 | Still in EditorInChief review (committed at `525974e`, not PUBLISH_READY) |
-| ENPIRE: NVIDIA/CMU/UC Berkeley robot-coding loop | nvidia-enpire-coding-agents-real-robots | UNTRACKED | No QualityGate assessment exists; untracked file |
+## Unblock Condition (one of)
+
+| # | Action | Effect |
+|---|--------|--------|
+| 1 | Human board member transitions AIN-155 to `blocked` or `done` | Break the loop now |
+| 2 | Configure Cloudflare Access service token for agent API key | Agents can update issue status |
+| 3 | Add Cloudflare Access bypass rule for `/api/*` path | Same as #2 |
+| 4 | Trigger QualityGate on AIN-145 LifeSciBench article | Creates a PUBLISH_READY article for Publisher |
 
 ## Build Verification
 
-| Check | Result |
-|-------|--------|
-| `npm run build` | 23 pages, 0 errors ✅ |
-| `npm run check` | 0 errors, 0 warnings, 0 hints ✅ |
+- `npm run build` → 25 pages, 0 errors ✅
 
-## Cloudflare Pages Deployment Issue
+## Artiffact History
 
-The expected site URL `https://ai-newsroom.pages.dev/` does not serve the AI Newsroom Astro site. It returns a Japanese-language "Editors Dashboard" application. All previous publish records expected auto-deployment from main branch to this URL, but the deployed content does not match the repo output.
+- `0a1a7fe` — Heartbeat 1: "no PUBLISH_READY articles pending"
+- `ddc810e` — Heartbeat 2: same finding, overwrote same conclusion
+- This file — Heartbeat 3: identifying the loop itself
 
-This is a site engineering issue — the Cloudflare Pages project may need reconfiguration.
-
-## Publication Pipeline Status
-
-1. googleworkspace-cli article committed and pushed to main ✅
-2. Build verified ✅
-3. No Cloudflare credentials available to check/manage deployment ❌
-4. API unreachable (Cloudflare Access blocks) — cannot create interaction or update issue ❌
-
-## Blockers
-
-1. **Cloudflare Pages deployment not serving correct content.** The site at `ai-newsroom.pages.dev` shows an unrelated dashboard app, not the Astro-generated site. Needs SiteEngineer investigation.
-2. **Paperclip API behind Cloudflare Access.** Cannot update issue status, create comments, or create interactions programmatically.
-3. **No PUBLISH_READY articles pending.** The googleworkspace-cli article from AIN-129 is the only PUBLISH_READY article and is already on main.
-
-## Next Actions
-
-| # | Action | Owner |
-|---|--------|-------|
-| 1 | Investigate Cloudflare Pages deployment — verify project config and domain mapping | SiteEngineer |
-| 2 | Route AIN-145 (LifeSciBench) through QualityGate once writer disposition is reviewed | QualityGate |
-| 3 | Route openai-gpt-5-4-ai-chemist-tempo through Writer → EditorInChief → QualityGate | Writer pipeline |
-| 4 | Route AIN-122 (x86 ACE) through QualityGate once EditorInChief approves | QualityGate |
-| 5 | Route nvidia-enpire article through Writer → EditorInChief → QualityGate | Writer pipeline |
+**Do not re-schedule Publisher for AIN-155 until one of the unblock conditions above is met.**
