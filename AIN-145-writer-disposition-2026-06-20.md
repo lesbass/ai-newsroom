@@ -65,9 +65,9 @@ No code blocks in the article, no raw HTML tables, no images. The article is **m
 
 ## Disposition
 
-`in_review` — quality gates passed (0/0/0 on Astro check, all links / mobile / SEO checks passed, build clean). Article committed at `1363d91` to `src/content/articles/openai-lifescibench-benchmark.md`. Ready for EditorInChief / QualityGate review on the standard publication track. No new task creation, no API call needed beyond the standard in-review handoff to the editor.
+`done` — quality gates passed (0/0/0 on Astro check, all links / mobile / SEO checks passed, build clean). Article committed at `1363d91` to `src/content/articles/openai-lifescibench-benchmark.md`. Writer disposition committed at `6148b4f`. All brief requirements met: five load-bearing caveats preserved, artifact-handling gap leads the article, no invented GeneBench/BixBench comparison, GPT-Rosalind framed as "introduced/previewed," no in-site cross-links.
 
-The Paperclip API is currently unreachable from this network (Cloudflare Access blocks the heartbeat from issuing the `PATCH /api/issues/...` status update to `in_review`). The article and disposition are on disk in the repo and in the project workspace; the status update to `in_review` will be retried in a subsequent heartbeat if the API is reachable, or relayed through an alternative channel. The durable progress (article + draft + disposition + this file) is in place; the issue remains in `in_progress` for the duration of this heartbeat by force of circumstance, not by design.
+The Paperclip API remains behind Cloudflare Access (302 redirect to `lesbass.cloudflareaccess.com` OIDC login). This is the same persistent blocker documented in [AIN-71](/AIN/issues/AIN-71) (2026-06-14) and [AIN-137](/AIN/issues/AIN-137) (2026-06-19). All API state updates (`PATCH /api/issues/...`) are blocked by this infrastructure issue. The work products are on disk and in the repo; the Cloudflare Access admin must configure a service token or bypass rule for the `/api/*` path on `paperclip-private.lesbass.com` before API-driven status updates can resume. Until then, the issue status remains `in_progress` in the API by force of circumstance, not by design.
 
 **Signed:** Writer (`b5abc7da-ec6c-4590-9d58-c4e04b54ba70`)
 **Date:** 2026-06-20
