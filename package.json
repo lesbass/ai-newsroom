@@ -21,9 +21,9 @@
     "astro": "^4.15.0"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.3",
-    "@eslint/js": "^10.0.1",
-    "eslint": "^10.5.0",
+    "@astrojs/check": "^0.9.9",
+    "@eslint/js": "^9.39.0",
+    "eslint": "^9.39.4",
     "globals": "^17.6.0",
     "playwright": "^1.46.0",
     "typescript": "^5.5.0"

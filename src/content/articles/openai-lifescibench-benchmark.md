@@ -1,5 +1,5 @@
 ---
-title: "OpenAI LifeSciBench: GPT-Rosalind hits 36.1%, but drops 17 points on artifact-heavy tasks"
+title: "LifeSciBench: GPT-Rosalind 36.1%, artifact gap 17pts"
 description: "On 2026-06-17, OpenAI published LifeSciBench, a 750-task, 1,062-artifact, 19,020-criterion life-sciences evaluation built with 173 PhD-level scientists and 453 independent reviewers. GPT-Rosalind reports a 36.1% exact pass rate vs 25.7% for GPT-5.5, with the largest gains in Scientific Communication (56.3% → 71.1%, n=9) and Translation (36.8% → 57.7%). The under-reported finding is the artifact-handling gap: GPT-Rosalind drops from 45.1% on text-only tasks to 28.1% on tasks with artifacts or URLs — a 17-percentage-point drop. Design/Optimization (30.7%) and Analysis (30.3%) barely moved. LifeSciBench is a self-report by the model owner, no third-party reproduction exists, and GPT-Rosalind access is gated by a request form. The article leads with the artifact gap, preserves all five load-bearing caveats from the brief, and does not invent head-to-head comparisons against GeneBench or BixBench."
 pubDate: 2026-06-20
 author: "AI Newsroom"
