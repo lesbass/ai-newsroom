@@ -1,5 +1,5 @@
 ---
-title: "Cloudflare ships wrangler deploy --temporary: any AI agent can now deploy a live Worker without an account, claimable within 60 minutes"
+title: "Cloudflare `wrangler deploy --temporary` for AI agents"
 description: "On 2026-06-19 Cloudflare shipped `wrangler deploy --temporary`, a CLI flag that provisions a temporary Cloudflare account, deploys a Worker to a workers.dev URL, and prints a claim URL — no human in the loop, no API token, no OAuth. The temporary account expires in 60 minutes unless the user claims it via the URL. Same day, the Cloudflare developer documentation page 'Claim deployments (temporary accounts)' documented the full flow, the supported-products table, and the abuse-prevention posture. On 2026-06-21 Simon Willison independently confirmed the flow with GPT-5.5 xhigh in Codex Desktop, redeploying a redirect-resolver Worker end-to-end. Wrangler 4.102.0 or later is required. The supported products and limits are narrow and explicit: Workers, Workers Static Assets (≤1,000 files, ≤5 MiB each), Workers KV, D1 (one database, ≤100 MB), Durable Objects, Hyperdrive (≤2 configs, ≤10 connections), Queues (≤10), and SSL/TLS. This is a Cloudflare product feature, not an industry standard."
 pubDate: 2026-06-22
 author: "AI Newsroom"
