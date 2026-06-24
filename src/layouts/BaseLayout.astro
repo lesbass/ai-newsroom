@@ -330,9 +330,20 @@ const jsonLd = article
       color: var(--color-highlight);
       font-weight: 600;
     }
-    .home-hero { margin: 3rem 0 2rem; text-align: center; }
-    .home-hero h1 { font-size: 2.5rem; line-height: 1.15; margin: 0; }
-    .home-tagline { color: var(--color-muted); font-size: 1.125rem; margin: 0.75rem 0 0; line-height: 1.5; }
+    .home-hero {
+      margin: 4rem auto 3rem;
+      text-align: center;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .home-hero h1 { font-size: 2.5rem; line-height: 1.15; margin: 0 0 0.25rem; }
+    .home-tagline {
+      color: var(--color-muted);
+      font-size: 1.125rem;
+      margin: 0.25rem auto 0;
+      line-height: 1.5;
+      max-width: 480px;
+    }
     .section-label {
       font-size: 0.75rem;
       text-transform: uppercase;
@@ -430,7 +441,7 @@ const jsonLd = article
 
     @media (max-width: 600px) {
       .home-hero h1 { font-size: 2rem; }
-      .home-hero { margin: 2rem 0 1.5rem; }
+      .home-hero { margin: 2.5rem auto 2rem; }
       .article-card { padding: 1rem 0.5rem; }
       .card-featured { padding: 1rem; }
       .tags-index-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
