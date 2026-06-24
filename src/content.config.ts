@@ -13,10 +13,10 @@ const articles = defineCollection({
     updatedDate: z.coerce.date().optional(),
     author: z.string().default('AI Newsroom'),
     tags: z.array(z.string()).default([]),
-    canonicalURL: z.string().optional(),
     image: z.string().optional(),
     imageAlt: z.string().optional(),
     imageCredit: z.string().optional(),
+    canonicalURL: z.string().optional(),
     sources: z.array(z.object({
       title: z.string(),
       url: z.string(),
