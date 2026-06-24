@@ -1,5 +1,5 @@
 ---
-title: "codebase-memory-mcp: a zero-dependency MCP code intelligence engine for AI coding agents"
+title: "codebase-memory-mcp: zero-dep code intelligence"
 description: "codebase-memory-mcp is a pure-C, single-binary MCP server that indexes a codebase into a persistent Tree-Sitter knowledge graph in milliseconds and replaces dozens of file-by-file read cycles with a handful of structured MCP queries. As of 2026-06-24 it sits at 13,355 GitHub stars with 5,604 tests passing, MIT-licensed, supports 11 coding agents, and is backed by an arXiv preprint (arXiv:2603.27277) that benchmarks 83% answer quality at 10× fewer tokens and 2.1× fewer tool calls versus file-by-file exploration across 31 real-world repositories. The article is a builder-focused tool piece, not a news event."
 pubDate: 2026-06-25
 author: "AI Newsroom"

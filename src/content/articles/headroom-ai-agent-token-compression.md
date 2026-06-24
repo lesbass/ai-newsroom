@@ -1,5 +1,5 @@
 ---
-title: "Headroom: the open-source compression layer cutting AI agent tokens by 60-95%"
+title: "Headroom: open-source token compression for AI agents"
 description: "On 2026-06-22, the open-source project Headroom shipped v0.27.0, a release that adds `headroom update`, `headroom doctor`, and a hot-reload path for live proxy env knobs. The repository (headroomlabs-ai/headroom on GitHub) reached 48,803 stars, 3,406 forks, and 368 open issues on 2026-06-24, six months after its first commit on 2026-01-07. The project compresses tool outputs, logs, RAG chunks, files, and conversation history before they reach an LLM, with published benchmarks of 92% token reduction on code search, 92% on SRE incident debugging, 73% on GitHub issue triage, and 47% on codebase exploration. Accuracy on GSM8K, TruthfulQA, SQuAD v2, and BFCL is preserved or improved. Headroom is Apache 2.0 licensed, runs locally, and exposes a library, a proxy, an agent wrapper, and an MCP server. v0.27.0 also adds `headroom mcp install`, tabular `.xlsx/.xls` compression, and Cortex Code (Snowflake CoCo) to the supported agent list."
 pubDate: 2026-06-24
 author: "AI Newsroom"
