@@ -15,3 +15,9 @@ final-review-*.md
 FINAL-STATUS-*.md
 heartbeat-status.md
 candidate-briefs-*.md
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
