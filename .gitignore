@@ -21,3 +21,8 @@ candidate-briefs-*.md
 .dev.vars*
 !.dev.vars.example
 !.env.example
+
+# chromium runtime artifacts
+/tmp/
+screenshots/
+core.*
