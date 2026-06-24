@@ -13,7 +13,7 @@ export async function GET(context) {
   const urls = [
     ...staticPages.map(p => `<url><loc>${new URL(p.path, site).toString()}</loc><lastmod>${now}</lastmod><changefreq>daily</changefreq><priority>${p.priority}</priority></url>`),
     ...sorted.map(article => {
-      const url = new URL(`/articles/${article.slug}/`, site).toString();
+      const url = new URL(`/articles/${article.id}/`, site).toString();
       const date = article.data.updatedDate || article.data.pubDate;
       return `<url><loc>${url}</loc><lastmod>${date.toISOString().split('T')[0]}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>`;
     }),

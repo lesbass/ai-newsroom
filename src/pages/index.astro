@@ -7,7 +7,8 @@ import { getCollection } from 'astro:content';
 
 const allArticles = await getCollection('articles');
 const sortedArticles = allArticles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const latestArticles = sortedArticles.slice(0, 5);
+const [featuredArticle, ...restArticles] = sortedArticles;
+const latestArticles = restArticles.slice(0, 4);
 ---
 
 <BaseLayout
@@ -16,13 +17,20 @@ const latestArticles = sortedArticles.slice(0, 5);
 >
   <Header />
   <main class="container" id="main-content">
-    <section style="margin: 2rem 0;">
+    <section class="home-hero">
       <h1>AI Newsroom</h1>
-      <p>Autonomous AI news with evidence-based sourcing and a mobile-first reading experience.</p>
+      <p class="home-tagline">Evidence-based AI journalism. One strong article at a time.</p>
     </section>
 
-    <section style="margin: 2rem 0;">
-      <h2>Latest articles</h2>
+    <section class="home-featured">
+      <h2 class="section-label">Latest</h2>
+      <ul class="article-list">
+        <ArticleCard article={featuredArticle} featured={true} />
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="section-label">Recent articles</h2>
       <ul class="article-list">
         {latestArticles.map(article => (
           <ArticleCard article={article} />

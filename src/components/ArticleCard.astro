@@ -3,15 +3,24 @@ import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   article: CollectionEntry<'articles'>;
+  featured?: boolean;
 }
 
-const { article } = Astro.props;
+const { article, featured = false } = Astro.props;
 const { title, description, pubDate, tags } = article.data;
-const url = `/articles/${article.slug}/`;
+const url = `/articles/${article.id}/`;
 const date = new Date(pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const wordCount = article.body?.split(/\s+/).filter(Boolean).length || 0;
+const readingTime = Math.max(1, Math.round(wordCount / 238));
+const displayTags = tags.slice(0, featured ? 8 : 5);
+const extraTagCount = Math.max(0, tags.length - (featured ? 8 : 5));
 ---
-<li>
+<li class={featured ? 'article-card-featured' : ''}>
   <a href={url}>{title}</a>
-  <p class="article-meta">{date} {tags.map(t => <span class="tag">{t}</span>)}</p>
-  <p>{description}</p>
+  <p class="article-meta">{date} &middot; <span class="reading-time">{readingTime} min read</span></p>
+  <p class="article-meta">
+    {displayTags.map(t => <span class="tag">{t}</span>)}
+    {extraTagCount > 0 && <span class="tag">+{extraTagCount}</span>}
+  </p>
+  <p class="article-desc">{description}</p>
 </li>

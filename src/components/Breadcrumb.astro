@@ -1,0 +1,34 @@
+---
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+const { items = [] } = Astro.props as { items: Crumb[] };
+const site = 'https://ai-newsroom.pages.dev';
+---
+
+<nav aria-label="Breadcrumb" class="breadcrumb">
+  <ol>
+    {items.map((item, i) => (
+      <li>
+        {item.href && i < items.length - 1
+          ? <a href={item.href}>{item.label}</a>
+          : <span aria-current={i === items.length - 1 ? 'page' : undefined}>{item.label}</span>
+        }
+        {i < items.length - 1 && <span class="breadcrumb-sep" aria-hidden="true">/</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.label,
+    item: item.href ? new URL(item.href, site).toString() : undefined,
+  })),
+})} />
