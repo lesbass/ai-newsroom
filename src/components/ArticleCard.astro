@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { slugifyTag } from '../lib/slugify';
 
 interface Props {
   article: CollectionEntry<'articles'>;
@@ -7,20 +8,34 @@ interface Props {
 }
 
 const { article, featured = false } = Astro.props;
-const { title, description, pubDate, tags } = article.data;
+const { title, description, pubDate, tags, sources } = article.data;
 const url = `/articles/${article.id}/`;
 const date = new Date(pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 const wordCount = article.body?.split(/\s+/).filter(Boolean).length || 0;
 const readingTime = Math.max(1, Math.round(wordCount / 238));
 const displayTags = tags.slice(0, featured ? 8 : 5);
 const extraTagCount = Math.max(0, tags.length - (featured ? 8 : 5));
+const sourceCount = sources.length;
 ---
-<li class={featured ? 'article-card-featured' : ''}>
-  <a href={url}>{title}</a>
-  <p class="article-meta">{date} &middot; <span class="reading-time">{readingTime} min read</span></p>
-  <p class="article-meta">
-    {displayTags.map(t => <span class="tag">{t}</span>)}
-    {extraTagCount > 0 && <span class="tag">+{extraTagCount}</span>}
-  </p>
+
+<div class={featured ? 'card-featured' : 'article-card'}>
+  <a href={url} class="article-card-title">{title}</a>
+  <div class="article-meta">
+    <span>{date}</span>
+    <span class="sep-dot">&middot;</span>
+    <span class="reading-time">{readingTime} min read</span>
+    {sourceCount > 0 && (
+      <>
+        <span class="sep-dot">&middot;</span>
+        <span title={`${sourceCount} cited source${sourceCount !== 1 ? 's' : ''}`}>{sourceCount} source{sourceCount !== 1 ? 's' : ''}</span>
+      </>
+    )}
+  </div>
+  {tags.length > 0 && (
+    <div style="margin-top: 0.35rem;">
+      {displayTags.map(t => <a href={`/tags/${slugifyTag(t)}/`} class="tag">{t}</a>)}
+      {extraTagCount > 0 && <span class="tag">+{extraTagCount}</span>}
+    </div>
+  )}
   <p class="article-desc">{description}</p>
-</li>
+</div>

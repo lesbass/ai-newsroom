@@ -15,10 +15,11 @@ const sorted = articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate
 >
   <Header />
   <main class="container" id="main-content">
-    <h1 style="margin: 2rem 0 1rem;">Articles</h1>
-    <ul class="article-list">
+    <h1 style="margin: 2rem 0 1rem;">All articles</h1>
+    <p style="color: var(--color-muted); margin-bottom: 1.5rem;">{sorted.length} article{sorted.length !== 1 ? 's' : ''} published</p>
+    <div>
       {sorted.map(article => <ArticleCard article={article} />)}
-    </ul>
+    </div>
   </main>
   <Footer />
 </BaseLayout>

@@ -4,40 +4,73 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
+import { slugifyTag } from '../lib/slugify';
 
 const allArticles = await getCollection('articles');
 const sortedArticles = allArticles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const [featuredArticle, ...restArticles] = sortedArticles;
-const latestArticles = restArticles.slice(0, 4);
+const latestArticles = restArticles.slice(0, 5);
+
+const tagMap = new Map<string, { count: number; display: string }>();
+for (const article of allArticles) {
+  for (const tag of article.data.tags) {
+    const slug = slugifyTag(tag);
+    if (slug) {
+      const existing = tagMap.get(slug);
+      if (existing) {
+        existing.count++;
+      } else {
+        tagMap.set(slug, { count: 1, display: tag.toLowerCase().trim() });
+      }
+    }
+  }
+}
+const topTags = [...tagMap.entries()]
+  .sort((a, b) => b[1].count - a[1].count || a[0].localeCompare(b[0]))
+  .slice(0, 10);
 ---
 
 <BaseLayout
   title="AI Newsroom"
-  description="Autonomous AI news website with strict editorial quality gates."
+  description="Autonomous AI news website with strict editorial quality gates. Evidence-based journalism, one strong article at a time."
 >
   <Header />
-  <main class="container" id="main-content">
-    <section class="home-hero">
+  <main id="main-content">
+    <section class="container home-hero">
       <h1>AI Newsroom</h1>
       <p class="home-tagline">Evidence-based AI journalism. One strong article at a time.</p>
     </section>
 
-    <section class="home-featured">
+    <section class="container">
       <h2 class="section-label">Latest</h2>
-      <ul class="article-list">
-        <ArticleCard article={featuredArticle} featured={true} />
-      </ul>
+      <ArticleCard article={featuredArticle} featured={true} />
     </section>
 
-    <section>
+    <section class="container">
       <h2 class="section-label">Recent articles</h2>
-      <ul class="article-list">
+      <div>
         {latestArticles.map(article => (
           <ArticleCard article={article} />
         ))}
-      </ul>
-      <p><a href="/articles/">View all articles &rarr;</a></p>
+      </div>
+      <p style="margin-top: 1.5rem;">
+        <a href="/articles/">View all {sortedArticles.length} articles &rarr;</a>
+      </p>
     </section>
+
+    {topTags.length > 0 && (
+      <section class="container">
+        <h2 class="section-label">Browse by topic</h2>
+        <div class="tag-cloud">
+          {topTags.map(([slug, { count, display }]) => (
+            <a href={`/tags/${slug}/`} class="tag">{display} <span style="opacity:0.65; font-size:0.7rem;">{count}</span></a>
+          ))}
+        </div>
+        <p style="margin-top: 0.5rem;">
+          <a href="/tags/" style="font-size: 0.875rem;">All topics &rarr;</a>
+        </p>
+      </section>
+    )}
   </main>
   <Footer />
 </BaseLayout>

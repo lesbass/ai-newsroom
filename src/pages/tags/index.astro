@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+import { slugifyTag } from '../../lib/slugify';
+
+const allArticles = await getCollection('articles');
+const tagMap = new Map<string, { count: number; display: string }>();
+
+for (const article of allArticles) {
+  for (const tag of article.data.tags) {
+    const slug = slugifyTag(tag);
+    if (slug) {
+      const existing = tagMap.get(slug);
+      if (existing) {
+        existing.count++;
+      } else {
+        tagMap.set(slug, { count: 1, display: tag.toLowerCase().trim() });
+      }
+    }
+  }
+}
+
+const sortedTags = [...tagMap.entries()]
+  .sort((a, b) => b[1].count - a[1].count || a[0].localeCompare(b[0]));
+
+const totalArticles = allArticles.length;
+---
+
+<BaseLayout
+  title="Topics"
+  description={`Browse ${sortedTags.length} topics across ${totalArticles} evidence-based AI news articles.`}
+>
+  <Header />
+  <main class="container" id="main-content">
+    <div class="tag-page-header">
+      <h1>Topics</h1>
+      <p class="tag-page-count">{sortedTags.length} topics across {totalArticles} articles</p>
+    </div>
+    <div class="tags-index-grid">
+      {sortedTags.map(([slug, { count, display }]) => (
+        <a href={`/tags/${slug}/`} class="tag-index-card">
+          <span>{display}</span>
+          <span class="tag-index-count">{count}</span>
+        </a>
+      ))}
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

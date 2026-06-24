@@ -1,12 +1,18 @@
 ---
+const currentPath = Astro.url.pathname;
+function isCurrent(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
 ---
 <header>
-  <div class="container nav">
-    <a href="/" style="font-size:1.25rem; color: var(--color-text); min-height:44px; display:inline-flex; align-items:center;">AI Newsroom</a>
+  <div class="container">
+    <a href="/" class="site-logo">AI Newsroom</a>
     <nav class="nav-links">
-      <a href="/">Home</a>
-      <a href="/articles">Articles</a>
-      <a href="/corrections">Corrections</a>
+      <a href="/" class={isCurrent('/') && !isCurrent('/articles') && !isCurrent('/tags') && !isCurrent('/corrections') ? 'current' : ''}>Home</a>
+      <a href="/articles/" class={isCurrent('/articles') ? 'current' : ''}>Articles</a>
+      <a href="/tags/" class={isCurrent('/tags') ? 'current' : ''}>Topics</a>
+      <a href="/corrections/" class={isCurrent('/corrections') ? 'current' : ''}>Corrections</a>
       <a href="/rss.xml">RSS</a>
     </nav>
   </div>
