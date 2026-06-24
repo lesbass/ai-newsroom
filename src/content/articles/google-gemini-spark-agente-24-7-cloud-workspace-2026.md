@@ -4,6 +4,9 @@ description: "On May 19, 2026, Google announced Gemini Spark, a 24/7 personal AI
 pubDate: 2026-06-16
 author: "AI Newsroom"
 tags: ["google", "gemini", "gemini-spark", "antigravity", "gemini-3-5", "workspace", "gmail", "docs", "slides", "mcp", "canva", "opentable", "instacart", "agentic-ai", "cloud-agent", "google-ai-ultra", "macos", "android", "halo", "google-io-2026"]
+image: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Geminiapp_Bento_hero.width-1300.jpg"
+imageAlt: "Gemini app Bento hero illustration"
+imageCredit: "Image: Google blog / Gemini Spark announcement (May 19, 2026)"
 sources:
   - title: "Google blog — 'The Gemini app becomes more agentic, delivering proactive, 24/7 help' (Josh Woodward, May 19, 2026)"
     url: "https://blog.google/innovation-and-ai/products/gemini-app/next-evolution-gemini-app/"

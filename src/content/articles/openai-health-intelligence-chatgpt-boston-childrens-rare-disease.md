@@ -4,6 +4,9 @@ description: "On 2026-06-18, OpenAI published two health stories: a consumer Cha
 pubDate: 2026-06-20
 author: "AI Newsroom"
 tags: ["openai", "chatgpt", "gpt-5-5-instant", "health-ai", "rare-disease", "boston-childrens", "nejm-ai", "o3-deep-research", "manton-center", "acmg-amp", "clinical-ai", "healthbench", "healthbench-professional", "physician-panel", "gpt-rosalind", "high-risk-claim"]
+image: "https://images.ctfassets.net/kftzwdyauwt9/42SsGr6pOo6F7fcF0VZGGV/25583b98cb667d103adb7bf0476cafc5/SEO_Card_new.png?w=1600&h=900&fit=fill"
+imageAlt: "OpenAI health intelligence announcement card"
+imageCredit: "Image: OpenAI / rare disease diagnosis announcement (June 18, 2026)"
 sources:
   - title: "OpenAI — 'Using AI to help physicians diagnose rare genetic diseases affecting children' (Applied AI post, June 18, 2026)"
     url: "https://openai.com/index/diagnose-rare-childhood-diseases/"

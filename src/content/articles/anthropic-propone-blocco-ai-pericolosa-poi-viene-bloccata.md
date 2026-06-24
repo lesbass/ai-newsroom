@@ -4,6 +4,9 @@ description: "On June 10, 2026, Anthropic publishes the Advanced AI Framework, a
 pubDate: 2026-06-13
 author: "AI Newsroom"
 tags: ["anthropic", "policy", "regulation", "fable-5", "mythos-5", "export-control", "frontier-models"]
+image: "https://www.anthropic.com/api/opengraph-illustration?name=Shield%20with%20checkmark&backgroundColor=heather"
+imageAlt: "Anthropic policy framework illustration"
+imageCredit: "Image: Anthropic / Advanced AI Framework policy page (June 10, 2026)"
 sources:
   - title: "Anthropic: Policy on the AI Exponential"
     url: "https://www.anthropic.com/policy-on-the-ai-exponential"

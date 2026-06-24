@@ -4,6 +4,9 @@ description: "On June 15, 2026, the x86 Ecosystem Advisory Group — led by Inte
 pubDate: 2026-06-18
 author: "AI Newsroom"
 tags: ["x86", "ace", "ai-compute-extensions", "intel", "amd", "avx10", "instruction-set", "matrix-multiplication", "inference", "cpu-acceleration", "x86-ecosystem-advisory-group", "specification", "white-paper"]
+image: "https://opengraph.githubassets.com/1/intel/x86-simd-sort"
+imageAlt: "Intel x86 SIMD sort repository social preview card"
+imageCredit: "Image: GitHub / Intel x86-simd-sort repository"
 sources:
   - title: "x86 Ecosystem Advisory Group — 'AI Compute Extensions (ACE) Specification' (resource page, June 15, 2026)"
     url: "https://x86ecosystem.org/resource/ai-compute-extensions-ace-specification/"

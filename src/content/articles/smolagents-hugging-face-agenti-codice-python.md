@@ -4,6 +4,9 @@ description: "The Hugging Face library for building LLM agents where actions are
 pubDate: 2026-06-14
 author: "AI Newsroom"
 tags: ["huggingface", "smolagents", "agent", "code-agent", "open-source", "mcp", "langchain", "sandbox", "framework", "repository-feature"]
+image: "https://opengraph.githubassets.com/1/huggingface/smolagents"
+imageAlt: "smolagents open-source repository social preview card"
+imageCredit: "Image: GitHub / huggingface/smolagents repository (Apache 2.0)"
 sources:
   - title: "huggingface/smolagents (GitHub repository)"
     url: "https://github.com/huggingface/smolagents"

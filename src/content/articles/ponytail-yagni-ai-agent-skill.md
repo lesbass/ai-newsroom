@@ -5,6 +5,9 @@ pubDate: 2026-06-16
 updatedDate: 2026-06-16
 author: "AI Newsroom"
 tags: ["ponytail", "ai-agents", "yagni", "claude-code", "codex", "opencode", "cursor", "windsurf", "cline", "aider", "kiro", "prompt-engineering", "agent-skills", "developer-tools", "code-review", "ai-code-bloat"]
+image: "https://opengraph.githubassets.com/1/DietrichGebert/ponytail"
+imageAlt: "ponytail open-source repository social preview card"
+imageCredit: "Image: GitHub / DietrichGebert/ponytail repository (MIT)"
 sources:
   - title: "DietrichGebert/ponytail — GitHub repository"
     url: "https://github.com/DietrichGebert/ponytail"

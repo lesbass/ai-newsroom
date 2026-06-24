@@ -4,6 +4,9 @@ description: "On June 11, 2026, OpenAI announces the acquisition of Ona (formerl
 pubDate: 2026-06-16
 author: "AI Newsroom"
 tags: ["openai", "ona", "codex", "acquisition", "m-and-a", "cloud-development-environments", "gitpod", "background-agents", "enterprise-ai", "agentic-coding"]
+image: "https://images.ctfassets.net/kftzwdyauwt9/3vpY0M1x6mrbhiFVcfTF4Y/99dae42f0ed1030d045f56249385ac3a/OAI-Ona-SEO.png?w=1600&h=900&fit=fill"
+imageAlt: "OpenAI Ona acquisition announcement card"
+imageCredit: "Image: OpenAI / Ona acquisition announcement (June 11, 2026)"
 sources:
   - title: "OpenAI — 'OpenAI to acquire Ona' (Company, June 11, 2026)"
     url: "https://openai.com/index/openai-to-acquire-ona/"

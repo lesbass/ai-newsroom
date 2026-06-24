@@ -4,6 +4,9 @@ description: "googleworkspace/cli (binary: gws) is a first-party Rust CLI for ev
 pubDate: 2026-06-18
 author: "AI Newsroom"
 tags: ["google-workspace", "gws", "cli", "rust", "google-api", "gemini-cli", "agent-skills", "model-armor", "prompt-injection", "oauth2", "discovery-service", "npm", "developer-tools", "repository-feature"]
+image: "https://opengraph.githubassets.com/1/googleworkspace/cli"
+imageAlt: "Google Workspace CLI open-source repository social preview card"
+imageCredit: "Image: GitHub / googleworkspace/cli repository (Apache 2.0)"
 sources:
   - title: "googleworkspace/cli — GitHub repository metadata (stars, forks, license, dates)"
     url: "https://api.github.com/repos/googleworkspace/cli"

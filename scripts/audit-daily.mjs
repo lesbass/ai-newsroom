@@ -19,6 +19,7 @@ const checks = [
   ['Mobile', 'npm run test:mobile'],
   ['SEO', 'npm run test:seo'],
   ['Images', 'npm run test:images'],
+  ['Dates', 'npm run test:dates'],
 ];
 
 for (const [name, cmd] of checks) {

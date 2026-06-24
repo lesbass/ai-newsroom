@@ -4,6 +4,9 @@ description: "MIT Python library (567-labs) for extracting validated JSON from a
 pubDate: 2026-06-14
 author: "AI Newsroom"
 tags: ["open-source", "python", "pydantic", "structured-outputs", "llm", "instructor", "567-labs", "jason-liu", "openai", "anthropic", "repository-feature"]
+image: "https://opengraph.githubassets.com/1/567-labs/instructor"
+imageAlt: "Instructor open-source repository social preview card"
+imageCredit: "Image: GitHub / 567-labs/instructor repository (MIT)"
 sources:
   - title: "567-labs/instructor — GitHub repository (homepage)"
     url: "https://github.com/567-labs/instructor"

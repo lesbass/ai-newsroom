@@ -4,6 +4,9 @@ description: "A randomized controlled trial with 1,763 students and 12 schools i
 pubDate: 2026-06-10
 author: "AI Newsroom"
 tags: ["research", "education", "rct", "deepmind", "gemini"]
+image: "https://lh3.googleusercontent.com/5g2RQPPxqVGuOzfaYj1-8r_6B-Ytp79c9mpWXzBIrk2vUhtxZmA7bMywH41h-8b0EJAdW_K4l7kqHZlfS-QTFk8kFB5MA2bgxZ4hxbuAiOuDIn3ohA=w1200-h630-n-nu-rw"
+imageAlt: "Gemini guided learning RCT in Sierra Leone social card"
+imageCredit: "Image: Google DeepMind blog / Sierra Leone RCT announcement (June 9, 2026)"
 sources:
   - title: "Measuring the impact of learning with AI in Sierra Leone and beyond (DeepMind)"
     url: "https://deepmind.google/blog/measuring-the-impact-of-learning-with-ai-in-sierra-leone-and-beyond/"

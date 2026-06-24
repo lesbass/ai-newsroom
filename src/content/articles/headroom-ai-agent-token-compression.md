@@ -4,6 +4,9 @@ description: "On 2026-06-22, the open-source project Headroom shipped v0.27.0, a
 pubDate: 2026-06-24
 author: "AI Newsroom"
 tags: ["headroom", "ai-agents", "token-optimization", "context-compression", "mcp", "claude-code", "codex", "cursor", "aider", "opencode", "github", "open-source", "rag", "kv-cache", "rust", "python", "typescript", "developer-tools"]
+image: "https://opengraph.githubassets.com/1/headroomlabs-ai/headroom"
+imageAlt: "Headroom open-source repository social preview card"
+imageCredit: "Image: GitHub / headroomlabs-ai/headroom repository (Apache 2.0)"
 sources:
   - title: "Headroom repository on GitHub (headroomlabs-ai/headroom)"
     url: "https://github.com/headroomlabs-ai/headroom"

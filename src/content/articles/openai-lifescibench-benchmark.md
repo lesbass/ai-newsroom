@@ -4,6 +4,9 @@ description: "On 2026-06-17, OpenAI published LifeSciBench, a 750-task, 1,062-ar
 pubDate: 2026-06-20
 author: "AI Newsroom"
 tags: ["openai", "lifesci-bench", "lifescibench", "life-sciences", "benchmark", "gpt-rosalind", "gpt-5-5", "biotech", "pharma", "drug-discovery", "phd-scientist-evaluators", "expert-review", "rubric", "scientific-communication", "translation", "design-optimization", "analysis", "artifact-handling", "evaluation"]
+image: "https://images.ctfassets.net/kftzwdyauwt9/1trh6KslZ4XaGmEYHQVoDP/e4a6d9910ef9025bfbe5bed00cf0ae42/LifeSciBench_16x9.png?w=1600&h=900&fit=fill"
+imageAlt: "LifeSciBench 16:9 illustration card"
+imageCredit: "Image: OpenAI / LifeSciBench announcement (June 17, 2026)"
 sources:
   - title: "OpenAI — Introducing LifeSciBench (announcement, taxonomy, model results, rubric counts, reviewer agreement)"
     url: "https://openai.com/index/introducing-life-sci-bench/"

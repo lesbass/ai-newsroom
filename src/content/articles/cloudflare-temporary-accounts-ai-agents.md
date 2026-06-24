@@ -4,6 +4,9 @@ description: "On 2026-06-19 Cloudflare shipped `wrangler deploy --temporary`, a 
 pubDate: 2026-06-22
 author: "AI Newsroom"
 tags: ["cloudflare", "cloudflare-workers", "wrangler", "ai-agents", "agentic-ai", "developer-tools", "cli", "deployment", "temporary-accounts", "workers-dev", "auth", "agent-auth", "frictionless-deploy", "simon-willison", "gpt-5-5"]
+image: "https://cf-assets.www.cloudflare.com/zkvhlag99gkb/60PB1NmcYFywT5TDlwDR0v/a9e72c980e108702e00b57343ea1ccb2/OG_Share_2024-2025-2026__39_.png"
+imageAlt: "Cloudflare Temporary Accounts for AI agents social card"
+imageCredit: "Image: Cloudflare blog / Temporary Accounts announcement (June 19, 2026)"
 sources:
   - title: "Cloudflare blog — 'Temporary Cloudflare Accounts for AI agents' (Sid Chatterjee, Celso Martinho, Brendan Irvine-Broque)"
     url: "https://blog.cloudflare.com/temporary-accounts/"

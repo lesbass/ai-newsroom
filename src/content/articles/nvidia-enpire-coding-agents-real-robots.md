@@ -4,6 +4,9 @@ description: "On 2026-06-16, NVIDIA GEAR, CMU LeCAR Lab, and UC Berkeley publish
 pubDate: 2026-06-19
 author: "AI Newsroom"
 tags: ["nvidia", "cmu", "uc-berkeley", "enpire", "robotics", "manipulation", "coding-agents", "codex", "claude-code", "kimi-code", "physical-autoresearch", "autoenvbench", "mean-robot-utilization", "mean-token-utilization", "push-t", "robocasa", "gpt-5-5", "opus-4-7", "kimi-k2-6", "closed-loop", "robot-learning", "research-paper"]
+image: "https://opengraph.githubassets.com/1/NVIDIAGameWorks/kaolin-wisp"
+imageAlt: "NVIDIA research social preview card"
+imageCredit: "Image: GitHub / NVlabs organization page"
 sources:
   - title: "NVIDIA GEAR — ENPIRE project page (title, authors, institutions, 99% pass@8, four modules, task list, MRU/MTU, Limitations)"
     url: "https://research.nvidia.com/labs/gear/enpire/"

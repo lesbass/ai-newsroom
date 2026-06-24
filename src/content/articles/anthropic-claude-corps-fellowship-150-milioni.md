@@ -4,6 +4,9 @@ description: "Anthropic commits $150M in initial funding to a national fellowshi
 pubDate: 2026-06-13
 author: "AI Newsroom"
 tags: ["anthropic", "claude", "nonprofit", "work", "fellowship", "program"]
+image: "https://cdn.sanity.io/images/4zrzovbb/website/eb5d94573805e24cb381cd0676527cfada75c177-3840x2160.jpg"
+imageAlt: "Claude Corps fellow assisting at a nonprofit organization"
+imageCredit: "Image: Anthropic newsroom / Claude Corps announcement (June 11, 2026)"
 sources:
   - title: "Introducing Claude Corps (Anthropic newsroom)"
     url: "https://www.anthropic.com/news/claude-corps"

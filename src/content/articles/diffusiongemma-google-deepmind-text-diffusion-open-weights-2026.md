@@ -4,6 +4,9 @@ description: "On June 10, 2026, Google DeepMind releases DiffusionGemma, a 26B/3
 pubDate: 2026-06-15
 author: "AI Newsroom"
 tags: ["google-deepmind", "gemma", "diffusiongemma", "text-diffusion", "open-weights", "apache-2.0", "moe", "h100", "blackwell", "vllm", "hugging-face", "unsloth", "tensorrt-llm", "experimental"]
+image: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Diffusion_Gemma_Social.width-1300.png"
+imageAlt: "DiffusionGemma social card illustration"
+imageCredit: "Image: Google blog / DiffusionGemma announcement (June 10, 2026)"
 sources:
   - title: "Google blog — 'DiffusionGemma: 4x faster text generation' (Brendan O'Donoghue, Sebastian Flennerhag, June 10, 2026)"
     url: "https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/"

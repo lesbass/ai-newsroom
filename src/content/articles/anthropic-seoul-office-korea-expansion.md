@@ -4,6 +4,9 @@ description: "On 2026-06-17 (updated 2026-06-18), Anthropic opened a Seoul offic
 pubDate: 2026-06-20
 author: "AI Newsroom"
 tags: ["anthropic", "seoul", "korea", "asia-pacific", "enterprise", "claude", "claude-code", "claude-cowork", "aws-bedrock", "naver", "nexon", "lg-cns", "hanwha", "samsung-sds", "kaist", "yonsei", "korea-university", "postech", "nairl", "ministry-of-science-ict", "korea-ai-safety-institute", "kiyoung-choi", "data-residency", "memo-of-understanding", "ai-safety", "channel-corp"]
+image: "https://www.anthropic.com/api/opengraph-illustration?name=Object%20Globe&backgroundColor=heather"
+imageAlt: "Anthropic global expansion illustration with globe"
+imageCredit: "Image: Anthropic newsroom / Seoul office announcement (June 18, 2026)"
 sources:
   - title: "Anthropic — Seoul office and Korean AI ecosystem partnerships (office opening, MOU with Ministry of Science and ICT, enterprise deployments, NAIRL program, developer activations)"
     url: "https://www.anthropic.com/news/seoul-office-partnerships-korean-ai-ecosystem"
