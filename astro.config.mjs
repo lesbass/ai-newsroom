@@ -1,7 +1,5 @@
 import { defineConfig } from 'astro/config';
 
-import cloudflare from '@astrojs/cloudflare';
-
 export default defineConfig({
   site: 'https://news.lesbass.com/',
   output: 'static',
@@ -11,6 +9,4 @@ export default defineConfig({
       theme: 'github-dark',
     },
   },
-
-  adapter: cloudflare(),
 });

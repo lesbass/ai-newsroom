@@ -1,8 +1,7 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
-import { join, resolve, extname, dirname } from 'node:path';
+import { join, resolve, dirname } from 'node:path';
 
 const dist = resolve('dist');
-const srcDir = resolve('src');
 
 function* walk(dir) {
   for (const entry of readdirSync(dir)) {
@@ -57,7 +56,7 @@ for (const path of walk(dist)) {
           console.warn(`⚠  ${rel}: JSON-LD image is favicon fallback (article should have a real image)`);
           warnings++;
         }
-      } catch {}
+      } catch { /* JSON parse error — skip invalid LD+JSON */ }
     }
   }
 
@@ -149,9 +148,6 @@ for (const path of walk(dist)) {
     }
   }
 }
-
-const staticDir = join(dist, 'images');
-const contentImgDir = join(srcDir, 'content', 'images');
 
 const faviconPath = join(dist, 'favicon.svg');
 if (existsSync(faviconPath)) {

@@ -1,2 +1,2 @@
-# Force www to apex (uncomment if needed for the canonical domain)
+# Force www to apex (optional, uncomment if needed)
 # https://www.news.lesbass.com/* https://news.lesbass.com/:splat 301
