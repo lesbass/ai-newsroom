@@ -2,11 +2,16 @@ import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
 
 const dist = resolve('dist');
+const baseUrl = process.env.CHECK_URL || '';
+const clientDir = join(dist, 'client');
+const assetBase = existsSync(clientDir) ? clientDir : dist;
 
 function* walk(dir) {
+  if (!existsSync(dir)) return;
   for (const entry of readdirSync(dir)) {
     const path = join(dir, entry);
-    const s = statSync(path);
+    let s;
+    try { s = statSync(path); } catch { continue; }
     if (s.isDirectory()) yield* walk(path);
     else if (path.endsWith('.html')) yield path;
   }
@@ -15,10 +20,42 @@ function* walk(dir) {
 let errors = 0;
 let warnings = 0;
 
-for (const path of walk(dist)) {
+const pagePaths = [...walk(dist)];
+const fetchedPages = [];
+
+if (pagePaths.length === 0 && baseUrl) {
+  console.log(`ℹ No HTML pages in dist/ — fetching from ${baseUrl}`);
+  const pages = ['/', '/articles/', '/tags/', '/corrections/',
+    '/articles/openai-broadcom-jalapeno-inference-chip/',
+    '/articles/codebase-memory-mcp-zero-dependency-code-intelligence/',
+  ];
+  for (const p of pages) {
+    try {
+      const resp = await fetch(`${baseUrl.replace(/\/$/, '')}${p}`);
+      if (resp.ok) {
+        const html = await resp.text();
+        fetchedPages.push({ path: `${dist}${p}index.html`, html, rel: p });
+      }
+    } catch { /* skip unreachable pages */ }
+  }
+} else if (pagePaths.length === 0) {
+  console.warn('⚠ No HTML pages found in dist/ and no CHECK_URL set. Run with CHECK_URL=https://news.lesbass.com for live checks.');
+}
+
+// Process fetched (live) pages first
+for (const { html, rel } of fetchedPages) {
+  checkPageHtml(html, rel, true);
+}
+
+// Process local dist/ pages
+for (const path of pagePaths) {
   const rel = path.slice(dist.length);
   const html = readFileSync(path, 'utf-8');
-  const isArticle = rel.startsWith('/articles/') && !rel.endsWith('/articles/index.html');
+  checkPageHtml(html, rel, false);
+}
+
+function checkPageHtml(html, rel, isRemote) {
+  const isArticle = rel.startsWith('/articles/') && !rel.endsWith('/articles/index.html') && !rel.endsWith('/articles/');
 
   const imgTags = html.match(/<img[^>]*>/g) || [];
   const internalImgs = imgTags.filter(tag => {
@@ -56,7 +93,9 @@ for (const path of walk(dist)) {
           console.warn(`⚠  ${rel}: JSON-LD image is favicon fallback (article should have a real image)`);
           warnings++;
         }
-      } catch { /* JSON parse error — skip invalid LD+JSON */ }
+      } catch {
+        /* JSON-LD parse failure is non-fatal */
+      }
     }
   }
 
@@ -79,23 +118,25 @@ for (const path of walk(dist)) {
     }
   }
 
-  for (const tag of internalImgs) {
-    const srcMatch = tag.match(/src="([^"]*)"/);
-    const src = srcMatch[1];
+  if (!isRemote) {
+    for (const tag of internalImgs) {
+      const srcMatch = tag.match(/src="([^"]*)"/);
+      const src = srcMatch[1];
 
-    let filePath;
-    if (src.startsWith('/')) {
-      filePath = join(dist, src);
-    } else {
-      const pageDir = dirname(rel);
-      filePath = resolve(dist, pageDir, src);
-    }
+      let filePath;
+      if (src.startsWith('/')) {
+        filePath = join(assetBase, src);
+      } else {
+        const pageDir = dirname(rel);
+        filePath = resolve(assetBase, pageDir, src);
+      }
 
-    if (!existsSync(filePath)) {
-      const altPath = filePath.replace(/\/$/, '') + '.html';
-      if (!existsSync(altPath)) {
-        console.error(`❌ ${rel}: broken image src="${src}" (file not found)`);
-        errors++;
+      if (!existsSync(filePath)) {
+        const altPath = filePath.replace(/\/$/, '') + '.html';
+        if (!existsSync(altPath)) {
+          console.error(`❌ ${rel}: broken image src="${src}" (file not found)`);
+          errors++;
+        }
       }
     }
   }
@@ -113,16 +154,16 @@ for (const path of walk(dist)) {
     }
   }
 
-  if (internalImgs.length > 0) {
+  if (!isRemote && internalImgs.length > 0) {
     for (const tag of internalImgs) {
       const srcMatch = tag.match(/src="([^"]*)"/);
       const src = srcMatch[1];
       let filePath;
       if (src.startsWith('/')) {
-        filePath = join(dist, src);
+        filePath = join(assetBase, src);
       } else {
         const pageDir = dirname(rel);
-        filePath = resolve(dist, pageDir, src);
+        filePath = resolve(assetBase, pageDir, src);
       }
       if (existsSync(filePath)) {
         const stats = statSync(filePath);
@@ -149,7 +190,7 @@ for (const path of walk(dist)) {
   }
 }
 
-const faviconPath = join(dist, 'favicon.svg');
+const faviconPath = join(assetBase, 'favicon.svg');
 if (existsSync(faviconPath)) {
   try {
     const favicon = readFileSync(faviconPath, 'utf-8');

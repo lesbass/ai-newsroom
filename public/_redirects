@@ -1,2 +1,3 @@
-# Force www to apex (optional, uncomment if needed)
-# https://www.news.lesbass.com/* https://news.lesbass.com/:splat 301
+# Force www to apex — configure via Cloudflare Dashboard > Rules > Redirect Rules:
+# Source: www.news.lesbass.com/*  →  Destination: https://news.lesbass.com/:splat  (301)
+# The _redirects file only supports path patterns, not domain redirects.

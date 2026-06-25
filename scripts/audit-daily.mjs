@@ -10,6 +10,15 @@ const now = new Date();
 const ts = now.toISOString().replace(/T/, ' ').replace(/\..+/, ' UTC');
 const dateFile = now.toISOString().split('T')[0];
 
+const checkUrl = process.env.CHECK_URL || '';
+const urlEnv = checkUrl ? { CHECK_URL: checkUrl, ...process.env } : process.env;
+
+if (checkUrl) {
+  console.log(`ℹ Live-check mode: ${checkUrl}`);
+} else {
+  console.log('ℹ Running against dist/ (set CHECK_URL for live-site checks)');
+}
+
 const results = [];
 const checks = [
   ['Build', 'npm run build'],
@@ -24,7 +33,7 @@ const checks = [
 
 for (const [name, cmd] of checks) {
   try {
-    const out = execSync(`${cmd} 2>&1`, { cwd: root, encoding: 'utf-8', timeout: 120000 });
+    const out = execSync(`${cmd} 2>&1`, { cwd: root, encoding: 'utf-8', timeout: 120000, env: urlEnv });
     const text = out.trim();
     const pass = !text.includes('❌');
     results.push({ name, pass, output: text });

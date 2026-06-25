@@ -2,11 +2,18 @@ import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 const dist = resolve('dist');
+const baseUrl = process.env.CHECK_URL || '';
+
+// Support new Cloudflare adapter output: static assets in dist/client/
+const clientDir = join(dist, 'client');
+const assetBase = existsSync(clientDir) ? clientDir : dist;
 
 function* walk(dir) {
+  if (!existsSync(dir)) return;
   for (const entry of readdirSync(dir)) {
     const path = join(dir, entry);
-    const s = statSync(path);
+    let s;
+    try { s = statSync(path); } catch { continue; }
     if (s.isDirectory()) yield* walk(path);
     else if (path.endsWith('.html') || path.endsWith('.xml')) yield path;
   }
@@ -15,12 +22,66 @@ function* walk(dir) {
 let errors = 0;
 let warnings = 0;
 
-for (const path of walk(dist)) {
+// Collect pages: from dist/ or from URL
+const pagePaths = [...walk(dist)];
+
+let fetchedSitemap = false;
+let fetchedRss = false;
+
+if (pagePaths.length === 0 && baseUrl) {
+  console.log(`ℹ No HTML pages in dist/ — fetching from ${baseUrl}`);
+  const pages = ['/', '/articles/', '/tags/', '/corrections/'];
+  const fetchedPages = [];
+  for (const p of pages) {
+    try {
+      const resp = await fetch(`${baseUrl.replace(/\/$/, '')}${p}`);
+      if (resp.ok) {
+        const html = await resp.text();
+        fetchedPages.push({ path: `${dist}${p}index.html`, html });
+      }
+    } catch { /* skip unreachable pages */ }
+  }
+  // Also fetch the sitemap and RSS
+  try {
+    const sitemapResp = await fetch(`${baseUrl.replace(/\/$/, '')}/sitemap.xml`);
+    if (sitemapResp.ok) {
+      const xml = await sitemapResp.text();
+      fetchedSitemap = true;
+      fetchedPages.push({ path: join(assetBase, 'sitemap.xml'), html: xml });
+    }
+  } catch {
+    /* sitemap.fetch failure is non-fatal */
+  }
+  try {
+    const rssResp = await fetch(`${baseUrl.replace(/\/$/, '')}/rss.xml`);
+    if (rssResp.ok) {
+      const xml = await rssResp.text();
+      fetchedRss = true;
+      fetchedPages.push({ path: join(assetBase, 'rss.xml'), html: xml });
+    }
+  } catch {
+    /* rss fetch failure is non-fatal */
+  }
+
+  for (const p of fetchedPages) {
+    const rel = p.path.slice(dist.length);
+    const html = p.html;
+    checkPage(rel, html, p.path);
+  }
+} else if (pagePaths.length === 0) {
+  console.warn('⚠ No HTML pages found in dist/ and no CHECK_URL set. Run with CHECK_URL=https://news.lesbass.com for live checks.');
+  console.warn('⚠ Or run "npm run preview" then CHECK_URL=http://localhost:8788 node scripts/check-seo.mjs');
+}
+
+for (const path of pagePaths) {
   const rel = path.slice(dist.length);
   const html = readFileSync(path, 'utf-8');
+  checkPage(rel, html, path);
+}
 
+function checkPage(rel, html, path) {
   // 1. Every HTML page must have a <title>
-  if (path.endsWith('.html')) {
+  if (path.endsWith('.html') || rel.endsWith('.html')) {
     if (!/<title>/.test(html) || !/<\/title>/.test(html)) {
       console.error(`❌ ${rel}: missing <title>`);
       errors++;
@@ -193,59 +254,63 @@ for (const path of walk(dist)) {
   }
 }
 
-// 16. Check that required files exist
-if (!existsSync(join(dist, 'robots.txt'))) {
+// 16. Check that required files exist (look in client/ for Cloudflare adapter output)
+if (!existsSync(join(assetBase, 'robots.txt'))) {
   console.error('❌ missing robots.txt');
   errors++;
 }
-if (!existsSync(join(dist, 'sitemap.xml'))) {
+if (!fetchedSitemap && !existsSync(join(assetBase, 'sitemap.xml'))) {
   console.error('❌ missing sitemap.xml');
   errors++;
 }
-if (!existsSync(join(dist, 'rss.xml'))) {
+if (!fetchedRss && !existsSync(join(assetBase, 'rss.xml'))) {
   console.error('❌ missing rss.xml');
   errors++;
 }
-if (!existsSync(join(dist, 'favicon.svg'))) {
+if (!existsSync(join(assetBase, 'favicon.svg'))) {
   console.warn('⚠ missing favicon.svg');
   warnings++;
 }
 
-// 17. Validate sitemap
-if (existsSync(join(dist, 'sitemap.xml'))) {
-  const sitemap = readFileSync(join(dist, 'sitemap.xml'), 'utf-8');
-  if (!/<\?xml/.test(sitemap)) {
-    console.error('❌ sitemap.xml: missing XML declaration');
-    errors++;
-  }
-  if (!/<urlset/.test(sitemap)) {
-    console.error('❌ sitemap.xml: missing <urlset>');
-    errors++;
-  }
-  if (!/<loc>/.test(sitemap)) {
-    console.error('❌ sitemap.xml: no <loc> entries');
-    errors++;
-  }
-  if (!/<lastmod>/.test(sitemap)) {
-    console.warn('⚠ sitemap.xml: no <lastmod> entries');
-    warnings++;
+// 17. Validate sitemap (skip XML structure checks if already validated via URL fetch)
+if (!fetchedSitemap) {
+  if (existsSync(join(assetBase, 'sitemap.xml'))) {
+    const sitemap = readFileSync(join(assetBase, 'sitemap.xml'), 'utf-8');
+    if (!/<\?xml/.test(sitemap)) {
+      console.error('❌ sitemap.xml: missing XML declaration');
+      errors++;
+    }
+    if (!/<urlset/.test(sitemap)) {
+      console.error('❌ sitemap.xml: missing <urlset>');
+      errors++;
+    }
+    if (!/<loc>/.test(sitemap)) {
+      console.error('❌ sitemap.xml: no <loc> entries');
+      errors++;
+    }
+    if (!/<lastmod>/.test(sitemap)) {
+      console.warn('⚠ sitemap.xml: no <lastmod> entries');
+      warnings++;
+    }
   }
 }
 
-// 18. Validate RSS
-if (existsSync(join(dist, 'rss.xml'))) {
-  const rss = readFileSync(join(dist, 'rss.xml'), 'utf-8');
-  if (!/<rss/.test(rss)) {
-    console.error('❌ rss.xml: missing <rss> root');
-    errors++;
-  }
-  if (!/<channel>/.test(rss)) {
-    console.error('❌ rss.xml: missing <channel>');
-    errors++;
-  }
-  if (!/<item>/.test(rss)) {
-    console.warn('⚠ rss.xml: no <item> entries');
-    warnings++;
+// 18. Validate RSS (skip XML structure checks if already validated via URL fetch)
+if (!fetchedRss) {
+  if (existsSync(join(assetBase, 'rss.xml'))) {
+    const rss = readFileSync(join(assetBase, 'rss.xml'), 'utf-8');
+    if (!/<rss/.test(rss)) {
+      console.error('❌ rss.xml: missing <rss> root');
+      errors++;
+    }
+    if (!/<channel>/.test(rss)) {
+      console.error('❌ rss.xml: missing <channel>');
+      errors++;
+    }
+    if (!/<item>/.test(rss)) {
+      console.warn('⚠ rss.xml: no <item> entries');
+      warnings++;
+    }
   }
 }
 

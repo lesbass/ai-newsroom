@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0f172a"/>
+  <rect x="60" y="60" width="1080" height="510" rx="16" fill="none" stroke="#334155" stroke-width="2"/>
+  <text x="120" y="280" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700" fill="#f1f5f9" letter-spacing="-0.02em">AI Newsroom</text>
+  <text x="120" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="#94a3b8">Evidence-based AI journalism.</text>
+  <text x="120" y="410" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="#94a3b8">Published with source links, not hype.</text>
+  <rect x="120" y="460" width="48" height="48" rx="8" fill="#2563eb"/>
+  <text x="144" y="494" font-family="ui-monospace, monospace" font-size="22" font-weight="700" fill="#fff" text-anchor="middle">AI</text>
+</svg>
