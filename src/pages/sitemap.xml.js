@@ -1,5 +1,9 @@
 import { getCollection } from 'astro:content';
 
+function xmlEscape(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+}
+
 function slugifyTag(tag) {
   return tag
     .toLowerCase()
@@ -33,19 +37,19 @@ export async function GET(context) {
 
   const urls = [
     ...staticPages.map(p => {
-      const url = new URL(p.path, site).toString();
+      const url = xmlEscape(new URL(p.path, site).toString());
       return `<url><loc>${url}</loc><lastmod>${now}</lastmod><changefreq>daily</changefreq><priority>${p.priority}</priority></url>`;
     }),
     ...[...tagSet].map(tag => {
-      const url = new URL(`/tags/${tag}/`, site).toString();
+      const url = xmlEscape(new URL(`/tags/${tag}/`, site).toString());
       return `<url><loc>${url}</loc><lastmod>${now}</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>`;
     }),
     ...sorted.map(article => {
-      const url = new URL(`/articles/${article.id}/`, site).toString();
+      const url = xmlEscape(new URL(`/articles/${article.id}/`, site).toString());
       const date = article.data.updatedDate || article.data.pubDate;
       const d = date.toISOString().split('T')[0];
       const imageTag = article.data.image
-        ? `<image:image><image:loc>${new URL(article.data.image, site).toString()}</image:loc><image:caption><![CDATA[${article.data.imageAlt || article.data.title}]]></image:caption></image:image>`
+        ? `<image:image><image:loc>${xmlEscape(new URL(article.data.image, site).toString())}</image:loc><image:caption><![CDATA[${article.data.imageAlt || article.data.title}]]></image:caption></image:image>`
         : '';
       return `<url><loc>${url}</loc><lastmod>${d}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority>${imageTag}</url>`;
     }),
