@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-labelledby="title desc">
+  <title id="title">Editorial diagram: US Commerce Department customer-vetting regime for frontier AI, 2026-06-26</title>
+  <desc id="desc">Generated editorial diagram (not source evidence). A horizontal timeline dated 2026-06-26 with two events - OpenAI begins a limited preview of GPT-5.6 Sol with the customer list shared with the US government, and the US Commerce Department lifts its block on Anthropic Claude Mythos 5 - with arrows from both events into a single box labelled "US Commerce Department customer-vetting regime".</desc>
+
+  <defs>
+    <style type="text/css"><![CDATA[
+      .frame { fill: #ffffff; stroke: #d6d3d1; stroke-width: 1; }
+      .title-text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 26px; font-weight: 700; fill: #1c1917; }
+      .subtitle { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 15px; fill: #57534e; }
+      .date-band { fill: #1c1917; }
+      .date-text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 18px; font-weight: 600; fill: #fafaf9; }
+      .event-card { fill: #fafaf9; stroke: #44403c; stroke-width: 1.5; }
+      .event-title { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 17px; font-weight: 700; fill: #1c1917; }
+      .event-body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #292524; }
+      .event-source { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #78716c; font-style: italic; }
+      .regime-box { fill: #0c0a09; stroke: #0c0a09; stroke-width: 1; }
+      .regime-title { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 18px; font-weight: 700; fill: #fafaf9; }
+      .regime-body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12px; fill: #e7e5e4; }
+      .arrow { fill: none; stroke: #1c1917; stroke-width: 2.5; }
+      .arrow-head { fill: #1c1917; stroke: none; }
+      .footnote { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #78716c; }
+      .disclaimer { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 700; fill: #b91c1c; }
+      .line { stroke: #1c1917; stroke-width: 3; fill: none; }
+    ]]></style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" class="arrow-head"/>
+    </marker>
+  </defs>
+
+  <rect class="frame" x="0" y="0" width="1200" height="700"/>
+
+  <text class="title-text" x="40" y="55">Frontier AI, same day, same gatekeeper</text>
+  <text class="subtitle" x="40" y="80">A generated editorial diagram of the structural shift announced on 2026-06-26. Not source evidence.</text>
+
+  <rect class="date-band" x="40" y="120" width="1120" height="42" rx="4"/>
+  <text class="date-text" x="60" y="148">Friday, 2026-06-26 — two same-day events at the US frontier-AI frontier</text>
+
+  <line class="line" x1="80" y1="220" x2="1120" y2="220"/>
+  <circle cx="80" cy="220" r="7" fill="#1c1917"/>
+  <circle cx="1120" cy="220" r="7" fill="#1c1917"/>
+
+  <g transform="translate(80, 250)">
+    <rect class="event-card" x="0" y="0" width="500" height="180" rx="6"/>
+    <text class="event-title" x="20" y="32">OpenAI: GPT-5.6 Sol preview begins</text>
+    <text class="event-body" x="20" y="62">Sol (flagship), Terra (balanced), Luna (fast)</text>
+    <text class="event-body" x="20" y="84">Limited preview for a "small group of trusted</text>
+    <text class="event-body" x="20" y="104">partners whose participation has been shared</text>
+    <text class="event-body" x="20" y="124">with the government."</text>
+    <text class="event-body" x="20" y="150" style="font-style: italic;">"We don't believe this kind of government access</text>
+    <text class="event-body" x="20" y="168" style="font-style: italic;">process should become the long-term default."</text>
+    <text class="event-source" x="20" y="195">Source: openai.com/index/previewing-gpt-5-6-sol/ (2026-06-26)</text>
+  </g>
+
+  <g transform="translate(620, 250)">
+    <rect class="event-card" x="0" y="0" width="500" height="180" rx="6"/>
+    <text class="event-title" x="20" y="32">Commerce Dept: Mythos 5 unblock</text>
+    <text class="event-body" x="20" y="62">Letter from Commerce Sec. Howard Lutnick to</text>
+    <text class="event-body" x="20" y="84">Anthropic. Released to "more than 100 US</text>
+    <text class="event-body" x="20" y="104">institutions" via Annex A. Fable 5 not addressed.</text>
+    <text class="event-body" x="20" y="130" style="font-style: italic;">"The framework for overseeing AI is being</text>
+    <text class="event-body" x="20" y="148" style="font-style: italic;">built on the fly."</text>
+    <text class="event-source" x="20" y="195">Source: semafor.com (Albergotti, Smith, 2026-06-26, 6:30pm EDT)</text>
+  </g>
+
+  <path class="arrow" d="M 330 430 L 330 470 L 600 470 L 600 510" marker-end="url(#arrow)"/>
+  <path class="arrow" d="M 870 430 L 870 470 L 600 470 L 600 510" marker-end="url(#arrow)"/>
+
+  <g transform="translate(280, 510)">
+    <rect class="regime-box" x="0" y="0" width="640" height="120" rx="6"/>
+    <text class="regime-title" x="20" y="32">US Commerce Department customer-vetting regime</text>
+    <text class="regime-body" x="20" y="60">Pre-approval of each new customer of US frontier labs' most capable models</text>
+    <text class="regime-body" x="20" y="80">No published rule, no Federal Register entry, no executive order cited</text>
+    <text class="regime-body" x="20" y="100">Short-term step, per OpenAI, pending a "cyber Executive Order" framework</text>
+  </g>
+
+  <text class="disclaimer" x="40" y="660">GENERATED EDITORIAL IMAGE — NOT SOURCE EVIDENCE</text>
+  <text class="footnote" x="40" y="680">Hand-authored SVG by AI Newsroom writer, 2026-06-27. Composed from text of openai.com/index/previewing-gpt-5-6-sol/ (2026-06-26) and semafor.com (2026-06-26, 6:30pm EDT).</text>
+</svg>
