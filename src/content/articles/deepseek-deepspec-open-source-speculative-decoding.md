@@ -41,18 +41,7 @@ sources:
     url: "https://arxiv.org/abs/2503.01840"
     date: 2026-06-28
     type: primary
-  - title: "AIN-230 — NewsScout radar sweep 2026-06-28 (the candidate brief that flagged DeepSpec to EditorInChief)"
-    url: "/AIN/issues/AIN-230"
-    date: 2026-06-28
-    type: primary
-  - title: "AIN-231 — Article candidate brief: DeepSeek DeepSpec (EditorInChief-accepted 2026-06-28; the disposition this brief is replacing)"
-    url: "/AIN/issues/AIN-231"
-    date: 2026-06-28
-    type: primary
-  - title: "AIN-164 — Correct AI Newsroom production URL (done 2026-06-25; site restored to https://news.lesbass.com/)"
-    url: "/AIN/issues/AIN-164"
-    date: 2026-06-25
-    type: secondary
+
 highRiskClaims: true
 ---
 
@@ -136,6 +125,4 @@ On **2026-06-26**, DeepSeek published [`deepseek-ai/DeepSpec`](https://github.co
 | 2 | GitHub REST API — `repos/deepseek-ai/DeepSpec` | Primary | snapshot 2026-06-28 | https://api.github.com/repos/deepseek-ai/DeepSpec | Live-verified 2026-06-28 (returns `stargazers_count: 1546, forks_count: 128, open_issues_count: 2, default_branch: "main", license: { key: "mit", name: "MIT License", spdx_id: "MIT" }, has_releases: false, size: 3465 KB, created_at: 2026-06-26 12:36:05Z, pushed_at: 2026-06-27 04:57:08Z`; 10 commits on `main`; topics empty; no homepage) |
 | 3 | arXiv — "DFlash: Block Diffusion for Flash Speculative Decoding" (Jian Chen, Yesheng Liang, Zhijian Liu) | Primary | v1 2026-02-05, v2 2026-05-28; "Accepted at ICML 2026. Camera-ready version" | https://arxiv.org/abs/2602.06036 | Live-verified 2026-06-28 via webfetch (full abstract extracted, including the 6× and 2.5× claims, the block-diffusion framing, the ICML 2026 acceptance comment, and the author list) |
 | 4 | arXiv — "EAGLE-3: Scaling up Inference Acceleration of Large Language Models via Training-Time Test" (Yuhui Li, Fangyun Wei, Chao Zhang, Hongyang Zhang) | Primary | v1 2025-03-03, v3 2025-04-23 | https://arxiv.org/abs/2503.01840 | Live-verified 2026-06-28 via webfetch (EAGLE-3's own abstract: "speedup ratio up to 6.5x, with about 1.4x improvement over EAGLE-2"; for context only, not a data source for the headline DFlash claim) |
-| 5 | AIN-230 — NewsScout radar sweep 2026-06-28 | Primary | 2026-06-28 | /AIN/issues/AIN-230 | Local; the radar sweep that flagged the candidate to the EditorInChief |
-| 6 | AIN-231 — Article candidate brief (this issue, accepted by EditorInChief on 2026-06-28) | Primary | 2026-06-28 | /AIN/issues/AIN-231 | Local; the editorial disposition that this brief is replacing |
-| 7 | AIN-164 — Correct AI Newsroom production URL | Secondary | 2026-06-25 (`done`) | /AIN/issues/AIN-164 | Local; the site is restored to `https://news.lesbass.com/`, so the article can be committed to `src/content/articles/...` after QualityGate approval |
+
