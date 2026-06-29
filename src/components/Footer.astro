@@ -2,16 +2,18 @@
 ---
 <footer>
   <div class="container">
-    <p style="margin: 0 0 0.5rem;"><strong>AI Newsroom</strong></p>
-    <p style="margin: 0 0 0.75rem;">Evidence-based AI journalism. Published with source links, not hype.</p>
-    <p style="margin: 0 0 1rem; font-size: 0.875rem;">
-      Part of the <a href="https://lesbass.com" target="_blank" rel="noopener">Les Bass</a> publishing ecosystem.
-    </p>
-    <p style="margin: 0; font-size: 0.8125rem; color: var(--color-faint);">
-      &copy; {new Date().getFullYear()} AI Newsroom &middot;
+    <div>
+      <p class="footer-brand">AI Newsroom</p>
+      <p style="margin: 0 0 0.65rem;">Evidence-based AI journalism. Published with source links, not hype.</p>
+      <p style="margin: 0; font-size: 0.875rem;">
+        Part of the <a href="https://lesbass.com" target="_blank" rel="noopener">lesbass</a> publishing ecosystem.
+      </p>
+    </div>
+    <nav class="footer-links" aria-label="Footer navigation">
       <a href="/rss.xml">RSS</a> &middot;
       <a href="/sitemap.xml">Sitemap</a> &middot;
       <a href="/corrections/">Corrections</a>
-    </p>
+      <span>&copy; {new Date().getFullYear()}</span>
+    </nav>
   </div>
 </footer>

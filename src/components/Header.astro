@@ -7,7 +7,13 @@ function isCurrent(href: string): boolean {
 ---
 <header>
   <div class="container">
-    <a href="/" class="site-logo">AI Newsroom</a>
+    <a href="/" class="site-logo" aria-label="AI Newsroom home">
+      <span class="site-mark" aria-hidden="true">AIN</span>
+      <span class="site-logo-text">
+        <span class="site-logo-name">AI Newsroom</span>
+        <span class="site-logo-kicker">lesbass signal desk</span>
+      </span>
+    </a>
     <nav class="nav-links">
       <a href="/" class={isCurrent('/') && !isCurrent('/articles') && !isCurrent('/tags') && !isCurrent('/corrections') ? 'current' : ''}>Home</a>
       <a href="/articles/" class={isCurrent('/articles') ? 'current' : ''}>Articles</a>
