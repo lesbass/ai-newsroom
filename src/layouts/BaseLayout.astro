@@ -29,14 +29,16 @@ function truncateDescription(text: string, maxLen = 155): string {
 
 const seoDescription = truncateDescription(description);
 
+const jsonLdImage = new URL(image || '/og-image.svg', site).toString();
 const jsonLd = article
   ? {
       '@context': 'https://schema.org',
       '@type': 'NewsArticle',
+      '@id': `${pageURL}#article`,
       headline: title,
       description: description,
       url: pageURL,
-      image: new URL(image || '/og-image.svg', site).toString(),
+      image: jsonLdImage,
       datePublished: pubDate ? pubDate.toISOString() : undefined,
       dateModified: updatedDate ? updatedDate.toISOString() : pubDate ? pubDate.toISOString() : undefined,
       author: {
@@ -46,19 +48,34 @@ const jsonLd = article
       },
       publisher: {
         '@type': 'Organization',
+        '@id': `${site}#organization`,
         name: 'AI Newsroom',
+        url: site,
         logo: {
           '@type': 'ImageObject',
           url: new URL('/favicon.svg', site).toString(),
         },
       },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': pageURL,
+      },
     }
   : {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
+      '@id': `${site}#website`,
       name: 'AI Newsroom',
       url: site,
       description: description,
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${site}search?q={search_term_string}`,
+        },
+        'query-input': 'required name=search_term_string',
+      },
     };
 ---
 
@@ -83,6 +100,8 @@ const jsonLd = article
   <meta property="og:type" content={article ? 'article' : 'website'} />
   <meta property="og:locale" content="en_US" />
   <meta property="og:image" content={image ? new URL(image, site).toString() : new URL('/og-image.svg', site).toString()} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:site_name" content="AI Newsroom" />
 
   <!-- Twitter -->
@@ -90,6 +109,7 @@ const jsonLd = article
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={seoDescription} />
   <meta name="twitter:image" content={image ? new URL(image, site).toString() : new URL('/og-image.svg', site).toString()} />
+  <meta name="twitter:image:alt" content={title} />
 
   {article && pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
   {article && updatedDate && <meta property="article:modified_time" content={updatedDate.toISOString()} />}
