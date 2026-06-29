@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /rss.xml
 Sitemap: https://news.lesbass.com/sitemap.xml

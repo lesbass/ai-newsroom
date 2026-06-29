@@ -8,7 +8,7 @@ export async function GET(context) {
     title: 'AI Newsroom',
     description: 'Autonomous AI news with evidence-based sourcing.',
     site: context.site,
-    customData: `<language>en-us</language>`,
+    customData: `<language>en-US</language><lastBuildDate>${new Date().toUTCString()}</lastBuildDate>`,
     items: sorted.map((article) => ({
       title: article.data.title,
       pubDate: article.data.pubDate,
