@@ -1,6 +1,6 @@
 ---
 title: "oh-my-pi: a terminal agent that treats the harness as the product"
-description: "GitHub repo can1357/oh-my-pi: a fork of Mario Zechner's pi-mono, re-engineered as a terminal AI coding agent. ~55k lines of Rust, 40+ LLM providers, Hashline edits, an advisor model, 18-hour release cadence."
+description: "can1357/oh-my-pi: a Rust-based terminal AI coding agent (fork of Mario Zechner's pi-mono) with Hashline edits, an advisor model, 40+ providers, 18-hour release cadence."
 pubDate: 2026-06-26
 author: "AI Newsroom"
 tags: ["oh-my-pi", "omp", "ai-coding-agent", "harness", "harness-engineering", "hashline", "subagents", "advisor-model", "stream-rules", "lsp", "dap", "rust", "typescript", "bun", "claude", "openai", "gemini", "grok", "mcp", "terminal", "tui", "pi-mono", "mario-zechner", "can1357", "can-boluk", "multi-provider", "developer-tools", "open-source", "mit-license", "high-risk-claim"]
@@ -59,11 +59,11 @@ On **2026-06-26**, [`can1357/oh-my-pi`](https://github.com/can1357/oh-my-pi) —
 
 ## What it is
 
-**A terminal coding agent, not a wrapper.** `omp` ships as a single Rust binary on macOS, Linux, Windows (no WSL bridge). Install: `curl -fsSL https://omp.sh/install | sh` on Unix, `irm https://omp.sh/install.ps1 | iex` on Windows, `brew install can1357/tap/omp`, or `bun install -g @oh-my-pi/pi-coding-agent`. Four entry points: TUI, one-shot prompt, Node SDK, stdio RPC / ACP for editor embedding.
+**A terminal coding agent, not a wrapper.** `omp` ships as a single Rust binary on macOS, Linux, Windows (no WSL bridge). Install: `curl -fsSL https://omp.sh/install | sh` on Unix, `irm https://omp.sh/install.ps1 | iex` on Windows, `brew install can1357/tap/omp`, or `bun install -g @oh-my-pi/pi-coding-agent`. Four entry points: TUI, one-shot prompt, Node SDK, stdio RPC / ACP.
 
-**The fork relationship.** `oh-my-pi` is a fork of [Mario Zechner's Pi](https://github.com/earendil-works/pi) — previously at `badlogic/pi-mono` (the README still links the old URL; it 301-redirects). LICENSE: *"© 2025 Mario Zechner / © 2025-2026 Can Bölük."* Upstream Pi: 65.7k stars, MIT, 240 releases. The maintainer's framing: *"The model is the moat. The harness is the bridge. Burning bridges just means fewer people bother to cross."* ([blog.can.ac, 2026-02-12](https://blog.can.ac/2026/02/12/the-harness-problem/)).
+**The fork relationship.** `oh-my-pi` is a fork of [Mario Zechner's Pi](https://github.com/earendil-works/pi) — previously at `badlogic/pi-mono`. LICENSE: *"© 2025 Mario Zechner / © 2025-2026 Can Bölük."* Upstream Pi: 65.7k stars, MIT, 240 releases. The maintainer's framing: *"The model is the moat. The harness is the bridge. Burning bridges just means fewer people bother to cross."* ([blog.can.ac, 2026-02-12](https://blog.can.ac/2026/02/12/the-harness-problem/)).
 
-**The four numbers.** **40+ providers** (Anthropic, OpenAI, Gemini, xAI Grok, Mistral, Groq, Cerebras, Fireworks, Together, Hugging Face, NVIDIA NIM, OpenRouter, Ollama, llama.cpp, vLLM, LiteLLM, more). **32 built-in tools** plus **14 LSP + 28 DAP operations**. **~55k lines of Rust** in the N-API addon.
+**The four numbers.** **40+ providers** (Anthropic, OpenAI, Gemini, xAI Grok, Mistral, Groq, Cerebras, Fireworks, Together, Hugging Face, NVIDIA NIM, OpenRouter, Ollama, llama.cpp, vLLM, LiteLLM). **32 built-in tools** plus **14 LSP + 28 DAP operations**. **~55k lines of Rust** in the N-API addon.
 
 ## Why it matters
 
@@ -71,13 +71,13 @@ The harness is the boundary between *"the model knows what to change"* and *"the
 
 **1 · Hashline — edit by content hash.** The harness tags every read line with a 2-3 hex character content hash; every patch is anchored to a `[PATH#TAG]` full-file content hash, and **rejects the patch before it corrupts anything** if the file has changed. The model never retypes the lines it wants to change; the harness resolves the anchor and applies SWAP / INS / DEL operations ([hashline README](https://raw.githubusercontent.com/can1357/oh-my-pi/main/packages/hashline/README.md)).
 
-**2 · First-class subagents with schema-validated yield.** The `task` tool fans out into isolated worktrees; the final yield is a **schema-validated object the parent reads directly** — no prose to parse, no merge conflicts.
+**2 · First-class subagents with schema-validated yield.** The `task` tool fans out into isolated worktrees; the final yield is a **schema-validated object the parent reads directly** — no prose to parse.
 
-**3 · Time-traveling stream rules.** A regex match against the streaming model output aborts mid-token, **injects the rule as a system reminder, and retries from the same point.** README example: the model is about to write `Box::leak`; the request aborts, an amber card injects *"Don't reach for Box::leak in production code paths,"* and the agent course-corrects to `Arc<str>`.
+**3 · Time-traveling stream rules.** A regex match against the streaming model output aborts mid-token, **injects the rule as a system reminder, and retries from the same point.** README example: the model is about to write `Box::leak`; the request aborts, an amber card injects *"Don't reach for `Box::leak` in production code paths,"* and the agent course-corrects to `Arc<str>`.
 
 **4 · The advisor model.** A second model on the `advisor` role reads every turn and injects notes inline. Stream rules catch mechanical departures from policy; the advisor catches semantic drift.
 
-Plus: **native even on Windows** (`ripgrep`, `glob`, `find`, `brush` in-process); **eight-format config import** (Cursor MDC, Cline `.clinerules`, Codex `AGENTS.md`, Copilot `applyTo`); **18-hour release cadence** with fixes at the right depth — a `Ctrl+Z` hang in `brush-core` ([#3461](https://github.com/can1357/oh-my-pi/issues/3461)), a `mise()` shell fix ([#3470](https://github.com/can1357/oh-my-pi/issues/3470)), a Claude 4.5 effort-parameter crash ([#3497](https://github.com/can1357/oh-my-pi/issues/3497)), an ollama-cloud concurrency-cap violation ([#3464](https://github.com/can1357/oh-my-pi/issues/3464)).
+Plus: **native on Windows** (`ripgrep`, `glob`, `find`, `brush` in-process); **eight-format config import** (Cursor MDC, Cline `.clinerules`, Codex `AGENTS.md`, Copilot `applyTo`); **18-hour release cadence** with fixes at the right depth.
 
 ## The benchmark
 
@@ -90,13 +90,13 @@ The README publishes a 540-task, 16-model benchmark (3 runs per task, fresh sess
 | Grok 4 Fast | −61% tokens | Output collapses once the retry loop on bad diffs disappears |
 | MiniMax | 2.1× | Pass rate more than doubles, same weights, same prompt |
 
-**All four are project-published and self-attributed.** Treat the spread as the order-of-magnitude the harness contribution can deliver, not a contract ([README](https://raw.githubusercontent.com/can1357/oh-my-pi/main/README.md); [harness-problem, 2026-02-12](https://blog.can.ac/2026/02/12/the-harness-problem/)).
+**All four are project-published and self-attributed.** Treat the spread as the order-of-magnitude the harness contribution can deliver, not a contract ([README](https://raw.githubusercontent.com/can1357/oh-my-pi/main/README.md)).
 
 ## Practical implications
 
 - **For harness evaluators.** The right question is "which agent's tool boundary is best" — not "which agent is best." All of `omp`'s load-bearing moves are harness-side.
 - **For teams replacing Claude Code / Codex CLI today.** Migration cost is low — `omp` reads Cursor MDC, Cline `.clinerules`, Codex `AGENTS.md`, Copilot `applyTo` in their native shape, and the same binary runs against Anthropic, OpenAI, xAI, Google, Mistral, Groq, Ollama, or `llama.cpp`.
-- **For researchers.** Hashline is in `packages/hashline`; the agent runtime is in `packages/agent` with typed events.
+- **For researchers.** Hashline lives in `packages/hashline`; the agent runtime in `packages/agent` exposes typed events.
 
 ## What to watch
 
@@ -104,7 +104,7 @@ The README publishes a 540-task, 16-model benchmark (3 runs per task, fresh sess
 2. **Upstream Pi merge cadence** — `omp` is a fork, not a vendor branch.
 3. **The advisor model in real sessions** — no published benchmark yet.
 4. **`/collab` and the `my.omp.sh` relay** — third-party service, no SLO.
-5. **VOUCHED.td governance** — a public denouncement list *"so other projects can reuse our prior knowledge of bad actors."*
+5. **VOUCHED.td governance** — a public denouncement list of bad actors.
 
 ## Risks and caveats
 
@@ -112,12 +112,11 @@ The README publishes a 540-task, 16-model benchmark (3 runs per task, fresh sess
 - **The `my.omp.sh` relay is a third-party dependency.** Frames are sealed client-side; that protects content, not availability.
 - **Supply-chain surface is large.** 40+ provider SDKs, 14 web-search backends, MCP, ACP, Discord, four platform-tagged binaries.
 - **369 open issues / 10,671 commits is a velocity signal, not a stability signal.** Six tags in 72 hours.
-- **MIT is permissive; the maintenance commitment is not guaranteed.** Pin a release tag.
-- **Vouch-based contribution model; one maintainer's call.** No `CODE_OF_CONDUCT.md`, no foundation, no advisory board, no published roadmap.
+- **MIT is permissive; the maintenance commitment is not guaranteed.** Pin a release tag. Vouch-based contribution model; one maintainer's call.
 
 ## Verdict
 
-[`can1357/oh-my-pi`](https://github.com/can1357/oh-my-pi) — the fork of Mario Zechner's Pi shipping as `omp` — sat at **14,677 stars, 1,287 forks, 369 open issues, 10,671 commits, MIT**, with a Rust core of ~55k lines, 40+ LLM providers, and a project-published 16-model edit benchmark. The 18-hour release cadence is the second load-bearing signal: a project using its own binary. The takeaway is **harness engineering** — *the model is the moat, the harness is the bridge* — a working MIT-licensed demonstration of a serious agent boundary in 2026. *Pin a release tag, read `packages/hashline`, watch the relay.*
+[`can1357/oh-my-pi`](https://github.com/can1357/oh-my-pi) — the fork of Mario Zechner's Pi shipping as `omp` — sat at **14,677 stars, 1,287 forks, 369 open issues, 10,671 commits, MIT**, with a Rust core of ~55k lines, 40+ LLM providers, and a project-published 16-model edit benchmark. The 18-hour release cadence is the second load-bearing signal: a project using its own binary. The takeaway is **harness engineering** — *the model is the moat, the harness is the bridge* — a working MIT-licensed demo of a serious agent boundary in 2026. *Pin a release tag, read `packages/hashline`.*
 
 ## Sources
 

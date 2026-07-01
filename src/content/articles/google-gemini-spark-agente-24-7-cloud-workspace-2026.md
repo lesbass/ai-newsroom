@@ -1,6 +1,6 @@
 ---
 title: "Google launches Gemini Spark, a 24/7 cloud agent"
-description: "On May 19, 2026, Google announced Gemini Spark: a 24/7 cloud AI agent on Gemini 3.5 + Antigravity, deeply integrated with Workspace, linked to Canva/OpenTable/Instacart via MCP. U.S. AI Ultra Beta first."
+description: "Google's May 19, 2026 launch of Gemini Spark: a 24/7 cloud agent on Gemini 3.5 + Antigravity, integrated with Workspace, connected to Canva/OpenTable/Instacart via MCP."
 pubDate: 2026-06-16
 author: "AI Newsroom"
 tags: ["google", "gemini", "gemini-spark", "antigravity", "gemini-3-5", "workspace", "gmail", "docs", "slides", "mcp", "canva", "opentable", "instacart", "agentic-ai", "cloud-agent", "google-ai-ultra", "macos", "android", "halo", "google-io-2026"]
