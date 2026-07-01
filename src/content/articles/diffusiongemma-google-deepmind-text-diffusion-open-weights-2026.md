@@ -78,16 +78,6 @@ Integrations: **Hugging Face Transformers** (`DiffusionGemmaForBlockDiffusion`),
 5. **Fine-tuning lift on vertical use cases** (code infilling, structured extraction, IDE completion).
 6. **Independent safety benchmarks** (HarmBench, AdvBench, third-party red teams).
 
-## What to watch
-
-1. **Independent benchmarks on SWE-bench, LiveCodeBench, GPQA, AIME.** Numbers above are from Google's model card.
-2. **vLLM and Hugging Face TGI serving stability** for block-autoregressive decoding.
-3. **Blackwell NVFP4 quality samples.** NVIDIA calls it *"near-lossless"* — measure on your workload.
-4. **llama.cpp support** for non-NVIDIA hardware.
-5. **Fine-tuning lift on vertical use cases** (code infilling, structured extraction).
-
-## Risks and caveats
-
 ## Risks and caveats
 
 - **"Experimental" is the load-bearing word.** Google labels the model as experimental in both the blog title and the DeepMind product page. *"For applications that demand maximum quality, we recommend deploying standard Gemma 4."*
