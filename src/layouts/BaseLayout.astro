@@ -105,7 +105,7 @@ const jsonLd = article
   <meta property="og:site_name" content="AI Newsroom" />
 
   <!-- Twitter -->
-  <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={seoDescription} />
   <meta name="twitter:image" content={image ? new URL(image, site).toString() : new URL('/og-image.svg', site).toString()} />
