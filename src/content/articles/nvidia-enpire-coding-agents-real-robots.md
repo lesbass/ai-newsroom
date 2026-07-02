@@ -1,6 +1,6 @@
 ---
 title: "NVIDIA ENPIRE: real-robot coding agents hit 99% pass@8"
-description: "NVIDIA GEAR + CMU LeCAR + UC Berkeley harness putting coding agents (Codex GPT-5.5, Claude Code Opus 4.7, Kimi Code K2.6) in a closed loop on real robots. 99% pass@8 on five tasks; code not yet public."
+description: "NVIDIA GEAR, CMU, and UC Berkeley published ENPIRE, a four-module harness that puts coding agents in a closed loop on real robots. Three frontier agents hit 99% pass@8 on five manipulation tasks."
 pubDate: 2026-06-19
 author: "AI Newsroom"
 tags: ["nvidia", "cmu", "uc-berkeley", "enpire", "robotics", "manipulation", "coding-agents", "codex", "claude-code", "kimi-code", "physical-autoresearch", "autoenvbench", "mean-robot-utilization", "mean-token-utilization", "push-t", "robocasa", "gpt-5-5", "opus-4-7", "kimi-k2-6", "closed-loop", "robot-learning", "research-paper"]
@@ -43,64 +43,66 @@ sources:
 highRiskClaims: false
 ---
 
-On **2026-06-16**, NVIDIA GEAR, the CMU LeCAR Lab, and UC Berkeley published **ENPIRE** — *"Agentic Robot Policy Self-Improvement in the Real World"* — a four-module harness that puts coding agents in a fully automatic closed loop on real robots with **auto-reset** and **auto-verify** ([NVIDIA GEAR, ENPIRE, 2026-06-19](https://research.nvidia.com/labs/gear/enpire/)). Three frontier coding agents — **Codex with GPT-5.5, Claude Code with Opus 4.7, and Kimi Code with Kimi K2.6** — reach a **99% pass@8 success rate** on five hard manipulation tasks: **Push-T, Pin Insertion, Tie Zip-tie, GPU Insertion, and Cut Zip-tie**. The paper also introduces two efficiency metrics — **Mean Robot Utilization (MRU)** and **Mean Token Utilization (MTU)** — and reports team-size scaling at 1, 4, and 8 agents. **Two caveats lead:** the 99% is *not* best-of-8 sampling, and the harness code is *not yet open-sourced*.
+On **2026-06-16**, NVIDIA GEAR, CMU LeCAR Lab, and UC Berkeley published **ENPIRE** — a four-module harness that puts coding agents in a fully automatic closed loop on real robots, with auto-reset and auto-verify ([NVIDIA GEAR, ENPIRE, 2026-06-19](https://research.nvidia.com/labs/gear/enpire/)). Three frontier coding agents — **Codex with GPT-5.5, Claude Code with Opus 4.7, and Kimi Code with Kimi K2.6** — reach **99% pass@8** on five manipulation tasks. The catch: 99% is *not* best-of-8 sampling, and the code is not yet open-sourced.
 
 ## What it is
 
-**The four-module architecture.** ENPIRE is named for the four modules that wrap a real robot cell:
+ENPIRE is named for four modules ([NVIDIA GEAR, ENPIRE, 2026-06-19](https://research.nvidia.com/labs/gear/enpire/)):
 
-1. **Environment (EN).** The reset, safety, verification, and logging interfaces the agent can call. Two load-bearing capabilities: **Auto Evaluation** (a detector + segmentation model judge whether the task succeeded; per-camera verdicts are fused into a binary reward) and **Auto Reset** (each task is returned to a randomized initial state without manual intervention, with reset-verification).
-2. **Policy Improvement (PI).** Generates and revises **policy code** from rewards, videos, traces, and failure cases. Supports heuristic learning, behavior cloning, offline RL, online RL, and tool calling.
-3. **Rollout (R).** Runs **budgeted robot trials** across one or more physical robots in parallel, preserving state, action, video, and result for audit.
-4. **Evolution (E).** Coding agents compare branches, reuse successful recipes, and prune hypotheses that fail on hardware.
+- **Environment (EN)** — reset, safety, verification, and logging interfaces. Includes auto-evaluation (reward functions per task) and auto-reset (restores randomized initial states without manual intervention).
+- **Policy Improvement (PI)** — generates and revises policy code from rewards, videos, traces, and failure cases. Supports heuristic learning, behavior cloning, offline RL, online RL, and tool calling.
+- **Rollout (R)** — runs budgeted robot trials across one or more physical robots in parallel, preserving state, action, video, and result for audit.
+- **Evolution (E)** — coding agents compare branches, reuse successful recipes, and prune failed hypotheses. The project page visualizes this as a "hypothesis git-tree."
 
-**The five tasks.** All evaluated on physical hardware, with four paired with an auto-reset policy: **Push-T** (the [gym-pusht](https://github.com/huggingface/gym-pusht) Gymnasium environment), **Pin Insertion**, **Tie Zip-tie**, **GPU Insertion**, **Cut Zip-tie**.
+## The five tasks
 
-**The headline metric — and what it does and does not mean.** The 99% pass@8 is one specific quantity: within a single long-horizon rollout, the agentic loop gets up to **8 in-context retries per subtask, each conditioned on the previous failures**. The project page:
+All are real-world manipulation tasks on physical hardware ([NVIDIA GEAR, ENPIRE, 2026-06-19](https://research.nvidia.com/labs/gear/enpire/)):
 
-> "pass@8 is *not* best-of-8 i.i.d. samples on the task. Within a single long-horizon rollout, the agentic loop gets up to 8 in-context retries per subtask, each conditioned on the previous failures — so it measures emergent retry and recovery, not sampling luck. Retries only help to the extent the policy can recover: a policy that can't stays near pass@1."
+- **Push-T** — pushing a T-shaped block into a target zone ([huggingface/gym-pusht](https://github.com/huggingface/gym-pusht))
+- **Pin Insertion** — picking pins and organizing them into a pin box
+- **Tie Zip-tie** — manipulating a zip-tie so the strap passes through the head
+- **GPU Insertion** — picking a GPU and inserting it into a board
+- **Cut Zip-tie** — using a cutter to cut a zip-tie
 
-**The 99% is the team's emergent retry-and-recovery capability.** A policy that cannot recover does not jump to 99%; a 13% policy stays near 13% even with 8 retries. The project page: *"this is why we show the uncut 5-minute rollout here rather than a cherry-picked clip."*
+## What 99% pass@8 actually means
 
-**The baseline that grounds the 99%.** When the three coding agents are given a heuristic-only task on Push-T — *"write a heuristic policy, with no neural network training, to achieve a 100% success rate"* — the **single-run coverage is 0% for all three** (43 / 73 / 66 steps). The 99% is what ENPIRE achieves once the agents iterate through the closed loop.
+The project page is explicit: pass@8 is *not* best-of-8 i.i.d. samples. Within a single long-horizon rollout, the agentic loop gets up to **8 in-context retries per subtask, each conditioned on the previous failures**. A policy that cannot recover stays near pass@1 — a 13% policy stays ~13%, not 99%. The 99% over 8 retries is itself the capability the team reports ([NVIDIA GEAR, ENPIRE, 2026-06-19](https://research.nvidia.com/labs/gear/enpire/)).
 
-**The two new metrics.** **MRU** captures how much available robot time is actually used to run policy trials. **MTU** captures the same idea on the token-throughput axis, normalized against a linear scaling reference. Resource-utilization plots compare 1, 4, and 8 agent teams; a "Tokens to Success" plot pairs total token spend against time-to-success.
+The baseline grounds the number. When the three agents are given a heuristic-only task on Push-T with no neural network training, **all three report 0% coverage** in 43–73 steps.
 
-**The simulation parallel.** Real-world results are paired with simulation runs in [RoboCasa](https://robocasa.ai/) (Diffusion Policy, π₀, GR00T; RoboCasa365 expansion to 2,500 kitchens / 365 tasks).
+## New metrics: MRU and MTU
+
+The paper introduces **Mean Robot Utilization (MRU)** and **Mean Token Utilization (MTU)** for multi-agent physical autoresearch. MRU measures robot time usage; MTU measures token throughput normalized against a linear scaling reference. The team publishes resource-utilization plots comparing 1, 4, and 8 agents ([NVIDIA GEAR, ENPIRE, 2026-06-19](https://research.nvidia.com/labs/gear/enpire/)).
+
+## Team-size scaling
+
+Larger fleets reach success sooner on wall-clock time, but the speedup is **not free**. The Limitations section states: *"Scaling the robot fleet drives higher token consumption: as more agents read logs, summarize peer branches, and coordinate, the total token budget required to reach a successful policy grows with fleet size."* MRU *decreases* as the fleet grows ([NVIDIA GEAR, ENPIRE, 2026-06-19](https://research.nvidia.com/labs/gear/enpire/)).
+
+## Simulation parallel
+
+The paper pairs real-world results with **RoboCasa**, a large-scale kitchen-manipulation framework supporting Diffusion Policy, π₀, and GR00T ([RoboCasa, 2026-06-19](https://robocasa.ai/); [NVIDIA GEAR, ENPIRE, 2026-06-19](https://research.nvidia.com/labs/gear/enpire/)).
 
 ## Why it matters
 
-**The missing abstraction for autonomous robotics research is here.** Real-world robot learning has been bottlenecked by human supervision and algorithmic engineering, and the missing piece — repeatability — has been waiting for a **callable interface to the reset-execute-verify-refine loop**. ENPIRE's claim: it turns "run a policy on a robot, check the result, edit the code, run it again" into a callable harness. The paper: *"frontier coding agents can autonomously develop a policy to achieve a 99% success rate on challenging, dexterous manipulation tasks in the real world."* **Head-to-head coding-agent evaluation on real hardware, with a public comparison surface.** Three frontier coding agents on the same five tasks under the same harness, with research-progress curves on a wall-clock-time axis. The team's new evaluation harness is **AutoEnvBench**; team-size scaling is reported at 1, 4, and 8 agents. **A clean team-size scaling story — with a real cost.** The Limitations section: *"Scaling the robot fleet drives higher token consumption … Larger fleets can reach success sooner, but the additional speedup comes at the cost of higher token consumption."* MRU *decreases* as the fleet grows.
-
-## Practical implications
-
-- **Robotics researchers and PhD students:** the auto-reset / auto-verify pattern is the load-bearing abstraction. Start with EN (build the auto-reset and auto-verify interface for one task) and only then layer PI on top. The PI module's support for **heuristic learning, behavior cloning, offline RL, online RL, and tool calling** means the same harness can host heterogeneous algorithm families.
-- **AI agent / coding-tool builders:** MRU and MTU are useful metrics. Instrumenting robot utilization and token throughput at the team level (not just per-agent) is meaningful. The Push-T ablation compares Codex with native vision, VLM-as-vision-tool, and GoFE vision — vision-stack choice is non-trivial.
-- **Operators evaluating "autonomous robotics" claims:** the open-source question is the right first check. **The ENPIRE harness is not yet public as of 2026-06-19**; replication outside NVIDIA / CMU / UC Berkeley is not possible from the paper alone.
+ENPIRE turns "run a policy on a robot, check the result, edit the code, run it again" into a callable harness — the missing abstraction for autonomous robotics research. It is also the first time three frontier coding agents have been compared on the same physical manipulation tasks with the same evaluation harness (AutoEnvBench).
 
 ## Risks and caveats
 
-- **99% pass@8 is not best-of-8.** A policy that cannot recover stays near pass@1.
-- **The 99% is the project's own benchmark, not an independent reproduction.** AutoEnvBench is introduced in the same paper.
-- **The harness code is not yet open-sourced.** The project page states plans to open-source; the public link is not yet live as of 2026-06-19.
-- **Larger fleets trade speed for tokens.** Total token consumption grows with fleet size; MRU decreases as agents spend more time summarizing peer branches.
-- **Generalization beyond the five tasks is not established.** Do not extrapolate to "any manipulation task" or "general-purpose robotics."
+1. **99% pass@8 is not best-of-8.** It measures emergent retry-and-recovery, not sampling luck. The article must lead with this caveat.
+2. **The benchmark is the project's own.** AutoEnvBench is introduced in the same paper. No independent reproduction exists.
+3. **The harness code is not yet open-sourced.** The authors state plans to open-source; no public repository is provided as of 2026-06-19.
+4. **Larger fleets trade speed for tokens.** Total token consumption grows with fleet size, and MRU decreases.
+5. **Generalization beyond five tasks is not established.** Do not extrapolate to "any manipulation task."
 
 ## What to watch
 
-1. **Public release of the ENPIRE harness code** — watch for a repository under the NVIDIA GitHub organization or an academic project page.
-2. **Independent reproduction of the 99% pass@8 numbers** — academic lab reproductions, arXiv replications, or community AutoEnvBench runs.
-3. **Larger fleet sizes (16, 32 agents)** — to test how the MRU / token-consumption cost curve behaves.
-4. **Newer model families in AutoEnvBench** — Anthropic released Claude Opus 4.8 on 2026-05-28; Kimi Platform now lists K2.7; GPT-5.6, Claude Opus 4.8, Gemini 3.x, Kimi K3.x are the natural next additions.
-5. **Adoption of MRU and MTU as a cross-paper standard** — both are introduced in this paper and have not been adopted externally as of 2026-06-19.
+- Public release of the ENPIRE harness code
+- Independent reproduction of 99% pass@8
+- Larger fleet sizes (16, 32 agents)
+- Newer model families in AutoEnvBench (GPT-5.6, Claude Opus 4.8)
+- Adoption of MRU/MTU as cross-paper standards
+- Transfer of auto-reset/auto-verify to other task families
 
-## Sources
+## Verdict
 
-- [NVIDIA GEAR — ENPIRE project page](https://research.nvidia.com/labs/gear/enpire/)
-- [NVIDIA GEAR — ENPIRE paper (drive folder)](https://drive.google.com/drive/folders/1J8w1yQux9ODYqTNZ2ynOIFjerBIQtw1V?usp=sharing)
-- [GitHub — huggingface/gym-pusht](https://github.com/huggingface/gym-pusht)
-- [RoboCasa](https://robocasa.ai/)
-- [OpenAI — Codex](https://openai.com/codex/)
-- [Anthropic — Claude Code](https://www.anthropic.com/claude-code)
-- [Anthropic — Claude Opus model index](https://www.anthropic.com/claude/opus)
-- [Moonshot AI — Kimi Platform](https://platform.kimi.ai/)
+ENPIRE is the clearest signal yet that the coding-agent closed-loop workflow has crossed the digital-physical boundary. The code is not open-sourced, the 99% is a self-report, and fleet scaling is not free — but the four-module harness and the three-agent comparison on real hardware are a genuine contribution ([NVIDIA GEAR, ENPIRE, 2026-06-19](https://research.nvidia.com/labs/gear/enpire/)).
