@@ -70,12 +70,21 @@ On **May 19, 2026**, Google announced **Gemini Spark** — a 24/7 personal AI ag
 
 Scale: 900M Gemini monthly users, 230 countries, 70+ languages ([keynote](https://blog.google/innovation-and-ai/sundar-pichai-io-2026/)).
 
-## Why it matters
+## What Spark is not
 
-- **Cloud-resident agent with consent gates.** Spark keeps running after the laptop closes, but *"asks you first"* before spending or emailing — same pattern Microsoft Copilot, OpenAI Operator, and Anthropic Claude use.
-- **MCP is the third-party seam.** Canva, OpenTable, Instacart are the launch partners; the standard is shared with Claude, ChatGPT, Cursor, and VS Code.
-- **Workspace is the moat.** Gemini is already in Gmail, Docs, Sheets, Meet, Vids, Drive, Chat ([Workspace AI](https://workspace.google.com/solutions/ai/)). Spark orchestrates these surfaces.
-- **Rollout is staged.** Trusted tester this week → U.S. AI Ultra Beta next week → macOS, voice, sub-agents, local browser, Android Halo *"later this summer / later this year."*
+Three boundaries worth flagging.
+
+- **Not a personal-assistant replacement.** Task-orchestration, not a relationship. May 19 framing: *"designed to ask you first before performing high-stakes actions."*
+- **Not fully autonomous.** *"Spark operates under your direction"* and *"asks you first"* before spending or emailing. Same consent pattern as Copilot, Operator, and Claude.
+- **Not free.** No Spark line item, but AI Ultra is the only published path to the U.S. Beta — see pricing below.
+
+## Pricing — what is and isn't on the page
+
+There is no Spark line item. The only published path to the U.S. AI Ultra Beta is the **Google AI Ultra** tier.
+
+- **AI Plus / Pro / Ultra** — Google One plan ladder; [Italian page](https://one.google.com/about/google-ai-plans/) lists EUR pricing as of 2026-06-16. Antigravity is bundled in **Pro** and **Ultra**.
+- **AI Ultra** is the U.S. plan advertised in the May 19 keynote as the Beta path. U.S. list price is **$249.99 / month** per the [Google One plans page](https://one.google.com/about/google-ai-plans/).
+- **EU / Italy AI Ultra pricing not yet published.** Italian page lists EUR pricing for Antigravity access via Pro/Ultra; the May 19 Spark Beta is U.S.-only.
 
 ## What to watch
 
@@ -90,7 +99,6 @@ Scale: 900M Gemini monthly users, 230 countries, 70+ languages ([keynote](https:
 - **"24/7" is not "available now."** Trusted tester this week, U.S. AI Ultra Beta next — not GA on June 16, 2026.
 - **"Cloud-based" is not a category novelty.** Siri, Alexa, Google Assistant have run server-side for years. The novelty is the layered stack: 3.5 + Antigravity + Workspace + MCP.
 - **MCP integration depth unspecified.** Three launch partners named; depth not stated.
-- **No Spark-specific price.** Italian AI plans page lists AI Plus, Pro, Ultra in EUR with Antigravity under Pro/Ultra, but no Spark line item.
 - **900M / 230 / 70+ are Google's own disclosures.** Not third-party verified.
 - **Roadmap features are forward-looking.** Texting, sub-agents, local browser, Chrome, Android Halo — none GA on June 16, 2026.
 - **Announcement coverage, not hands-on.** A follow-up will be filed when Beta is broadly accessible.

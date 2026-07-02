@@ -69,6 +69,14 @@ The model card compares DiffusionGemma 26B A4B (instruction-tuned, Entropy Bound
 
 Integrations: **Hugging Face Transformers** (`DiffusionGemmaForBlockDiffusion`), **vLLM** (day-zero, Red Hat AI support), **MLX**, **Unsloth**, **NVIDIA NeMo**, and **TensorRT-LLM** with **NVFP4** on Blackwell. Cloud paths: **Gemini Enterprise Model Garden** and **NVIDIA NIM**. *llama.cpp* support is *"coming soon"* — that would open Mac.
 
+## Practical advice
+
+**1. IDE / editor completion teams.** Profile latency to *first block* (256 tokens), not *first token*. Bidirectional attention refines tokens AR would have frozen — useful for non-linear edits.
+**2. Agent harness builders.** Read the [`DiffusionGemmaForBlockDiffusion`](https://huggingface.co/google/diffusiongemma-26B-A4B-it) implementation and vLLM day-zero PR. Block-autoregressive decoding changes the KV-cache story.
+**3. Benchmark evaluators.** Re-run the deltas independently — contribution is *speed*, not a new SOTA. Deltas vs Gemma 4 AR: **−5.0 MMLU Pro, −19.2 AIME, −8.0 LiveCodeBench, −289 ELO Codeforces, −12.1 MRCR v2, +0.170 OmniDocBench, +2.3 HLE** (pp).
+**4. Local inference users.** Measure VRAM: 18 GB (Google) vs 24 GB (DeepMind) — difference is quantization and context length.
+**5. Cloud serving architects.** Google: speedup *"collapses in high-QPS cloud serving."* Use DiffusionGemma for low-to-medium batch single-user; keep AR for batched serving.
+
 ## What to watch
 
 1. **Independent benchmarks on SWE-bench, LiveCodeBench, GPQA, AIME.** Numbers above are from Google's model card, not independent runs.
