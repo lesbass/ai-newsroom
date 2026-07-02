@@ -1,6 +1,6 @@
 ---
 title: "cognee: open-source AI memory platform for agents"
-description: "Apache-2.0, self-hosted knowledge-graph engine for agent memory. Four-method API, single-Postgres architecture, Claude Code plugin, MCP server. v1.2.2 (Jun 26, 2026) adds opt-in truth-subspace reranking."
+description: "cognee is an Apache-2.0 open-source AI memory platform for agents: a self-hosted knowledge graph engine with a four-method API (remember, recall, forget, improve) and a Claude Code plugin."
 pubDate: 2026-06-30
 author: "AI Newsroom"
 tags: ["cognee", "topoteretes", "ai-memory", "agent-memory", "knowledge-graph", "graph-rag", "ai-agents", "context-engineering", "mcp", "model-context-protocol", "claude-code", "claude-code-plugin", "postgres", "pgvector", "truth-subspace", "reranking", "single-postgres", "rust-client", "typescript-client", "cognee-cloud", "open-source", "apache-2-0", "arxiv-2505-24478", "beam", "memory-platform", "vector-database", "ai-newsroom-coverage"]
@@ -55,68 +55,77 @@ sources:
 highRiskClaims: false
 ---
 
-[cognee](https://github.com/topoteretes/cognee) is the leading self-hosted answer to the agent-memory problem: the agent has no memory of what it learned last week, last month, or last release. Apache-2.0, as of 2026-06-30 the [`topoteretes/cognee`](https://github.com/topoteretes/cognee) repository sits at **25,747 stars, 2,371 forks, 8,426 commits, 207 open issues, 224 open PRs, 121 releases** ([GitHub REST API](https://api.github.com/repos/topoteretes/cognee)). The latest release, **v1.2.2 "Truth Subspace & Retrieval Improvements"** ([release notes, 2026-06-26](https://github.com/topoteretes/cognee/releases/tag/v1.2.2)), adds an opt-in retrieval layer on top of the single-Postgres architecture that shipped in cognee 1.0. The project also has a published research paper: [arXiv:2505.24478](https://arxiv.org/abs/2505.24478).
+[cognee](https://github.com/topoteretes/cognee) (Apache-2.0) is the leading self-hosted answer to a problem every team running AI agents at scale hits: the agent has no memory of what it learned last week, last month, or last release. As of 2026-06-30, the [`topoteretes/cognee`](https://github.com/topoteretes/cognee) repository sits at **25,747 stars, 2,371 forks, 8,426 commits on `main`, 207 open issues, 224 open pull requests, 121 releases, Apache-2.0** ([GitHub REST API, 2026-06-30](https://api.github.com/repos/topoteretes/cognee)). The latest release, **v1.2.2 "Truth Subspace & Retrieval Improvements"** ([2026-06-26](https://github.com/topoteretes/cognee/releases/tag/v1.2.2)), adds a new retrieval layer on top of the single-Postgres architecture that shipped in cognee 1.0.
 
-## What happened
+## What it does
 
-**The four-method API is the surface most builders touch first.** `remember` ingests into the permanent knowledge graph; `recall` queries and auto-routes to the best search strategy; `forget(dataset=...)` deletes a dataset; `improve(...)` runs the truth-subspace build after session distillation ([README](https://github.com/topoteretes/cognee)). The CLI mirrors the same surface: `cognee-cli remember`, `cognee-cli recall`, `cognee-cli forget --all`, and `cognee-cli -ui` to open the local graph UI.
+**The four-method API.** Cognee exposes four async operations — `remember`, `recall`, `forget`, `improve` — for the entire memory lifecycle ([README](https://github.com/topoteretes/cognee/blob/main/README.md)). `remember` ingests into the permanent knowledge graph or a fast session cache that syncs in the background. `recall` queries the graph and auto-routes to the best search strategy. `forget(dataset=...)` deletes a dataset. `improve(...)` runs the truth-subspace build after session distillation and before enrichment; v1.2.2 added the `build_truth_subspace=True` opt-in flag.
 
-**Single Postgres is the recommended default.** Per the README: *"In cognee 1.0 you can run the entire memory layer on a single Postgres instance."* The traditional stack needs four services (graph DB, vector DB, Redis, relational DB); cognee 1.0 collapses that to one Postgres with `pgvector` for embeddings and a SQL session-cache backend. The README reports *"in our CI benchmarks, Postgres search ran ~10% faster than the separate graph-plus-vector setup."* Optional dedicated backends remain: Neo4j, Neptune, Redis, pgvector, LanceDB, Qdrant, ChromaDB, Weaviate, Milvus. Local development stays fully embedded — SQLite, LanceDB, Kuzudb.
+**Single Postgres is the recommended default, but optionality remains.** Per the README: *"In cognee 1.0 you can run the entire memory layer on a single Postgres instance"* ([README](https://github.com/topoteretes/cognee/blob/main/README.md)). The traditional agent-memory stack needs four services — a graph database, a vector database, Redis, and a relational database. cognee 1.0 collapses that to one Postgres instance with `pgvector` for embeddings, a SQL session-cache backend, and the same Postgres for metadata. The README reports that *"in our CI benchmarks, Postgres search ran ~10% faster than the separate graph-plus-vector setup."* Optional dedicated backends remain available: Neo4j and Neptune for graphs, Redis for sessions, pgvector and LanceDB for vectors, plus Qdrant, ChromaDB, Weaviate, and Milvus via community adapters.
 
-**The research grounding is a dated arXiv paper — a preliminary version.** [*Optimizing the Interface Between Knowledge Graphs and LLMs for Complex Reasoning*](https://arxiv.org/abs/2505.24478) (Markovic et al., 2025-05-30) studies hyperparameter optimization across HotPotQA, TwoWikiMultiHop, MuSiQue, scored with exact match, F1, and DeepEval's LLM-based correctness. The paper: *"meaningful gains can be achieved through targeted tuning. While the gains are consistent, they are not uniform."* The arXiv page is explicit: *"This is a preliminary version. A revised and expanded version is in preparation."*
+**The research grounding is real, with honest limits.** [*Optimizing the Interface Between Knowledge Graphs and LLMs for Complex Reasoning*](https://arxiv.org/abs/2505.24478) (Markovic et al., 2025-05-30) studies hyperparameter optimization across three multi-hop QA benchmarks — **HotPotQA, TwoWikiMultiHop, MuSiQue**. The paper is explicit: *"This is a preliminary version. A revised and expanded version is in preparation."* The BEAM benchmark is self-reported: cognee **0.79 at 100K tokens** (>0.8 with per-question routing), **0.67 at 10M tokens**, with an Obsidian / RAG baseline of ~0.33. The README's own caveat: *"These numbers are a directional signal rather than a definitive measure."*
 
-**The BEAM benchmark is self-reported and explicitly directional.** Per the [README](https://github.com/topoteretes/cognee), cognee **0.79 at 100K tokens** vs previous SOTA 0.735, and **0.67 at 10M tokens** vs previous SOTA 0.641. The README's caveat, verbatim: *"These numbers are a directional signal rather than a definitive measure."* No third-party reproduction is on the record as of 2026-06-30.
+**The Claude Code plugin is the most direct builder hook.** Cognee ships a Claude Code marketplace plugin — `cognee-memory@cognee` — that captures prompts, tool traces, and assistant responses into session memory, injects relevant context on every prompt, and syncs session memory into the permanent knowledge graph at session end ([plugin source](https://github.com/topoteretes/cognee-integrations/tree/main/integrations/claude-code)). The lifecycle hooks cover `SessionStart`, `UserPromptSubmit`, `PostToolUse`, `Stop`, `PreCompact`, `SessionEnd`. Install is three commands before the first `claude` launch:
 
-**The Claude Code plugin is the most direct builder hook.** `cognee-memory@cognee` captures prompts, tool traces, and assistant responses into session memory, injects relevant context on every prompt, and syncs session memory into the permanent knowledge graph at session end ([plugin source](https://github.com/topoteretes/cognee-integrations/tree/main/integrations/claude-code)). Install: `claude plugin marketplace add topoteretes/cognee-integrations`; `claude plugin install cognee-memory@cognee`; `export LLM_API_KEY="sk-..."`; `claude`. The first launch shows a "Cognee Memory Connected" system message.
+```bash
+claude plugin marketplace add topoteretes/cognee-integrations
+claude plugin install cognee-memory@cognee
+export LLM_API_KEY="sk-..."   # local mode
+claude
+```
 
-**The MCP server attaches cognee to any agent that speaks MCP.** [`cognee/cognee-mcp`](https://hub.docker.com/r/cognee/cognee-mcp) on port 8001 exposes cognee as a first-class MCP server. Claude Code, Codex, Cursor, OpenCode, Cline, Windsurf, Continue, Kiro can attach a persistent memory layer without writing custom glue code.
+**The MCP server attaches cognee to any agent that speaks MCP.** Pre-built images are published as [`cognee/cognee`](https://hub.docker.com/r/cognee/cognee) (API server on port 8000) and [`cognee/cognee-mcp`](https://hub.docker.com/r/cognee/cognee-mcp) (MCP server on port 8001). Any MCP-speaking agent — Claude Code, Codex, Cursor, OpenCode, Cline, Windsurf, Continue, Kiro — can attach a persistent memory layer without custom glue code.
 
-**Other clients.** Rust (`cognee-rs`, [`cargo add cognee`](https://github.com/topoteretes/cognee-rs)); TypeScript (`@cognee/cognee-ts`, [npm](https://www.npmjs.com/package/@cognee/cognee-ts)); OpenClaw plugin; Cognee Cloud at [www.cognee.ai](https://www.cognee.ai). One-click deploys target Modal, Railway, Fly.io, Render, Daytona.
+**Other clients and add-ons.** Official clients for **Rust** (`cognee-rs`, [`cargo add cognee`](https://github.com/topoteretes/cognee-rs)) and **TypeScript** (`@cognee/cognee-ts`, [`npm install @cognee/cognee-ts`](https://www.npmjs.com/package/@cognee/cognee-ts)); an **OpenClaw plugin** (`@cognee/cognee-openclaw`); and **Cognee Cloud** at [www.cognee.ai](https://www.cognee.ai). One-click deploys target Modal, Railway, Fly.io, Render, and Daytona.
 
-**v1.2.2 (2026-06-26) — truth-subspace reranking, all opt-in.** Per the [v1.2.2 release notes](https://github.com/topoteretes/cognee/releases/tag/v1.2.2), the headline is a **truth subspace** — centroids and slots built from distilled, accepted session learnings — that helps rerank search results. Items: truth subspace builder, centroid-slot truth weighting (MVP), truth-subspace reranking + feedback activation, `build_truth_subspace` opt-in flag on `/improve`, `DEFAULT_FEEDBACK_INFLUENCE` env var (default **0.0**). **No breaking changes.**
+**v1.2.2 (2026-06-26) is the headline release: truth-subspace reranking, all opt-in.** Five named items: a truth-subspace builder, centroid-slot truth weighting (MVP), truth-subspace reranking + feedback activation, a `build_truth_subspace` opt-in flag on `/improve`, and a `DEFAULT_FEEDBACK_INFLUENCE` env var (default **0.0**). Two demos ship: `truth_centroid_slots_demo.py` and `truth_subspace_reranking_demo.py`. Truth signatures now use **sha256 hashing**. **Breaking changes: none.**
 
-**v1.2.0 (2026-06-21) — security-and-distillation, with two breaking env var renames.** Smart session distillation auto-runs during `improve()`. Breaking: `LLM_MAX_TOKENS` → `LLM_MAX_COMPLETION_TOKENS`; `EMBEDDING_MAX_TOKENS` → `EMBEDDING_MAX_COMPLETION_TOKENS`. Public registration is disabled by default; `ENABLE_BACKEND_ACCESS_CONTROL` now implies API auth and per-user/dataset DB isolation ([release notes](https://github.com/topoteretes/cognee/releases/tag/v1.2.0)).
+**v1.2.0 (2026-06-21) is the security-and-distillation release.** Smart session distillation, batched curator, per-lesson writers. Breaking changes: `LLM_MAX_TOKENS` → `LLM_MAX_COMPLETION_TOKENS` and `EMBEDDING_MAX_TOKENS` → `EMBEDDING_MAX_COMPLETION_TOKENS`. Public registration is **disabled by default**; `ENABLE_BACKEND_ACCESS_CONTROL` now implies API auth and per-user/dataset DB isolation.
 
 ## Why it matters
 
-**Agent memory is the unsolved infrastructure problem of agent tooling** — cognee is the leading open-source answer. **The single-Postgres architecture is a real simplification, not marketing** — the README reports ~10% faster than the separate graph-plus-vector setup in CI. **The Claude Code plugin is the lowest-friction entry point on the market today** — three commands, value visible in the next session. **v1.2.2's truth-subspace reranking is a research-grade retrieval improvement, shipped behind a default-off flag** — `DEFAULT_FEEDBACK_INFLUENCE` defaults to 0.0; the README does not claim "improves accuracy by X%."
+1. **Agent memory is the unsolved infrastructure problem of agent tooling.** cognee is the leading open-source answer — self-hosted, Apache-2.0, graph-backed, attachable via SDK, CLI, MCP, or marketplace plugin.
+2. **The single-Postgres architecture is a real simplification.** The traditional stack needs four deployed services before an agent remembers anything; cognee 1.0 collapses that to one Postgres instance, **~10% faster** than the separate setup.
+3. **The arXiv paper is real research grounding, with honest limits.** HotPotQA, TwoWikiMultiHop, MuSiQue; the paper is a *preliminary version*; the BEAM numbers are *directional*.
+4. **The Claude Code plugin is the lowest-friction entry point on the market.** Three commands and the value is visible in the next session.
+5. **v1.2.2's truth-subspace reranking is a research-grade retrieval improvement, shipped behind a default-off flag.** `DEFAULT_FEEDBACK_INFLUENCE` default 0.0 means no behavior change unless the operator opts in.
 
 ## Practical implications
 
-1. **If you run Claude Code today, install the plugin in three commands.** `claude plugin marketplace add topoteretes/cognee-integrations`; `claude plugin install cognee-memory@cognee`; `export LLM_API_KEY="sk-..."`; `claude`.
-2. **If you run any MCP-speaking agent, attach `cognee-mcp` via Docker.** `docker pull cognee/cognee-mcp:main && docker run -e TRANSPORT_MODE=http --env-file ./.env -p 8000:8000 --rm -it cognee/cognee-mcp:main` exposes the API on `localhost:8000`.
-3. **If you are deploying for the first time, default to single Postgres.** `pip install "cognee[postgres]"`, then set `DB_PROVIDER=postgres`, `VECTOR_DB_PROVIDER=pgvector`, `GRAPH_DATABASE_PROVIDER=postgres`, `CACHE_BACKEND=postgres`.
-4. **If you are upgrading to v1.2.0 or later, rename two env vars.** `LLM_MAX_TOKENS` → `LLM_MAX_COMPLETION_TOKENS`; `EMBEDDING_MAX_TOKENS` → `EMBEDDING_MAX_COMPLETION_TOKENS`. Skipping silently disables your completion-token cap.
-5. **If you want to try truth-subspace reranking, opt in.** Set `DEFAULT_FEEDBACK_INFLUENCE` to a non-zero value, or pass `feedback_influence` per API call; then call `improve(..., build_truth_subspace=True)`.
-6. **If you are building in Python, the SDK path is four lines.** `uv pip install cognee`; `import cognee; await cognee.remember(...); await cognee.recall(...); await cognee.forget(...)`.
+- **If you run Claude Code today, install the cognee plugin in three commands.** The first launch bootstraps memory automatically.
+- **For any MCP-speaking agent, attach `cognee-mcp` via Docker.** Configure the agent's MCP client to point at the container on `localhost:8000`.
+- **For first-time deploys, default to single Postgres.** `pip install "cognee[postgres]"`, then set the four `*_PROVIDER=postgres` env vars.
+- **If upgrading to v1.2.0+, rename two env vars.** `LLM_MAX_COMPLETION_TOKENS` and `EMBEDDING_MAX_COMPLETION_TOKENS`.
+- **If trying truth-subspace reranking, opt in per-call or per-deployment.** Set `DEFAULT_FEEDBACK_INFLUENCE` to a non-zero value (e.g. `0.1`), then call `improve(..., build_truth_subspace=True)`.
+- **If building in Python, the SDK path is four lines of code.** `import cognee; await cognee.remember(...); await cognee.recall(...); await cognee.forget(...)`.
 
 ## Risks and caveats
 
-- **The BEAM numbers are self-reported and explicitly directional.** No third-party reproduction is on the record as of 2026-06-30.
-- **The arXiv paper is a preliminary version, not peer-reviewed.** The arXiv page states: *"This is a preliminary version. A revised and expanded version is in preparation."*
-- **Truth-subspace reranking is opt-in.** Default `DEFAULT_FEEDBACK_INFLUENCE` is **0.0**; reranking does not change behavior unless the operator opts in.
-- **Single Postgres is the recommended default, but optionality remains.** Neo4j, Neptune, Redis, pgvector, LanceDB, Qdrant, ChromaDB, Weaviate, Milvus are still supported as dedicated backends.
-- **v1.2.0 introduced a breaking env var rename** and disabled public registration by default.
-- **No independent head-to-head against a comparable agent-memory platform.** Zep, mem0, Letta exist; no head-to-head benchmark is on the record as of 2026-06-30. Cognee Cloud pricing is not on the public record.
+1. **The BEAM numbers are self-reported and explicitly directional.** *"These numbers are a directional signal rather than a definitive measure."* No third-party reproduction is on the record as of 2026-06-30.
+2. **The arXiv paper is a preliminary version, not peer-reviewed.** *"This is a preliminary version. A revised and expanded version is in preparation."*
+3. **Truth-subspace reranking is opt-in.** Default `DEFAULT_FEEDBACK_INFLUENCE` is **0.0** — existing deployments that upgrade do not see a behavior change unless they opt in.
+4. **Single Postgres is the recommended default, but optionality remains.** Neo4j, Neptune, Redis, pgvector, LanceDB, Qdrant, ChromaDB, Weaviate, Milvus all still supported.
+5. **v1.2.0 introduced a breaking env var rename.** Operators relying on `LLM_MAX_TOKENS` or `EMBEDDING_MAX_TOKENS` must update their `.env`.
+6. **No independent head-to-head against Zep, mem0, or Letta** is on the record. Cognee Cloud pricing is also not on the public record.
 
 ## What to watch
 
-1. **Revised arXiv paper** — the 2025-05-30 submission flags a revised and expanded version in preparation.
-2. **First independent BEAM benchmark reproduction** — the 100K / 10M numbers are project self-reports as of 2026-06-30.
-3. **Cognee Cloud GA / pricing** — published pricing is not on the record.
-4. **v1.3 / v1.4 with truth-subspace as default** — v1.2.2 ships it opt-in.
-5. **Adoption in non-Claude-Code agents** — the MCP server is the hook.
+1. **Revised arXiv paper** in preparation per the arXiv page.
+2. **First independent BEAM benchmark reproduction.**
+3. **Cognee Cloud GA / pricing** ([www.cognee.ai](https://www.cognee.ai)) — pricing not on the public record as of 2026-06-30.
+4. **v1.3 / v1.4 with truth-subspace as default.**
+5. **Adoption in non-Claude-Code agents** via the MCP server.
 
 ## Sources
 
-- [topoteretes/cognee — GitHub repository](https://github.com/topoteretes/cognee)
-- [topoteretes/cognee — GitHub REST API metadata](https://api.github.com/repos/topoteretes/cognee)
-- [topoteretes/cognee — v1.2.2 release notes (2026-06-26)](https://github.com/topoteretes/cognee/releases/tag/v1.2.2)
+- [topoteretes/cognee — GitHub repository (2026-06-30)](https://github.com/topoteretes/cognee)
+- [topoteretes/cognee — GitHub REST API metadata (2026-06-30)](https://api.github.com/repos/topoteretes/cognee)
+- [topoteretes/cognee — v1.2.2 "Truth Subspace & Retrieval Improvements" release notes (2026-06-26)](https://github.com/topoteretes/cognee/releases/tag/v1.2.2)
 - [topoteretes/cognee — v1.2.0 release notes (2026-06-21)](https://github.com/topoteretes/cognee/releases/tag/v1.2.0)
-- [arXiv:2505.24478 — Optimizing the Interface Between Knowledge Graphs and LLMs (2025-05-30)](https://arxiv.org/abs/2505.24478)
-- [cognee-integrations/claude-code — Claude Code plugin source](https://github.com/topoteretes/cognee-integrations/tree/main/integrations/claude-code)
-- [cognee/cognee-mcp — Docker Hub prebuilt MCP server image](https://hub.docker.com/r/cognee/cognee-mcp)
-- [cognee-rs — Rust client](https://github.com/topoteretes/cognee-rs)
-- [@cognee/cognee-ts — TypeScript client (npm)](https://www.npmjs.com/package/@cognee/cognee-ts)
-- [Cognee Cloud — www.cognee.ai](https://www.cognee.ai)
+- [arXiv:2505.24478 — *Optimizing the Interface Between Knowledge Graphs and LLMs for Complex Reasoning* (2025-05-30)](https://arxiv.org/abs/2505.24478)
+- [cognee-integrations/claude-code — Claude Code marketplace plugin source (2026-06-30)](https://github.com/topoteretes/cognee-integrations/tree/main/integrations/claude-code)
+- [cognee-mcp — Docker Hub prebuilt MCP server image (2026-06-30)](https://hub.docker.com/r/cognee/cognee-mcp)
+- [cognee-rs — Rust client (2026-06-30)](https://github.com/topoteretes/cognee-rs)
+- [@cognee/cognee-ts — TypeScript client (2026-06-30)](https://www.npmjs.com/package/@cognee/cognee-ts)
+- [Cognee Cloud — managed hosting at www.cognee.ai (2026-06-30)](https://www.cognee.ai)
 - [AI Newsroom — codebase-memory-mcp article (2026-06-24)](https://news.lesbass.com/articles/codebase-memory-mcp-zero-dependency-code-intelligence/)

@@ -1,6 +1,6 @@
 ---
 title: "Cloudflare `wrangler deploy --temporary` for AI agents"
-description: "Wrangler CLI flag that provisions a temporary Cloudflare account, deploys a Worker to workers.dev, and prints a 60-minute claim URL — no API token, no OAuth, no human in the loop."
+description: "Cloudflare shipped `wrangler deploy --temporary` on 2026-06-19: a CLI flag that provisions a temporary Cloudflare account, deploys a Worker, and prints a claim URL — 60 minutes to claim, no human in the loop."
 pubDate: 2026-06-22
 author: "AI Newsroom"
 tags: ["cloudflare", "cloudflare-workers", "wrangler", "ai-agents", "agentic-ai", "developer-tools", "cli", "deployment", "temporary-accounts", "workers-dev", "auth", "agent-auth", "frictionless-deploy", "simon-willison", "gpt-5-5"]
@@ -51,71 +51,81 @@ sources:
 highRiskClaims: false
 ---
 
-On **2026-06-19**, Cloudflare shipped `wrangler deploy --temporary` — a Wrangler CLI flag that provisions a temporary Cloudflare account, deploys a Worker to a `workers.dev` URL, and prints a claim URL ([Cloudflare blog](https://blog.cloudflare.com/temporary-accounts/); [developer docs](https://developers.cloudflare.com/workers/platform/claim-deployments/)). No human in the loop, no API token, no OAuth, no Cloudflare account. The deployment stays live for **60 minutes**; within that window a human can claim it and convert the temporary account into a permanent one, keeping the Worker and every Cloudflare resource it created. On **2026-06-21**, [Simon Willison](https://simonwillison.net/2026/Jun/21/temporary-cloudflare-accounts/) confirmed the flow end-to-end with **GPT-5.5 xhigh in Codex Desktop**, redeploying a [redirect-resolver Worker](https://github.com/simonw/cloudflare-redirect-resolver) and capturing the claim UI.
+On **2026-06-19**, Cloudflare shipped `wrangler deploy --temporary` — a Wrangler CLI flag that provisions a temporary Cloudflare account, deploys a Worker to a `workers.dev` URL, and prints a claim URL. No human in the loop. No API token. No OAuth. No Cloudflare account. The deployment stays live for **60 minutes**; within that window a human can open the claim URL, sign in or sign up, and convert the temporary account into a permanent one. If nobody claims it, Cloudflare deletes the temporary account and its deployments automatically ([Cloudflare blog, 2026-06-19](https://blog.cloudflare.com/temporary-accounts/); [Cloudflare developer docs, 2026-06-19](https://developers.cloudflare.com/workers/platform/claim-deployments/)). On **2026-06-21**, independent developer [Simon Willison](https://simonwillison.net/2026/Jun/21/temporary-cloudflare-accounts/) confirmed the flow end-to-end with **GPT-5.5 xhigh in Codex Desktop**.
 
-## What happened
+This is the most concrete engineering response so far in 2026 to the *auth wall* that has stalled autonomous deploys. It is also, clearly, a Cloudflare product feature, not an industry standard.
 
-**The blog post (2026-06-19).** The Cloudflare framing the audience will recognize: *"the moment an agent needs to deploy something… it slams face-first into a wall built for humans: a browser-based OAuth flow, a dashboard to click through, an API token to copy-paste, a multi-factor authentication prompt to satisfy."* The technical core is the new `wrangler deploy --temporary` flag — opt-in for the LLM: when an agent runs `wrangler deploy` without credentials, the CLI now prints a message suggesting `--temporary`, so the agent can discover the flag without being told.
+## What shipped
 
-**The developer docs.** The full flow, the supported-products table, the limits, and the abuse-prevention posture are documented. The page is explicit that `--temporary` returns an error if the CLI can already use OAuth, `CLOUDFLARE_API_TOKEN`, or a global API key.
+**The blog post (2026-06-19).** ["Temporary Cloudflare Accounts for AI agents"](https://blog.cloudflare.com/temporary-accounts/) was authored by **Sid Chatterjee**, **Celso Martinho**, and **Brendan Irvine-Broque** at Cloudflare. The framing: *"the moment an agent needs to deploy something — and needs to sign up and create an account — it slams face-first into a wall built for humans."* The technical core is the new `wrangler deploy --temporary` flag. When an agent runs `wrangler deploy` without credentials, the CLI now prints a message suggesting `--temporary`, so the agent can discover the flag without being told by a human. Cloudflare provisions a temporary account, gives Wrangler an API token, and prints a claim URL.
 
-**Simon's test.** His verdict: *"The temporary deployment worked as advertised."* His boundary: *"the AI hook isn't really necessary, this is an interesting feature for everyone else as well."* His [claim-UI screenshot](https://static.simonwillison.net/static/2026/cloudflare-claim.jpg) shows the account-claim page with a 49:26 countdown timer.
+**The developer docs (page last modified 2026-06-19).** ["Claim deployments (temporary accounts)"](https://developers.cloudflare.com/workers/platform/claim-deployments/) documents the full flow, the supported-products table, the limits, and the abuse-prevention posture. `--temporary` returns an error if the CLI can already use OAuth, `CLOUDFLARE_API_TOKEN`, or a global API key.
 
-**The four-step flow.** Install Wrangler 4.102.0+, run `wrangler deploy` without credentials (CLI hints `--temporary`), rerun with `npx wrangler deploy --temporary`, and the CLI prints a `Claim URL: https://dash.cloudflare.com/claim-preview?claimToken=...` valid for 60 minutes. Within the window, Wrangler caches the temporary account and reuses it for subsequent `--temporary` runs, so an agent can iterate on a Worker and verify changes in one session. The cache is cleared by `wrangler login` or `wrangler logout`.
+**Simon Willison's independent test (2026-06-21).** Simon ran GPT-5.5 xhigh in Codex Desktop, had the agent build and deploy a [cloudflare-redirect-resolver](https://github.com/simonw/cloudflare-redirect-resolver) Worker. Verdict: *"The temporary deployment worked as advertised."* His [claim-UI screenshot](https://static.simonwillison.net/static/2026/cloudflare-claim.jpg) shows the account-claim page with a 49:26 countdown timer.
 
-**Supported products and limits** (2026-06-19 docs):
+## The flow
 
-| Product | Limit |
-|---|---|
+1. Update Wrangler to **4.102.0 or later** ([install-and-update docs](https://developers.cloudflare.com/workers/wrangler/install-and-update/)).
+2. The agent runs `npx wrangler deploy --temporary`. The CLI prints:
+   > Temporary account ready: Account: `example-name` (created). Claim within: 60 minutes. Claim URL: `https://dash.cloudflare.com/claim-preview?claimToken=<TOKEN>`. Deployed `example-worker` triggers `https://example-worker.example-name.workers.dev`.
+3. Within the 60-minute window, Wrangler caches the temporary account and reuses it for subsequent `wrangler deploy --temporary` runs. The cache is cleared by `wrangler login` or `wrangler logout`.
+4. A human opens the claim URL, signs in or signs up, and converts the temporary account into a permanent one. The Worker and its resources attach.
+
+## Supported products and limits
+
+| Product | Temporary preview account limit |
+| --- | --- |
 | Workers | Deployments on `workers.dev` |
-| Workers Static Assets | Up to 1,000 files, ≤5 MiB each |
-| Workers KV | Commands with temporary credentials |
-| D1 | One database, ≤100 MB total |
-| Durable Objects | Commands with temporary credentials |
+| Workers Static Assets | ≤1,000 files, each ≤5 MiB |
+| Workers KV | Commands that use temporary credentials |
+| D1 | One database, ≤100 MB |
+| Durable Objects | Commands that use temporary credentials |
 | Hyperdrive | ≤2 configs, ≤10 connections |
-| Queues | ≤10 queues |
-| SSL/TLS | Commands with temporary credentials |
+| Queues | ≤10 |
+| SSL/TLS | Commands that use temporary credentials |
 
-**The non-obvious limits.** (1) **Proof-of-work** before account creation — CLI handles it; can add a short delay. (2) **Rate limits** — not published numerically; the advice is to wait or authenticate. (3) **Abuse prevention** — *"additional abuse prevention checks"* not specified. (4) **Claim URLs are sensitive** — *"Treat them as sensitive."*
+Anything outside this list (R2, Pages, Stream, Email Workers) is not yet supported via `--temporary`. The docs also call out four behaviors that are easy to miss: a **proof-of-work** check before account creation, **rate limits** on temporary account creation, opaque **abuse prevention** checks, and the fact that **claim URLs are sensitive** — the token in the URL is the credential.
 
 ## Why it matters
 
-The auth wall is the single biggest visible blocker for autonomous agents in 2026. Browser OAuth, copy-paste of API tokens, and MFA prompts stop background agents cold. `--temporary` is the first widely-deployed CLI-level response from a major platform that does not require the agent to discover a custom protocol, a vendor partnership, or a paid auth product. Vercel, Netlify, Render, Fly, and Railway do not have a public equivalent as of 2026-06-22. Tight write → deploy → verify loops are essential for agent productivity, and the industry is converging on a few specific patterns: Cloudflare's CLI-level shortcut, WorkOS's `auth.md` (OAuth-based provisioning), and Cloudflare's Stripe partnership (billing). None is a standard yet, but they are the building blocks of a near-term convention.
+1. **The auth wall is the single biggest visible blocker for autonomous agents in 2026.** Browser-based OAuth flows, copy-paste of API tokens, and MFA prompts stop background agents cold. `--temporary` is the first widely-deployed CLI-level response from a major platform that does not require the agent to discover a custom protocol.
+2. **Tight write → deploy → verify loops are essential for agent productivity.** An agent can write code, deploy, curl the result, and verify the output in a single session without any human interaction.
+3. **The industry is converging on a few specific patterns.** The blog references the [Cloudflare + Stripe partnership](https://blog.cloudflare.com/agents-stripe-projects/) for provisioning and the [WorkOS `auth.md`](https://workos.com/auth-md) collaboration. Each is a different shape of the same problem: how does an agent get credentials in a world built for humans?
 
 ## Practical implications
 
-- **One-line invocation.** `npx wrangler deploy --temporary` is the entry point. Wrangler 4.102.0+ required.
-- **Iterate within the 60-minute window.** Wrangler caches the temporary account; the agent's write/deploy/verify loop works.
-- **The supported products table is the truth.** R2, Pages, Stream, Email Workers, Workers AI inference bindings beyond the table — use `wrangler login` / `CLOUDFLARE_API_TOKEN`.
-- **Production path is unchanged.** Per the docs: *"For production and CI/CD, use a permanent Cloudflare account… Do not use `--temporary` when the Wrangler CLI is already authenticated."*
+- **The invocation is one line.** `npx wrangler deploy --temporary`. Wrangler 4.102.0+ is required.
+- **Iteration is supported within the 60-minute window** via cached credentials.
+- **The supported products table is the truth.** R2, Pages, Stream, Email Workers are not yet supported.
+- **The production path is unchanged.** Use `wrangler login` or `CLOUDFLARE_API_TOKEN` for production and CI/CD.
 
 ## Risks and caveats
 
-- **Cloudflare product, not an industry standard.** Don't frame `--temporary` as canonical.
-- **60-minute TTL is short for some workloads.** Long-running training or multi-day batch jobs will be reclaimed.
-- **Supported products and limits are narrow.** D1 to one DB; Hyperdrive to two configs; Queues to ten. Don't imply "every Cloudflare product."
-- **Claim URLs grant ownership of the temporary account.** Treat them as credentials.
-- **Abuse prevention is opaque.** Agents that trip checks will be silently rate-limited.
-- **Simon's test is a single user / model / project.** Generalize carefully.
-- **"For AI agents" is partly marketing.** The flag is genuinely useful for human developers too.
+1. **This is a Cloudflare product, not an industry standard.** Vercel, Netlify, Render, Fly, and Railway do not have a public `--temporary`-equivalent flag as of 2026-06-22.
+2. **The 60-minute TTL is short for some real workloads.** Long-running training or multi-day batch jobs will be reclaimed.
+3. **Supported products and limits are narrow.** D1 to one database, Hyperdrive to two configurations, Queues to ten.
+4. **Claim URLs grant ownership of the temporary account. Treat them as sensitive credentials.**
+5. **Abuse prevention is opaque.** Additional abuse checks and rate limits may silently block agents.
+6. **Simon Willison's test is a single user, single model, single project.** Generalisation from one test is a classic pitfall.
+7. **"For AI agents" is partly marketing.** Simon's own write-up flags: *"the AI hook isn't really necessary."*
 
 ## What to watch
 
-1. Whether other platforms ship equivalent features (Vercel, Netlify, Render, Fly, Railway).
-2. Adoption in agent frameworks (Claude Code, Codex, Cursor, Aider, smolagents).
-3. Expansion of the supported-products table and limits.
-4. Abuse / rate-limit behavior at scale.
-5. Convergence with WorkOS `auth.md` and the Cloudflare + Stripe partnership.
+1. **Whether other platforms ship equivalent features** and the rough shape (CLI flag vs. dashboard shortcut vs. protocol).
+2. **Adoption in agent frameworks** — Claude Code, Codex, Cursor, Aider, smolagents.
+3. **Expansion of supported products and limits.**
+4. **Abuse and rate-limit behaviour at scale.**
+5. **Convergence with WorkOS `auth.md` and the Cloudflare + Stripe partnership.**
 
 ## Sources
 
 - [Cloudflare blog — "Temporary Cloudflare Accounts for AI agents" (2026-06-19)](https://blog.cloudflare.com/temporary-accounts/)
-- [Cloudflare developer docs — "Claim deployments (temporary accounts)"](https://developers.cloudflare.com/workers/platform/claim-deployments/)
-- [Cloudflare developer docs — Wrangler install / update (4.102.0 minimum)](https://developers.cloudflare.com/workers/wrangler/install-and-update/)
-- [Cloudflare developer docs — Wrangler deploy reference](https://developers.cloudflare.com/workers/wrangler/commands/workers/#deploy)
-- [Cloudflare blog — Cloudflare + Stripe partnership](https://blog.cloudflare.com/agents-stripe-projects/)
+- [Cloudflare developer docs — "Claim deployments (temporary accounts)" (2026-06-19)](https://developers.cloudflare.com/workers/platform/claim-deployments/)
+- [Cloudflare developer docs — "Install and update" the Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/)
+- [Cloudflare developer docs — Wrangler `deploy` command reference](https://developers.cloudflare.com/workers/wrangler/commands/workers/#deploy)
+- [Cloudflare blog — Cloudflare + Stripe partnership for agent provisioning (2026-06-19)](https://blog.cloudflare.com/agents-stripe-projects/)
 - [Simon Willison — "Temporary Cloudflare Accounts for AI agents" (2026-06-21)](https://simonwillison.net/2026/Jun/21/temporary-cloudflare-accounts/)
-- [Simon Willison — GPT-5.5 xhigh session gist](https://gist.github.com/simonw/264bd6b8a39fc34c91c9c867454c64b9)
-- [Simon Willison — cloudflare-redirect-resolver test repo](https://github.com/simonw/cloudflare-redirect-resolver)
-- [WorkOS — auth.md](https://workos.com/auth-md)
-- [Hacker News discussion](https://news.ycombinator.com/item?id=48608394)
+- [Simon Willison — GPT-5.5 xhigh in Codex Desktop session gist (2026-06-21)](https://gist.github.com/simonw/264bd6b8a39fc34c91c9c867454c64b9)
+- [Simon Willison — cloudflare-redirect-resolver test repo (2026-06-21)](https://github.com/simonw/cloudflare-redirect-resolver)
+- [WorkOS — `auth.md` (2026-06-19)](https://workos.com/auth-md)
+- [Hacker News discussion on the temporary-accounts announcement (2026-06-21)](https://news.ycombinator.com/item?id=48608394)

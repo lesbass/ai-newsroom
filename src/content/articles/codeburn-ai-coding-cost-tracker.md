@@ -1,11 +1,11 @@
 ---
-title: "CodeBurn: a free, local-first cost tracker for 31 AI coding tools"
-description: "Free, MIT, local-first TypeScript CLI that reads 31 AI coding tools' session files and breaks down tokens and dollars by task, model, and project — no proxy, no API key."
+title: "CodeBurn: free, local-first cost tracker for 31 AI coding tools"
+description: "CodeBurn (getagentseal/codeburn) reads the session files your AI coding tools already write, breaks down every token and dollar across 31 integrations, MIT, no proxy, no API key."
 pubDate: 2026-06-29
 author: "AI Newsroom"
 tags: ["codeburn", "ai-coding", "cost-tracking", "token-spend", "local-first", "claude-code", "codex", "cursor", "opencode", "openclaw", "grok", "gemini-cli", "kiro", "warp", "mux", "vercel-ai-gateway", "typescript", "nodejs", "tui", "menubar", "spend-visibility", "mcp", "litellm", "claude-for-open-source", "mit-license", "cli", "developer-tools", "open-source"]
 image: "/images/articles/codeburn-ai-coding-cost-tracker/hero.png"
-imageAlt: "CodeBurn TUI dashboard showing a week of AI coding spend broken down by tool, by model, by project, by activity, by day, by core tools, by shell commands, and by MCP server. The headline row reads $1,497.93 across 17,277 calls, 2,204 sessions, 100% cache hit, 891.6K input / 5.2M output / 2,394.6M cached / 45.3M written."
+imageAlt: "CodeBurn TUI dashboard showing a week of AI coding spend broken down by tool, by model, by project, by activity, by day, by core tools, by shell commands, and by MCP server."
 imageCredit: "Source: github.com/getagentseal/codeburn/blob/main/assets/dashboard.jpg · Captured 2026-06-29 via Playwright Chromium + @sparticuz/chromium (re-rendered with editorial caption and license) · License: MIT (project); screenshot used editorially for the CodeBurn article on news.lesbass.com"
 sources:
   - title: "CodeBurn repository on GitHub (getagentseal/codeburn) — 8,313 stars, 650 forks, 769 commits, 16 open issues, 15 open PRs, MIT, \"Claude for Open Source Recipient\" badge, 31 supported tools in the README"
@@ -28,11 +28,11 @@ sources:
     url: "https://github.com/getagentseal/codeburn/releases/tag/mac-v0.9.14"
     date: 2026-06-22
     type: primary
-  - title: "CodeBurn README \"How it reads your data\" table — per-provider data locations and parsing notes (Claude Code ~/.claude/projects/<sanitized-path>/<session-id>.jsonl, Codex ~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl, Cursor SQLite state.vscdb with bubbleId: prefix, OpenCode SQLite ~/.local/share/opencode/opencode*.db, Gemini CLI ~/.gemini/tmp/<project>/chats/, Antigravity, Copilot, Kiro, Mistral Vibe, OpenClaw, Warp, Forge, Pi / OMP, Codebuff, Cline / Roo Code / KiloCode, IBM Bob, Kimi Code CLI, Vercel AI Gateway); 13 task categories; 162 ISO 4217 currencies; LiteLLM pricing refreshed every 24h with hardcoded Claude / GPT-5 fallbacks; MCP-server attribution"
+  - title: "CodeBurn README \"How it reads your data\" table — per-provider data locations and parsing notes (Claude Code ~/.claude/projects/<sanitized-path>/<session-id>.jsonl, Codex ~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl, Cursor SQLite state.vscdb with bubbleId: prefix, OpenCode SQLite ~/.local/share/opencode/opencode*.db, Gemini CLI ~/.gemini/tmp/<project>/chats/); 13 task categories; 162 ISO 4217 currencies; LiteLLM pricing refreshed every 24h with hardcoded Claude / GPT-5 fallbacks; MCP-server attribution"
     url: "https://github.com/getagentseal/codeburn"
     date: 2026-06-29
     type: primary
-  - title: "CodeBurn README \"Find and fix waste\" / \"Track what shipped\" / \"Compare models\" sections — codeburn optimize scans the last 30 days for re-read files, low Read:Edit ratio, uncapped BASH_MAX_OUTPUT_LENGTH, unused MCP servers, ghost agents/skills/slash commands, bloated CLAUDE.md with @-import expansion, cache-creation overhead, context-heavy sessions, possibly low-worth expensive sessions; A–F setup health grade; new / improving / resolved classification over a 48-hour recent window. codeburn yield classifies spend as Productive / Reverted / Abandoned against git commits. codeburn compare gives side-by-side one-shot rate, retry rate, self-correction, cost per call / per edit, output tokens per call, cache hit rate"
+  - title: "CodeBurn README \"Find and fix waste\" / \"Track what shipped\" / \"Compare models\" sections — codeburn optimize scans the last 30 days for re-read files, low Read:Edit ratio, uncapped BASH_MAX_OUTPUT_LENGTH, unused MCP servers, ghost agents/skills/slash commands, bloated CLAUDE.md with @-import expansion, cache-creation overhead, context-heavy sessions, possibly low-worth expensive sessions; A–F setup health grade; new / improving / resolved classification over a 48-hour recent window; codeburn yield classifies spend as Productive / Reverted / Abandoned against git commits; codeburn compare gives side-by-side one-shot rate, retry rate, self-correction, cost per call / per edit, output tokens per call, cache hit rate"
     url: "https://github.com/getagentseal/codeburn"
     date: 2026-06-29
     type: primary
@@ -51,56 +51,64 @@ sources:
 highRiskClaims: false
 ---
 
-[CodeBurn](https://github.com/getagentseal/codeburn) is a free, MIT-licensed, local-first TypeScript CLI that reads the session files your AI coding tools already write to disk and breaks down every token and dollar by task, model, tool, and project — across 31 integrations, with no proxy, no API key, and nothing leaving your machine. As of 2026-06-29 the [repo](https://github.com/getagentseal/codeburn) reports 8,313 stars, 650 forks, 769 commits, 16 open issues, 15 open PRs, an MIT license, and a "Claude for Open Source Recipient" badge. The current line is **v0.9.14** (2026-06-22) for the CLI and **mac-v0.9.14** (2026-06-22) for the macOS menubar.
+[CodeBurn](https://github.com/getagentseal/codeburn) is a free, MIT-licensed, local-first TypeScript CLI that reads the session files your AI coding tools already write to disk and breaks down every token and dollar by task, model, tool, and project — across 31 integrations, with no proxy, no API key, and nothing leaving your machine. As of 2026-06-29 the repo sits at **8,313 stars, 650 forks, 769 commits on `main`, 16 open issues, 15 open PRs** ([GitHub repository, 2026-06-29](https://github.com/getagentseal/codeburn)). The current line is **v0.9.14 (2026-06-22)** ([release notes](https://github.com/getagentseal/codeburn/releases/tag/v0.9.14)); the macOS menubar app ships separately as **mac-v0.9.14** on the same date. This is a builder-focused tool piece, not a benchmark.
 
-## What happened
+## What it does
 
-**Latest CLI release — v0.9.14 (2026-06-22).** Ships a browser dashboard at `localhost:4747`, PIN-paired multi-device combining on the local network, five new providers (Grok Build, ZCode / z.ai GLM-5.2, Hermes Agent, Kiro CLI, Zerostack), a `codeburn overview` plain-text monthly summary, Codex credit usage, MCP server usage in JSON / CSV exports, OpenCode 1.1+ file-based sessions, and a new "daily cache v9" that backfills new providers across history without a manual clear ([release notes](https://github.com/getagentseal/codeburn/releases/tag/v0.9.14)).
+**The local-first architecture.** Per the README, *"Everything runs locally. No wrapper, no proxy, no API keys, nothing leaves your machine"* ([README, 2026-06-29](https://github.com/getagentseal/codeburn)). CodeBurn reads session files the tools already write — Claude Code's `~/.claude/projects/<sanitized-path>/<session-id>.jsonl`, Codex's `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl`, Cursor's `globalStorage/state.vscdb`, OpenCode's `~/.local/share/opencode/opencode*.db`, Gemini CLI's session files — and joins them by timestamp. Pricing comes from [LiteLLM](https://github.com/BerriAI/litellm) cached locally for 24 hours, with hardcoded fallbacks for Claude and GPT-5 models; v0.9.12 added automatic gap-fill from models.dev and OpenRouter so Fable 5 and Mythos 5 price correctly.
 
-**Prior CLI release — v0.9.12 (2026-06-09).** Added the `codeburn mcp` server (`get_usage`, `get_savings` to AI agents over stdio, with project names pseudonymized by default), five more providers (Devin, Antigravity IDE, JetBrains via Copilot, coder / mux, Vercel AI Gateway), and **automatic pricing gap-fill from models.dev and OpenRouter** so models LiteLLM has not yet indexed (Fable 5, Mythos 5) price correctly without a manual patch ([release notes](https://github.com/getagentseal/codeburn/releases/tag/v0.9.12)).
+**The TUI dashboard.** `codeburn` opens an interactive TUI for the last 7 days. The header shows cost, calls, sessions, in / out / cache-write / cache-read tokens, and cache hit rate. Below: **Daily Activity**, **By Project**, **By Activity** (13 deterministic categories), **By Model**, **Core Tools** (Bash, Read, Edit, Grep, Write), **Shell Commands**, and **MCP Servers**. The dashboard auto-refreshes every 30 seconds.
 
-**Prior CLI release — v0.9.11 (2026-05-27).** Warp provider adapter, file-aware retry detection, multi-day calendar selection, Forge provider support, and a menubar loading-recovery watchdog rewritten with exponential backoff ([release notes](https://github.com/getagentseal/codeburn/releases/tag/v0.9.11)).
+**v0.9.14 additions (2026-06-22).** A new `codeburn web` browser dashboard (React + Recharts) on `localhost:4747`. PIN-paired multi-device combining via `codeburn share --pair`. New providers: **Grok Build, ZCode / z.ai GLM-5.2, Hermes Agent, Kiro CLI, Zerostack**. A `codeburn overview` plain-text monthly summary, Codex credit usage, MCP server usage in JSON / CSV exports, and OpenCode 1.1+ file-based sessions. v0.9.12 added `codeburn mcp` server (`get_usage`, `get_savings` over stdio) and providers Devin, Antigravity IDE, JetBrains via Copilot, coder/mux, Vercel AI Gateway.
 
-**macOS menubar — mac-v0.9.14 (2026-06-22).** Native Swift / SwiftUI under `mac/`, 30s refresh, Today / Week / Month / 6 Months periods, custom daily-budget alert; install via `codeburn menubar` ([release](https://github.com/getagentseal/codeburn/releases/tag/mac-v0.9.14)).
+**The macOS menubar app.** [mac-v0.9.14](https://github.com/getagentseal/codeburn/releases/tag/mac-v0.9.14) ships native Swift / SwiftUI, refreshes every 30 seconds, supports Today / Week / Month / 6 Months, and v0.9.14 added a custom daily-budget alert.
 
-**Local-first architecture.** The README's headline: *"Everything runs locally. No wrapper, no proxy, no API keys, nothing leaves your machine."* CodeBurn reads Claude Code's `~/.claude/projects/.../jsonl`, Codex's `~/.codex/sessions/.../rollout-*.jsonl`, Cursor's `globalStorage/state.vscdb`, OpenCode's `~/.local/share/opencode/opencode*.db`, and the session files of the other supported tools, joining them by timestamp. Pricing comes from [LiteLLM](https://github.com/BerriAI/litellm), cached 24h at `~/.cache/codeburn/`, with hardcoded fallbacks for all Claude and GPT-5 models; v0.9.12 added the models.dev + OpenRouter gap-fill.
+**`codeburn optimize` — the waste-finder.** Scans the last 30 days for known cost leaks: re-read files, low Read:Edit ratio, uncapped `BASH_MAX_OUTPUT_LENGTH`, unused MCP servers, ghost agents/skills/slash commands, bloated `CLAUDE.md` files, cache-creation overhead, possibly low-worth expensive sessions. Each finding shows estimated savings plus a copy-pasteable fix. Findings are ranked by urgency and rolled up to an **A–F setup-health grade**.
 
-**The dashboard.** `codeburn` opens an interactive TUI: header (cost, calls, sessions, in / out / cache tokens, cache-hit rate), Daily Activity, By Project, By Activity (13 categories), By Model, Core Tools (Bash, Read, Edit, Grep, Write), Shell Commands, and MCP Servers. Arrow keys switch periods; `c` opens model comparison; `o` opens optimize. `codeburn optimize` scans 30 days for waste (re-read files, low Read:Edit ratio, uncapped `BASH_MAX_OUTPUT_LENGTH`, ghost agents / skills, bloated `CLAUDE.md`) and rolls up to an **A–F setup-health grade**. `codeburn yield` correlates AI sessions with git commits (Productive / Reverted / Abandoned). `codeburn compare` gives per-model one-shot rate, retry rate, self-correction, cost per call, output tokens per call, cache hit rate.
+**`codeburn yield` — the productivity breakdown.** Correlates AI sessions with git commits and classifies spend as **Productive** (commits landed in `main`), **Reverted** (commits were later reverted), or **Abandoned** (no commits near the session). Requires a git repository.
+
+**Currency and plans.** 162 ISO 4217 currencies (FX from the European Central Bank via [Frankfurter](https://www.frankfurter.app/), refreshed every 24 hours, no API key). Subscription-plan tracking for Claude Pro / Max, Cursor Pro, and per-provider custom plans via `codeburn plan set`.
 
 ## Why it matters
 
-**AI coding spend is the silent line item in 2026 dev budgets.** CodeBurn is the only free, local-first, 31-tool option the Writer can verify end-to-end. **Local-first is the differentiator** — tools that *cut* tokens exist; CodeBurn is about *seeing* the bill before you cut it. The browser dashboard binds to `localhost:4747`; multi-device combining is PIN-paired on the local network. **31 integrations is the breadth argument** — one combined total across Claude Code, Codex, OpenCode, and Gemini CLI on one machine, broken down per tool. **The waste-finding loop is the workflow** — `codeburn optimize` does not just report spend; it suggests copy-pasteable fixes (`CLAUDE.md` line, env var, `mv` command). The loop is **scan → fix → re-scan → watch the grade improve**.
+Five reasons this is a day-one story on 2026-06-29.
+
+1. **AI coding spend is the silent line item.** Most builders running Claude Code, Codex, and Cursor simultaneously have a spend problem they cannot see. CodeBurn is the only free, local-first, 31-tool option the Writer can verify end-to-end.
+2. **Local-first is the differentiator.** Tools that *cut* tokens already exist. CodeBurn is about *seeing* the bill before you cut it.
+3. **31 integrations is the breadth argument.** A team using Claude Code, Codex, OpenCode, and Gemini CLI simultaneously can see one combined total.
+4. **The waste-finding loop is the workflow story.** `codeburn optimize` does not just report spend; it suggests copy-pasteable fixes.
+5. **The yield command is the executive summary.** Productive vs Reverted vs Abandoned spend, correlated with git commits, is the question every AI-leadership meeting asks.
 
 ## Practical implications
 
-1. **`npx codeburn` is the 30-second start.** No install, no account, no telemetry; the TUI shows where the last 7 days went.
-2. **Pair `optimize` with `yield` weekly.** Optimize finds waste; yield tells you which spend actually shipped (commits in `main`).
-3. **Cursor "Auto" rows are estimates.** Cursor's "Auto" mode hides the model; CodeBurn costs it at Sonnet rates and labels it "Auto (Sonnet est.)". Same caveat for Kiro and the GitHub Copilot legacy CLI.
-4. **PIN-pair your machines via the menubar app.** No hosted backend; the pairing is local-network only.
-5. **`codeburn compare` weekly for model-choice decisions.** A pattern of Opus 4.6 dominating cost on small turns suggests overpowered-model waste, not that Opus is "bad".
+- **If you use more than one AI coding tool, `npx codeburn` is the 30-second start.** No install, no account, no telemetry. The first run is typically when a builder realises 60% of the bill is one model on one project.
+- **Pair `codeburn optimize` with `codeburn yield` weekly.** Optimize finds waste and prints copy-pasteable fixes; yield tells you which spend actually shipped.
+- **For Cursor users, watch the "Auto (Sonnet est.)" rows.** Cursor's Auto mode hides the model; CodeBurn costs the row at Sonnet rates. The same caveat applies to Kiro and the GitHub Copilot legacy CLI.
+- **For team settings, run the macOS menubar app and PIN-pair your machines.** No hosted backend; pairing is local-network only.
 
 ## Risks and caveats
 
-- **Single-maintainer project** ([@iamtoruk](https://github.com/iamtoruk)); v0.9.14 credits 8 external contributors, but the bus factor is still improving. No SLA, no commercial support.
-- **Token counts are estimated for GitHub Copilot (legacy CLI), Kiro, and Mistral Vibe** — those tools don't write structured session files. Real counts only for Claude Code, Codex, OpenCode, Gemini CLI, Pi / OMP.
-- **Pricing depends on LiteLLM catalog matching.** Behind a proxy that rewrites model names, CodeBurn reports `$0.00` until the user runs `codeburn model-alias`. v0.9.12 added models.dev + OpenRouter gap-fill.
-- **Optimize findings are heuristic, not causal.** Low Read:Edit ratio is a pattern, not a measurement of waste.
-- **Yield requires a git repository.** Sessions outside a git working directory, or in repos where commits are not pushed, are misclassified as Abandoned.
+1. **Single-maintainer project.** [@iamtoruk](https://github.com/iamtoruk) is the primary maintainer; v0.9.14 credits 8 external contributors, but the project is still 1.0 of one person.
+2. **Token counts are accurate only for tools that write real counts.** **GitHub Copilot legacy CLI, Kiro, and Mistral Vibe are estimated** — Copilot editor transcripts carry no explicit counts; Kiro sessions are labelled `kiro-auto` and costed at Sonnet rates.
+3. **Pricing accuracy depends on the upstream model name matching the LiteLLM catalog.** Behind a proxy that rewrites model names, CodeBurn will report `$0.00` until the user configures `codeburn model-alias`.
+4. **`optimize` findings are heuristic, not causal.** Low Read:Edit ratio implies retry loops is a pattern, not a measurement of waste.
+5. **Yield requires a git repository.** Sessions outside a git working directory are misclassified as Abandoned.
+6. **No head-to-head benchmark against an alternative spend tracker** is on the record as of 2026-06-29.
 
 ## What to watch
 
-- A **v1.0 release** marking "intended for production use."
-- New provider coverage; the first OpenCode-only or Kiro-only shop that adopts CodeBurn will surface coverage gaps.
-- Pricing for new model families (next launch will stress the models.dev + OpenRouter gap-fill).
-- A first independent benchmark — the Writer must not invent one.
+- **A v1.0 release** marking the first "intended for production use" milestone.
+- **New provider coverage** as each new AI coding tool requires its own parser.
+- **Adoption in team / org settings** if a team-mode ships.
+- **A first independent benchmark** against OpenAI's admin dashboard, Cursor's analytics, or a hosted spend tracker.
 
 ## Sources
 
-- [GitHub — getagentseal/codeburn (README, LICENSE, 31 tools)](https://github.com/getagentseal/codeburn)
-- [GitHub — v0.9.14 release notes](https://github.com/getagentseal/codeburn/releases/tag/v0.9.14)
-- [GitHub — v0.9.12 release notes](https://github.com/getagentseal/codeburn/releases/tag/v0.9.12)
-- [GitHub — v0.9.11 release notes](https://github.com/getagentseal/codeburn/releases/tag/v0.9.11)
-- [GitHub — mac-v0.9.14 release](https://github.com/getagentseal/codeburn/releases/tag/mac-v0.9.14)
-- [GitHub — CodeBurn LICENSE (MIT)](https://github.com/getagentseal/codeburn/blob/main/LICENSE)
-- [npm — codeburn package](https://www.npmjs.com/package/codeburn)
-- [AI Newsroom — sitemap.xml](https://news.lesbass.com/sitemap.xml)
+- [GitHub — `getagentseal/codeburn` (README, LICENSE, "Supported tools" section, "How it reads your data" table, "Find and fix waste" / "Track what shipped" / "Compare models" sections) — 2026-06-29](https://github.com/getagentseal/codeburn)
+- [GitHub — `getagentseal/codeburn` releases page (v0.9.14) — 2026-06-22](https://github.com/getagentseal/codeburn/releases/tag/v0.9.14)
+- [GitHub — `getagentseal/codeburn` releases page (v0.9.12) — 2026-06-09](https://github.com/getagentseal/codeburn/releases/tag/v0.9.12)
+- [GitHub — `getagentseal/codeburn` releases page (v0.9.11) — 2026-05-27](https://github.com/getagentseal/codeburn/releases/tag/v0.9.11)
+- [GitHub — `getagentseal/codeburn` releases page (mac-v0.9.14) — 2026-06-22](https://github.com/getagentseal/codeburn/releases/tag/mac-v0.9.14)
+- [GitHub — `getagentseal/codeburn` LICENSE (MIT)](https://github.com/getagentseal/codeburn/blob/main/LICENSE)
+- [npm — `codeburn` package (CLI distribution, Node.js 22.13+ runtime requirement) — 2026-06-29](https://www.npmjs.com/package/codeburn)
+- [AI Newsroom — sitemap.xml (no prior CodeBurn article; 2026-06-29)](https://news.lesbass.com/sitemap.xml)
