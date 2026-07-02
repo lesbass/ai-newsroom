@@ -1,6 +1,6 @@
 ---
 title: "DeepMind RCT: AI Tutoring Boosts Math in Sierra Leone"
-description: "A randomized controlled trial with 1,763 students and 12 schools in Sierra Leone shows Gemini's Guided Learning mode delivers 1.2-1.7 years of learning in eight weeks. But it's a single trial, in a single country, and the achievement gap widens."
+description: "Pre-registered RCT in 12 Sierra Leone schools (1,763 students): Gemini Guided Learning delivers +0.258 SD in math over 8 weeks (1.2–1.7 years of learning). Single trial, single country; the achievement gap widens."
 pubDate: 2026-06-10
 author: "AI Newsroom"
 tags: ["research", "education", "rct", "deepmind", "gemini"]
