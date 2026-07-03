@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-labelledby="title desc">
+  <title id="title">Content Signals `use` extension: three values layered on the Search / Agent / Training taxonomy</title>
+  <desc id="desc">Generated editorial diagram (not source evidence). A horizontal three-column layout. The top row is a tier layer (Search, Agent, Training) with two on/off states. The middle row is a horizontal flow of the new Content Signals use field: use=immediate, use=reference (default), and use=full, each with a short practical meaning. The bottom row is the before/after robots.txt block, showing Content-Signal: search=yes,ai-train=no,use=reference. A red disclaimer band at the bottom labels the image as a generated editorial image and not source evidence.</desc>
+
+  <defs>
+    <style type="text/css"><![CDATA[
+      .frame { fill: #ffffff; stroke: #d6d3d1; stroke-width: 1; }
+      .title-text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 28px; font-weight: 700; fill: #1c1917; }
+      .subtitle { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 15px; fill: #57534e; }
+      .row-label { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; fill: #57534e; letter-spacing: 0.04em; }
+      .tier-card { fill: #fafaf9; stroke: #44403c; stroke-width: 1.5; }
+      .tier-card-allowed { fill: #ecfdf5; stroke: #047857; stroke-width: 1.5; }
+      .tier-card-blocked { fill: #fef2f2; stroke: #b91c1c; stroke-width: 1.5; }
+      .tier-title { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 16px; font-weight: 700; fill: #1c1917; }
+      .tier-body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12px; fill: #292524; }
+      .tier-state { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; }
+      .tier-state-allowed { fill: #047857; }
+      .tier-state-blocked { fill: #b91c1c; }
+
+      .use-card { fill: #ffffff; stroke: #1c1917; stroke-width: 2; }
+      .use-card-default { fill: #fff7ed; stroke: #c2410c; stroke-width: 2.5; }
+      .use-value { font-family: ui-monospace, "SFMono-Regular", "Menlo", monospace; font-size: 18px; font-weight: 700; fill: #1c1917; }
+      .use-meaning { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12px; fill: #292524; }
+      .use-default-tag { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 700; fill: #c2410c; letter-spacing: 0.04em; }
+      .arrow-line { fill: none; stroke: #1c1917; stroke-width: 2.5; }
+      .arrow-head { fill: #1c1917; stroke: none; }
+
+      .code-frame { fill: #0c0a09; stroke: #0c0a09; stroke-width: 1; rx: 6; }
+      .code-text { font-family: ui-monospace, "SFMono-Regular", "Menlo", monospace; font-size: 14px; fill: #fafaf9; }
+      .code-comment { font-family: ui-monospace, "SFMono-Regular", "Menlo", monospace; font-size: 13px; fill: #a8a29e; font-style: italic; }
+      .code-key { fill: #fb923c; }
+      .code-string { fill: #86efac; }
+      .code-added { fill: #fde68a; font-weight: 700; }
+      .code-label { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 700; fill: #57534e; letter-spacing: 0.04em; }
+
+      .disclaimer-band { fill: #fef2f2; stroke: #b91c1c; stroke-width: 1.5; }
+      .disclaimer-text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 700; fill: #b91c1c; }
+      .footnote { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #78716c; }
+    ]]></style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" class="arrow-head"/>
+    </marker>
+  </defs>
+
+  <rect class="frame" x="0" y="0" width="1200" height="800"/>
+
+  <text class="title-text" x="40" y="50">Content Signals `use` — the new field on `robots.txt`</text>
+  <text class="subtitle" x="40" y="78">Three values layered on the Search / Agent / Training bot taxonomy. Generated editorial diagram, not source evidence.</text>
+
+  <!-- Row 1: Search / Agent / Training tier layer -->
+  <text class="row-label" x="40" y="120">TIER LAYER (per bot)</text>
+  <text class="row-label" x="40" y="138" style="font-weight: 400; letter-spacing: 0;">Search · Agent · Training</text>
+
+  <!-- Tier cards -->
+  <g transform="translate(40, 160)">
+    <rect class="tier-card-allowed" x="0" y="0" width="360" height="110" rx="6"/>
+    <text class="tier-state tier-state-allowed" x="16" y="26">ALLOWED BY DEFAULT</text>
+    <text class="tier-title" x="16" y="52">Search</text>
+    <text class="tier-body" x="16" y="74">Crawlers that index the site so it can be</text>
+    <text class="tier-body" x="16" y="90">returned in a search/answer experience later.</text>
+    <text class="tier-body" x="16" y="104" style="font-style: italic; fill: #57534e;">Examples: any search engine.</text>
+  </g>
+
+  <g transform="translate(420, 160)">
+    <rect class="tier-card-blocked" x="0" y="0" width="360" height="110" rx="6"/>
+    <text class="tier-state tier-state-blocked" x="16" y="26">BLOCKED ON AD PAGES (Sep 15)</text>
+    <text class="tier-title" x="16" y="52">Agent</text>
+    <text class="tier-body" x="16" y="74">Automated behaviour that acts on a person's</text>
+    <text class="tier-body" x="16" y="90">behalf, often in real time, often with a</text>
+    <text class="tier-body" x="16" y="104" style="font-style: italic; fill: #57534e;">human waiting on the response.</text>
+  </g>
+
+  <g transform="translate(800, 160)">
+    <rect class="tier-card-blocked" x="0" y="0" width="360" height="110" rx="6"/>
+    <text class="tier-state tier-state-blocked" x="16" y="26">BLOCKED ON AD PAGES (Sep 15)</text>
+    <text class="tier-title" x="16" y="52">Training</text>
+    <text class="tier-body" x="16" y="74">Crawlers that take content to train or</text>
+    <text class="tier-body" x="16" y="90">fine-tune a model. Permanently absorbed</text>
+    <text class="tier-body" x="16" y="104" style="font-style: italic; fill: #57534e;">into model weights.</text>
+  </g>
+
+  <!-- Row 2: The use= field horizontal flow -->
+  <text class="row-label" x="40" y="320">NEW `use=` FIELD (per Content Signal rule)</text>
+  <text class="row-label" x="40" y="338" style="font-weight: 400; letter-spacing: 0;">What a crawler may keep and reshare after fetching</text>
+
+  <!-- use=immediate -->
+  <g transform="translate(40, 360)">
+    <rect class="use-card" x="0" y="0" width="360" height="130" rx="6"/>
+    <text class="use-value" x="20" y="40">use=immediate</text>
+    <text class="use-meaning" x="20" y="70">Interact, store nothing.</text>
+    <text class="use-meaning" x="20" y="92">No excerpt, no index entry, no</text>
+    <text class="use-meaning" x="20" y="110">republication. A one-shot fetch.</text>
+  </g>
+
+  <!-- use=reference (default) -->
+  <g transform="translate(420, 360)">
+    <rect class="use-card-default" x="0" y="0" width="360" height="130" rx="6"/>
+    <text class="use-default-tag" x="20" y="22">CLOUDFLARE-MANAGED DEFAULT</text>
+    <text class="use-value" x="20" y="50" style="fill: #c2410c;">use=reference</text>
+    <text class="use-meaning" x="20" y="80">Index, excerpt, link back.</text>
+    <text class="use-meaning" x="20" y="102">Permitted for search results and</text>
+    <text class="use-meaning" x="20" y="120">attributed references.</text>
+  </g>
+
+  <!-- use=full -->
+  <g transform="translate(800, 360)">
+    <rect class="use-card" x="0" y="0" width="360" height="130" rx="6"/>
+    <text class="use-value" x="20" y="40">use=full</text>
+    <text class="use-meaning" x="20" y="70">Summarize and reproduce.</text>
+    <text class="use-meaning" x="20" y="92">Permit the model to ingest the content</text>
+    <text class="use-meaning" x="20" y="110">as raw material for synthesis.</text>
+  </g>
+
+  <!-- Arrows between use cards -->
+  <path class="arrow-line" d="M 400 425 L 420 425" marker-end="url(#arrow)"/>
+  <path class="arrow-line" d="M 780 425 L 800 425" marker-end="url(#arrow)"/>
+
+  <!-- Row 3: before/after robots.txt block -->
+  <text class="row-label" x="40" y="540">EFFECT ON `robots.txt`</text>
+
+  <!-- Before -->
+  <g transform="translate(40, 560)">
+    <text class="code-label" x="0" y="0">BEFORE</text>
+    <rect class="code-frame" x="0" y="14" width="540" height="170" rx="6"/>
+    <text class="code-comment" x="20" y="42"># Before</text>
+    <text class="code-text" x="20" y="70"><tspan class="code-key">User-agent:</tspan> *</text>
+    <text class="code-text" x="20" y="98"><tspan class="code-key">Content-Signal:</tspan> <tspan class="code-string">search=yes,ai-train=no</tspan></text>
+    <text class="code-text" x="20" y="126"><tspan class="code-key">Allow:</tspan> /</text>
+  </g>
+
+  <!-- After -->
+  <g transform="translate(620, 560)">
+    <text class="code-label" x="0" y="0" style="fill: #c2410c;">AFTER (Cloudflare-managed)</text>
+    <rect class="code-frame" x="0" y="14" width="540" height="170" rx="6"/>
+    <text class="code-comment" x="20" y="42"># After</text>
+    <text class="code-text" x="20" y="70"><tspan class="code-key">User-agent:</tspan> *</text>
+    <text class="code-text" x="20" y="98"><tspan class="code-key">Content-Signal:</tspan> <tspan class="code-string">search=yes,ai-train=no</tspan><tspan class="code-added">,use=reference</tspan></text>
+    <text class="code-text" x="20" y="126"><tspan class="code-key">Allow:</tspan> /</text>
+  </g>
+
+  <!-- Disclaimer band -->
+  <g transform="translate(40, 750)">
+    <rect class="disclaimer-band" x="0" y="0" width="1120" height="36" rx="4"/>
+    <text class="disclaimer-text" x="16" y="23">GENERATED EDITORIAL IMAGE — NOT SOURCE EVIDENCE · Playwright Chromium / libglib-2.0.so.0 blocker in effect · AI Newsroom, 2026-07-03</text>
+  </g>
+</svg>
