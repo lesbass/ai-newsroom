@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="system-ui, -apple-system, sans-serif">
+  <rect width="800" height="450" fill="#0f172a"/>
+  <text x="400" y="40" text-anchor="middle" fill="#e2e8f0" font-size="20" font-weight="700">OpenWiki — Two Operational Modes</text>
+  <text x="400" y="60" text-anchor="middle" fill="#94a3b8" font-size="12">langchain-ai/openwiki · MIT · TypeScript · 10,810★</text>
+
+  <!-- Code mode box -->
+  <rect x="30" y="80" width="355" height="340" rx="10" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+  <rect x="30" y="80" width="355" height="35" rx="10" fill="#3b82f6"/>
+  <rect x="30" y="105" width="355" height="10" fill="#3b82f6"/>
+  <text x="207" y="102" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">Code Mode</text>
+
+  <text x="50" y="140" fill="#e2e8f0" font-size="13" font-weight="600">openwiki code --init</text>
+
+  <rect x="50" y="155" width="150" height="30" rx="6" fill="#334155"/>
+  <text x="125" y="175" text-anchor="middle" fill="#94a3b8" font-size="11">Repository Source</text>
+
+  <line x1="200" y1="170" x2="240" y2="170" stroke="#475569" stroke-width="2"/>
+  <polygon points="240,165 250,170 240,175" fill="#475569"/>
+
+  <rect x="250" y="150" width="115" height="40" rx="6" fill="#1e3a5f"/>
+  <text x="307" y="170" text-anchor="middle" fill="#60a5fa" font-size="11">OpenWiki CLI</text>
+  <text x="307" y="183" text-anchor="middle" fill="#60a5fa" font-size="9">(LLM + BM25)</text>
+
+  <line x1="250" y1="205" x2="125" y2="230" stroke="#475569" stroke-width="2"/>
+  <polygon points="125,225 115,233 135,233" fill="#475569"/>
+
+  <rect x="50" y="225" width="150" height="50" rx="6" fill="#1b4332"/>
+  <text x="125" y="245" text-anchor="middle" fill="#34d399" font-size="11">AGENTS.md</text>
+  <text x="125" y="260" text-anchor="middle" fill="#34d399" font-size="11">CLAUDE.md</text>
+  <text x="125" y="270" text-anchor="middle" fill="#6ee7b7" font-size="9">(block-delimited)</text>
+
+  <line x1="250" y1="210" x2="307" y2="230" stroke="#475569" stroke-width="2"/>
+  <polygon points="307,225 315,233 299,233" fill="#475569"/>
+
+  <rect x="250" y="225" width="115" height="30" rx="6" fill="#1b4332"/>
+  <text x="307" y="244" text-anchor="middle" fill="#34d399" font-size="11">openwiki/docs/</text>
+
+  <rect x="50" y="295" width="315" height="30" rx="6" fill="#4a1d2e"/>
+  <text x="207" y="314" text-anchor="middle" fill="#f472b6" font-size="11">CI Workflow — auto PR on schedule</text>
+  <text x="207" y="319" text-anchor="middle" fill="#f9a8d4" font-size="9">GitHub Actions · GitLab CI · Bitbucket</text>
+
+  <rect x="50" y="340" width="95" height="55" rx="6" fill="#2d3748"/>
+  <text x="97" y="357" text-anchor="middle" fill="#e2e8f0" font-size="10">--update</text>
+  <text x="97" y="375" text-anchor="middle" fill="#94a3b8" font-size="9">Rewrites block</text>
+
+  <rect x="160" y="340" width="95" height="55" rx="6" fill="#2d3748"/>
+  <text x="207" y="357" text-anchor="middle" fill="#e2e8f0" font-size="10">Custom content</text>
+  <text x="207" y="375" text-anchor="middle" fill="#94a3b8" font-size="9">Preserved</text>
+
+  <rect x="270" y="340" width="95" height="55" rx="6" fill="#2d3748"/>
+  <text x="317" y="357" text-anchor="middle" fill="#e2e8f0" font-size="10">-p / --print</text>
+  <text x="317" y="375" text-anchor="middle" fill="#94a3b8" font-size="9">One-shot</text>
+
+  <line x1="400" y1="80" x2="400" y2="420" stroke="#334155" stroke-width="1" stroke-dasharray="4"/>
+
+  <!-- Personal mode box -->
+  <rect x="415" y="80" width="355" height="340" rx="10" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+  <rect x="415" y="80" width="355" height="35" rx="10" fill="#8b5cf6"/>
+  <rect x="415" y="105" width="355" height="10" fill="#8b5cf6"/>
+  <text x="592" y="102" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">Personal Mode</text>
+
+  <text x="435" y="140" fill="#e2e8f0" font-size="13" font-weight="600">openwiki personal --init</text>
+
+  <rect x="435" y="155" width="310" height="22" rx="4" fill="#334155"/>
+  <text x="590" y="170" text-anchor="middle" fill="#94a3b8" font-size="10">Connectors</text>
+
+  <rect x="435" y="185" width="95" height="22" rx="4" fill="#3b1f1f"/>
+  <text x="482" y="200" text-anchor="middle" fill="#fca5a5" font-size="9">Gmail</text>
+  <rect x="538" y="185" width="95" height="22" rx="4" fill="#1f3b2d"/>
+  <text x="585" y="200" text-anchor="middle" fill="#86efac" font-size="9">Notion</text>
+  <rect x="641" y="185" width="95" height="22" rx="4" fill="#1f2937"/>
+  <text x="688" y="200" text-anchor="middle" fill="#93c5fd" font-size="9">X/Twitter</text>
+  <rect x="435" y="213" width="95" height="22" rx="4" fill="#3b2d1f"/>
+  <text x="482" y="228" text-anchor="middle" fill="#fcd34d" font-size="9">Web Search</text>
+  <rect x="538" y="213" width="95" height="22" rx="4" fill="#2d1f3b"/>
+  <text x="585" y="228" text-anchor="middle" fill="#d8b4fe" font-size="9">Hacker News</text>
+  <rect x="641" y="213" width="95" height="22" rx="4" fill="#1f2937"/>
+  <text x="688" y="228" text-anchor="middle" fill="#93c5fd" font-size="9">Git Repos</text>
+
+  <line x1="590" y1="240" x2="590" y2="262" stroke="#475569" stroke-width="2"/>
+  <polygon points="585,262 590,270 595,262" fill="#475569"/>
+
+  <rect x="435" y="270" width="310" height="22" rx="4" fill="#4c1d95"/>
+  <text x="590" y="285" text-anchor="middle" fill="#c4b5fd" font-size="10">Connector Agent — synthesizes local wiki</text>
+
+  <line x1="590" y1="292" x2="590" y2="308" stroke="#475569" stroke-width="2"/>
+  <polygon points="585,308 590,316 595,308" fill="#475569"/>
+
+  <rect x="435" y="316" width="310" height="22" rx="4" fill="#1b4332"/>
+  <text x="590" y="332" text-anchor="middle" fill="#34d399" font-size="10">~/.openwiki/wiki/ · ~/.openwiki/INSTRUCTIONS.md</text>
+
+  <rect x="435" y="350" width="145" height="38" rx="6" fill="#2d3748"/>
+  <text x="507" y="366" text-anchor="middle" fill="#e2e8f0" font-size="10">OAuth auth flows</text>
+  <text x="507" y="380" text-anchor="middle" fill="#94a3b8" font-size="9">Gmail, X, Notion, Slack</text>
+
+  <rect x="590" y="350" width="155" height="38" rx="6" fill="#2d3748"/>
+  <text x="667" y="366" text-anchor="middle" fill="#e2e8f0" font-size="10">Scheduled updates</text>
+  <text x="667" y="380" text-anchor="middle" fill="#94a3b8" font-size="9">LaunchAgent (macOS)</text>
+
+  <text x="400" y="440" text-anchor="middle" fill="#475569" font-size="10">Generated editorial diagram · Source: github.com/langchain-ai/openwiki · Retrieved 2026-07-13</text>
+</svg>
