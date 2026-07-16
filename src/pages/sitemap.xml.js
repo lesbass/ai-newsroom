@@ -20,13 +20,18 @@ export async function GET(context) {
   const site = context.site;
   const now = new Date().toISOString().split('T')[0];
 
-  const tagSet = new Set();
+  const tagCount = new Map();
   for (const article of articles) {
     for (const tag of article.data.tags) {
       const slug = slugifyTag(tag);
-      if (slug) tagSet.add(slug);
+      if (slug) {
+        tagCount.set(slug, (tagCount.get(slug) || 0) + 1);
+      }
     }
   }
+  const qualifyingTags = [...tagCount.entries()]
+    .filter(([, count]) => count >= 2)
+    .map(([slug]) => slug);
 
   const staticPages = [
     { path: '/', priority: '0.9' },
@@ -40,7 +45,7 @@ export async function GET(context) {
       const url = xmlEscape(new URL(p.path, site).toString());
       return `<url><loc>${url}</loc><lastmod>${now}</lastmod><changefreq>daily</changefreq><priority>${p.priority}</priority></url>`;
     }),
-    ...[...tagSet].map(tag => {
+    ...qualifyingTags.map(tag => {
       const url = xmlEscape(new URL(`/tags/${tag}/`, site).toString());
       return `<url><loc>${url}</loc><lastmod>${now}</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>`;
     }),

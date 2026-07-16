@@ -9,7 +9,7 @@ import { slugifyTag } from '../lib/slugify';
 const allArticles = await getCollection('articles');
 const sortedArticles = allArticles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const [featuredArticle, ...restArticles] = sortedArticles;
-const latestArticles = restArticles.slice(0, 5);
+const latestArticles = restArticles.slice(0, 12);
 
 const tagMap = new Map<string, { count: number; display: string }>();
 for (const article of allArticles) {
