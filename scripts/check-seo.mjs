@@ -220,7 +220,7 @@ function checkPage(rel, html, path) {
       }
     }
 
-    // 12. OG title should match <title> (decode HTML entities before comparing)
+    // 12. OG title should match <title> or be a longer version (SEO truncation is acceptable)
     const ogTitleMatch = html.match(/<meta property="og:title" content="([^"]*)"/);
     const titleTagMatch = html.match(/<title>([^<]+)<\/title>/);
     if (ogTitleMatch && titleTagMatch) {
@@ -228,8 +228,8 @@ function checkPage(rel, html, path) {
         .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
       const ogTitle = decodeEntities(ogTitleMatch[1]);
       const htmlTitle = decodeEntities(titleTagMatch[1]);
-      if (ogTitle !== htmlTitle) {
-        console.warn(`⚠ ${rel}: og:title "${ogTitle.slice(0,50)}..." differs from <title> "${htmlTitle.slice(0,50)}..."`);
+      if (ogTitle !== htmlTitle && !ogTitle.startsWith(htmlTitle.slice(0, htmlTitle.length - 1))) {
+        console.warn(`⚠ ${rel}: og:title "${ogTitle.slice(0,50)}..." differs unexpectedly from <title> "${htmlTitle.slice(0,50)}..."`);
         warnings++;
       }
     }

@@ -46,9 +46,15 @@ Three stages — **mid-training, supervised fine-tuning, reinforcement learning 
 
 Mistral notes the only provers ranked higher on PutnamBench operate under different conditions — some receive natural-language proof guidance, others cost more (e.g. **Aleph Prover at $54–$68 per problem**, **Seed-Prover 1.5 high at 10 H20-days per problem**) ([blog](https://mistral.ai/news/leanstral-1-5)).
 
-![PutnamBench Pass@8 vs token budget. The curve climbs monotonically from 44 problems at 50k tokens to 587 at 4M, passing through 126 (100k), 244 (200k), 396 (500k), 493 (1M), and 573 (2M). Leanstral 1.5 turns compute directly into solved problems rather than giving up on long proofs.](/images/articles/mistral-leanstral-1-5-proof-engineering-model/section-putnambench-scaling.png)
+<figure>
+  <img src="/images/articles/mistral-leanstral-1-5-proof-engineering-model/section-putnambench-scaling.png" alt="PutnamBench Pass@8 vs token budget. The curve climbs monotonically from 44 problems at 50k tokens to 587 at 4M, passing through 126 (100k), 244 (200k), 396 (500k), 493 (1M), and 573 (2M). Leanstral 1.5 turns compute directly into solved problems rather than giving up on long proofs." loading="lazy" decoding="async">
+  <figcaption>Source: Mistral AI blog <a href="https://mistral.ai/news/leanstral-1-5/">"Leanstral 1.5: Proof Abundance for All"</a> (2026-07-02).</figcaption>
+</figure>
 
-![FLTEval pass@k performance. Leanstral 1.5 (orange) sits above Leanstral 1.0, GLM5, Kimi K2.5, and Qwen 3.5 across pass@1, pass@2, and pass@4, reaching roughly 39% at pass@4.](/images/articles/mistral-leanstral-1-5-proof-engineering-model/section-flteval.png)
+<figure>
+  <img src="/images/articles/mistral-leanstral-1-5-proof-engineering-model/section-flteval.png" alt="FLTEval pass@k performance. Leanstral 1.5 (orange) sits above Leanstral 1.0, GLM5, Kimi K2.5, and Qwen 3.5 across pass@1, pass@2, and pass@4, reaching roughly 39% at pass@4." loading="lazy" decoding="async">
+  <figcaption>Source: Mistral AI blog <a href="https://mistral.ai/news/leanstral-1-5/">"Leanstral 1.5: Proof Abundance for All"</a> (2026-07-02).</figcaption>
+</figure>
 
 ## Real-world code verification
 

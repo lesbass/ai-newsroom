@@ -59,7 +59,10 @@ canonicalURL: "https://news.lesbass.com/articles/leanstral-mistral-open-source-p
 
 [Mistral AI](https://mistral.ai/news/leanstral-1-5/) released **Leanstral 1.5** on 2026-07-02 — an Apache-2.0, 119B/6B-active MoE for proof engineering in [Lean 4](https://leanprover.github.io/). It saturates miniF2F, solves **587 of 672 PutnamBench** problems, sets SOTA on FATE-H (87%) and FATE-X (34%), and lifts FLTEval pass@8 from 31.9 to 43.2 — past Opus 4.6's 39.6 at ~1/7 the cost. Weights are on [Hugging Face](https://huggingface.co/mistralai/Leanstral-1.5-119B-A6B); a free `leanstral-1-5` API is live.
 
-![Leanstral 1.5 benchmark summary: PutnamBench 587/672, FATE-H 87%, FATE-X 34%](/images/articles/leanstral-mistral-proof-engineering/hero-benchmarks.png)
+<figure>
+  <img src="/images/articles/leanstral-mistral-proof-engineering/hero-benchmarks.png" alt="Leanstral 1.5 benchmark summary: PutnamBench 587/672, FATE-H 87%, FATE-X 34%" loading="lazy" decoding="async">
+  <figcaption>Source: Mistral AI blog <a href="https://mistral.ai/news/leanstral-1-5/">"Leanstral 1.5: Proof Abundance for All"</a> (2026-07-02). Editorial screenshot.</figcaption>
+</figure>
 
 ## What happened
 
@@ -90,7 +93,10 @@ All numbers from the [Mistral blog post, 2026-07-02](https://mistral.ai/news/lea
 
 **Test-time scaling.** PutnamBench Pass@8 climbs monotonically with per-attempt tokens: **44 at 50k → 244 at 200k → 493 at 1M → 587 at 4M**. Not plateauing at 4M.
 
-![PutnamBench Pass@8 vs token budget — 44 problems at 50k tokens, 587 at 4M tokens](/images/articles/leanstral-mistral-proof-engineering/scaling-curve.png)
+<figure>
+  <img src="/images/articles/leanstral-mistral-proof-engineering/scaling-curve.png" alt="PutnamBench Pass@8 vs token budget — 44 problems at 50k tokens, 587 at 4M tokens" loading="lazy" decoding="async">
+  <figcaption>Source: Mistral AI blog <a href="https://mistral.ai/news/leanstral-1-5/">"Leanstral 1.5: Proof Abundance for All"</a> (2026-07-02). Editorial screenshot.</figcaption>
+</figure>
 
 ## Real-world bug discovery
 

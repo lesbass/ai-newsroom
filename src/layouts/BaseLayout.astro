@@ -13,8 +13,26 @@ export interface Props {
 
 const { title, description, image, canonicalURL, pubDate, updatedDate, author = 'AI Newsroom', article = false, tags = [] } = Astro.props;
 const site = 'https://news.lesbass.com/';
-const fullTitle = title === 'AI Newsroom' ? title : `${title} — AI Newsroom`;
+const rawFullTitle = title === 'AI Newsroom' ? title : `${title} — AI Newsroom`;
+const fullTitle = rawFullTitle.length <= 65 ? rawFullTitle : title;
 const pageURL = canonicalURL || new URL(Astro.url.pathname, site).toString();
+
+function truncateTitle(text: string, maxLen = 65): string {
+  if (text.length <= maxLen) return text;
+  const cut = text.slice(0, maxLen + 1);
+  const breaks = [':', ';', '—', '–', '|', '-'];
+  let best = -1;
+  for (const b of breaks) {
+    const idx = cut.lastIndexOf(b);
+    if (idx > maxLen * 0.5) best = Math.max(best, idx);
+  }
+  if (best > 0) return text.slice(0, best).trimEnd();
+  const lastSpace = cut.lastIndexOf(' ');
+  if (lastSpace > maxLen * 0.5) return text.slice(0, lastSpace).trimEnd() + '…';
+  return text.slice(0, maxLen).trimEnd() + '…';
+}
+
+const seoTitle = fullTitle.length <= 65 ? fullTitle : truncateTitle(fullTitle);
 
 function truncateDescription(text: string, maxLen = 155): string {
   if (text.length <= maxLen) return text;
@@ -85,7 +103,7 @@ const jsonLd = article
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>{fullTitle}</title>
+  <title>{seoTitle}</title>
   <meta name="description" content={seoDescription} />
   <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)" />
