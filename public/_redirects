@@ -1,3 +1,10 @@
 # Force www to apex — configure via Cloudflare Dashboard > Rules > Redirect Rules:
 # Source: www.news.lesbass.com/*  →  Destination: https://news.lesbass.com/:splat  (301)
 # The _redirects file only supports path patterns, not domain redirects.
+
+# Italian→English slug redirects (2026-07-20)
+/articles/anthropic-claude-corps-fellowship-150-milioni /articles/anthropic-claude-corps-150-million-fellowship 301
+/articles/anthropic-propone-blocco-ai-pericolosa-poi-viene-bloccata /articles/anthropic-proposes-block-then-gets-blocked 301
+/articles/didilili-ai-agents-from-zero-guida-open-source-2026 /articles/didilili-ai-agents-from-zero-guide-open-source-2026 301
+/articles/google-gemini-spark-agente-24-7-cloud-workspace-2026 /articles/google-gemini-spark-agent-24-7-cloud-workspace-2026 301
+/articles/smolagents-hugging-face-agenti-codice-python /articles/smolagents-hugging-face-agents-code-python 301
