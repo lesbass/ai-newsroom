@@ -2,7 +2,9 @@
 title: "OpenAI retracts SWE-Bench Pro: ~30% of tasks broken, audit finds"
 description: "OpenAI's own datapoint + 5-engineer audit flags 27–34% of SWE-Bench Pro tasks as broken. It just retracted its own recommendation to use the benchmark."
 pubDate: 2026-07-11
-heroImage: "/images/articles/openai-swe-bench-pro-audit-30-percent-broken/hero-desktop.png"
+image: "/images/articles/openai-swe-bench-pro-audit-30-percent-broken/hero-desktop.png"
+imageAlt: "Screenshot of OpenAI's 'Separating signal from noise in coding evaluations' blog post with SWE-Bench Pro audit results and failure-mode analysis charts."
+imageCredit: "Source: openai.com/index/separating-signal-from-noise-coding-evaluations/ · Credit: OpenAI · License: Content from the announcement page, used for editorial commentary."
 canonicalURL: "https://news.lesbass.com/articles/openai-swe-bench-pro-audit-30-percent-broken/"
 tags:
   - openai
