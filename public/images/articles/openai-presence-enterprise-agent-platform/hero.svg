@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="box" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Title -->
+  <text x="600" y="52" text-anchor="middle" fill="#f1f5f9" font-size="28" font-weight="700">OpenAI Presence — Enterprise Agent Platform</text>
+  <text x="600" y="80" text-anchor="middle" fill="#94a3b8" font-size="16">Managed deployment · Codex improvement loop · FDE-led</text>
+  
+  <!-- Component boxes -->
+  <rect x="60" y="110" width="230" height="130" rx="10" fill="url(#box)" stroke="#334155" stroke-width="1.5"/>
+  <text x="175" y="145" text-anchor="middle" fill="#10b981" font-size="14" font-weight="600">POLICIES &amp; SOPs</text>
+  <text x="175" y="167" text-anchor="middle" fill="#94a3b8" font-size="11">Define agent behavior rules,</text>
+  <text x="175" y="185" text-anchor="middle" fill="#94a3b8" font-size="11">approval thresholds, and</text>
+  <text x="175" y="203" text-anchor="middle" fill="#94a3b8" font-size="11">escalation policies</text>
+
+  <rect x="320" y="110" width="230" height="130" rx="10" fill="url(#box)" stroke="#334155" stroke-width="1.5"/>
+  <text x="435" y="145" text-anchor="middle" fill="#10b981" font-size="14" font-weight="600">GUARDRAILS</text>
+  <text x="435" y="167" text-anchor="middle" fill="#94a3b8" font-size="11">Runtime enforcement of</text>
+  <text x="435" y="185" text-anchor="middle" fill="#94a3b8" font-size="11">boundaries — intercept</text>
+  <text x="435" y="203" text-anchor="middle" fill="#94a3b8" font-size="11">out-of-policy actions</text>
+
+  <rect x="580" y="110" width="230" height="130" rx="10" fill="url(#box)" stroke="#334155" stroke-width="1.5"/>
+  <text x="695" y="145" text-anchor="middle" fill="#10b981" font-size="14" font-weight="600">APPROVED ACTIONS</text>
+  <text x="695" y="167" text-anchor="middle" fill="#94a3b8" font-size="11">Pre-defined system</text>
+  <text x="695" y="185" text-anchor="middle" fill="#94a3b8" font-size="11">integrations — billing,</text>
+  <text x="695" y="203" text-anchor="middle" fill="#94a3b8" font-size="11">refunds, account changes</text>
+
+  <rect x="840" y="110" width="230" height="130" rx="10" fill="url(#box)" stroke="#334155" stroke-width="1.5"/>
+  <text x="955" y="145" text-anchor="middle" fill="#10b981" font-size="14" font-weight="600">SIMULATION</text>
+  <text x="955" y="167" text-anchor="middle" fill="#94a3b8" font-size="11">Test agent against</text>
+  <text x="955" y="185" text-anchor="middle" fill="#94a3b8" font-size="11">common requests, edge</text>
+  <text x="955" y="203" text-anchor="middle" fill="#94a3b8" font-size="11">cases, and risk scenarios</text>
+
+  <!-- Bottom row -->
+  <rect x="160" y="280" width="350" height="130" rx="10" fill="url(#box)" stroke="#334155" stroke-width="1.5"/>
+  <text x="335" y="315" text-anchor="middle" fill="#10b981" font-size="14" font-weight="600">EVALUATION TOOLS</text>
+  <text x="335" y="337" text-anchor="middle" fill="#94a3b8" font-size="11">Graders check: right outcome, followed policy,</text>
+  <text x="335" y="355" text-anchor="middle" fill="#94a3b8" font-size="11">used tools correctly, escalated appropriately</text>
+  <text x="335" y="380" text-anchor="middle" fill="#64748b" font-size="10">Pre-launch + continuous production monitoring</text>
+
+  <rect x="600" y="280" width="400" height="130" rx="10" fill="url(#box)" stroke="#059669" stroke-width="2"/>
+  <text x="800" y="315" text-anchor="middle" fill="#10b981" font-size="14" font-weight="600">CODEX IMPROVEMENT LOOP</text>
+  <text x="800" y="340" text-anchor="middle" fill="#94a3b8" font-size="11">Production sessions → Codex proposes updates →</text>
+  <text x="800" y="358" text-anchor="middle" fill="#94a3b8" font-size="11">Team tests &amp; approves → Controlled rollout</text>
+  <text x="800" y="383" text-anchor="middle" fill="#64748b" font-size="10">Self-reported: 15pp handoff reduction in 10 days</text>
+
+  <!-- Arrow -->
+  <line x1="510" y1="345" x2="595" y2="345" stroke="#334155" stroke-width="2" marker-end="url(#arrow)"/>
+  <polygon points="585,340 600,345 585,350" fill="#475569"/>
+
+  <!-- Deployment model bar -->
+  <rect x="60" y="450" width="1080" height="60" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="100" y="485" fill="#f59e0b" font-size="14" font-weight="600">DEPLOYMENT</text>
+  <text x="230" y="485" fill="#94a3b8" font-size="13">Limited GA · FDE-led · Select global SIs · No self-serve · No published pricing</text>
+
+  <!-- Metrics row -->
+  <rect x="60" y="530" width="520" height="80" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+  <text x="80" y="560" fill="#34d399" font-size="13" font-weight="600">SELF-REPORTED: 75% resolution rate</text>
+  <text x="80" y="582" fill="#94a3b8" font-size="11">On OpenAI's own 1-888-GPT-0090 phone line</text>
+  <text x="80" y="599" fill="#64748b" font-size="10">Against OpenAI's own grading benchmarks</text>
+
+  <rect x="620" y="530" width="520" height="80" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+  <text x="640" y="560" fill="#34d399" font-size="13" font-weight="600">SELF-REPORTED: 15pp handoff reduction</text>
+  <text x="640" y="582" fill="#94a3b8" font-size="11">Codex improvement loop in 10 days</text>
+  <text x="640" y="599" fill="#64748b" font-size="10">OpenAI's own English phone support</text>
+</svg>
