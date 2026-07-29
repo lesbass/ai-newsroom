@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
+  <rect width="1280" height="800" fill="#0d1117"/>
+  <text x="40" y="60" font-family="sans-serif" font-size="28" fill="#e6edf3" font-weight="bold">Context Mode</text>
+  <text x="40" y="95" font-family="sans-serif" font-size="18" fill="#8b949e">The other half of the context problem</text>
+  <rect x="40" y="120" width="1200" height="1" fill="#30363d"/>
+  <rect x="40" y="145" rx="8" width="280" height="80" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="60" y="175" font-family="sans-serif" font-size="13" fill="#8b949e">Stars</text>
+  <text x="60" y="205" font-family="sans-serif" font-size="28" fill="#e6edf3" font-weight="bold">19,414</text>
+  <rect x="340" y="145" rx="8" width="280" height="80" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="360" y="175" font-family="sans-serif" font-size="13" fill="#8b949e">Forks</text>
+  <text x="360" y="205" font-family="sans-serif" font-size="28" fill="#e6edf3" font-weight="bold">1,400+</text>
+  <rect x="640" y="145" rx="8" width="280" height="80" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="660" y="175" font-family="sans-serif" font-size="13" fill="#8b949e">Commits</text>
+  <text x="660" y="205" font-family="sans-serif" font-size="28" fill="#e6edf3" font-weight="bold">2,108</text>
+  <rect x="940" y="145" rx="8" width="280" height="80" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="960" y="175" font-family="sans-serif" font-size="13" fill="#8b949e">License</text>
+  <text x="960" y="205" font-family="sans-serif" font-size="22" fill="#e6edf3" font-weight="bold">ELv2</text>
+  <text x="40" y="270" font-family="sans-serif" font-size="22" fill="#e6edf3" font-weight="bold">How Context Mode Solves It</text>
+  <rect x="40" y="290" rx="8" width="580" height="140" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <circle cx="70" cy="320" r="12" fill="#238636"/>
+  <text x="95" y="325" font-family="sans-serif" font-size="17" fill="#e6edf3" font-weight="bold">Context Saving</text>
+  <text x="70" y="355" font-family="sans-serif" font-size="14" fill="#8b949e">Sandbox tools keep raw data out of the context window.</text>
+  <text x="70" y="380" font-family="sans-serif" font-size="14" fill="#8b949e">315 KB becomes 5.4 KB. 98% reduction.</text>
+  <rect x="640" y="290" rx="8" width="580" height="140" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <circle cx="670" cy="320" r="12" fill="#238636"/>
+  <text x="695" y="325" font-family="sans-serif" font-size="17" fill="#e6edf3" font-weight="bold">Session Continuity</text>
+  <text x="670" y="355" font-family="sans-serif" font-size="14" fill="#8b949e">SQLite + FTS5 indexes events on compaction.</text>
+  <text x="670" y="380" font-family="sans-serif" font-size="14" fill="#8b949e">Model picks up exactly where it left off.</text>
+  <rect x="40" y="445" rx="8" width="580" height="140" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <circle cx="70" cy="475" r="12" fill="#238636"/>
+  <text x="95" y="480" font-family="sans-serif" font-size="17" fill="#e6edf3" font-weight="bold">Think in Code</text>
+  <text x="70" y="510" font-family="sans-serif" font-size="14" fill="#8b949e">47 Read() = 700 KB. One ctx_execute = 3.6 KB.</text>
+  <text x="70" y="535" font-family="sans-serif" font-size="14" fill="#8b949e">100x less context, same answer.</text>
+  <rect x="640" y="445" rx="8" width="580" height="140" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <circle cx="670" cy="475" r="12" fill="#238636"/>
+  <text x="695" y="480" font-family="sans-serif" font-size="17" fill="#e6edf3" font-weight="bold">No Prose Enforcement</text>
+  <text x="670" y="510" font-family="sans-serif" font-size="14" fill="#8b949e">context-mode never dictates how the model writes.</text>
+  <text x="670" y="535" font-family="sans-serif" font-size="14" fill="#8b949e">Brevity, completeness, formatting — model's call.</text>
+  <rect x="40" y="605" width="1200" height="1" fill="#30363d"/>
+  <text x="40" y="640" font-family="sans-serif" font-size="18" fill="#8b949e">Used across teams at:</text>
+  <text x="40" y="670" font-family="sans-serif" font-size="15" fill="#58a6ff">Microsoft  Google  Meta  Amazon  NVIDIA  Stripe  ···</text>
+  <text x="40" y="700" font-family="sans-serif" font-size="18" fill="#8b949e">17 supported platforms:</text>
+  <text x="40" y="730" font-family="sans-serif" font-size="14" fill="#58a6ff">Claude Code · OpenCode · Gemini CLI · Cursor · Codex CLI · Kimi Code · Qwen Code · GitHub Copilot CLI · JetBrains Copilot · Kiro · Zed · Antigravity IDE · and more</text>
+  <rect x="40" y="760" width="1200" height="1" fill="#30363d"/>
+  <text x="40" y="785" font-family="sans-serif" font-size="12" fill="#484f58">Source: https://github.com/mksglu/context-mode · Captured-based editorial diagram 2026-07-29 · GENERATED EDITORIAL DIAGRAM</text>
+</svg>
