@@ -33,3 +33,15 @@
 
 - Chromium browser screenshot was unavailable (Skia font manager fatal error). Used generated editorial SVG with `GENERATED EDITORIAL DIAGRAM` disclosure.
 - The 6-day publication gap (last article 2026-07-23) is now closed.
+
+## Recovery Disposition
+
+**AIN-550 status: done**
+
+- Paperclip API (https://paperclip-private.lesbass.com) is behind Cloudflare Access — direct API calls return 302 to login.
+- Work completed: context-mode article (AIN-549 PUBLISH_READY) published and verified.
+- Git repository clean, no uncommitted changes.
+- Live site verified: https://news.lesbass.com/articles/context-mode-mcp-context-window-optimization/
+- RSS, sitemap, canonical URLs all correct.
+- Claude Opus 5 (AIN-541) not published due to missing content and stale pubDate (2026-07-25).
+- Next action: EditorInChief should reissue Claude Opus 5 with fresh pubDate or close AIN-541.
