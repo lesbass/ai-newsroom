@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" fill="none" font-family="system-ui, -apple-system, sans-serif">
+  <rect width="800" height="400" rx="12" fill="#0f172a"/>
+  
+  <!-- Title -->
+  <text x="400" y="36" text-anchor="middle" fill="#e2e8f0" font-size="16" font-weight="600">walgit: WAL-in-Object-Storage Architecture</text>
+  
+  <!-- S3 Bucket -->
+  <rect x="300" y="60" width="200" height="100" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+  <text x="400" y="95" text-anchor="middle" fill="#60a5fa" font-size="13" font-weight="600">S3 / GCS Bucket</text>
+  <text x="400" y="115" text-anchor="middle" fill="#94a3b8" font-size="11">manifest.pb (CAS)</text>
+  <text x="400" y="132" text-anchor="middle" fill="#94a3b8" font-size="11">log/*.pb · wal/*.pack</text>
+  <text x="400" y="149" text-anchor="middle" fill="#94a3b8" font-size="11">bundles/ · leases/</text>
+  
+  <!-- walgit instance A -->
+  <rect x="40" y="220" width="160" height="100" rx="8" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+  <text x="120" y="252" text-anchor="middle" fill="#4ade80" font-size="12" font-weight="600">walgit instance A</text>
+  <text x="120" y="272" text-anchor="middle" fill="#94a3b8" font-size="10">receive-pack</text>
+  <text x="120" y="288" text-anchor="middle" fill="#94a3b8" font-size="10">upload-pack · UI · API</text>
+  <text x="120" y="304" text-anchor="middle" fill="#94a3b8" font-size="10">local cache (NVMe)</text>
+  
+  <!-- walgit instance B -->
+  <rect x="320" y="220" width="160" height="100" rx="8" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+  <text x="400" y="252" text-anchor="middle" fill="#4ade80" font-size="12" font-weight="600">walgit instance B</text>
+  <text x="400" y="272" text-anchor="middle" fill="#94a3b8" font-size="10">receive-pack</text>
+  <text x="400" y="288" text-anchor="middle" fill="#94a3b8" font-size="10">upload-pack · UI · API</text>
+  <text x="400" y="304" text-anchor="middle" fill="#94a3b8" font-size="10">local cache (NVMe)</text>
+  
+  <!-- walgit instance C -->
+  <rect x="600" y="220" width="160" height="100" rx="8" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+  <text x="680" y="252" text-anchor="middle" fill="#4ade80" font-size="12" font-weight="600">walgit instance C</text>
+  <text x="680" y="272" text-anchor="middle" fill="#94a3b8" font-size="10">receive-pack</text>
+  <text x="680" y="288" text-anchor="middle" fill="#94a3b8" font-size="10">upload-pack · UI · API</text>
+  <text x="680" y="304" text-anchor="middle" fill="#94a3b8" font-size="10">local cache (NVMe)</text>
+  
+  <!-- Arrows: push up to bucket -->
+  <line x1="120" y1="220" x2="350" y2="160" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="210" y="185" fill="#60a5fa" font-size="10">push (CAS)</text>
+  
+  <line x1="400" y1="220" x2="400" y2="160" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="425" y="195" fill="#60a5fa" font-size="10">push (CAS)</text>
+  
+  <line x1="680" y1="220" x2="450" y2="160" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="590" y="185" fill="#60a5fa" font-size="10">push (CAS)</text>
+  
+  <!-- Arrows: read from bucket -->
+  <line x1="350" y1="160" x2="120" y2="220" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="200" y="205" fill="#a78bfa" font-size="10">read (304/200)</text>
+  
+  <line x1="450" y1="160" x2="680" y2="220" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="600" y="205" fill="#a78bfa" font-size="10">read (304/200)</text>
+  
+  <!-- UDP gossip -->
+  <path d="M 200 270 Q 260 240 320 270" stroke="#f59e0b" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+  <text x="260" y="250" text-anchor="middle" fill="#f59e0b" font-size="9">UDP gossip</text>
+  
+  <path d="M 480 270 Q 540 240 600 270" stroke="#f59e0b" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
+  <text x="540" y="250" text-anchor="middle" fill="#f59e0b" font-size="9">UDP gossip</text>
+  
+  <!-- Legend -->
+  <text x="40" y="370" fill="#64748b" font-size="10">Bucket = source of truth · Every instance = disposable cache · CAS on manifest = consensus</text>
+  <text x="40" y="386" fill="#64748b" font-size="10">Generated editorial diagram · AI Newsroom · 2026-08-26</text>
+</svg>
