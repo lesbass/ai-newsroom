@@ -213,7 +213,8 @@ function checkPage(rel, html, path) {
     const imgTags = html.match(/<img[^>]*>/g);
     if (imgTags) {
       for (const img of imgTags) {
-        if (!/alt="[^"]*"/.test(img) && !/alt='[^']*'/.test(img)) {
+        // Handle > characters inside quoted attributes by checking for alt= pattern
+        if (!/alt="[^"]*"/.test(img) && !/alt='[^']*'/.test(img) && !/alt=\S/.test(img)) {
           console.warn(`⚠ ${rel}: <img> missing alt attribute`);
           warnings++;
         }
