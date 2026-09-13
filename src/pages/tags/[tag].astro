@@ -32,11 +32,13 @@ const matchingArticles = allArticles
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const displayTag = tag.replace(/-/g, ' ');
+const isThinTag = matchingArticles.length < 2;
 ---
 
 <BaseLayout
   title={`${displayTag} articles`}
   description={`Evidence-based AI news articles tagged with "${displayTag}". ${matchingArticles.length} article${matchingArticles.length !== 1 ? 's' : ''}.`}
+  robots={isThinTag ? 'noindex, follow' : undefined}
 >
   <Header />
   <main class="container" id="main-content">

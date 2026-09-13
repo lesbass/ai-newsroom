@@ -25,6 +25,7 @@ for (const article of allArticles) {
 const sortedTags = [...tagMap.entries()]
   .sort((a, b) => b[1].count - a[1].count || a[0].localeCompare(b[0]));
 
+const filteredTags = sortedTags.filter(([slug, { count }]) => count >= 2);
 const totalArticles = allArticles.length;
 ---
 
@@ -36,10 +37,10 @@ const totalArticles = allArticles.length;
   <main class="container" id="main-content">
     <div class="tag-page-header">
       <h1>Topics</h1>
-      <p class="tag-page-count">{sortedTags.length} topics across {totalArticles} articles</p>
+      <p class="tag-page-count">{filteredTags.length} topics across {totalArticles} articles</p>
     </div>
     <div class="tags-index-grid">
-      {sortedTags.map(([slug, { count, display }]) => (
+      {filteredTags.map(([slug, { count, display }]) => (
         <a href={`/tags/${slug}/`} class="tag-index-card">
           <span>{display}</span>
           <span class="tag-index-count">{count}</span>
