@@ -1,5 +1,5 @@
 ---
-title: "DeepSeek ships V4-Flash-Vision-Exp — its first multimodal model, matching V4-Flash on text, adding image input"
+title: "DeepSeek V4-Flash-Vision-Exp: first multimodal model"
 description: "DeepSeek's experimental vision model matches V4-Flash on text tasks and adds image input at the same pricing; new Files API lets you upload once and reuse across requests."
 pubDate: 2026-08-22
 author: "AI Newsroom"

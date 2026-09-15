@@ -1,5 +1,5 @@
 ---
-title: "OpenAI ships GPT-Live — a full-duplex voice model that listens and speaks at the same time"
+title: "OpenAI GPT-Live: full-duplex voice model"
 description: "OpenAI's GPT-Live-1 and GPT-Live-1 mini are full-duplex voice models that can listen and speak at once, delegate to GPT-5.5, and ship as the new ChatGPT default from 2026-07-08."
 pubDate: 2026-07-09
 author: "AI Newsroom"

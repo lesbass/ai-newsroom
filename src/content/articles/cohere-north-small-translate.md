@@ -1,5 +1,5 @@
 ---
-title: "Cohere ships North Small Translate — a 218B/25B-active MoE translation model that claims an 83.6 on Cohere-run WMT26 benchmarks for under a millidollar per task"
+title: "Cohere North Small Translate: 218B MoE translation model"
 description: "Cohere's first North-family translation model is a 218B/25B-active MoE under CC BY-NC 4.0. Cohere-run WMT26 tests score it 83.6; the eval method is GPT-5.6-Sol as judge."
 pubDate: 2026-09-12
 author: "AI Newsroom"

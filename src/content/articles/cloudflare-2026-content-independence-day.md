@@ -1,5 +1,5 @@
 ---
-title: "Cloudflare 2026 Content Independence Day: three-tier AI bot taxonomy and x402 waitlist"
+title: "Cloudflare 2026 Content Independence Day: AI bot taxonomy"
 description: "Cloudflare's second Content Independence Day splits AI bots into Search/Agent/Training, sets a Sep 15 default blocking Training and Agent on ad pages, and opens an x402 waitlist."
 pubDate: 2026-07-03
 author: "AI Newsroom"

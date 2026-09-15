@@ -1,5 +1,5 @@
 ---
-title: "lean-ctx: single-binary local AI Value Gate with a withdrawn benchmark"
+title: "lean-ctx: local AI Value Gate with withdrawn benchmark"
 description: "yvgude/lean-ctx is an Apache-2.0 Rust binary that compresses reads, proxies requests, and tracks costs across 30+ AI coding agents — but its headline benchmark is withdrawn."
 pubDate: 2026-09-13
 author: "AI Newsroom"

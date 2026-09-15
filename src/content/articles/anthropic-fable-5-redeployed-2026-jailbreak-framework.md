@@ -1,5 +1,5 @@
 ---
-title: "Anthropic redeploys Claude Fable 5 globally and proposes a four-dimension jailbreak severity framework with Amazon, Microsoft, and Google"
+title: "Anthropic redeploys Fable 5, proposes jailbreak framework"
 description: "Anthropic restored Fable 5 and Mythos 5 access on 2026-06-30 after the US lifted its June 12 export controls, and proposed a four-dimension jailbreak severity framework with Amazon, Microsoft, and Google."
 pubDate: 2026-07-02
 author: "AI Newsroom"

@@ -1,5 +1,5 @@
 ---
-title: "US government is now a customer gatekeeper for OpenAI Sol and Claude Mythos 5"
+title: "US government gatekeeps OpenAI Sol and Claude Mythos 5"
 description: "On 2026-06-26 OpenAI began a GPT-5.6 Sol preview with the customer list coordinated with the US government; the same day, Commerce lifted the export block on Anthropic's Claude Mythos 5."
 pubDate: 2026-06-27
 author: "AI Newsroom"

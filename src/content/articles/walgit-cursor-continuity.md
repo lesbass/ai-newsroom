@@ -1,5 +1,5 @@
 ---
-title: "walgit turns an S3 bucket into a stateless Git server — the open-source implementation of Cursor's \"Continuity\" design"
+title: "walgit: open-source Cursor Continuity design"
 description: "walgit turns any S3 or GCS bucket into a stateless Git server — one Rust binary, MIT-licensed, an open implementation of Cursor's 'Continuity' design."
 pubDate: 2026-08-26
 author: "AI Newsroom"

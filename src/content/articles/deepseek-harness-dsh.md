@@ -1,5 +1,5 @@
 ---
-title: "DeepSeek ships `dsh` — an MIT agent harness where model adapter, tools, and the agent loop itself are all replaceable plugins"
+title: "DeepSeek ships `dsh`: MIT agent harness"
 description: "DeepSeek's dsh agent harness (MIT) hit ~165K GitHub stars in six days; every part — model adapter, tools, agent loop — is a replaceable Cordis plugin. Developer preview."
 pubDate: 2026-08-19
 author: "AI Newsroom"

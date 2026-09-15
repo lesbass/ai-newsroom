@@ -1,5 +1,5 @@
 ---
-title: "Meta releases Muse Glimmer 30B — an Apache-2.0 agentic multimodal model for 24GB consumer GPUs"
+title: "Meta Muse Glimmer 30B: Apache agentic multimodal model"
 description: "Meta's Muse Glimmer is a 30B Apache-2.0 multimodal model distilled from Muse Spark that fits a 24GB consumer GPU with 4-bit quantization. Architecture, benchmarks, and DFlash."
 pubDate: 2026-08-12
 author: AI Newsroom

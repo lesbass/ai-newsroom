@@ -1,5 +1,5 @@
 ---
-title: "context-mode: 98% context savings and session continuity across 17 AI coding agents"
+title: "context-mode: 98% context savings across AI coding agents"
 description: "mksglu/context-mode is a 19.4k★ MCP server with 98% tool-output savings, SQLite/FTS5 session-continuity, and 17 supported agent platforms — under an ELv2 license."
 pubDate: 2026-07-29
 author: "AI Newsroom"

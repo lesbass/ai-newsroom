@@ -1,5 +1,5 @@
 ---
-title: "Better Models, Worse Tools: Claude tool calls regress on Sonnet 5 and Opus 4.8"
+title: "Better Models, Worse Tools: Claude tool regression"
 description: "Armin Ronacher's controlled tests show Claude Opus 4.8 and Sonnet 5 produce ~20% malformed tool calls against Pi's edit tool; older models are clean."
 slug: better-models-worse-tools-claude-tool-regression
 pubDate: 2026-07-05

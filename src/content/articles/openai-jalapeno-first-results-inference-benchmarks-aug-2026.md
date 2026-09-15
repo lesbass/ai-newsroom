@@ -1,5 +1,5 @@
 ---
-title: "OpenAI's Jalapeño chip posts first measured numbers — 1.5–1.9× more AI work per watt and 1.7–3.6× lower end-to-end latency"
+title: "OpenAI Jalapeño chip posts first benchmarks"
 description: "OpenAI published first-party benchmark numbers for Jalapeño: 1.5–1.9× more AI work per watt, 1.7–3.6× lower end-to-end latency. Vendor-tested, not independent."
 pubDate: 2026-08-26
 language: en

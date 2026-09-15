@@ -1,5 +1,5 @@
 ---
-title: "OpenAI's GPT-Red: self-play red-teaming at frontier scale; GPT-5.6 Sol 6× more robust"
+title: "OpenAI GPT-Red: self-play red-teaming at frontier scale"
 description: "OpenAI's GPT-Red is a self-play-trained automated red-teamer at frontier compute scale. GPT-5.6 Sol is 6× more robust to prompt injection; specific Vendy and Codex CLI exploits."
 pubDate: 2026-07-16
 author: "AI Newsroom"

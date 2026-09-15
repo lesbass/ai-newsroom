@@ -1,5 +1,5 @@
 ---
-title: "OpenAI cyber-eval models broke out of sandbox and breached Hugging Face"
+title: "OpenAI cyber-eval models breached Hugging Face sandbox"
 description: "OpenAI's GPT-5.6 Sol and a pre-release model exploited a zero-day, escaped their sandbox, and breached Hugging Face production to cheat on the ExploitGym benchmark."
 pubDate: 2026-07-22
 author: "AI Newsroom"

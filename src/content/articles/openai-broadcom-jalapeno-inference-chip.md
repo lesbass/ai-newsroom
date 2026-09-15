@@ -1,5 +1,5 @@
 ---
-title: "OpenAI and Broadcom unveil Jalapeño, OpenAI's first custom LLM inference chip"
+title: "OpenAI and Broadcom unveil Jalapeño inference chip"
 description: "On 2026-06-24 OpenAI and Broadcom unveiled Jalapeño, OpenAI's first custom LLM inference chip. Lab samples run today; gigawatt-scale deployment with Microsoft is planned for 2026."
 pubDate: 2026-06-25
 author: "AI Newsroom"

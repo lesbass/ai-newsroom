@@ -1,5 +1,5 @@
 ---
-title: "Ratel: an in-process BM25 tool catalog that cuts AI agent context spend 87% on BFCL v3"
+title: "Ratel: BM25 tool catalog cuts AI agent context spend 87%"
 description: "Ratel (ratel-ai/ratel, 186★, Apache-2.0 core + MIT SDKs) ships an in-process BM25 tool catalog. On BFCL v3: ~87% fewer tokens, tool selection within ±5 points."
 pubDate: 2026-07-11
 author: "AI Newsroom"

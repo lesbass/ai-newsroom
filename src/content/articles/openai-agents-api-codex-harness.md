@@ -1,5 +1,5 @@
 ---
-title: "OpenAI launches the Agents API — the managed Codex harness for cloud agents"
+title: "OpenAI launches Agents API: managed Codex harness"
 description: "OpenAI's Agents API brings the open-source Codex harness to a managed API, letting developers run cloud agents with pay-per-use pricing and sandbox partner options."
 pubDate: 2026-09-12
 author: "AI Newsroom"

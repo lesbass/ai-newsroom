@@ -1,5 +1,5 @@
 ---
-title: "reverify lets deterministic tools judge every AI claim — zero false accepts across 275 binaries"
+title: "reverify: deterministic tools judge AI claims"
 description: "2akouwu/reverify pairs an LLM with a deterministic verifier: model proposes, tools check bytes, only VERIFIED claims survive. Lossless rollover replaces compaction."
 pubDate: 2026-09-09
 author: "AI Newsroom"

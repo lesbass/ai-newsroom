@@ -1,5 +1,5 @@
 ---
-title: "Moonshot AI releases Kimi K3 — a 2.8T open-weights MoE model with million-token context"
+title: "Moonshot AI Kimi K3: 2.8T open-weights MoE model"
 description: "Kimi K3 is a 2.8T-parameter open-weights MoE model built on Kimi Delta Attention and Attention Residuals, with 1M-token context and native vision. Weights to follow by July 27."
 pubDate: 2026-07-19
 author: "AI Newsroom"

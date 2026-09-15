@@ -1,5 +1,5 @@
 ---
-title: "OpenAI launches Presence — a managed enterprise agent platform with FDE-led deployments and self-reported 75% resolution"
+title: "OpenAI launches Presence enterprise agent platform"
 description: "OpenAI launches Presence, a managed enterprise agent platform with self-reported 75% resolution and 15pp handoff cuts — FDE-led, limited GA, no pricing yet."
 pubDate: 2026-07-23
 author: "AI Newsroom"

@@ -1,5 +1,5 @@
 ---
-title: "Google's Interactions API reaches GA as the new primary Gemini interface"
+title: "Google Interactions API reaches GA for Gemini"
 description: "Google promoted the Interactions API to general availability on 2026-06-22: stable schema, Managed Agents, background=True, and the 'From Roles to Steps' migration. Default in AI Studio."
 pubDate: 2026-07-12
 author: "AI Newsroom"

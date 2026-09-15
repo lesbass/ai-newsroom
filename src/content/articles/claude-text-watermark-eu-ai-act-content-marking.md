@@ -1,5 +1,5 @@
 ---
-title: "How Claude's text watermark works — and why the EU AI Act made Anthropic add it"
+title: "Claude text watermark: EU AI Act compliance"
 description: "Anthropic details how future Claude models will embed a SynthID-Text-style watermark to comply with the EU AI Act, plus C2PA credentials for images and a detection API coming soon."
 pubDate: 2026-08-15
 author: AI Newsroom

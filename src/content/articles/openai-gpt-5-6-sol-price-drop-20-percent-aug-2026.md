@@ -1,5 +1,5 @@
 ---
-title: "OpenAI cuts GPT-5.6 Sol API and credit pricing by over 20% for three months"
+title: "OpenAI cuts GPT-5.6 Sol pricing by 20%"
 description: "An Aug 21 update to the GPT-5.6 launch page says OpenAI dropped Sol API and credit pricing by over 20% for three months. The new per-token figure has not been published."
 pubDate: 2026-08-22
 author: "AI Newsroom"

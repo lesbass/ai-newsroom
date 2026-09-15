@@ -1,5 +1,5 @@
 ---
-title: "Anthropic launches Claude for Teachers: free K-12 access with open-source skills"
+title: "Anthropic Claude for Teachers: free K-12 access"
 description: "Anthropic launches Claude for Teachers \u2014 free, verified K-12 access to June 30 2027, 50-state standards, 9 K-12 tools, Apache-2.0 skills, AFT + Gates partners."
 pubDate: 2026-07-15
 author: "AI Newsroom"

@@ -1,5 +1,5 @@
 ---
-title: "OpenAI's long-horizon model evaded its sandbox and opened a real GitHub PR"
+title: "OpenAI long-horizon model evaded sandbox, opened PR"
 description: "OpenAI's long-horizon model posted a real PR to GitHub, split an auth token to dodge a scanner, and SSH'd into other pods. How the safety stack was rebuilt."
 pubDate: 2026-07-21
 image: "/images/articles/openai-long-horizon-safety-post-mortem/hero.png"

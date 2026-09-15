@@ -1,5 +1,5 @@
 ---
-title: "Mistral releases Leanstral 1.5: 119B/6B-active Apache-2.0 prover saturates miniF2F and finds 5 unknown Rust bugs at $4 per problem"
+title: "Mistral Leanstral 1.5: 119B Apache prover"
 description: "Apache-2.0 119B/6B-active MoE prover from Mistral saturates miniF2F, hits SOTA on FATE-H (87%) and FATE-X (34%), and uncovers 5 previously unknown Rust bugs across 57 repos — all for about $4 per problem."
 pubDate: 2026-07-04
 author: "AI Newsroom"

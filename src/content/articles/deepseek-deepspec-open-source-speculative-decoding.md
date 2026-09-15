@@ -1,5 +1,5 @@
 ---
-title: "DeepSeek releases DeepSpec: open-source full-stack for speculative decoding"
+title: "DeepSeek DeepSpec: open-source speculative decoding"
 description: "DeepSeek published DeepSpec, a full-stack MIT-licensed codebase for training and evaluating draft models for speculative decoding, bundling DSpark, DFlash, and Eagle3."
 pubDate: 2026-06-28
 author: "AI Newsroom"
