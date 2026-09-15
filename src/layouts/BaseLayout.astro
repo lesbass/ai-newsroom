@@ -34,6 +34,8 @@ function truncateTitle(text: string, maxLen = 65): string {
 }
 
 const seoTitle = fullTitle.length <= 65 ? fullTitle : truncateTitle(fullTitle);
+const ogTitle = fullTitle.length <= 65 ? fullTitle : truncateTitle(fullTitle, 60);
+const jsonLdHeadline = title.length <= 60 ? title : truncateTitle(title, 60);
 
 function truncateDescription(text: string, maxLen = 155): string {
   if (text.length <= maxLen) return text;
@@ -54,7 +56,7 @@ const jsonLd = article
       '@context': 'https://schema.org',
       '@type': 'NewsArticle',
       '@id': `${pageURL}#article`,
-      headline: title,
+      headline: jsonLdHeadline,
       description: description,
       url: pageURL,
       image: jsonLdImage,
@@ -106,7 +108,7 @@ const jsonLd = article
   <link rel="alternate" type="application/rss+xml" title="AI Newsroom" href="/rss.xml" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content={fullTitle} />
+  <meta property="og:title" content={ogTitle} />
   <meta property="og:description" content={seoDescription} />
   <meta property="og:url" content={pageURL} />
   <meta property="og:type" content={article ? 'article' : 'website'} />
@@ -118,11 +120,11 @@ const jsonLd = article
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:title" content={ogTitle} />
   <meta name="twitter:description" content={seoDescription} />
   <meta name="twitter:image" content={image ? new URL(image, site).toString() : new URL('/og-image.svg', site).toString()} />
-  <meta name="twitter:image:alt" content={title} />
-  <meta property="og:image:alt" content={title} />
+  <meta name="twitter:image:alt" content={ogTitle} />
+  <meta property="og:image:alt" content={ogTitle} />
 
   {article && pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
   {article && updatedDate && <meta property="article:modified_time" content={updatedDate.toISOString()} />}
