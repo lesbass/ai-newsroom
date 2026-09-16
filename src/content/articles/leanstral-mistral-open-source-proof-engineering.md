@@ -13,11 +13,22 @@ tags:
   - open-source
   - apache-2-0
   - moe
+  - moe-119b-6b-active
   - cispo
   - flteval
-image: "/images/articles/leanstral-mistral-proof-engineering/hero-benchmarks.png"
-imageAlt: "Leanstral 1.5 benchmark summary showing PutnamBench 587/672, FATE-H 87%, and FATE-X 34% compared against Seed-Prover 1.5 high, Goedel-Architect, A-ProverBase, and Aleph Prover (Mistral AI blog, 2026-07-02)."
-imageCredit: "Screenshot of Mistral AI blog post \"Leanstral 1.5: Proof Abundance for All\", captured 2026-07-04 from https://mistral.ai/news/leanstral-1-5/ via Playwright Chromium through the AI Newsroom browser helper. License: no license stated; editorial use of a single chart image from a public blog post for news commentary."
+  - putnambench
+  - minif2f
+  - fate-h
+  - fate-x
+  - rust
+  - code-verification
+  - 256k-context
+  - huggingface
+  - vllm
+  - rl
+image: "/images/articles/mistral-leanstral-1-5-proof-engineering-model/hero-desktop.png"
+imageAlt: "Screenshot of the Mistral AI blog post \"Leanstral 1.5: Proof Abundance for All\" (July 2, 2026, by the Leanstral Team at Mistral AI), with the cover image and the article's opening summary describing a free Apache-2.0 6B-active MoE model that saturates miniF2F, solves 587/672 PutnamBench problems, and hits 87% / 34% on FATE-H and FATE-X."
+imageCredit: "Source: https://mistral.ai/news/leanstral-1-5 · Captured 2026-07-04 via Playwright Chromium (bundled-libs pattern) · License: no license stated on Mistral's blog post cover image; screenshot used editorially for the Leanstral 1.5 article"
 sources:
   - title: "Mistral AI — \"Leanstral 1.5: Proof Abundance for All\" — 2026-07-02"
     url: "https://mistral.ai/news/leanstral-1-5/"
@@ -60,13 +71,13 @@ canonicalURL: "https://news.lesbass.com/articles/leanstral-mistral-open-source-p
 [Mistral AI](https://mistral.ai/news/leanstral-1-5/) released **Leanstral 1.5** on 2026-07-02 — an Apache-2.0, 119B/6B-active MoE for proof engineering in [Lean 4](https://leanprover.github.io/). It saturates miniF2F, solves **587 of 672 PutnamBench** problems, sets SOTA on FATE-H (87%) and FATE-X (34%), and lifts FLTEval pass@8 from 31.9 to 43.2 — past Opus 4.6's 39.6 at ~1/7 the cost. Weights are on [Hugging Face](https://huggingface.co/mistralai/Leanstral-1.5-119B-A6B); a free `leanstral-1-5` API is live.
 
 <figure>
-  <img src="/images/articles/leanstral-mistral-proof-engineering/hero-benchmarks.png" alt="Leanstral 1.5 benchmark summary: PutnamBench 587/672, FATE-H 87%, FATE-X 34%" loading="lazy" decoding="async">
-  <figcaption>Source: Mistral AI blog <a href="https://mistral.ai/news/leanstral-1-5/">"Leanstral 1.5: Proof Abundance for All"</a> (2026-07-02). Editorial screenshot.</figcaption>
+  <img src="/images/articles/mistral-leanstral-1-5-proof-engineering-model/hero-desktop.png" alt="Screenshot of the Mistral AI blog post \"Leanstral 1.5: Proof Abundance for All\" (July 2, 2026, by the Leanstral Team at Mistral AI), with the cover image and the article's opening summary describing a free Apache-2.0 6B-active MoE model that saturates miniF2F, solves 587/672 PutnamBench problems, and hits 87% / 34% on FATE-H and FATE-X." loading="lazy" decoding="async">
+  <figcaption>Source: <a href="https://mistral.ai/news/leanstral-1-5">Mistral AI — "Leanstral 1.5: Proof Abundance for All"</a> (2026-07-02). Editorial screenshot.</figcaption>
 </figure>
 
 ## What happened
 
-Leanstral 1.5 is a **119B/6B-active MoE** — small enough for one consumer node, large enough to learn deep proof structure ([Mistral blog, 2026-07-02](https://mistral.ai/news/leanstral-1-5/)). Training runs **mid-training → SFT → RL with CISPO** in two custom environments that return feedback from a real Lean compiler.
+Leanstral 1.5 is the second-generation release in Mistral's Leanstral line (the first is [Leanstral-2603](https://huggingface.co/mistralai/Leanstral-2603)). It is a **119B/6B-active MoE** — **128 experts / 4 active per token**, **256k context**, **multimodal input** (text + image → text) — small enough for one consumer node, large enough to learn deep proof structure ([Mistral blog, 2026-07-02](https://mistral.ai/news/leanstral-1-5/)). Training runs **mid-training → SFT → RL with CISPO** in two custom environments that return feedback from a real Lean compiler.
 
 The **multiturn Lean verifier** gives the model a theorem, returns the Lean compiler's verdict, and loops until the proof compiles. The **code agent environment** gives it a filesystem, bash, and the Lean language server; it edits files, builds auxiliary lemmas, and survives many rounds of context compaction. Final proofs are checked by [Mistral's fork of SafeVerify](https://github.com/mistralai/LeanstralSafeVerify).
 
@@ -94,8 +105,13 @@ All numbers from the [Mistral blog post, 2026-07-02](https://mistral.ai/news/lea
 **Test-time scaling.** PutnamBench Pass@8 climbs monotonically with per-attempt tokens: **44 at 50k → 244 at 200k → 493 at 1M → 587 at 4M**. Not plateauing at 4M.
 
 <figure>
-  <img src="/images/articles/leanstral-mistral-proof-engineering/scaling-curve.png" alt="PutnamBench Pass@8 vs token budget — 44 problems at 50k tokens, 587 at 4M tokens" loading="lazy" decoding="async">
-  <figcaption>Source: Mistral AI blog <a href="https://mistral.ai/news/leanstral-1-5/">"Leanstral 1.5: Proof Abundance for All"</a> (2026-07-02). Editorial screenshot.</figcaption>
+  <img src="/images/articles/mistral-leanstral-1-5-proof-engineering-model/section-putnambench-scaling.png" alt="PutnamBench Pass@8 vs token budget. The curve climbs monotonically from 44 problems at 50k tokens to 587 at 4M, passing through 126 (100k), 244 (200k), 396 (500k), 493 (1M), and 573 (2M). Leanstral 1.5 turns compute directly into solved problems rather than giving up on long proofs." loading="lazy" decoding="async">
+  <figcaption>Source: Mistral AI blog <a href="https://mistral.ai/news/leanstral-1-5/">"Leanstral 1.5: Proof Abundance for All"</a> (2026-07-02).</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/articles/mistral-leanstral-1-5-proof-engineering-model/section-flteval.png" alt="FLTEval pass@k performance. Leanstral 1.5 (orange) sits above Leanstral 1.0, GLM5, Kimi K2.5, and Qwen 3.5 across pass@1, pass@2, and pass@4, reaching roughly 39% at pass@4." loading="lazy" decoding="async">
+  <figcaption>Source: Mistral AI blog <a href="https://mistral.ai/news/leanstral-1-5/">"Leanstral 1.5: Proof Abundance for All"</a> (2026-07-02).</figcaption>
 </figure>
 
 ## Real-world bug discovery
@@ -104,6 +120,8 @@ Mistral ran a verification pipeline against **57 Rust repos** using [Aeneas](htt
 
 - **AVL tree time-complexity proof.** A real AVL implementation was proven `O(log n)` for insert and delete via structural induction on the `TimeM` monad — **2.7M+ tokens across 22 compactions**, almost-tight bound of 48 steps per height unit plus a constant.
 - **U64 overflow in [`datrs/varinteger`](https://github.com/datrs/varinteger).** Zigzag-decoding `value + 1` overflows on `Std.U64.MAX` — debug crash, silent release corruption.
+
+Alongside the model, Mistral also **fully open-sourced the FLTEval harness** at [github.com/mistralai/FLTEval](https://github.com/mistralai/FLTEval) (Apache-2.0) — a Docker-only SWE-bench-shaped harness that applies submitted diffs inside per-task images, runs Lean and SafeVerify, and writes per-instance and aggregate reports.
 
 ## Practical implications for builders
 
