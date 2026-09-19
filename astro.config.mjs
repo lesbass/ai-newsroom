@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { unified } from '@astrojs/markdown-remark';
 import { rehypeLazyImages } from './src/lib/rehype-lazy-images.ts';
 
 export default defineConfig({
@@ -6,7 +7,9 @@ export default defineConfig({
   output: 'static',
 
   markdown: {
-    rehypePlugins: [rehypeLazyImages],
+    processor: unified({
+      rehypePlugins: [rehypeLazyImages],
+    }),
     shikiConfig: {
       theme: 'github-dark',
     },
