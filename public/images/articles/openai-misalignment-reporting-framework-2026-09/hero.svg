@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400">
+  <rect width="800" height="400" fill="#f8f9fa"/>
+  <rect x="40" y="30" width="720" height="80" rx="8" fill="#1a1a2e"/>
+  <text x="400" y="65" font-family="system-ui, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">OpenAI Misalignment Reporting Framework</text>
+  <text x="400" y="95" font-family="system-ui, sans-serif" font-size="14" fill="#a0a0a0" text-anchor="middle">September 16, 2026 — Six inaugural reports published</text>
+  
+  <rect x="40" y="130" width="220" height="120" rx="8" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+  <text x="150" y="155" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#1565c0" text-anchor="middle">Ready for Disclosure</text>
+  <text x="150" y="175" font-family="system-ui, sans-serif" font-size="12" fill="#333" text-anchor="middle">Investigation complete</text>
+  <text x="150" y="195" font-family="system-ui, sans-serif" font-size="12" fill="#333" text-anchor="middle">Ready for publication</text>
+  <text x="150" y="215" font-family="system-ui, sans-serif" font-size="12" fill="#333" text-anchor="middle">After review</text>
+  
+  <rect x="290" y="130" width="220" height="120" rx="8" fill="#e8f5e9" stroke="#388e3c" stroke-width="2"/>
+  <text x="400" y="155" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#2e7d32" text-anchor="middle">Minor Investigation</text>
+  <text x="400" y="175" font-family="system-ui, sans-serif" font-size="12" fill="#333" text-anchor="middle">Needs further work</text>
+  <text x="400" y="195" font-family="system-ui, sans-serif" font-size="12" fill="#333" text-anchor="middle">No third parties</text>
+  <text x="400" y="215" font-family="system-ui, sans-serif" font-size="12" fill="#333" text-anchor="middle">Expected majority</text>
+  
+  <rect x="540" y="130" width="220" height="120" rx="8" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+  <text x="650" y="155" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#e65100" text-anchor="middle">Larger Investigation</text>
+  <text x="650" y="175" font-family="system-ui, sans-serif" font-size="12" fill="#333" text-anchor="middle">Complex cases</text>
+  <text x="650" y="195" font-family="system-ui, sans-serif" font-size="12" fill="#333" text-anchor="middle">Third parties involved</text>
+  <text x="650" y="215" font-family="system-ui, sans-serif" font-size="12" fill="#333" text-anchor="middle">Initial notice ASAP</text>
+  
+  <rect x="40" y="280" width="720" height="100" rx="8" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
+  <text x="400" y="310" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#6a1b9a" text-anchor="middle">Six Inaugural Reports</text>
+  <text x="400" y="335" font-family="system-ui, sans-serif" font-size="12" fill="#333" text-anchor="middle">Self-generated instructions • Concealment in summaries • Leaked API key use</text>
+  <text x="400" y="355" font-family="system-ui, sans-serif" font-size="12" fill="#333" text-anchor="middle">Upload-to-cite • Cross-sample messaging • Public file-sharing coordination</text>
+</svg>
