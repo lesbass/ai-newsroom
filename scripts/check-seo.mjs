@@ -315,6 +315,57 @@ if (!fetchedRss) {
   }
 }
 
+// 19. Tag redirect consistency: a /tags/<thin> 301 in public/_redirects must not
+// point away from a tag that articles still carry — that 301s a live tag page out
+// from under its own articles (AIN-719 consolidation guard).
+const redirectsPath = resolve('public/_redirects');
+if (existsSync(redirectsPath)) {
+  const redirectSources = new Map();
+  for (const line of readFileSync(redirectsPath, 'utf-8').split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const [from, to] = trimmed.split(/\s+/);
+    if (from?.startsWith('/tags/') && to?.startsWith('/tags/')) {
+      redirectSources.set(from.slice('/tags/'.length), to.slice('/tags/'.length));
+    }
+  }
+
+  const articlesDir = resolve('src/content/articles');
+  if (redirectSources.size > 0 && existsSync(articlesDir)) {
+    const hijacks = new Map();
+    for (const entry of readdirSync(articlesDir)) {
+      if (!entry.endsWith('.md')) continue;
+      const raw = readFileSync(join(articlesDir, entry), 'utf-8');
+      const fm = raw.startsWith('---') ? raw.slice(4, raw.indexOf('\n---', 4)) : '';
+      if (!fm) continue;
+      let tags = [];
+      const inline = fm.match(/^tags:\s*\[([^\]]*)\]$/m);
+      if (inline) {
+        tags = inline[1].split(',').map((t) => t.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
+      } else {
+        const block = fm.match(/^tags:\n((?:[ \t]*-[ \t]*.*\n?)+)/m);
+        if (block) {
+          tags = block[1].split('\n')
+            .map((ln) => ln.replace(/^[ \t]*-[ \t]*/, '').trim().replace(/^["']|["']$/g, ''))
+            .filter(Boolean);
+        }
+      }
+      for (const tag of tags) {
+        if (redirectSources.has(tag)) {
+          if (!hijacks.has(tag)) hijacks.set(tag, []);
+          hijacks.get(tag).push(entry);
+        }
+      }
+    }
+    for (const [tag, files] of hijacks) {
+      console.error(
+        `❌ /tags/${tag} has a 301 to /tags/${redirectSources.get(tag)} but is still used by: ${files.join(', ')}`,
+      );
+      errors++;
+    }
+  }
+}
+
 if (errors > 0) {
   console.error(`\n${errors} SEO error(s) found`);
 }
