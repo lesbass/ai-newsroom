@@ -10,7 +10,7 @@ tags:
   - agent-infra
   - pricing
   - kv-cache
-  - mit
+  - open-source
 image: "/images/articles/deepseek-v41-flash/hero.svg"
 imageAlt: "Generated editorial diagram showing DeepSeek V4.1-Flash architecture (8B/16B asymmetric CED), KV cache compression (1/4 HBM, 1/8 SSD), pricing table, and vendor-reported benchmark scores (AI-generated, AI Newsroom)"
 imageCredit: "Generated editorial image · Model/tool: hand-authored SVG · Disclosure: AI-generated, not source evidence"
