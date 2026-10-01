@@ -333,6 +333,7 @@ if (existsSync(redirectsPath)) {
   const articlesDir = resolve('src/content/articles');
   if (redirectSources.size > 0 && existsSync(articlesDir)) {
     const hijacks = new Map();
+    const usedTags = new Set();
     for (const entry of readdirSync(articlesDir)) {
       if (!entry.endsWith('.md')) continue;
       const raw = readFileSync(join(articlesDir, entry), 'utf-8');
@@ -351,6 +352,7 @@ if (existsSync(redirectsPath)) {
         }
       }
       for (const tag of tags) {
+        usedTags.add(tag);
         if (redirectSources.has(tag)) {
           if (!hijacks.has(tag)) hijacks.set(tag, []);
           hijacks.get(tag).push(entry);
@@ -362,6 +364,13 @@ if (existsSync(redirectsPath)) {
         `❌ /tags/${tag} has a 301 to /tags/${redirectSources.get(tag)} but is still used by: ${files.join(', ')}`,
       );
       errors++;
+    }
+    // A /tags/ redirect whose target tag no article carries is a 301 to a 404.
+    for (const target of new Set(redirectSources.values())) {
+      if (!usedTags.has(target)) {
+        console.error(`❌ /tags/ redirect points at /tags/${target}, which no article uses`);
+        errors++;
+      }
     }
   }
 }
