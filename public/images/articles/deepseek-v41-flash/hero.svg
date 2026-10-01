@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bg)"/>
+  <rect x="0" y="0" width="800" height="4" fill="url(#accent)"/>
+  <!-- Title -->
+  <text x="40" y="60" font-family="system-ui, sans-serif" font-size="28" font-weight="bold" fill="#f8fafc">DeepSeek V4.1-Flash</text>
+  <text x="40" y="90" font-family="system-ui, sans-serif" font-size="16" fill="#94a3b8">552B MoE · Causal Encoder–Decoder · MIT License</text>
+  <!-- Architecture diagram -->
+  <rect x="40" y="120" width="340" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="60" y="148" font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8">INPUT (Encoder)</text>
+  <rect x="60" y="158" width="140" height="32" rx="4" fill="#3b82f6" opacity="0.2" stroke="#3b82f6" stroke-width="1"/>
+  <text x="130" y="179" font-family="system-ui, sans-serif" font-size="14" fill="#60a5fa" text-anchor="middle">8B active</text>
+  <text x="60" y="210" font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8">OUTPUT (Decoder)</text>
+  <rect x="60" y="220" width="140" height="32" rx="4" fill="#8b5cf6" opacity="0.2" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="130" y="241" font-family="system-ui, sans-serif" font-size="14" fill="#a78bfa" text-anchor="middle">16B active</text>
+  <text x="220" y="185" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">←→</text>
+  <text x="280" y="170" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">Asymmetric</text>
+  <text x="280" y="186" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">CED Split</text>
+  <!-- KV Cache box -->
+  <rect x="420" y="120" width="340" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="440" y="148" font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8">KV CACHE COMPRESSION</text>
+  <text x="440" y="176" font-family="system-ui, sans-serif" font-size="22" font-weight="bold" fill="#34d399">1/4 HBM</text>
+  <text x="440" y="204" font-family="system-ui, sans-serif" font-size="22" font-weight="bold" fill="#34d399">1/8 SSD</text>
+  <text x="440" y="228" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">890 bytes/token vs V4-Flash</text>
+  <!-- Pricing bar -->
+  <rect x="40" y="264" width="340" height="130" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="60" y="292" font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8">PRICING (per 1M tokens)</text>
+  <text x="60" y="318" font-family="system-ui, sans-serif" font-size="13" fill="#f8fafc">Input (miss): $0.30 peak / $0.15 off</text>
+  <text x="60" y="338" font-family="system-ui, sans-serif" font-size="13" fill="#f8fafc">Input (hit): $0.006 peak / $0.003 off</text>
+  <text x="60" y="358" font-family="system-ui, sans-serif" font-size="13" fill="#f8fafc">Output: $1.20 peak / $0.60 off</text>
+  <text x="60" y="378" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">Peak: 01:00–04:00, 06:00–10:00 UTC · Off-peak: 50% of peak</text>
+  <!-- Benchmarks bar -->
+  <rect x="420" y="264" width="340" height="130" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="440" y="292" font-family="system-ui, sans-serif" font-size="13" fill="#94a3b8">VENDOR-REPORTED BENCHMARKS</text>
+  <text x="440" y="318" font-family="system-ui, sans-serif" font-size="13" fill="#f8fafc">Terminal-Bench 2.1: 90.6 (vs 87.9)</text>
+  <text x="440" y="338" font-family="system-ui, sans-serif" font-size="13" fill="#f8fafc">DeepSWE v1.1: 74.2 (vs 62.7)</text>
+  <text x="440" y="358" font-family="system-ui, sans-serif" font-size="13" fill="#f8fafc">Codeforces: 3471 (vs 3348)</text>
+  <text x="440" y="378" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">vs V4-Pro · Source: DeepSeek tech report</text>
+  <!-- Footer -->
+  <text x="400" y="412" font-family="system-ui, sans-serif" font-size="11" fill="#475569" text-anchor="middle">AI Newsroom · Generated editorial diagram · Not source evidence</text>
+</svg>
