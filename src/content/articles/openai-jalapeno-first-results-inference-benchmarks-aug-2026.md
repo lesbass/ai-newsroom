@@ -18,7 +18,7 @@ tags:
   - deepseek
   - kimi
   - ai-infrastructure
-  - ai-newsroom-coverage
+  - editorial
 image: "/images/articles/openai-jalapeno-first-results-inference-benchmarks-aug-2026/hero-desktop.jpg"
 imageAlt: "Close-up photograph of the OpenAI Jalapeño inference chip mounted on a teal circuit board, showing the chip package and surrounding board components."
 imageCredit: "Source: OpenAI (openai.com/index/jalapeno-first-results/, 2026-08-25) · Credit: OpenAI · License: OpenAI published material, used for editorial commentary under fair use"

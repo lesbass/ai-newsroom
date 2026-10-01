@@ -8,8 +8,8 @@ tags:
   - muse-glimmer
   - open-weights
   - multimodal
-  - agentic-ai
   - local-llm
+  - ai-agents
 image: /images/articles/meta-muse-glimmer-30b-apache-agentic-local/hero.png
 imageAlt: "Generated editorial diagram of Muse Glimmer 30B architecture: perception encoder, text decoder, and DFlash drafter (AI-generated, AI Newsroom)"
 imageCredit: "Generated editorial image · Model/tool: PIL · Disclosure: AI-generated, not source evidence"

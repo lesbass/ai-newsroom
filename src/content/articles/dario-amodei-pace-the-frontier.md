@@ -3,7 +3,7 @@ title: "Amodei calls to pace the frontier — Altman and Musk publicly endorse"
 description: "Anthropic commits to embedded external evaluators with employee-like access; Altman and Musk publicly endorse the three-step plan."
 pubDate: 2026-09-17
 author: "AI Newsroom"
-tags: ["anthropic", "alignment", "governance", "embedded-evaluators", "openai", "xai", "frontier-policy", "ai-newsroom-coverage"]
+tags: ["anthropic", "alignment", "governance", "embedded-evaluators", "openai", "xai", "frontier-policy", "editorial"]
 image: ""
 imageAlt: ""
 imageCredit: ""

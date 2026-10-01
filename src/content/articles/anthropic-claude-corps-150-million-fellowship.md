@@ -3,7 +3,7 @@ title: "Anthropic's $150M Claude Corps fellowship"
 description: "Anthropic commits $150M to a national fellowship: 1,000 early-career workers at $85K/year, 12 months at 400+ US nonprofits. Partners: CodePath, Social Finance."
 pubDate: 2026-06-13
 author: "AI Newsroom"
-tags: ["anthropic", "claude", "nonprofit", "work", "fellowship", "program"]
+tags: ["anthropic", "claude", "nonprofit", "policy", "program"]
 image: "https://cdn.sanity.io/images/4zrzovbb/website/eb5d94573805e24cb381cd0676527cfada75c177-3840x2160.jpg"
 imageAlt: "Claude Corps fellow assisting at a nonprofit organization"
 imageCredit: "Image: Anthropic newsroom / Claude Corps announcement (June 11, 2026)"

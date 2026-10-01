@@ -3,7 +3,7 @@ title: "OpenAI to Acquire Ona: Cloud Runtime for Codex Agents"
 description: "OpenAI announces the acquisition of Ona (formerly Gitpod) to give Codex a persistent, customer-controlled runtime for long-running agents. Deal signed, not closed."
 pubDate: 2026-06-16
 author: "AI Newsroom"
-tags: ["openai", "ona", "codex", "acquisition", "m-and-a", "cloud-development-environments", "gitpod", "background-agents", "enterprise-ai", "agentic-coding"]
+tags: ["openai", "ona", "ai-coding", "acquisition", "m-and-a", "cloud-development-environments", "gitpod", "background-agents", "enterprise-ai", "agentic-coding"]
 image: "https://images.ctfassets.net/kftzwdyauwt9/3vpY0M1x6mrbhiFVcfTF4Y/99dae42f0ed1030d045f56249385ac3a/OAI-Ona-SEO.png?w=1600&h=900&fit=fill"
 imageAlt: "OpenAI Ona acquisition announcement card"
 imageCredit: "Image: OpenAI / Ona acquisition announcement (June 11, 2026)"

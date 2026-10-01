@@ -10,10 +10,9 @@ tags:
   - full-duplex
   - chatgpt
   - advanced-voice-mode
-  - gpt-5-5
   - preparedness-framework
-  - system-card
   - realtime-voice
+  - ai-safety
 image: "/images/articles/openai-gpt-live-full-duplex-voice/hero-desktop.png"
 imageAlt: "Screenshot of the OpenAI GPT-Live System Card landing page on deploymentsafety.openai.com (captured 2026-07-09), showing the 'Introduction' section header, the 'Published July 8, 2026' date stamp, and the opening paragraph that announces GPT-Live-1 and GPT-Live-1 mini as full-duplex voice models that can listen and respond continuously."
 imageCredit: "Source: OpenAI GPT-Live System Card — https://deploymentsafety.openai.com/gpt-live (2026-07-08, OpenAI). Desktop screenshot (1280x900) captured 2026-07-09 via Playwright Chromium using the AI Newsroom browser helper. Editorial use: visual evidence of the primary source the article summarises; every load-bearing claim about model behaviour, safety scores, and the Preparedness determination is verified against this page in the body."

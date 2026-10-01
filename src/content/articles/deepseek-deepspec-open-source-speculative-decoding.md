@@ -18,7 +18,6 @@ tags:
   - gemma
   - specforge
   - sglang
-  - mit-license
   - open-source
   - high-risk-claim
 image: "/images/articles/deepseek-deepspec-open-source-speculative-decoding/hero-desktop.png"

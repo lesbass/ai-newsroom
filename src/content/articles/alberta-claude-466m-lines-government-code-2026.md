@@ -3,7 +3,7 @@ title: "Alberta scanned 466M lines of government code with Claude in 20 hours"
 description: "Alberta's Ministry of Technology and Innovation scanned 466M lines of government code in 20 hours with Claude Code and ~50 agents — here is the playbook other provinces can copy."
 pubDate: 2026-07-07
 author: "AI Newsroom"
-tags: ["anthropic", "claude-code", "claude-opus", "claude-sonnet", "agent-sdk", "government", "alberta", "cybersecurity", "vulnerability-scanning", "code-modernization", "case-study", "applied-ai", "public-sector"]
+tags: ["anthropic", "claude-code", "claude", "ai-agents", "government", "security", "developer-tools", "editorial"]
 image: "/images/articles/alberta-claude-466m-lines-government-code-2026/hero-desktop.png"
 imageAlt: "Screenshot of the Anthropic case study 'Government of Alberta uses Claude to find and fix cybersecurity vulnerabilities across government systems' (anthropic.com, dated Jul 6, 2026), showing the headline, the case-study label, and the laptop illustration on a blue field."
 imageCredit: "Source: https://www.anthropic.com/news/alberta-government-claude-cybersecurity · Captured: 2026-07-07 via Playwright Chromium (headless, 1280x900 viewport) · Use: editorial illustration of the published case-study landing page; the same article body is the source for every hard number cited in this piece."

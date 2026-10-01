@@ -21,7 +21,7 @@ tags:
   - google-tpu
   - ai-infrastructure
   - data-centers
-  - ai-newsroom-coverage
+  - editorial
 image: "/images/articles/openai-broadcom-jalapeno-inference-chip/hero-desktop.png"
 imageAlt: "Screenshot of the OpenAI 'OpenAI and Broadcom unveil LLM-optimized inference chip' announcement page archived by the Wayback Machine on 2026-06-24 at 20:14:46 UTC, showing the headline 'Designed to be the best inference platform for LLMs' above the section 'Nine-month tape-out, accelerated by OpenAI models'."
 imageCredit: "Screenshot: OpenAI / Broadcom announcement (openai.com, 2026-06-24) — captured 2026-06-25 from the Wayback Machine archive snapshot 20260624201446 (the live openai.com URL returned HTTP 403 to a non-browser Cloudflare challenge). Credit: OpenAI. License: OpenAI published material, used for editorial commentary under fair use."

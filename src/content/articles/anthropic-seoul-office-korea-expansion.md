@@ -3,7 +3,7 @@ title: "Anthropic opens Seoul office with Korea AI safety MOU"
 description: "Anthropic opened a Seoul office, signed an AI-safety MOU with Korea's Ministry of Science and ICT, and named five enterprise Claude deployments."
 pubDate: 2026-06-20
 author: "AI Newsroom"
-tags: ["anthropic", "seoul", "korea", "asia-pacific", "enterprise", "claude", "claude-code", "claude-cowork", "aws-bedrock", "naver", "nexon", "lg-cns", "hanwha", "samsung-sds", "kaist", "yonsei", "korea-university", "postech", "nairl", "ministry-of-science-ict", "korea-ai-safety-institute", "kiyoung-choi", "data-residency", "memo-of-understanding", "ai-safety", "channel-corp"]
+tags: ["anthropic", "asia-pacific", "enterprise", "claude", "claude-code", "cloud", "naver", "nexon", "lg-cns", "hanwha", "samsung-sds", "education", "nairl", "government", "ai-safety", "kiyoung-choi", "data-residency", "memo-of-understanding", "channel-corp"]
 image: "https://www.anthropic.com/api/opengraph-illustration?name=Object%20Globe&backgroundColor=heather"
 imageAlt: "Anthropic global expansion illustration with globe"
 imageCredit: "Image: Anthropic newsroom / Seoul office announcement (June 18, 2026)"

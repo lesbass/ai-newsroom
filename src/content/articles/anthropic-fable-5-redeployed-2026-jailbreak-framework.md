@@ -3,7 +3,7 @@ title: "Anthropic redeploys Fable 5, proposes jailbreak framework"
 description: "Anthropic restored Fable 5 and Mythos 5 access on 2026-06-30 after the US lifted its June 12 export controls, and proposed a four-dimension jailbreak severity framework with Amazon, Microsoft, and Google."
 pubDate: 2026-07-02
 author: "AI Newsroom"
-tags: ["anthropic", "claude-fable-5", "claude-mythos-5", "amazon", "microsoft", "google", "glasswing", "jailbreak", "ai-safety", "ai-policy", "export-controls", "caisi", "hackerone", "executive-order-14409", "us-government", "ai-regulation", "high-risk-claim"]
+tags: ["anthropic", "claude", "amazon", "microsoft", "google", "glasswing", "jailbreak", "ai-safety", "ai-policy", "export-controls", "caisi", "hackerone", "executive-order-14409", "us-government", "ai-regulation", "high-risk-claim"]
 image: "/images/articles/anthropic-fable-5-redeployed-2026-jailbreak-framework/hero-framework-dimensions.png"
 imageAlt: "Screenshot of the Anthropic 'Redeploying Fable 5' announcement page (anthropic.com/news/redeploying-fable-5, captured 2026-07-02), showing the section heading 'A consensus industry framework for jailbreaks' and the opening paragraph that motivates the four-dimension scoring proposal."
 imageCredit: "Source: https://www.anthropic.com/news/redeploying-fable-5 · Captured: 2026-07-02 via Playwright Chromium (headless, networkidle) · Section heading 'A consensus industry framework for jailbreaks' visible on the page at the time of capture · Use: editorial illustration for the four-dimension jailbreak severity framework described in the article body."

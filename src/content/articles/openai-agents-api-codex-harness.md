@@ -6,16 +6,16 @@ author: "AI Newsroom"
 tags:
   - openai
   - agents-api
-  - codex
   - api
   - cloud-agents
   - sandbox
-  - multi-agent
   - tool-search
   - compaction
   - mcp
   - pricing
-  - ai-newsroom-coverage
+  - ai-coding
+  - ai-agents
+  - editorial
 image: "/images/articles/openai-agents-api-codex-harness/hero.png"
 imageAlt: "Generated editorial diagram of the Agents API architecture showing the managed Codex harness connecting to sandbox providers (AI-generated, AI Newsroom)"
 imageCredit: "Generated editorial image · Model/tool: PIL/Pillow script · Disclosure: AI-generated, not source evidence"

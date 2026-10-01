@@ -3,7 +3,7 @@ title: "Instructor: Pydantic structured outputs for any LLM"
 description: "MIT Python library (567-labs) for extracting validated Pydantic objects from any LLM. 13.2k stars, 108 releases, 15+ providers. v1.15.2 adds log redaction."
 pubDate: 2026-06-14
 author: "AI Newsroom"
-tags: ["open-source", "python", "pydantic", "structured-outputs", "llm", "instructor", "567-labs", "jason-liu", "openai", "anthropic", "repository-feature"]
+tags: ["open-source", "developer-tools", "pydantic", "structured-outputs", "llm", "instructor", "567-labs", "jason-liu", "openai", "anthropic"]
 image: "https://opengraph.githubassets.com/1/567-labs/instructor"
 imageAlt: "Instructor open-source repository social preview card"
 imageCredit: "Image: GitHub / 567-labs/instructor repository (MIT)"

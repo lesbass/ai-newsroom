@@ -3,7 +3,7 @@ title: "OpenAI ships GPT-5.6 (Sol, Terra, Luna) and ChatGPT Work"
 description: "On 2026-07-09 OpenAI released the three-tier GPT-5.6 family and ChatGPT Work, an agentic product powered by GPT-5.6 with Codex built in and a public system card."
 pubDate: 2026-07-10
 author: "AI Newsroom"
-tags: ["openai", "gpt-5-6", "gpt-5-6-sol", "gpt-5-6-terra", "gpt-5-6-luna", "chatgpt-work", "codex", "api-pricing", "preparedness-framework", "ai-safety", "high-risk-claim", "openai-blog", "system-card", "deploymentsafety"]
+tags: ["openai", "gpt-5-6", "gpt-5-6-sol", "gpt-5-6-terra", "gpt-5-6-luna", "chatgpt-work", "ai-coding", "api-pricing", "preparedness-framework", "ai-safety", "high-risk-claim", "openai-blog", "deploymentsafety"]
 image: "/images/articles/openai-gpt-5-6-sol-terra-luna-and-chatgpt-work/hero-desktop.png"
 imageAlt: "OpenAI GPT-5.6 System Card landing page on deploymentsafety.openai.com, dated July 9, 2026. Shows the introduction section for the three-model family: Sol (flagship), Terra (balanced), Luna (fast/affordable)."
 imageCredit: "Source: deploymentsafety.openai.com/gpt-5-6 (OpenAI GPT-5.6 System Card, 2026-07-09) · Desktop screenshot captured 2026-07-10 via Playwright Chromium · Editorial use under fair use."

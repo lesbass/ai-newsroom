@@ -8,12 +8,12 @@ tags:
   - presence
   - enterprise-agents
   - customer-service
-  - codex
   - fde
   - limited-ga
   - high-risk-claim
   - ai-agents
   - openai-deployment-company
+  - ai-coding
 image: /images/articles/openai-presence-enterprise-agent-platform/hero.svg
 imageAlt: "Editorial diagram of the OpenAI Presence platform architecture showing six components — Policies & SOPs, Guardrails, Approved Actions, Simulation, Evaluation Tools, and the Codex Improvement Loop — with deployment model and self-reported metrics."
 imageCredit: "Generated editorial diagram · AI Newsroom · Disclosure: AI-generated, not source evidence"

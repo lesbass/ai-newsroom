@@ -6,13 +6,12 @@ author: "AI Newsroom"
 tags:
   - context-mode
   - mcp
-  - context-engineering
   - context-window
-  - ai-coding-agents
   - token-savings
   - compaction
   - elv2
-  - ai-newsroom-coverage
+  - ai-coding
+  - editorial
 image: "/images/articles/context-mode/hero-desktop.svg"
 imageAlt: "context-mode README at github.com/mksglu/context-mode on 2026-07-29, showing the 'Used across teams at' logo grid and the 'How Context Mode Solves It' four-bullet block: Context Saving, Session Continuity, Think in Code, No prose-style enforcement."
 imageCredit: "Source: https://github.com/mksglu/context-mode · Captured 2026-07-29 via Playwright Chromium · Project license: ELv2."

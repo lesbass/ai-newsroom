@@ -3,7 +3,7 @@ title: "smolagents: Hugging Face's Code-First Python Agent Library"
 description: "Hugging Face's open-source Python agent library where the model writes executable code instead of JSON. 27.8k stars, Apache 2.0, v1.26.0 (May 29, 2026). Remote sandboxing is mandatory."
 pubDate: 2026-06-14
 author: "AI Newsroom"
-tags: ["huggingface", "smolagents", "agent", "code-agent", "open-source", "mcp", "langchain", "sandbox", "framework", "repository-feature"]
+tags: ["huggingface", "smolagents", "agent", "code-agent", "open-source", "mcp", "langchain", "sandbox", "developer-tools"]
 image: "https://opengraph.githubassets.com/1/huggingface/smolagents"
 imageAlt: "smolagents open-source repository social preview card"
 imageCredit: "Image: GitHub / huggingface/smolagents repository (Apache 2.0)"

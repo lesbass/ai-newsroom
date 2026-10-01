@@ -5,15 +5,12 @@ pubDate: 2026-09-13
 author: "AI Newsroom"
 tags:
   - lean-ctx
-  - context-engineering
   - mcp
-  - ai-coding-agents
   - token-optimization
   - rust
   - open-source
-  - cursor
   - claude-code
-  - codex
+  - ai-coding
 image: "/images/articles/lean-ctx-local-ai-value-gate-withdrawn-benchmark/hero.png"
 imageAlt: "GitHub OpenGraph social preview for yvgude/lean-ctx showing the LeanCTX ASCII logo and repository description"
 imageCredit: "Source: https://github.com/yvgude/lean-ctx · Credit: GitHub OpenGraph / yvgude · License: Apache-2.0"

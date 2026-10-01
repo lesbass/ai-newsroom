@@ -3,7 +3,7 @@ title: "Cloudflare `wrangler deploy --temporary` for AI agents"
 description: "Cloudflare shipped `wrangler deploy --temporary` on 2026-06-19: a CLI flag that provisions a temporary Cloudflare account, deploys a Worker, and prints a claim URL — 60 minutes to claim, no human in the loop."
 pubDate: 2026-06-22
 author: "AI Newsroom"
-tags: ["cloudflare", "cloudflare-workers", "wrangler", "ai-agents", "agentic-ai", "developer-tools", "cli", "deployment", "temporary-accounts", "workers-dev", "auth", "agent-auth", "frictionless-deploy", "simon-willison", "gpt-5-5"]
+tags: ["cloudflare", "cloud", "cli", "ai-agents", "developer-tools", "devops", "security", "people", "openai"]
 image: "https://cf-assets.www.cloudflare.com/zkvhlag99gkb/60PB1NmcYFywT5TDlwDR0v/a9e72c980e108702e00b57343ea1ccb2/OG_Share_2024-2025-2026__39_.png"
 imageAlt: "Cloudflare Temporary Accounts for AI agents social card"
 imageCredit: "Image: Cloudflare blog / Temporary Accounts announcement (June 19, 2026)"

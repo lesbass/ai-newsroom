@@ -19,4 +19,19 @@ export default [
       "no-unused-vars": "warn",
     },
   },
+  {
+    files: ["scripts/**/*.{js,mjs,cjs}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        ...globals.node,
+        ...globals.browser,
+      },
+    },
+    rules: {
+      "no-unused-vars": "warn",
+      "no-redeclare": "off",
+    },
+  },
 ];

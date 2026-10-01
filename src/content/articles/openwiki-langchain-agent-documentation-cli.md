@@ -3,7 +3,7 @@ title: "OpenWiki: LangChain's CLI that lets agents maintain their own docs"
 description: "OpenWiki is a TypeScript CLI from LangChain that writes AGENTS.md, CLAUDE.md, and a local wiki from a repo or your personal sources — and updates them in CI."
 pubDate: 2026-07-13
 author: "AI Newsroom"
-tags: ["openwiki", "langchain", "agent-documentation", "claude-md", "agents-md", "cli", "typescript", "documentation", "ci-cd", "github-actions", "gitlab-ci", "bitbucket", "knowledge-management", "ai-agents", "mit"]
+tags: ["openwiki", "langchain", "agent-documentation", "claude-code", "agents-md", "cli", "typescript", "documentation", "ci-cd", "github-actions", "gitlab-ci", "bitbucket", "knowledge-management", "ai-agents", "open-source"]
 highRiskClaims: false
 image: "/images/articles/openwiki-langchain-agent-documentation-cli/hero.svg"
 imageAlt: "Editorial diagram showing OpenWiki's two operational modes: Code mode generating repository documentation (AGENTS.md, CLAUDE.md, openwiki/ directory) from a codebase via git, and Personal mode building a personal brain wiki at ~/.openwiki/wiki from connectors including Gmail, Notion, X/Twitter, Web Search, Hacker News, and local Git repositories."

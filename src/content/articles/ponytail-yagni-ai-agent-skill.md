@@ -4,7 +4,7 @@ description: "Dietrich Gebert's ponytail v4.6.0 (2026-06-15): 17.9k stars, 8 rel
 pubDate: 2026-06-16
 updatedDate: 2026-06-16
 author: "AI Newsroom"
-tags: ["ponytail", "ai-agents", "yagni", "claude-code", "codex", "opencode", "cursor", "windsurf", "cline", "aider", "kiro", "prompt-engineering", "agent-skills", "developer-tools", "code-review", "ai-code-bloat"]
+tags: ["ponytail", "ai-agents", "yagni", "claude-code", "ai-coding", "windsurf", "cline", "aider", "prompt-engineering", "agent-skills", "developer-tools", "code-review", "ai-code-bloat"]
 image: "https://opengraph.githubassets.com/1/DietrichGebert/ponytail"
 imageAlt: "ponytail open-source repository social preview card"
 imageCredit: "Image: GitHub / DietrichGebert/ponytail repository (MIT)"

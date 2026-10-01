@@ -3,7 +3,7 @@ title: "cognee: open-source AI memory platform for agents"
 description: "cognee is an Apache-2.0 open-source AI memory platform for agents: a self-hosted knowledge graph engine with a four-method API (remember, recall, forget, improve) and a Claude Code plugin."
 pubDate: 2026-06-30
 author: "AI Newsroom"
-tags: ["cognee", "topoteretes", "ai-memory", "agent-memory", "knowledge-graph", "graph-rag", "ai-agents", "context-engineering", "mcp", "model-context-protocol", "claude-code", "claude-code-plugin", "postgres", "pgvector", "truth-subspace", "reranking", "single-postgres", "rust-client", "typescript-client", "cognee-cloud", "open-source", "apache-2-0", "arxiv-2505-24478", "beam", "memory-platform", "vector-database", "ai-newsroom-coverage"]
+tags: ["cognee", "people", "ai-agents", "graph-rag", "ai-coding", "mcp", "model-context-protocol", "claude-code", "databases", "developer-tools", "cloud", "open-source", "research", "editorial"]
 image: "/images/articles/cognee-open-source-ai-memory-platform-agents/hero-desktop.png"
 imageAlt: "GitHub repository landing page for topoteretes/cognee, an Apache-2.0 open-source AI memory platform for agents, showing 25.7k stars, 2.4k forks, 207 open issues, 224 open pull requests, 8,426 commits, and a topics list that includes ai-memory, agent-memory, cognitive-memory, context-engineering, and knowledge-graph."
 imageCredit: "Screenshot: GitHub repository landing page for topoteretes/cognee (github.com/topoteretes/cognee), captured 2026-06-30 via Playwright Chromium via the project's scripts/browser.mjs. License: Apache-2.0 (project) / screenshot used editorially for the cognee article."

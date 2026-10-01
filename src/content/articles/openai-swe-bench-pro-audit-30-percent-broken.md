@@ -9,19 +9,17 @@ canonicalURL: "https://news.lesbass.com/articles/openai-swe-bench-pro-audit-30-p
 tags:
   - openai
   - openai-blog
-  - swe-bench-pro
   - benchmark
   - evaluation
   - ai-coding
-  - ai-coding-agents
   - coding-agents
-  - agentic-ai
   - high-risk-claim
   - preparedness-framework
   - deployment-safety
   - ai-safety
-  - codex
   - openai-prep-framework
+  - benchmarks
+  - ai-agents
 highRiskClaims: true
 ---
 

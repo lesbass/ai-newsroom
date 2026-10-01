@@ -3,7 +3,7 @@ title: "caveman: terse-output skill, 75k stars in 11 weeks"
 description: "GitHub JuliusBrussee/caveman: a TypeScript skill for 30+ agent platforms that asks the agent to drop filler. 75k stars, MIT, 65% output-token reduction."
 pubDate: 2026-06-20
 author: "AI Newsroom"
-tags: ["open-source", "typescript", "claude-code", "codex", "gemini", "cursor", "agent-skills", "tokens", "token-efficiency", "prompt-engineering", "anthropic", "openai", "gemini-cli", "caveman", "juliusbrussee", "caveman-code", "cavemem", "cavekit", "cavegemma", "openclaw", "mcp", "fine-tuning", "gemma", "lora", "developer-tools", "high-risk-claim"]
+tags: ["open-source", "typescript", "claude-code", "ai-coding", "gemini", "agent-skills", "tokens", "token-efficiency", "prompt-engineering", "anthropic", "openai", "caveman", "juliusbrussee", "caveman-code", "cavemem", "cavekit", "cavegemma", "mcp", "fine-tuning", "gemma", "lora", "developer-tools", "high-risk-claim"]
 image: "https://opengraph.githubassets.com/1/JuliusBrussee/caveman"
 imageAlt: "caveman open-source repository social preview card showing the '74,940 stars' badge and the JuliusBrussee avatar"
 imageCredit: "Image: GitHub / JuliusBrussee/caveman repository (MIT)"

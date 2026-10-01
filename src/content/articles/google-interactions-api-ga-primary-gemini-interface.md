@@ -21,12 +21,12 @@ tags:
   - ai-sdk
   - google-genai
   - mcp
-  - litellm
   - agno
   - eigent
   - coding-agents
   - agent-skills
   - gemini-omni
+  - ai-coding
 highRiskClaims: false
 image: "/images/articles/google-interactions-api-ga-primary-gemini-interface/hero-blog-desktop.png"
 imageAlt: "Google blog post 'Interactions API: our primary interface for Gemini models and agents' on 2026-07-12, showing the bylines (Ali Çevik, Group PM, Google DeepMind; Philipp Schmid, Developer Relations Engineer, Google DeepMind), the Interactions_API_GA_final hero illustration, and the opening paragraph announcing general availability and a stable schema."

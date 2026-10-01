@@ -3,7 +3,7 @@ title: "CodeBurn: free, local-first cost tracker for 31 AI coding tools"
 description: "CodeBurn (getagentseal/codeburn) reads the session files your AI coding tools already write, breaks down every token and dollar across 31 integrations, MIT, no proxy, no API key."
 pubDate: 2026-06-29
 author: "AI Newsroom"
-tags: ["codeburn", "ai-coding", "cost-tracking", "token-spend", "local-first", "claude-code", "codex", "cursor", "opencode", "openclaw", "grok", "gemini-cli", "kiro", "warp", "mux", "vercel-ai-gateway", "typescript", "nodejs", "tui", "menubar", "spend-visibility", "mcp", "litellm", "claude-for-open-source", "mit-license", "cli", "developer-tools", "open-source"]
+tags: ["codeburn", "ai-coding", "pricing", "developer-tools", "claude-code", "cloud", "typescript", "nodejs", "mcp", "claude", "open-source", "cli"]
 image: "/images/articles/codeburn-ai-coding-cost-tracker/hero.png"
 imageAlt: "CodeBurn TUI dashboard showing a week of AI coding spend broken down by tool, by model, by project, by activity, by day, by core tools, by shell commands, and by MCP server."
 imageCredit: "Source: github.com/getagentseal/codeburn/blob/main/assets/dashboard.jpg · Captured 2026-06-29 via Playwright Chromium + @sparticuz/chromium (re-rendered with editorial caption and license) · License: MIT (project); screenshot used editorially for the CodeBurn article on news.lesbass.com"

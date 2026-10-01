@@ -11,12 +11,12 @@ tags:
   - gcs
   - object-storage
   - stateless
-  - cursor
   - continuity
   - tobias-lutke
   - shopify
   - git-hosting
   - open-source
+  - ai-coding
 image: "/images/articles/walgit-cursor-continuity/hero.svg"
 imageAlt: "Generated editorial diagram showing walgit's architecture: three stateless walgit instances push and read from an S3/GCS bucket via CAS on a manifest, with UDP gossip between instances. The bucket is the source of truth; each instance is a disposable cache."
 imageCredit: "Generated editorial image · Model/tool: hand-authored SVG · Disclosure: AI-generated, not source evidence"

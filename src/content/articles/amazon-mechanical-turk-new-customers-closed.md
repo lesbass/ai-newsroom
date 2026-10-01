@@ -3,7 +3,7 @@ title: "Amazon closes Mechanical Turk to new customers on July 30, 2026"
 description: "Amazon stops accepting new Mechanical Turk customers effective July 30, 2026 and ships no new features — the 20-year-old crowdsourcing platform that built AI data labeling is on life support."
 pubDate: 2026-07-06
 author: "AI Newsroom"
-tags: ["amazon", "mechanical-turk", "aws", "sagemaker", "ai-training-data", "crowdsourcing", "data-annotation", "ground-truth", "end-of-life"]
+tags: ["amazon", "mechanical-turk", "cloud", "ai-training", "data", "policy"]
 image: "/images/articles/amazon-mechanical-turk-new-customers-closed/hero-mturk-announcement.png"
 imageAlt: "Screenshot of the Mechanical Turk homepage (mturk.com, captured 2026-07-06) showing the dark announcement banner at the top: 'Amazon Mechanical Turk will be closed to new customers, effective July 30, 2026. Existing users will not be impacted by this change. More information is available here.' Below the banner the standard MTurk navigation and 'Get started with Amazon Mechanical Turk' landing are visible."
 imageCredit: "Screenshot of https://www.mturk.com/ — captured 2026-07-06 via Playwright Chromium (headless, networkidle, 1280x900) · License: no license stated on the MTurk homepage; screenshot used editorially for the AIN-328 article."

@@ -11,7 +11,6 @@ tags:
   - formal-verification
   - lean-4
   - open-source
-  - apache-2-0
   - moe
   - moe-119b-6b-active
   - cispo

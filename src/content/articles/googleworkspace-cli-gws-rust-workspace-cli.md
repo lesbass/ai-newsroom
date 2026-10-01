@@ -3,7 +3,7 @@ title: "Google Workspace CLI (gws): Rust CLI for Workspace APIs"
 description: "googleworkspace/cli (gws) is a first-party Rust CLI for every Workspace API, built dynamically from the Google Discovery Service, with 95 skill directories and opt-in Model Armor sanitization."
 pubDate: 2026-06-18
 author: "AI Newsroom"
-tags: ["google-workspace", "gws", "cli", "rust", "google-api", "gemini-cli", "agent-skills", "model-armor", "prompt-injection", "oauth2", "discovery-service", "npm", "developer-tools", "repository-feature"]
+tags: ["google-workspace", "gws", "cli", "rust", "google-api", "ai-coding", "agent-skills", "model-armor", "prompt-injection", "oauth2", "discovery-service", "npm", "developer-tools"]
 image: "https://opengraph.githubassets.com/1/googleworkspace/cli"
 imageAlt: "Google Workspace CLI open-source repository social preview card"
 imageCredit: "Image: GitHub / googleworkspace/cli repository (Apache 2.0)"

@@ -3,7 +3,7 @@ title: "OpenAI GPT-Red: self-play red-teaming at frontier scale"
 description: "OpenAI's GPT-Red is a self-play-trained automated red-teamer at frontier compute scale. GPT-5.6 Sol is 6× more robust to prompt injection; specific Vendy and Codex CLI exploits."
 pubDate: 2026-07-16
 author: "AI Newsroom"
-tags: ["openai", "gpt-5-6", "gpt-5-6-sol", "gpt-red", "automated-red-teaming", "prompt-injection", "ai-safety", "alignment", "openai-research", "system-card", "agentic-coding", "ai-newsroom-coverage"]
+tags: ["openai", "gpt-5-6", "gpt-5-6-sol", "gpt-red", "automated-red-teaming", "prompt-injection", "ai-safety", "alignment", "openai-research", "agentic-coding", "editorial"]
 image: "/images/articles/openai-gpt-red-automated-red-teaming-frontier-safety/hero.svg"
 imageAlt: "Visual showing a GPT-Red attack-search process against a Vendy-style autonomous vending machine agent, with the model iterating on attacks in simulation before transferring to the live agent."
 imageCredit: "Source: openai.com/index/unlocking-self-improvement-gpt-red/ · Credit: OpenAI · License: Content from the announcement page, used for editorial commentary."

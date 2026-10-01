@@ -9,11 +9,10 @@ tags:
   - dsh
   - cordis
   - agent-harness
-  - agentic-ai
-  - mit
   - typescript
   - open-source
   - plugin-architecture
+  - ai-agents
 image: "/images/articles/deepseek-harness-dsh/hero.svg"
 imageAlt: "Generated editorial diagram of DeepSeek Harness (dsh) architecture showing the Cordis kernel at center with replaceable plugins: Model Adapter, Tools, Agent Loop, Skills, Session, Sandbox, and Storage — all connected via dashed lines representing plugin composition"
 imageCredit: "Generated editorial image · Model/tool: hand-authored SVG · Disclosure: AI-generated, not source evidence"

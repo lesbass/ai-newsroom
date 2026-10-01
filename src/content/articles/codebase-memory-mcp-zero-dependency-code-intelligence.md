@@ -3,7 +3,7 @@ title: "codebase-memory-mcp: zero-dep code intelligence"
 description: "Pure-C, single-binary MCP server that indexes a codebase into a Tree-Sitter knowledge graph in milliseconds. 13.3k stars, MIT, 5,604 tests, 11 agents. arXiv 2603.27277 reports 83% quality at 10× fewer tokens."
 pubDate: 2026-06-24
 author: "AI Newsroom"
-tags: ["codebase-memory-mcp", "mcp", "model-context-protocol", "tree-sitter", "knowledge-graph", "code-intelligence", "ai-coding-agents", "claude-code", "codex", "gemini-cli", "opencode", "hybrid-lsp", "static-binary", "zero-dependency", "arxiv-2603-27277", "deusdata", "ai-newsroom-coverage"]
+tags: ["codebase-memory-mcp", "mcp", "model-context-protocol", "developer-tools", "ai-agents", "ai-coding", "claude-code", "research", "people", "editorial"]
 image: "https://opengraph.githubassets.com/1/DeusData/codebase-memory-mcp"
 imageAlt: "codebase-memory-mcp open-source repository social preview card"
 imageCredit: "Image: GitHub / DeusData/codebase-memory-mcp repository (MIT)"

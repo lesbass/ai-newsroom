@@ -8,12 +8,12 @@ tags:
   - anti-hallucination
   - binary-analysis
   - verification
-  - context-engineering
   - mcp
   - reverse-engineering
   - deterministic-verifier
   - open-source
-  - python
+  - ai-coding
+  - developer-tools
 image: "/images/articles/reverify-grounded-verification-lossless-context-rollover/hero.svg"
 imageAlt: "Generated editorial diagram of reverify's propose-and-verify loop: LLM agent proposes a claim, deterministic verifier checks bytes against the actual binary, decision diamond routes VERIFIED claims to the fact ledger and REFUTED claims back to the model for correction"
 imageCredit: "Generated editorial image · Model/tool: hand-authored SVG · Disclosure: AI-generated, not source evidence"

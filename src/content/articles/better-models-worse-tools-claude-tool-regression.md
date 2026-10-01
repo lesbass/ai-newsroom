@@ -6,14 +6,12 @@ pubDate: 2026-07-05
 author: "AI Newsroom"
 tags:
   - anthropic
-  - claude-opus-4-8
-  - claude-sonnet-5
   - tool-use
   - claude-code
   - ai-agents
   - pi
-  - agentic-ai
   - developer-tools
+  - claude
 image: "/images/articles/better-models-worse-tools-claude-tool-regression/hero-desktop.png"
 imageAlt: "Screenshot of the 'The Failure' section of Armin Ronacher's blog post showing two invented-key JSON examples (requireUnique, oldText2, newText2) and the bulleted list of trailing keys Claude Opus 4.8 and Sonnet 5 produced against Pi's edit tool schema (pocoo.org, 2026-07-04)."
 imageCredit: "Source: Armin Ronacher's blog post 'Better Models: Worse Tools' — https://lucumr.pocoo.org/2026/7/4/better-models-worse-tools/ (2026-07-04). Screenshot of the 'The Failure' section, captured 2026-07-05 via Playwright Chromium using the AI Newsroom browser helper. License: no license stated; editorial use of a single screenshot from a public analysis post for news commentary, with full attribution to the author."
