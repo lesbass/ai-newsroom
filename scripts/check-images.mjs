@@ -68,7 +68,8 @@ function checkPageHtml(html, rel, isRemote) {
   });
 
   if (isArticle) {
-    if (imgTags.length === 0) {
+    const imageException = html.includes('data-image-policy="exception"');
+    if (imgTags.length === 0 && !imageException) {
       console.warn(`⚠  ${rel}: no <img> tags (editorial policy requires at least one image per article)`);
       warnings++;
     }

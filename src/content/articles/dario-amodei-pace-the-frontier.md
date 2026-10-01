@@ -4,9 +4,9 @@ description: "Anthropic commits to embedded external evaluators with employee-li
 pubDate: 2026-09-17
 author: "AI Newsroom"
 tags: ["anthropic", "alignment", "governance", "embedded-evaluators", "openai", "xai", "frontier-policy", "editorial"]
-image: ""
-imageAlt: ""
-imageCredit: ""
+image: "/images/articles/dario-amodei-pace-the-frontier/hero.png"
+imageAlt: "Screenshot of Dario Amodei's essay page \"We Must Pace the Frontier\" (darioamodei.com), showing the title, the September 2026 date, a contents sidebar (Why Pace?, Embedded Evaluators, Pacing Within Democracies, Global Pacing, Bottom Line) and the opening paragraph."
+imageCredit: "Source: https://darioamodei.com/post/we-must-pace-the-frontier · Captured: 2026-10-01 via Playwright Chromium (headless, 1366x900) · License: no license stated on the essay page; screenshot used editorially as the primary source for this article"
 sources:
   - title: "Dario Amodei — \"We Must Pace the Frontier\" (essay, Sep 12 2026; three-step plan, embedded evaluators commitment, pacing rationale)"
     url: "https://darioamodei.com/post/we-must-pace-the-frontier"

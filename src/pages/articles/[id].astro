@@ -33,7 +33,7 @@ const headlineClass = title.length > 60 ? 'headline-long' : title.length > 45 ? 
 <BaseLayout
   title={title}
   description={description}
-  image={image}
+  image={image === 'exception' ? undefined : image}
   pubDate={pubDate}
   updatedDate={updatedDate || pubDate}
   author={author}
@@ -43,7 +43,7 @@ const headlineClass = title.length > 60 ? 'headline-long' : title.length > 45 ? 
 >
   <Header />
   <main id="main-content">
-  <article class="container article-body">
+  <article class="container article-body" data-image-policy={image === 'exception' ? 'exception' : undefined}>
     <Breadcrumb
       items={[
         { label: 'Home', href: '/' },
