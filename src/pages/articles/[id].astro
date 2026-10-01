@@ -27,6 +27,7 @@ const wordCount = body.split(/\s+/).filter(Boolean).length;
 const readingTime = Math.max(1, Math.round(wordCount / 238));
 const displayTags = tags.slice(0, 6);
 const extraTagCount = Math.max(0, tags.length - 6);
+const headlineClass = title.length > 60 ? 'headline-long' : title.length > 45 ? 'headline-medium' : 'headline-short';
 ---
 
 <BaseLayout
@@ -51,7 +52,7 @@ const extraTagCount = Math.max(0, tags.length - 6);
       ]}
     />
     <div class="article-header">
-      <h1>{title}</h1>
+      <h1 class={headlineClass}>{title}</h1>
       <div class="article-meta">
         <span>{date}</span>
         {updated && <span> (updated {updated})</span>}
