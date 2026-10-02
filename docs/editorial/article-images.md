@@ -19,7 +19,7 @@ The `image` field is passed to `BaseLayout` and used for:
 - `twitter:image` (Twitter/X card)
 - JSON-LD `NewsArticle.image` (schema.org structured data)
 
-When `image` is absent or empty, all three default to `/favicon.svg`. The `scripts/check-images.mjs` audit script flags this as a warning on article pages.
+When `image` is absent or empty, `og:image`, `twitter:image`, and JSON-LD `NewsArticle.image` all fall back to the site default `/og-image.svg`. The `scripts/check-images.mjs` audit script flags a hero-less article page as a warning.
 
 ## In-Content Images
 
@@ -79,16 +79,17 @@ npm run audit:daily  # daily report runner (includes images step)
 
 ## Exception Protocol
 
-If an article genuinely cannot include a relevant image and the favicon fallback is unavoidable:
+If an article genuinely cannot include a relevant image and the site-default social fallback is unavoidable:
 
-1. Writer records the reason in the article's Paperclip issue thread.
+1. Writer records the reason in the article's Paperclip issue thread and in the article body as an `**Image exception reason:**` paragraph.
 2. QualityGate reviews the reason and either approves the exception or requests alternatives.
 3. The exception reason is auditable — it should cite why screenshots, diagrams, or charts of primary sources were unavailable or inappropriate.
+4. An approved exception uses the frontmatter sentinel `image: exception` (with `imageAlt: exception` and `imageCredit: exception`). The article template then skips the hero figure and renders `data-image-policy="exception"` on the article element, and it stops passing the sentinel to `BaseLayout` so social/JSON-LD images fall back to `/og-image.svg` instead of a broken `/exception` URL. `scripts/check-images.mjs` reads that marker and skips the "no `<img>` tags" warning for the page, so the warning list only shows genuine gaps. An empty `image: ""` is **not** an exception — it is a real gap and still warns.
 
 ## Image File Conventions
 
-- Store images in `public/images/`.
-- Use the article slug as a prefix: `article-slug-hero.png`, `article-slug-diagram.png`.
+- Store images in `public/images/articles/<article-slug>/`.
+- Name the hero file `hero.png` (screenshot/photo) or `hero.svg` (diagram/chart): `public/images/articles/<article-slug>/hero.png`.
 - Prefer WebP or AVIF for photos, PNG for screenshots and diagrams, SVG for charts.
 - Keep images under 200 KB where practical.
 - Progressive JPEG or optimized PNG is preferred.
