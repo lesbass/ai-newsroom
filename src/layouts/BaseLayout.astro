@@ -538,6 +538,12 @@ const jsonLd = article
       border-color: rgba(200, 79, 56, 0.35);
       font-weight: 600;
     }
+    .tag-more-narrow { display: none; }
+    @media (max-width: 640px) {
+      .tag-overflow { display: none; }
+      .tag-more-wide { display: none; }
+      .tag-more-narrow { display: inline-flex; }
+    }
     .home-hero {
       position: relative;
       width: min(1120px, calc(100% - 2rem));
