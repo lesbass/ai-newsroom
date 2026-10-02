@@ -465,6 +465,18 @@ if (rssFeed) {
   );
   const atomHrefs = [...rssFeed.matchAll(/<atom:link[^>]*href="([^"]+)"/g)].map((m) => m[1]);
   if (atomHrefs.length > 0) checkBulkCanonicalOrigin('rss.xml', '<atom:link href>', atomHrefs);
+
+  // Feed readers that render <enclosure> artwork ignore image/svg+xml, so a
+  // non-raster enclosure renders as no image at all (AIN-848).
+  const nonRasterEnclosures = [...rssFeed.matchAll(/<enclosure\b[^>]*\btype="([^"]*)"/g)].filter(
+    (m) => !/^image\/(png|jpe?g|gif|webp|avif)$/i.test(m[1]),
+  );
+  if (nonRasterEnclosures.length > 0) {
+    console.error(
+      `❌ rss.xml: ${nonRasterEnclosures.length} <enclosure> entries are not raster (e.g. ${nonRasterEnclosures.slice(0, 3).map((m) => m[1]).join(', ')})`,
+    );
+    errors++;
+  }
 }
 
 const robotsTxt = await loadArtifact('robots.txt', '/robots.txt');

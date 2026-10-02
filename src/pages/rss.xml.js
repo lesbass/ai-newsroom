@@ -1,5 +1,14 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
+import { DEFAULT_OG_IMAGE, resolveOgImage } from '../lib/ogImage';
+
+const RASTER_TYPES = new Set([
+  'image/png',
+  'image/jpeg',
+  'image/webp',
+  'image/gif',
+  'image/avif',
+]);
 
 function mimeFromUrl(url) {
   const ext = url.split('?')[0].split('.').pop()?.toLowerCase();
@@ -9,8 +18,20 @@ function mimeFromUrl(url) {
     case 'svg': return 'image/svg+xml';
     case 'webp': return 'image/webp';
     case 'gif': return 'image/gif';
+    case 'avif': return 'image/avif';
     default: return 'image/png';
   }
+}
+
+function enclosureXml(image, site) {
+  const resolved = resolveOgImage(image).src;
+  const type = mimeFromUrl(resolved);
+  // Feed readers that render enclosure artwork ignore image/svg+xml (and any
+  // other non-raster type), so a non-raster enclosure is a missing image.
+  // Fall back to the same brand card og:image uses (AIN-844 / AIN-848).
+  const url = RASTER_TYPES.has(type) ? resolved : DEFAULT_OG_IMAGE;
+  const enclosureType = RASTER_TYPES.has(type) ? type : 'image/png';
+  return `<enclosure url="${new URL(url, site).toString()}" type="${enclosureType}" />`;
 }
 
 export async function GET(context) {
@@ -27,7 +48,7 @@ export async function GET(context) {
       description: article.data.description,
       link: `/articles/${article.id}/`,
       customData: article.data.image
-        ? `<enclosure url="${new URL(article.data.image, context.site).toString()}" type="${mimeFromUrl(article.data.image)}" />`
+        ? enclosureXml(article.data.image, context.site)
         : undefined,
     })),
   });
