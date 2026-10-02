@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { readImageSizeFile } from './lib/image-size.mjs';
 
 const dist = resolve('dist');
 const baseUrl = process.env.CHECK_URL || '';
@@ -163,6 +164,60 @@ function checkPage(rel, html, path) {
       errors++;
     }
 
+    // 5b. Social preview image must be a raster file fetchers can render
+    // (Facebook/X/LinkedIn/Slack/Discord ignore image/svg+xml), and any
+    // og:image:width/height claim must match the bytes we actually ship.
+    const ogImageMatch = html.match(/<meta property="og:image" content="([^"]*)"/);
+    const twImageMatch = html.match(/<meta name="twitter:image" content="([^"]*)"/);
+    if (!ogImageMatch) {
+      console.error(`❌ ${rel}: missing og:image`);
+      errors++;
+    }
+    for (const [label, match] of [['og:image', ogImageMatch], ['twitter:image', twImageMatch]]) {
+      if (match && /\.svg([?#]|$)/i.test(match[1])) {
+        console.error(`❌ ${rel}: ${label} points at an SVG (${match[1]}) — social fetchers will not render it`);
+        errors++;
+      }
+    }
+    if (ogImageMatch) {
+      const ogUrl = ogImageMatch[1];
+      const width = html.match(/<meta property="og:image:width" content="(\d+)"/);
+      const height = html.match(/<meta property="og:image:height" content="(\d+)"/);
+      if (width && !height) {
+        console.warn(`⚠ ${rel}: og:image:width without og:image:height`);
+        warnings++;
+      }
+      if (!width && !height && !/^https?:\/\//i.test(ogUrl)) {
+        console.warn(`⚠ ${rel}: og:image has no width/height claim`);
+        warnings++;
+      }
+      if (width && height && existsSync(assetBase)) {
+        let localPath = null;
+        if (ogUrl.startsWith('/')) localPath = ogUrl;
+        else if (ogUrl.startsWith('https://news.lesbass.com/')) {
+          localPath = ogUrl.slice('https://news.lesbass.com/'.length);
+        }
+        if (localPath) {
+          const file = join(assetBase, localPath.split(/[?#]/)[0]);
+          if (!existsSync(file)) {
+            console.error(`❌ ${rel}: og:image file missing from build output (${localPath})`);
+            errors++;
+          } else {
+            const size = readImageSizeFile(file);
+            if (!size) {
+              console.warn(`⚠ ${rel}: could not read dimensions of ${localPath}`);
+              warnings++;
+            } else if (size.width !== Number(width[1]) || size.height !== Number(height[1])) {
+              console.error(
+                `❌ ${rel}: og:image claims ${width[1]}x${height[1]} but ${localPath} is ${size.width}x${size.height}`,
+              );
+              errors++;
+            }
+          }
+        }
+      }
+    }
+
     // 6. JSON-LD structured data
     if (!/<script type="application\/ld\+json">/.test(html)) {
       console.warn(`⚠ ${rel}: missing JSON-LD structured data`);
@@ -271,6 +326,10 @@ if (!fetchedRss && !existsSync(join(assetBase, 'rss.xml'))) {
 if (!existsSync(join(assetBase, 'favicon.svg'))) {
   console.warn('⚠ missing favicon.svg');
   warnings++;
+}
+if (!existsSync(join(assetBase, 'og-image.png'))) {
+  console.error('❌ missing og-image.png (raster social-preview fallback)');
+  errors++;
 }
 
 // 17. Validate sitemap (skip XML structure checks if already validated via URL fetch)

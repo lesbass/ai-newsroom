@@ -19,7 +19,23 @@ The `image` field is passed to `BaseLayout` and used for:
 - `twitter:image` (Twitter/X card)
 - JSON-LD `NewsArticle.image` (schema.org structured data)
 
-When `image` is absent or empty, `og:image`, `twitter:image`, and JSON-LD `NewsArticle.image` all fall back to the site default `/og-image.svg`. The `scripts/check-images.mjs` audit script flags a hero-less article page as a warning.
+When `image` is absent or empty, `og:image`, `twitter:image`, and JSON-LD `NewsArticle.image` all fall back to the site default `/og-image.png`. The `scripts/check-images.mjs` audit script flags a hero-less article page as a warning.
+
+### Social preview images must be raster
+
+Social fetchers (Facebook, X, LinkedIn, Slack, Discord) do not render `image/svg+xml`. `src/lib/ogImage.ts` therefore resolves the social image independently of the visible hero:
+
+- Local raster hero (`png` / `jpg` / `gif` / `webp`) → that file, with `og:image:width`/`height` read from the real bytes.
+- SVG hero, `image: exception`, missing file, or any other non-raster value → `/og-image.png`, the raster brand card. The rendered article `<img>` hero is unaffected.
+- Remote hero URL (anything except a remote `.svg`) → used as-is, with no `width`/`height` claim because the intrinsic size is not verified at build time.
+
+`og:image:width`/`og:image:height` are only emitted when the size is actually known. `scripts/check-seo.mjs` fails the build check if any page emits an SVG social image, if the image file is missing from `dist/`, or if a claimed size disagrees with the shipped bytes.
+
+`public/og-image.png` is generated from `public/og-image.svg` with:
+
+```bash
+npm run generate:og-image   # runs scripts/generate-og-image.mjs via the repo's Playwright helper
+```
 
 ## In-Content Images
 
@@ -84,7 +100,7 @@ If an article genuinely cannot include a relevant image and the site-default soc
 1. Writer records the reason in the article's Paperclip issue thread and in the article body as an `**Image exception reason:**` paragraph.
 2. QualityGate reviews the reason and either approves the exception or requests alternatives.
 3. The exception reason is auditable — it should cite why screenshots, diagrams, or charts of primary sources were unavailable or inappropriate.
-4. An approved exception uses the frontmatter sentinel `image: exception` (with `imageAlt: exception` and `imageCredit: exception`). The article template then skips the hero figure and renders `data-image-policy="exception"` on the article element, and it stops passing the sentinel to `BaseLayout` so social/JSON-LD images fall back to `/og-image.svg` instead of a broken `/exception` URL. `scripts/check-images.mjs` reads that marker and skips the "no `<img>` tags" warning for the page, so the warning list only shows genuine gaps. An empty `image: ""` is **not** an exception — it is a real gap and still warns.
+4. An approved exception uses the frontmatter sentinel `image: exception` (with `imageAlt: exception` and `imageCredit: exception`). The article template then skips the hero figure and renders `data-image-policy="exception"` on the article element, and it stops passing the sentinel to `BaseLayout` so social/JSON-LD images fall back to `/og-image.png` instead of a broken `/exception` URL. `scripts/check-images.mjs` reads that marker and skips the "no `<img>` tags" warning for the page, so the warning list only shows genuine gaps. An empty `image: ""` is **not** an exception — it is a real gap and still warns.
 
 ## Image File Conventions
 
