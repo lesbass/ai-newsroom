@@ -5,6 +5,12 @@ import { readImageSizeFile } from './lib/image-size.mjs';
 const dist = resolve('dist');
 const baseUrl = process.env.CHECK_URL || '';
 
+// Canonical production origin (matches `site` in astro.config.mjs). Every absolute
+// URL a crawler reads for our own pages — canonical, og:url, sitemap <loc>, RSS
+// <link>/<guid>, robots.txt Sitemap: — must stay on this origin. Legacy hosts
+// (ai-newsroom.pages.dev, ai-newsroom.lesbass.workers.dev) are not production.
+const CANONICAL_ORIGIN = 'https://news.lesbass.com';
+
 // Support new Cloudflare adapter output: static assets in dist/client/
 const clientDir = join(dist, 'client');
 const assetBase = existsSync(clientDir) ? clientDir : dist;
@@ -22,6 +28,27 @@ function* walk(dir) {
 
 let errors = 0;
 let warnings = 0;
+
+// Base-URL guard: an absolute URL that does not resolve to CANONICAL_ORIGIN is a
+// deployment/base-URL defect (wrong `site`, stale redirect, legacy host), not a
+// content defect — fail loudly so it cannot ship silently.
+function checkCanonicalOrigin(where, field, url) {
+  if (!url) return;
+  let origin;
+  try {
+    origin = new URL(url).origin;
+  } catch {
+    console.error(`❌ ${where}: ${field} is not an absolute URL: ${url}`);
+    errors++;
+    return;
+  }
+  if (origin !== CANONICAL_ORIGIN) {
+    console.error(
+      `❌ ${where}: ${field} points at ${origin}, expected ${CANONICAL_ORIGIN} (${url})`,
+    );
+    errors++;
+  }
+}
 
 // Collect pages: from dist/ or from URL
 const pagePaths = [...walk(dist)];
@@ -122,6 +149,9 @@ function checkPage(rel, html, path) {
     if (!/<link rel="canonical"/.test(html)) {
       console.error(`❌ ${rel}: missing canonical URL`);
       errors++;
+    } else {
+      const canonicalHref = html.match(/<link rel="canonical" href="([^"]+)"/);
+      checkCanonicalOrigin(rel, 'rel=canonical', canonicalHref?.[1]);
     }
 
     // 4. Open Graph tags
@@ -136,7 +166,12 @@ function checkPage(rel, html, path) {
     if (!/<meta property="og:url"/.test(html)) {
       console.error(`❌ ${rel}: missing og:url`);
       errors++;
+    } else {
+      const ogUrlMatch = html.match(/<meta property="og:url" content="([^"]+)"/);
+      checkCanonicalOrigin(rel, 'og:url', ogUrlMatch?.[1]);
     }
+    const twitterUrlMatch = html.match(/<meta name="twitter:url" content="([^"]+)"/);
+    if (twitterUrlMatch) checkCanonicalOrigin(rel, 'twitter:url', twitterUrlMatch[1]);
     if (!/<meta property="og:type"/.test(html)) {
       console.error(`❌ ${rel}: missing og:type`);
       errors++;
@@ -371,6 +406,79 @@ if (!fetchedRss) {
       console.warn('⚠ rss.xml: no <item> entries');
       warnings++;
     }
+  }
+}
+
+// 18b. Base-URL guard on sitemap / RSS / robots (CANONICAL_ORIGIN above).
+// Reads the built artefacts when dist/ exists, otherwise the live CHECK_URL copy,
+// so a wrong-base-URL deploy fails the same audit that would have shipped it.
+function checkBulkCanonicalOrigin(where, field, urls) {
+  const bad = urls.filter((u) => {
+    try {
+      return new URL(u).origin !== CANONICAL_ORIGIN;
+    } catch {
+      return true;
+    }
+  });
+  if (bad.length > 0) {
+    console.error(
+      `❌ ${where}: ${bad.length}/${urls.length} ${field} entries are not on ${CANONICAL_ORIGIN} — e.g. ${bad.slice(0, 3).join(', ')}`,
+    );
+    errors++;
+  }
+}
+
+async function loadArtifact(name, urlPath) {
+  const local = join(assetBase, name);
+  if (existsSync(local)) return readFileSync(local, 'utf-8');
+  if (!baseUrl) return null;
+  try {
+    const resp = await fetch(`${baseUrl.replace(/\/$/, '')}${urlPath}`);
+    if (resp.ok) return await resp.text();
+  } catch {
+    /* unreachable host: the fetch branch above already reported it */
+  }
+  return null;
+}
+
+const sitemapXml = await loadArtifact('sitemap.xml', '/sitemap.xml');
+if (sitemapXml) {
+  const locs = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+  if (locs.length === 0) {
+    console.error('❌ sitemap.xml: no <loc> entries');
+    errors++;
+  }
+  checkBulkCanonicalOrigin('sitemap.xml', '<loc>', locs);
+}
+
+const rssFeed = await loadArtifact('rss.xml', '/rss.xml');
+if (rssFeed) {
+  checkBulkCanonicalOrigin(
+    'rss.xml',
+    '<link>',
+    [...rssFeed.matchAll(/<link>([^<]+)<\/link>/g)].map((m) => m[1]),
+  );
+  checkBulkCanonicalOrigin(
+    'rss.xml',
+    '<guid>',
+    [...rssFeed.matchAll(/<guid[^>]*>([^<]+)<\/guid>/g)].map((m) => m[1]),
+  );
+  const atomHrefs = [...rssFeed.matchAll(/<atom:link[^>]*href="([^"]+)"/g)].map((m) => m[1]);
+  if (atomHrefs.length > 0) checkBulkCanonicalOrigin('rss.xml', '<atom:link href>', atomHrefs);
+}
+
+const robotsTxt = await loadArtifact('robots.txt', '/robots.txt');
+if (robotsTxt) {
+  const sitemapLines = robotsTxt
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => /^sitemap:/i.test(l));
+  if (sitemapLines.length === 0) {
+    console.error('❌ robots.txt: missing Sitemap: line');
+    errors++;
+  }
+  for (const line of sitemapLines) {
+    checkCanonicalOrigin('robots.txt', 'Sitemap:', line.split(/\s+/)[1]);
   }
 }
 
