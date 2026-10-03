@@ -85,3 +85,61 @@ curl -s  -o /dev/null -w '%{http_code}\n' https://news.lesbass.com/   # expect 2
 curl -sI https://news.lesbass.com/tags/agent-auth       # expect 301 /tags/security
 curl -s  -o /dev/null -w '%{http_code} %{size_download}\n' https://news.lesbass.com/nope-xyz/  # expect 404 0
 ```
+
+## Paperclip bookkeeping — handoff to the task-bound run
+
+**Why this section exists.** Issue writes are gated by the cross-issue influence counter
+(`server/src/services/cross-issue-influence-limit.ts`): for an agent, every comment, status
+change and relation edit runs `observeCrossIssueInfluence`, which *throws*
+`cross_issue_influence_run_context_required` unless the run's `contextSnapshot` carries
+`issueId`/`taskId`. A `heartbeat_timer` run has neither, so from that run **no issue can be
+commented, updated or re-triaged** — the code fix above is complete and live, but the two
+issues could not be dispositioned from it. Same guard is why `connections_search` /
+`connection_request` refuse a timer run ("Connection requests require a task-bound
+heartbeat run"; they also need `responsibleUserId`, which AIN-845 has).
+
+An issue-scoped wake (assignment / `issue_monitor_due` / `payload: { issueId }` on
+`POST /api/agents/{id}/wakeup`) produces a run whose `contextSnapshot.issueId` is set.
+Writes on that issue are then free (`sourceIssueId === targetIssueId` short-circuits the
+cap); writes on the *other* issue count against `CROSS_ISSUE_INFLUENCE_LIMIT = 20` per run.
+
+**Do not redo any of the following — it is finished:**
+
+| Item | State |
+|---|---|
+| Worker-edge `http:` → `301 https:` (`src/worker.js`, `wrangler.jsonc`) | live on production, verified |
+| `_redirects` / `_headers` / RSS / sitemap / empty 404 | verified intact after the Worker change |
+| `npm run lint` · `check` · `test:seo` · `test:links` · `test:dates` · `test:images` | all pass |
+| this report | on `main` |
+
+**Remaining Paperclip steps, in order:**
+
+1. **AIN-846** (`32c74205-ad37-4bda-bea2-d95a408c2648`, currently `blocked` by AIN-845,
+   assignee = this agent). The fix is done, so the blocker is obsolete:
+   `PATCH /api/issues/32c74205-…` with `{"blockedByIssueIds": []}`, then a second PATCH
+   `{"status": "done", "comment": <evidence: this file's tables, commits 2a01713 / e6dd0e5 /
+   cc7977b, build 255ef54e, before/after curl table>}`. A single PATCH with both fields
+   returns `409 Issue follow-up blocked by unresolved blockers`, so clear first, then close.
+2. **AIN-845** (`67a80b89-2820-40ba-8883-8ea105c0e7a8`, `in_progress`, assignee = this
+   agent, responsible user `KrG7jrdSjANfsanpgzdjx6KyZqnaVudo`). On the task-bound run call
+   `connections_search` for Cloudflare:
+   - **found** → `connection_request`, then use the granted access to enable zone
+     *Always Use HTTPS* (belt and braces) and remediate/redirect the legacy
+     `ai-newsroom.pages.dev` host → comment the outcome → `done`.
+   - **not found** → `PATCH` the issue to `blocked` with an
+     `unblockDescriptor: { owner, action }` naming the board/user as the owner of
+     "grant the agent Cloudflare access (dashboard login or `CLOUDFLARE_API_TOKEN`)", and a
+     comment carrying the evidence in this file. Do **not** fabricate a connection card and
+     do not leave it `in_progress` with no live path.
+3. Both issues are in the same project (`456aaef4-…`) and goal (`c3a5fb13-…`); no other
+   AIN-84x issue depends on either.
+
+**Known platform facts for this repo** (verified 2026-10-03, do not re-derive):
+
+- Production = Cloudflare Worker `ai-newsroom` + custom domain `news.lesbass.com`, deployed
+  by the *Workers Builds* GitHub check on every push to `main`. No workflow files in-repo.
+- `ai-newsroom.pages.dev` is a different app and is **not** in any `lesbass` repo.
+- `GET /api/agents/{id}/runner-goal` → `availability: unsupported` for this adapter
+  (`opencode_structured_goals_unavailable`), so session goals cannot carry a handoff.
+- No Cloudflare credentials anywhere: `/api/agents/me/secrets` empty, no `~/.wrangler`
+  auth, `GET /api/tool-gateway/tools` returns `[]`.
