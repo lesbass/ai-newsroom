@@ -1,0 +1,3 @@
+# AIN-845 option "noindex only" — keep the legacy dashboard, stop it being indexed.
+/*
+  X-Robots-Tag: noindex

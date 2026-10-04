@@ -1,0 +1,8 @@
+# Legacy host remediation payload — AIN-845
+# Deploy target: the Cloudflare Pages project that owns ai-newsroom.pages.dev
+# (NOT this repository's Worker, which serves news.lesbass.com)
+#
+# Cloudflare Pages: source must be a path pattern; destination may be external.
+# Order matters — static rule first, then the splat.
+/ https://news.lesbass.com/ 301
+/* https://news.lesbass.com/:splat 301
