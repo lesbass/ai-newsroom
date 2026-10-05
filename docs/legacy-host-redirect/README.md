@@ -19,6 +19,11 @@ only: the payloads are *not* wired into this repository's build or deploy.
 | Not deployable from `lesbass/ai-newsroom` | source exists in no `lesbass` repo (GitHub code search → 0 hits); no `.github/workflows/` here |
 | No hardcoded credential in the page | no `AIza…`, `ghp_…`, `Bearer …`, or non-empty `apiKey = '…'` literal; the API-key field only writes to `localStorage` (13 references) |
 
+**Baseline re-checked 2026-10-05 00:38–00:41 UTC — unchanged, no option applied yet:**
+`https://ai-newsroom.pages.dev/` and `/robots.txt` still return `200 text/html`, deep and
+unknown paths still soft-404 to the same HTML, still no `x-robots-tag`; `news.lesbass.com`
+still healthy (canonical/robots/sitemap/RSS all `news.lesbass.com`, `http://` → `301 https`).
+
 Because the dashboard holds its API key in the *visitor's* `localStorage` and has no
 `/api/*` backend, there is no server-side data to lose. The only thing any option destroys
 is the HTML app itself — which is why Step 0 below captures it first.
@@ -48,6 +53,9 @@ is the HTML app itself — which is why Step 0 below captures it first.
   `f3d7a5949d065c2f6da073c28060d19545af8a5233571eeacbadba7c3b17c8c2`, 2026-10-04 01:43 UTC.
 - Stored **outside this public repository**: attached to AIN-845 and kept in the agent
   workspace at `backups/ai-newsroom.pages.dev-2026-10-04.html` (gitignored by location).
+- Attachment `45055ed6-a2bf-4ea5-b63e-11505fe36de8` re-verified 2026-10-05 00:40 UTC:
+  `GET /api/attachments/45055ed6…/content` → `200`, 51,885 bytes, SHA-256 identical to the
+  workspace copy. Either copy is usable for the Option C restore.
 - Re-capture at execution time with
   `curl -sS -o legacy-dashboard.html https://ai-newsroom.pages.dev/` and compare the hash;
   if it differs, the copy on AIN-845 is stale — re-attach before deploying.
@@ -113,5 +121,11 @@ curl -sSI https://ai-newsroom.lesbass.workers.dev/ # 200, canonical → news.les
 1. Board answers the **Remediation choice** card on AIN-845 (A / B / C).
 2. Board completes the **Connect Cloudflare** card → `connections_search` returns `ready`.
 3. Enumerate Pages projects, identify the one serving `ai-newsroom.pages.dev`.
+   Cloudflare Pages project names *are* the `pages.dev` subdomain, so the expected project
+   name is `ai-newsroom`. Confirm with `npx wrangler pages project list` that a project of
+   that name exists in the same account as the `ai-newsroom` Worker
+   (`4adb3952e18826ca172f446428e1b2a3`), then deploy with `--project-name=ai-newsroom`.
+   If the list shows a different name or account, stop and record it on AIN-845 instead of
+   deploying blind.
 4. Re-run Step 0 (hash comparison), deploy the chosen payload, run the verification above.
 5. Record evidence on AIN-845 and, if the change is repo-relevant, in `docs/audit-reports/`.
