@@ -144,6 +144,49 @@ are the durable record.
 
 ---
 
+## Production re-verification (later the same day)
+
+Run against the **live site** `https://news.lesbass.com/`, not the local `dist/`, so the numbers
+cover the deployed artifact rather than only the build.
+
+- The inline rule is served: `.article-body :is(p, ul, ol, blockquote) { max-width: 51ch; }` is
+  present in the HTML of `/` and of the sampled article page (Astro inlines the layout CSS, there is
+  no external stylesheet).
+- CPL probe, same two articles, 1366×900, `document.fonts.ready`, 36 blocks. Each line is measured
+  with its trailing whitespace trimmed (the convention that makes the table above comparable):
+
+  | | value |
+  |---|---|
+  | min / avg / max of **block averages** | **62.5 / 67.5 / 72.2** |
+  | blocks outside the issue's 62–75 target | **0 of 36** |
+  | individual line extremes (context only) | 58 – 79 |
+
+  Every sampled paragraph sits inside 62–75 and the mean lands inside the 66–72 goal band. The
+  individual-line spread is not something `max-width` can tighten: it sets the *box*, while the
+  characters that fit in that box move with glyph widths, so short narrow-glyph runs and **bold**
+  lead-ins (`Training-only behaviors: …`, `Scope creep risk: …`) produce 58–60 character lines and
+  dense narrow-glyph runs reach the high 70s. This is ordinary proportional typography, not a layout
+  regression.
+
+- Widths on production, unchanged by the cap where it must be:
+
+  | element | width |
+  |---|---|
+  | `.article-body > p` | 562px |
+  | `.article-body > ul/ol > li` | 538px |
+  | `figure`, `table`, `h2` | 720px |
+  | `.container` | 760px |
+
+- Mobile 390×844 on production: prose renders at 350px (viewport-bound, so the 562px cap never
+  engages), `scrollWidth - clientWidth` is 0, no console errors and no ≥400 responses.
+- `npm run audit` re-run: **exit 0** — 553 pages built, `astro check` 0/0, eslint clean apart from a
+  pre-existing unused-import warning in `scripts/check-contrast.mjs`, links, mobile, SEO, images,
+  dates and contrast (20/20 at WCAG 2.1 AA) all green.
+- Desktop and mobile screenshots of the live article page were captured and reviewed: prose left
+  edge still aligns with headings, media keeps its full width, mobile layout is unchanged.
+
+---
+
 ## Not changed
 
 - `--max-width`, `.container`, `.container-wide`, listing and tag pages, header/footer.
