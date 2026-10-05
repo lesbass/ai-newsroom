@@ -509,6 +509,9 @@ const jsonLd = article
     }
     .article-body h2 { margin-top: 2.5rem; }
     .article-body h3 { margin-top: 2rem; }
+    .article-body :is(p, ul, ol, blockquote) { max-width: 51ch; }
+    .article-body p:has(> img),
+    .article-body p:has(> picture) { max-width: none; }
     .tag {
       display: inline-flex;
       align-items: center;
