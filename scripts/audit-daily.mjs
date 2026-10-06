@@ -30,11 +30,14 @@ const checks = [
   ['Images', 'npm run test:images'],
   ['Dates', 'npm run test:dates'],
   ['Contrast', 'npm run test:contrast'],
+  ['Targets', 'npm run test:targets'],
 ];
 
 for (const [name, cmd] of checks) {
   try {
-    const out = execSync(`${cmd} 2>&1`, { cwd: root, encoding: 'utf-8', timeout: 120000, env: urlEnv });
+    // Browser-backed checks (test:targets) launch Chromium twice and navigate
+    // a page set, so they need more headroom than the static scripts.
+    const out = execSync(`${cmd} 2>&1`, { cwd: root, encoding: 'utf-8', timeout: 300000, env: urlEnv });
     const text = out.trim();
     const pass = !text.includes('❌');
     results.push({ name, pass, output: text });

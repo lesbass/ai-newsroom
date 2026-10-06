@@ -118,4 +118,4 @@ if (errors) {
   console.error(`\n${errors} mobile-readiness issue(s) found`);
   process.exit(1);
 }
-console.log('✅ Mobile-readiness checks passed (viewport, images, code blocks, tables, container, touch targets, print)');
+console.log('✅ Mobile-readiness checks passed (viewport, images, code blocks, tables, container, print)');
