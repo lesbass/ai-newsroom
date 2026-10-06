@@ -15,17 +15,25 @@ const nextHref = page < pages ? articlePageHref(page + 1) : null;
   <nav class="pager" aria-label="Article archive pagination">
     <div class="pager-controls">
       {prevHref ? (
-        <a class="pager-link" href={prevHref} rel="prev">← Newer</a>
+        <a class="pager-link pager-prev" href={prevHref} rel="prev">
+          <span class="pager-chevron" aria-hidden="true"></span>Newer
+        </a>
       ) : (
-        <span class="pager-link pager-disabled" aria-hidden="true">← Newer</span>
+        <span class="pager-link pager-prev pager-disabled" aria-disabled="true">
+          <span class="pager-chevron" aria-hidden="true"></span>Newer
+        </span>
       )}
       <span class="pager-status" aria-current="page">
         Page {page} of {pages}
       </span>
       {nextHref ? (
-        <a class="pager-link" href={nextHref} rel="next">Older →</a>
+        <a class="pager-link pager-next" href={nextHref} rel="next">
+          Older<span class="pager-chevron" aria-hidden="true"></span>
+        </a>
       ) : (
-        <span class="pager-link pager-disabled" aria-hidden="true">Older →</span>
+        <span class="pager-link pager-next pager-disabled" aria-disabled="true">
+          Older<span class="pager-chevron" aria-hidden="true"></span>
+        </span>
       )}
     </div>
   </nav>

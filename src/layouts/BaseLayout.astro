@@ -492,8 +492,6 @@ const jsonLd = article
     }
     .pager {
       margin: 2rem 0 0;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--color-border);
     }
     .pager-controls {
       display: flex;
@@ -518,6 +516,22 @@ const jsonLd = article
     }
     .pager-link:hover { background: var(--color-accent-subtle); text-decoration: none; }
     .pager-link.pager-disabled { color: var(--color-faint); cursor: default; }
+    /* Chevrons are drawn in CSS: the bundled latin font subsets have no
+       U+2190/U+2192 coverage, so literal arrows render as tofu boxes. */
+    .pager-chevron {
+      display: inline-block;
+      width: 0.42em;
+      height: 0.42em;
+      border-top: 2px solid currentColor;
+      border-right: 2px solid currentColor;
+      margin: 0 0.55em 0 0;
+      transform: rotate(-135deg);
+      vertical-align: 0.12em;
+    }
+    .pager-link.pager-next .pager-chevron {
+      margin: 0 0 0 0.55em;
+      transform: rotate(45deg);
+    }
     .pager-status {
       font-family: var(--font-mono);
       font-size: 0.72rem;
