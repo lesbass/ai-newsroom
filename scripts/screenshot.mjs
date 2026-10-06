@@ -10,7 +10,7 @@
  * Default output: ./screenshots/
  */
 
-import { launchBrowser } from './browser.mjs';
+import { closeBrowser, launchBrowser } from './browser.mjs';
 import { mkdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -33,7 +33,7 @@ async function screenshot(url, outputPath, viewport) {
       `[screenshot] ${path.basename(outputPath)} (${viewport.width}x${viewport.height}, ${(size / 1024).toFixed(1)}KB) — "${pageTitle}"`,
     );
   } finally {
-    await browser.close();
+    await closeBrowser(browser);
   }
 }
 

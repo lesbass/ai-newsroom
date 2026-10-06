@@ -3,7 +3,7 @@
  * the hero image renders correctly at desktop and mobile widths.
  */
 
-import { launchBrowser } from './browser.mjs';
+import { closeBrowser, launchBrowser } from './browser.mjs';
 import { mkdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -32,7 +32,7 @@ async function capture(viewport, outName) {
       `[capture] ${outName} (${viewport.width}x${viewport.height}, ${(size / 1024).toFixed(1)}KB)`,
     );
   } finally {
-    await browser.close();
+    await closeBrowser(browser);
   }
 }
 

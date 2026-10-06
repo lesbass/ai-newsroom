@@ -19,7 +19,7 @@
  *   public/images/articles/google-interactions-api-ga-primary-gemini-interface/
  */
 
-import { launchBrowser } from './browser.mjs';
+import { closeBrowser, launchBrowser } from './browser.mjs';
 import { mkdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -73,7 +73,7 @@ async function capture(url, viewport, outName, scrollToText) {
       `[capture] ${outName} (${viewport.width}x${viewport.height}, ${(size / 1024).toFixed(1)}KB)`,
     );
   } finally {
-    await browser.close();
+    await closeBrowser(browser);
   }
 }
 

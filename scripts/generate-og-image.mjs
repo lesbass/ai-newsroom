@@ -9,7 +9,7 @@
  * Usage: node scripts/generate-og-image.mjs
  */
 
-import { launchBrowser } from './browser.mjs';
+import { closeBrowser, launchBrowser } from './browser.mjs';
 import { readFile, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -41,7 +41,7 @@ async function main() {
       type: 'png',
     });
   } finally {
-    await browser.close();
+    await closeBrowser(browser);
   }
 
   const { size } = await stat(PNG_PATH);
