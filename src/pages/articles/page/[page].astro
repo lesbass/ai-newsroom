@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import ArticlePager from '../../../components/ArticlePager.astro';
+import {
+  ARTICLES_PER_PAGE,
+  articlePageCount,
+  articlesForPage,
+} from '../../../lib/pagination';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  const sorted = articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  const pages = articlePageCount(sorted.length);
+
+  // Page 1 is the canonical /articles/ archive; only page 2+ gets a URL here.
+  const paths = [];
+  for (let page = 2; page <= pages; page++) {
+    paths.push({
+      params: { page: String(page) },
+      props: { page, pages, total: sorted.length, items: articlesForPage(sorted, page) },
+    });
+  }
+  return paths;
+}
+
+interface Props {
+  page: number;
+  pages: number;
+  total: number;
+  items: import('astro:content').CollectionEntry<'articles'>[];
+}
+
+const { page, pages, total, items } = Astro.props;
+const from = (page - 1) * ARTICLES_PER_PAGE + 1;
+const to = from + items.length - 1;
+---
+
+<BaseLayout
+  title={`Articles — page ${page} of ${pages}`}
+  description={`Evidence-based AI news articles with dated sources and strict editorial quality gates. Page ${page} of ${pages}, showing ${from}–${to} of ${total}.`}
+>
+  <Header />
+  <main class="container" id="main-content">
+    <h1 style="margin: 2rem 0 1rem;">All articles</h1>
+    <p style="color: var(--color-muted); margin-bottom: 1.5rem;">
+      {total} article{total !== 1 ? 's' : ''} published, showing {from}–{to} of {total}
+    </p>
+    <div>
+      {items.map(article => <ArticleCard article={article} />)}
+    </div>
+    <ArticlePager page={page} pages={pages} />
+  </main>
+  <Footer />
+</BaseLayout>

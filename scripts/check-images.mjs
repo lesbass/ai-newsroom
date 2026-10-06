@@ -55,7 +55,14 @@ for (const path of pagePaths) {
 }
 
 function checkPageHtml(html, rel, isRemote) {
-  const isArticle = rel.startsWith('/articles/') && !rel.endsWith('/articles/index.html') && !rel.endsWith('/articles/');
+  // /articles/page/N/ is a paged slice of the archive, not an article, so the
+  // one-image-per-article editorial rule must not apply to it (AIN-868).
+  const isArchivePage = /^\/articles\/page\//.test(rel);
+  const isArticle =
+    rel.startsWith('/articles/') &&
+    !isArchivePage &&
+    !rel.endsWith('/articles/index.html') &&
+    !rel.endsWith('/articles/');
 
   const imgTags = html.match(/<img[^>]*>/g) || [];
   const internalImgs = imgTags.filter(tag => {

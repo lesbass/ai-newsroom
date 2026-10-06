@@ -1,4 +1,5 @@
 import { getCollection } from 'astro:content';
+import { articlePageCount } from '../lib/pagination';
 
 function xmlEscape(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
@@ -44,6 +45,12 @@ export async function GET(context) {
     ...staticPages.map(p => {
       const url = xmlEscape(new URL(p.path, site).toString());
       return `<url><loc>${url}</loc><lastmod>${now}</lastmod><changefreq>daily</changefreq><priority>${p.priority}</priority></url>`;
+    }),
+    // Paged archive: page 1 is the staticPages /articles/ entry above, so only
+    // page 2+ gets a URL here (articlePageCount excludes page 1).
+    ...Array.from({ length: articlePageCount(sorted.length) - 1 }, (_, i) => i + 2).map(page => {
+      const url = xmlEscape(new URL(`/articles/page/${page}/`, site).toString());
+      return `<url><loc>${url}</loc><lastmod>${now}</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>`;
     }),
     ...qualifyingTags.map(tag => {
       const url = xmlEscape(new URL(`/tags/${tag}/`, site).toString());

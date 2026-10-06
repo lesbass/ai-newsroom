@@ -3,10 +3,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
+import ArticlePager from '../../components/ArticlePager.astro';
+import { ARTICLES_PER_PAGE, articlePageCount, articlesForPage } from '../../lib/pagination';
 import { getCollection } from 'astro:content';
 
 const articles = await getCollection('articles');
 const sorted = articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const pages = articlePageCount(sorted.length);
+const shown = articlesForPage(sorted, 1);
+const from = sorted.length === 0 ? 0 : 1;
+const to = shown.length;
 ---
 
 <BaseLayout
@@ -16,10 +22,14 @@ const sorted = articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate
   <Header />
   <main class="container" id="main-content">
     <h1 style="margin: 2rem 0 1rem;">All articles</h1>
-    <p style="color: var(--color-muted); margin-bottom: 1.5rem;">{sorted.length} article{sorted.length !== 1 ? 's' : ''} published</p>
+    <p style="color: var(--color-muted); margin-bottom: 1.5rem;">
+      {sorted.length} article{sorted.length !== 1 ? 's' : ''} published
+      {pages > 1 && <>, showing {from}–{to} of {sorted.length}</>}
+    </p>
     <div>
-      {sorted.map(article => <ArticleCard article={article} />)}
+      {shown.map(article => <ArticleCard article={article} />)}
     </div>
+    <ArticlePager page={1} pages={pages} />
   </main>
   <Footer />
 </BaseLayout>

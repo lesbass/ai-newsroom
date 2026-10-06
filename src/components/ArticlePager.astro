@@ -1,0 +1,32 @@
+---
+import { articlePageHref } from '../lib/pagination';
+
+interface Props {
+  page: number;
+  pages: number;
+}
+
+const { page, pages } = Astro.props;
+const prevHref = page > 1 ? articlePageHref(page - 1) : null;
+const nextHref = page < pages ? articlePageHref(page + 1) : null;
+---
+
+{pages > 1 && (
+  <nav class="pager" aria-label="Article archive pagination">
+    <div class="pager-controls">
+      {prevHref ? (
+        <a class="pager-link" href={prevHref} rel="prev">← Newer</a>
+      ) : (
+        <span class="pager-link pager-disabled" aria-hidden="true">← Newer</span>
+      )}
+      <span class="pager-status" aria-current="page">
+        Page {page} of {pages}
+      </span>
+      {nextHref ? (
+        <a class="pager-link" href={nextHref} rel="next">Older →</a>
+      ) : (
+        <span class="pager-link pager-disabled" aria-hidden="true">Older →</span>
+      )}
+    </div>
+  </nav>
+)}
