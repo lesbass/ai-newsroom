@@ -2,6 +2,11 @@
 # Source: www.news.lesbass.com/*  →  Destination: https://news.lesbass.com/:splat  (301)
 # The _redirects file only supports path patterns, not domain redirects.
 
+# Clients that hard-code /favicon.ico (feed readers, crawlers, older Safari) used to get a 404.
+# The site declares <link rel="icon" href="/favicon.svg">, so serve the same artwork on the
+# legacy path as a rewrite (200), not a redirect (2026-10-07 SiteEngineer audit).
+/favicon.ico /favicon.svg 200
+
 # Italian→English slug redirects (2026-07-20)
 /articles/anthropic-claude-corps-fellowship-150-milioni /articles/anthropic-claude-corps-150-million-fellowship 301
 /articles/anthropic-propone-blocco-ai-pericolosa-poi-viene-bloccata /articles/anthropic-proposes-block-then-gets-blocked 301
