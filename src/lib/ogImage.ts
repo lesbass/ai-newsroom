@@ -81,3 +81,44 @@ export function resolveOgImage(image?: string): OgImage {
   const size = readImageSizeFile(file);
   return size ? { src: raw, ...size } : { src: raw };
 }
+
+/**
+ * Intrinsic dimensions for a rendered article hero, used to emit width/height
+ * attributes so the browser reserves layout space and the image cannot cause
+ * Cumulative Layout Shift when it loads.
+ *
+ * Returns null when the size is genuinely unknown (a remote image without
+ * explicit w/h query params), so callers omit the attributes rather than
+ * fabricating a size.
+ */
+export function resolveImageDimensions(image?: string): OgImage | null {
+  const raw = typeof image === 'string' ? image.trim() : '';
+  if (!raw) return null;
+
+  if (/^https?:\/\//i.test(raw)) {
+    let url: URL;
+    try {
+      url = new URL(raw);
+    } catch {
+      return null;
+    }
+    const w = Number(url.searchParams.get('w'));
+    const h = Number(url.searchParams.get('h'));
+    if (Number.isFinite(w) && w > 0 && Number.isFinite(h) && h > 0) {
+      return { src: raw, width: Math.round(w), height: Math.round(h) };
+    }
+    return null;
+  }
+
+  let pathname: string;
+  try {
+    pathname = new URL(raw, SITE).pathname;
+  } catch {
+    return null;
+  }
+  const file = join(PUBLIC_DIR, pathname.replace(/^\/+/, ''));
+  if (!existsSync(file)) return null;
+
+  const size = readImageSizeFile(file);
+  return size ? { src: raw, ...size } : null;
+}

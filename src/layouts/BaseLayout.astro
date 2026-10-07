@@ -101,6 +101,8 @@ const jsonLd = article
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/atkinson-400-latin.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-600-700-latin.woff2" crossorigin />
   <title>{seoTitle}</title>
   <meta name="description" content={seoDescription} />
   <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
@@ -749,6 +751,10 @@ const jsonLd = article
       border-radius: var(--radius-lg);
       border: 1px solid var(--color-border);
     }
+    /* Remote heroes (e.g. repository social cards) cannot carry verified
+       width/height attributes, so reserve a social-card aspect ratio to avoid
+       Cumulative Layout Shift while the third-party image loads. */
+    .article-hero img:not([width]) { aspect-ratio: 1200 / 600; }
     .article-hero-credit {
       margin: 0.375rem 0 0;
       font-size: 0.75rem;

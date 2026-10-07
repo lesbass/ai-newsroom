@@ -5,6 +5,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { slugifyTag } from '../../lib/slugify';
+import { resolveImageDimensions } from '../../lib/ogImage';
 
 export async function getStaticPaths() {
   const posts = await getCollection('articles');
@@ -28,6 +29,7 @@ const readingTime = Math.max(1, Math.round(wordCount / 238));
 const displayTags = tags.slice(0, 6);
 const extraTagCount = Math.max(0, tags.length - 6);
 const headlineClass = title.length > 60 ? 'headline-long' : title.length > 45 ? 'headline-medium' : 'headline-short';
+const heroDimensions = image && image !== 'exception' ? resolveImageDimensions(image) : null;
 ---
 
 <BaseLayout
@@ -75,7 +77,7 @@ const headlineClass = title.length > 60 ? 'headline-long' : title.length > 45 ? 
     </div>
     {image && image !== 'exception' && (
       <figure class="article-hero">
-        <img src={image} alt={imageAlt || title} loading="eager" />
+        <img src={image} alt={imageAlt || title} loading="eager" width={heroDimensions?.width} height={heroDimensions?.height} />
         {imageCredit && <figcaption class="article-hero-credit">{imageCredit}</figcaption>}
       </figure>
     )}

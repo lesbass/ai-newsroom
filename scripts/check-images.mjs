@@ -105,6 +105,24 @@ function checkPageHtml(html, rel, isRemote) {
         /* JSON-LD parse failure is non-fatal */
       }
     }
+
+    // The hero image must reserve layout space (width + height) so it cannot
+    // shift the page down when it loads (Cumulative Layout Shift). Local
+    // assets are always measurable, so a local hero without dimensions is an
+    // error. Remote heroes instead rely on the CSS aspect-ratio fallback.
+    const heroMatch = html.match(/<figure class="article-hero">\s*<img\b([^>]*)>/);
+    if (heroMatch) {
+      const attrs = heroMatch[1];
+      const src = (attrs.match(/src="([^"]*)"/) || [])[1] || '';
+      const hasDims = /\bwidth="\d+"/.test(attrs) && /\bheight="\d+"/.test(attrs);
+      if (!hasDims && src.startsWith('/')) {
+        console.error(`❌ ${rel}: article hero <img> missing width/height (causes layout shift)`);
+        errors++;
+      }
+      // Remote heroes keep no width/height (their real size is not known at
+      // build time) and instead rely on the `.article-hero img:not([width])`
+      // aspect-ratio fallback in BaseLayout, so no warning here.
+    }
   }
 
   for (const tag of imgTags) {

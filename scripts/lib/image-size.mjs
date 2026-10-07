@@ -10,8 +10,41 @@ import { readFileSync } from 'node:fs';
 
 const PNG_SIGNATURE = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
 
+// SVG is text, so intrinsic size comes from the root <svg> tag: prefer the
+// explicit width/height attributes, otherwise fall back to the viewBox. A
+// percentage dimension carries no intrinsic pixel size and is ignored.
+function readSvgSize(text) {
+  const root = text.match(/<svg\b[^>]*>/i);
+  if (!root) return null;
+  const tag = root[0];
+  const dim = (attr) => {
+    const m = tag.match(new RegExp(`\\b${attr}\\s*=\\s*["']?([\\d.]+)\\s*([a-z%]*)`, 'i'));
+    if (!m || m[2] === '%') return null;
+    const n = parseFloat(m[1]);
+    return Number.isFinite(n) && n > 0 ? n : null;
+  };
+  const w = dim('width');
+  const h = dim('height');
+  if (w && h) return { width: Math.round(w), height: Math.round(h) };
+  const vb = tag.match(/viewBox\s*=\s*["']\s*[-\d.]+[\s,]+[-\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)/i);
+  if (vb) {
+    const vw = parseFloat(vb[1]);
+    const vh = parseFloat(vb[2]);
+    if (vw > 0 && vh > 0) return { width: Math.round(vw), height: Math.round(vh) };
+  }
+  return null;
+}
+
 export function readImageSize(buf) {
   if (!Buffer.isBuffer(buf) || buf.length < 16) return null;
+
+  // SVG: XML text. The root <svg> element always appears in the opening chunk
+  // (before any large embedded data), so only sniff the head.
+  const head = buf.subarray(0, Math.min(buf.length, 8192)).toString('utf8');
+  if (/<svg\b/i.test(head) && !head.includes('\u0000')) {
+    const svg = readSvgSize(head);
+    if (svg) return svg;
+  }
 
   // PNG: 8-byte signature, IHDR length/type, then width/height big-endian.
   if (buf.length > 24 && buf.subarray(0, 8).equals(PNG_SIGNATURE)) {
