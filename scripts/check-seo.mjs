@@ -554,6 +554,18 @@ if (existsSync(redirectsPath)) {
   }
 }
 
+// Font-swap CLS guard (AIN-885): self-hosted fonts use `font-display: optional`
+// so a late font load never reflows above-the-fold text. `swap` reintroduces a
+// visible layout shift on throttled/cold loads, so fail the build if it returns.
+for (const file of walk(assetBase)) {
+  if (!file.endsWith('.html')) continue;
+  const html = readFileSync(file, 'utf-8');
+  if (/font-display:\s*swap/.test(html)) {
+    console.error(`❌ ${file.replace(`${assetBase}/`, '')}: @font-face uses font-display: swap (font-swap CLS regression)`);
+    errors++;
+  }
+}
+
 if (errors > 0) {
   console.error(`\n${errors} SEO error(s) found`);
 }
