@@ -50,6 +50,20 @@ function checkCanonicalOrigin(where, field, url) {
   }
 }
 
+// Decode the HTML entities Astro escapes into attribute/text values so social
+// tags and hero alt text can be compared literally.
+function decodeEntities(s) {
+  return String(s ?? '')
+    .replace(/&#(\d+);/g, (_, d) => String.fromCharCode(Number(d)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&');
+}
+
 // Collect pages: from dist/ or from URL
 const pagePaths = [...walk(dist)];
 
@@ -322,6 +336,40 @@ function checkPage(rel, html, path) {
       if (ogTitle !== htmlTitle && !ogTitle.startsWith(htmlTitle.slice(0, htmlTitle.length - 1))) {
         console.warn(`⚠ ${rel}: og:title "${ogTitle.slice(0,50)}..." differs unexpectedly from <title> "${htmlTitle.slice(0,50)}..."`);
         warnings++;
+      }
+    }
+
+    // 12b. og:image:alt / twitter:image:alt must describe the image, not repeat
+    // the page title (AIN-899). When the hero <img> carries an alt that differs
+    // from the fallback (frontmatter imageAlt), the social-image alt tags must
+    // equal it; the page-title fallback is only valid when no image alt exists.
+    const heroImgMatch = html.match(/<figure class="article-hero">[\s\S]*?<img\b[^>]*\balt="([^"]*)"/);
+    if (heroImgMatch) {
+      const heroAlt = decodeEntities(heroImgMatch[1]).trim();
+      const h1Match = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/);
+      const h1Text = h1Match ? decodeEntities(h1Match[1].replace(/<[^>]*>/g, '')).trim() : '';
+      const pageTitle = decodeEntities((html.match(/<title>([^<]+)<\/title>/) || [])[1]).trim();
+      const ogTitleVal = decodeEntities((html.match(/<meta property="og:title" content="([^"]*)"/) || [])[1]).trim();
+      const isTitleFallback = heroAlt === h1Text || heroAlt === pageTitle || heroAlt === ogTitleVal;
+      if (heroAlt && !isTitleFallback) {
+        for (const [label, re] of [
+          ['og:image:alt', /<meta property="og:image:alt" content="([^"]*)"/],
+          ['twitter:image:alt', /<meta name="twitter:image:alt" content="([^"]*)"/],
+        ]) {
+          const m = html.match(re);
+          if (!m) {
+            console.error(`❌ ${rel}: hero image present but ${label} is missing`);
+            errors++;
+            continue;
+          }
+          const alt = decodeEntities(m[1]).trim();
+          if (alt !== heroAlt) {
+            console.error(
+              `❌ ${rel}: ${label} does not match the hero image alt (got "${alt.slice(0, 60)}", expected "${heroAlt.slice(0, 60)}")`,
+            );
+            errors++;
+          }
+        }
       }
     }
 
