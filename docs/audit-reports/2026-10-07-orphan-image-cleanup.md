@@ -43,3 +43,17 @@ sitemap, RSS, canonical, robots or domain setting was touched.
 | removed paths still served? | 0 of 37 present in rebuilt `dist/` |
 
 Commit: see `git log` for this file's commit.
+
+## Post-deploy live verification — 2026-10-07 09:00 UTC
+
+Re-checked the deployed artifact on `https://news.lesbass.com/` after the Workers Build for the
+cleanup commit landed.
+
+| Check | Result |
+|---|---|
+| Every local `<img src>` / `srcset` reference in built HTML | 43 unique paths, **43/43 return `200`** on production |
+| The 37 removed files (`git show --diff-filter=D`) | **0/37 still served**; all return `404` on production |
+| Local image refs missing from `dist/` | 0 |
+
+Conclusion: the deployed site serves every referenced image and no longer serves any removed
+asset, so the cleanup did not break live pages.
