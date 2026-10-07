@@ -67,7 +67,7 @@ The new **`effort` parameter** is generally available for Sonnet 5 (no beta head
 
 On Anthropic's own charts, **Sonnet 5 (orange) is a strict improvement over Sonnet 4.6 (gray) and overlaps Opus 4.8 (yellow) at `high` / `xhigh` near 82–85% pass rate on BrowseComp**. OSWorld-Verified tells the same story: Sonnet 5 reaches ~81% at `xhigh` vs Opus 4.8's ~83% at `xhigh` and `max`.
 
-![Cost-performance chart on BrowseComp at five effort levels for Sonnet 5 (orange), Opus 4.8 (yellow), and Sonnet 4.6 (gray). Sonnet 5's `high` and `xhigh` points cluster with Opus 4.8's `high` and `xhigh` near 82–85% pass rate. Source: anthropic.com/news/claude-sonnet-5, 2026-06-30.]({{ '/images/articles/claude-sonnet-5-narrows-gap-to-opus/hero-cost-performance-browsecomp.png' | url }})
+![Cost-performance chart on BrowseComp at five effort levels for Sonnet 5 (orange), Opus 4.8 (yellow), and Sonnet 4.6 (gray). Sonnet 5's `high` and `xhigh` points cluster with Opus 4.8's `high` and `xhigh` near 82–85% pass rate. Source: anthropic.com/news/claude-sonnet-5, 2026-06-30.](/images/articles/claude-sonnet-5-narrows-gap-to-opus/hero-cost-performance-browsecomp.png)
 
 The launch post's *Changelog* documents an *"Edit June 30, 2026"* BrowseComp chart methodology fix to *"10M token budget with compaction and programmatic tool calling"*, the [Sonnet 5 system card](https://www.anthropic.com/claude-sonnet-5-system-card) standard. The chart above is the corrected version, captured 2026-07-01.
 

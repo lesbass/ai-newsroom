@@ -100,7 +100,7 @@ sources:
 
 On **2026-06-22**, Google published *"Interactions API: our primary interface for Gemini models and agents"* — the GA post for the Gemini Interactions API, with a stable schema, Managed Agents, background execution, and a *"From Roles to Steps"* schema migration ([Google blog, 2026-06-22](https://blog.google/innovation-and-ai/technology/developers-tools/interactions-api-general-availability/)). The legacy `generateContent` API is not going away, but every Google AI Studio surface, the Gemini API docs, and the Google AI docs now default to the Interactions API, and frontier agent features *"will increasingly land exclusively on the Interactions API."*
 
-![Google blog post 'Interactions API: our primary interface for Gemini models and agents' on 2026-07-12, showing the bylines (Ali Çevik, Group PM, Google DeepMind; Philipp Schmid, Developer Relations Engineer, Google DeepMind) and the Interactions_API_GA_final hero illustration.]({{ '/images/articles/google-interactions-api-ga-primary-gemini-interface/hero-blog-desktop.png' | url }})
+![Google blog post 'Interactions API: our primary interface for Gemini models and agents' on 2026-07-12, showing the bylines (Ali Çevik, Group PM, Google DeepMind; Philipp Schmid, Developer Relations Engineer, Google DeepMind) and the Interactions_API_GA_final hero illustration.](/images/articles/google-interactions-api-ga-primary-gemini-interface/hero-blog-desktop.png)
 
 ## What happened
 

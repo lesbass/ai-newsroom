@@ -123,6 +123,31 @@ function checkPageHtml(html, rel, isRemote) {
       // build time) and instead rely on the `.article-hero img:not([width])`
       // aspect-ratio fallback in BaseLayout, so no warning here.
     }
+
+    // Astro only evaluates `{...}` expressions in .mdx. A `.md` body that uses
+    // `{{ '/asset' | url }}` renders the literal braces as visible text on the
+    // page, so treat any unresolved template expression as an error.
+    if (html.includes('{{')) {
+      console.error(`❌ ${rel}: unresolved template expression "{{" rendered as visible text`);
+      errors++;
+    }
+
+    // The documented image pattern (docs/editorial/image-frontmatter-pattern.md)
+    // lets a writer reuse the hero path in the body, but the page must show the
+    // figure once. The rehype pass drops an in-body copy of the hero; if a
+    // duplicate src survives, the renderer regressed.
+    const srcSeen = new Map();
+    for (const tag of imgTags) {
+      const src = (tag.match(/src="([^"]*)"/) || [])[1];
+      if (!src) continue;
+      srcSeen.set(src, (srcSeen.get(src) || 0) + 1);
+    }
+    for (const [src, count] of srcSeen) {
+      if (count > 1) {
+        console.error(`❌ ${rel}: duplicate <img> src rendered ${count} times (${src})`);
+        errors++;
+      }
+    }
   }
 
   for (const tag of imgTags) {

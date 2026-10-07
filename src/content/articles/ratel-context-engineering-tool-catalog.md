@@ -65,7 +65,7 @@ highRiskClaims: false
 
 [Ratel](https://github.com/ratel-ai/ratel) is the in-process tool catalog that addresses the "tools in context" problem on every agent stack. As of **2026-07-11** the [`ratel-ai/ratel`](https://github.com/ratel-ai/ratel) repository sits at **186 stars, 9 forks, 18 open issues, primary language Rust**, created **2025-11-12**, last pushed **2026-07-10** ([GitHub REST API](https://api.github.com/repos/ratel-ai/ratel)). The project's [benchmark page](https://benchmark.ratel.sh) is now pinned to **Version 0.4.0 (stable), Evaluated with BFCL v3** — 100-tool pool, 599 scenarios, **Claude Sonnet 4.6 drops from 29,301 mean tokens to 3,688 (−87%)** with tool selection 97.5% (Ratel) vs 98.0% (no Ratel) and task completion 92.5% vs 92.0%.
 
-![Benchmark.ratel.sh 'Token Spend by Model' dumbbell chart on 2026-07-11 showing the four-model comparison and the legend Oracle / With Ratel / Baseline under the Version 0.4.0 (stable) header.]({{ '/images/articles/ratel-context-engineering-tool-catalog/hero-benchmark-desktop.png' | url }})
+![Benchmark.ratel.sh 'Token Spend by Model' dumbbell chart on 2026-07-11 showing the four-model comparison and the legend Oracle / With Ratel / Baseline under the Version 0.4.0 (stable) header.](/images/articles/ratel-context-engineering-tool-catalog/hero-benchmark-desktop.png)
 
 ## What happened
 
