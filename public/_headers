@@ -17,6 +17,33 @@
 /*.svg
   Cache-Control: public, max-age=86400
 
+/*.png
+  Cache-Control: public, max-age=86400
+
+/*.jpg
+  Cache-Control: public, max-age=86400
+
+/*.jpeg
+  Cache-Control: public, max-age=86400
+
+/*.webp
+  Cache-Control: public, max-age=86400
+
+/*.avif
+  Cache-Control: public, max-age=86400
+
+/*.gif
+  Cache-Control: public, max-age=86400
+
+/*.ico
+  Cache-Control: public, max-age=86400
+
+/*.woff
+  Cache-Control: public, max-age=86400
+
+/*.woff2
+  Cache-Control: public, max-age=86400
+
 /rss.xml
   content-type: application/rss+xml; charset=utf-8
   Cache-Control: public, max-age=300
