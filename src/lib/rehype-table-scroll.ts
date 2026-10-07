@@ -1,4 +1,4 @@
-import type { Element, Root } from 'hast';
+import type { Element, Root, RootContent } from 'hast';
 
 const LABEL = 'Table, scroll horizontally to see more';
 
@@ -12,7 +12,7 @@ const LABEL = 'Table, scroll horizontally to see more';
  * element itself keeps its native table semantics — only the wrapper carries
  * the landmark role.
  */
-function wrapTables(children: Element['children']): void {
+function wrapTables(children: RootContent[]): void {
   for (let i = 0; i < children.length; i++) {
     const node = children[i];
     if (node.type !== 'element') continue;

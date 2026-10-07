@@ -1,4 +1,4 @@
-import type { Element, Root } from 'hast';
+import type { Element, Root, RootContent } from 'hast';
 import { existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -82,7 +82,7 @@ function isCaptionParagraph(node: Element): boolean {
  * credited hero. Distinct in-body figures have their own source and are left
  * untouched.
  */
-function dedupeHero(children: Element['children'], heroPath: string): void {
+function dedupeHero(children: RootContent[], heroPath: string): void {
   for (let i = 0; i < children.length; i++) {
     const node = children[i];
     if (node.type !== 'element') continue;
@@ -131,7 +131,7 @@ export function rehypeLazyImages() {
 
     if (heroPath) dedupeHero(tree.children, heroPath);
 
-    const visitImgs = (children: Element['children']) => {
+    const visitImgs = (children: RootContent[]) => {
       for (const node of children) {
         if (node.type !== 'element') continue;
         if (node.tagName === 'img') {

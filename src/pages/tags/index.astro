@@ -25,7 +25,7 @@ for (const article of allArticles) {
 const sortedTags = [...tagMap.entries()]
   .sort((a, b) => b[1].count - a[1].count || a[0].localeCompare(b[0]));
 
-const filteredTags = sortedTags.filter(([slug, { count }]) => count >= 2);
+const filteredTags = sortedTags.filter(([, { count }]) => count >= 2);
 const totalArticles = allArticles.length;
 ---
 
