@@ -5,10 +5,12 @@ import { slugifyTag } from '../lib/slugify';
 interface Props {
   article: CollectionEntry<'articles'>;
   featured?: boolean;
+  headingLevel?: 2 | 3;
 }
 
-const { article, featured = false } = Astro.props;
+const { article, featured = false, headingLevel = 3 } = Astro.props;
 const { title, description, pubDate, tags, sources } = article.data;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
 
 function truncateCardDesc(text: string, maxLen = 220): string {
   if (text.length <= maxLen) return text;
@@ -36,7 +38,9 @@ const sourceCount = sources.length;
 ---
 
 <div class={featured ? 'card-featured' : 'article-card'}>
-  <a href={url} class="article-card-title">{title}</a>
+  <Heading class="article-card-title">
+    <a href={url}>{title}</a>
+  </Heading>
   <div class="article-meta">
     <span>{date}</span>
     <span class="sep-dot">&middot;</span>

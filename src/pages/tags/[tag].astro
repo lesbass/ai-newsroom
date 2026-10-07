@@ -50,7 +50,7 @@ const isThinTag = matchingArticles.length < 2;
     {matchingArticles.length > 0 ? (
       <div>
         {matchingArticles.map(article => (
-          <ArticleCard article={article} />
+          <ArticleCard article={article} headingLevel={2} />
         ))}
       </div>
     ) : (

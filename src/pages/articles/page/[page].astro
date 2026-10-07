@@ -50,7 +50,7 @@ const to = from + items.length - 1;
       {total} article{total !== 1 ? 's' : ''} published, showing {from}–{to} of {total}
     </p>
     <div>
-      {items.map(article => <ArticleCard article={article} />)}
+      {items.map(article => <ArticleCard article={article} headingLevel={2} />)}
     </div>
     <ArticlePager page={page} pages={pages} />
   </main>

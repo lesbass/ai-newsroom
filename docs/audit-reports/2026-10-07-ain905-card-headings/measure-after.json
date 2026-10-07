@@ -1,0 +1,118 @@
+{
+  "home": {
+    "headingTag": "H3",
+    "anchorHref": "/articles/google-embeddinggemma-2-on-device-multimodal-2026-10/",
+    "headingText": "EmbeddingGemma 2: on-device multimodal embeddings under Apac",
+    "headingCS": {
+      "fontSize": "40.8px",
+      "fontWeight": "700",
+      "lineHeight": "45.696px",
+      "color": "rgb(16, 24, 39)",
+      "marginTop": "0px",
+      "marginBottom": "7.2px",
+      "display": "block"
+    },
+    "anchorCS": {
+      "color": "rgb(16, 24, 39)",
+      "textDecorationLine": "none"
+    },
+    "headingBox": {
+      "w": 656,
+      "h": 137
+    },
+    "counts": {
+      "h1": 1,
+      "h2": 3,
+      "h3": 13,
+      "h4": 0
+    },
+    "cardCount": 13
+  },
+  "home-mobile": {
+    "headingTag": "H3",
+    "anchorHref": "/articles/google-embeddinggemma-2-on-device-multimodal-2026-10/",
+    "headingText": "EmbeddingGemma 2: on-device multimodal embeddings under Apac",
+    "headingCS": {
+      "fontSize": "27.2px",
+      "fontWeight": "700",
+      "lineHeight": "30.464px",
+      "color": "rgb(16, 24, 39)",
+      "marginTop": "0px",
+      "marginBottom": "7.2px",
+      "display": "block"
+    },
+    "anchorCS": {
+      "color": "rgb(16, 24, 39)",
+      "textDecorationLine": "none"
+    },
+    "headingBox": {
+      "w": 295,
+      "h": 122
+    },
+    "counts": {
+      "h1": 1,
+      "h2": 3,
+      "h3": 13,
+      "h4": 0
+    },
+    "cardCount": 13
+  },
+  "articles": {
+    "headingTag": "H2",
+    "anchorHref": "/articles/google-embeddinggemma-2-on-device-multimodal-2026-10/",
+    "headingText": "EmbeddingGemma 2: on-device multimodal embeddings under Apac",
+    "headingCS": {
+      "fontSize": "26.4px",
+      "fontWeight": "700",
+      "lineHeight": "29.568px",
+      "color": "rgb(16, 24, 39)",
+      "marginTop": "0px",
+      "marginBottom": "7.2px",
+      "display": "block"
+    },
+    "anchorCS": {
+      "color": "rgb(16, 24, 39)",
+      "textDecorationLine": "none"
+    },
+    "headingBox": {
+      "w": 702,
+      "h": 59
+    },
+    "counts": {
+      "h1": 1,
+      "h2": 20,
+      "h3": 0,
+      "h4": 0
+    },
+    "cardCount": 20
+  },
+  "articles-mobile": {
+    "headingTag": "H2",
+    "anchorHref": "/articles/google-embeddinggemma-2-on-device-multimodal-2026-10/",
+    "headingText": "EmbeddingGemma 2: on-device multimodal embeddings under Apac",
+    "headingCS": {
+      "fontSize": "20px",
+      "fontWeight": "700",
+      "lineHeight": "22.4px",
+      "color": "rgb(16, 24, 39)",
+      "marginTop": "0px",
+      "marginBottom": "7.2px",
+      "display": "block"
+    },
+    "anchorCS": {
+      "color": "rgb(16, 24, 39)",
+      "textDecorationLine": "none"
+    },
+    "headingBox": {
+      "w": 309,
+      "h": 67
+    },
+    "counts": {
+      "h1": 1,
+      "h2": 20,
+      "h3": 0,
+      "h4": 0
+    },
+    "cardCount": 20
+  }
+}

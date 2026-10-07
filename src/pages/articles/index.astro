@@ -27,7 +27,7 @@ const to = shown.length;
       {pages > 1 && <>, showing {from}–{to} of {sorted.length}</>}
     </p>
     <div>
-      {shown.map(article => <ArticleCard article={article} />)}
+      {shown.map(article => <ArticleCard article={article} headingLevel={2} />)}
     </div>
     <ArticlePager page={1} pages={pages} />
   </main>

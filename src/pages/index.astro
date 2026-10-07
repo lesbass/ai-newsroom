@@ -43,14 +43,14 @@ const topTags = [...tagMap.entries()]
 
     <section class="container">
       <h2 class="section-label">Latest</h2>
-      <ArticleCard article={featuredArticle} featured={true} />
+      <ArticleCard article={featuredArticle} featured={true} headingLevel={3} />
     </section>
 
     <section class="container">
       <h2 class="section-label">Recent articles</h2>
       <div>
         {latestArticles.map(article => (
-          <ArticleCard article={article} />
+          <ArticleCard article={article} headingLevel={3} />
         ))}
       </div>
       <p style="margin-top: 1.5rem;">
