@@ -602,7 +602,19 @@ const jsonLd = article
       position: relative;
       width: min(1120px, calc(100% - 2rem));
       margin: 0 auto;
-      padding: clamp(3.4rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 3.6rem) clamp(2rem, 4vw, 3.25rem);
+      /* AIN-881: the headline must start on .container's content edge. 100%
+         here is the hero's containing block — the same width .container centres
+         in — so the middle term reproduces the container offset exactly while
+         the hero frame is 1rem from each edge (below 1152px) and the cap holds
+         it once the frame starts tracking the viewport. The floor is the same
+         value at 768px, which keeps the headline clear of the 0.42rem tick rail
+         on narrower screens. <=600px keeps its own padding below. */
+      padding: clamp(3.4rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 3.6rem)
+        clamp(
+          calc(0.25rem + 4px),
+          calc((100% - var(--max-width)) / 2 + 0.25rem),
+          calc(1.25rem + 180px)
+        );
       text-align: left;
       border-bottom: 1px solid var(--color-border);
     }
