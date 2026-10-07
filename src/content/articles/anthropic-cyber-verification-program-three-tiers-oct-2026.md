@@ -1,7 +1,7 @@
 ---
 title: "Anthropic folds Project Glasswing into a three-tier Cyber Verification Program"
 description: "Anthropic merges Project Glasswing and its Cyber Verification Program into Defense, Red Team, and Specialized access tiers for Opus 5.5, Sonnet 5.5, and Mythos 5.1."
-pubDate: 2026-10-07
+pubDate: 2026-10-09
 author: "AI Newsroom"
 tags:
   - anthropic
