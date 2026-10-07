@@ -489,6 +489,13 @@ const jsonLd = article
       font-size: 0.98rem;
       margin: 0.65rem 0 0;
       line-height: 1.6;
+      /* Keep listing previews compact: character truncation alone still wraps
+         to 4-5 lines on a 375px viewport. The full dek stays on the article
+         page, meta description and RSS. */
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .pager {
       margin: 2rem 0 0;
