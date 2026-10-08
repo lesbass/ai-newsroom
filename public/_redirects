@@ -7,6 +7,12 @@
 # legacy path as a rewrite (200), not a redirect (2026-10-07 SiteEngineer audit).
 /favicon.ico /favicon.svg 200
 
+# Internal Paperclip issue-record links. Some article Sources reference the newsroom's
+# own commissioning/radar records as https://news.lesbass.com/paperclip/AIN-###. That path
+# was never a route on the news site, so every one returned 404 (2026-10-08 SiteEngineer
+# audit). 301 the whole prefix to the real public issue page on the Paperclip app.
+/paperclip/* https://paperclip.lesbass.com/AIN/issues/:splat 301
+
 # Italian→English slug redirects (2026-07-20)
 /articles/anthropic-claude-corps-fellowship-150-milioni /articles/anthropic-claude-corps-150-million-fellowship 301
 /articles/anthropic-propone-blocco-ai-pericolosa-poi-viene-bloccata /articles/anthropic-proposes-block-then-gets-blocked 301

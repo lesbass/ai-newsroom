@@ -36,6 +36,36 @@ for (const path of walkAll(dist)) {
   if (rel.endsWith('/index.html')) files.add(rel.replace(/\/index\.html$/, '/'));
 }
 
+// Same-origin absolute links (https://news.lesbass.com/...) are internal links too.
+// They must resolve to a built file or to a declared `_redirects` rule, otherwise
+// they silently ship as 404s (e.g. the /paperclip/AIN-### provenance links found in the
+// 2026-10-08 audit).
+const CANONICAL_ORIGIN = 'https://news.lesbass.com';
+const redirectSources = [];
+const redirectsPath = resolve('public/_redirects');
+if (existsSync(redirectsPath)) {
+  for (const line of readFileSync(redirectsPath, 'utf-8').split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const from = trimmed.split(/\s+/)[0];
+    if (from?.startsWith('/')) redirectSources.push(from);
+  }
+}
+
+function resolvesToBuiltFile(pathname) {
+  if (files.has(pathname)) return true;
+  if (files.has(pathname + '/index.html')) return true;
+  if (files.has(pathname.replace(/\/$/, '') + '.html')) return true;
+  return false;
+}
+
+function isRedirected(pathname) {
+  return redirectSources.some((from) => {
+    if (from.endsWith('/*')) return pathname.startsWith(from.slice(0, -1));
+    return from === pathname;
+  });
+}
+
 const pagePaths = [...walkPages(dist)];
 
 if (pagePaths.length === 0 && baseUrl) {
@@ -74,6 +104,16 @@ for (const path of pagePaths) {
   const html = readFileSync(path, 'utf-8');
   const hrefs = [...html.matchAll(/href="([^"]+)"/g)].map(m => m[1]);
   for (const href of hrefs) {
+    // Same-origin absolute links must resolve to a built file or a redirect rule.
+    if (href === CANONICAL_ORIGIN || href.startsWith(CANONICAL_ORIGIN + '/')) {
+      let pathname;
+      try { pathname = new URL(href).pathname; } catch { continue; }
+      if (pathname === '/') continue;
+      if (resolvesToBuiltFile(pathname) || isRedirected(pathname)) continue;
+      console.error(`❌ ${rel} → broken absolute link: ${href}`);
+      errors++;
+      continue;
+    }
     if (href.startsWith('http') || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('data:')) continue;
     let target = href;
     if (target.startsWith('/')) {
