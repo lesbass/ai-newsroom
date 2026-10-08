@@ -42,7 +42,6 @@ const ogTitle = fullTitle.length <= 65 ? fullTitle : truncateTitle(fullTitle, 65
 // the article image's real alt text when one is provided (AIN-899). Listing
 // pages (no image alt) keep the sensible page-title fallback.
 const ogImageAlt = imageAlt || ogTitle;
-const jsonLdHeadline = title.length <= 65 ? title : truncateTitle(title, 65);
 
 function truncateDescription(text: string, maxLen = 155): string {
   if (text.length <= maxLen) return text;
@@ -64,7 +63,7 @@ const jsonLd = article
       '@context': 'https://schema.org',
       '@type': 'NewsArticle',
       '@id': `${pageURL}#article`,
-      headline: jsonLdHeadline,
+      headline: title,
       description: description,
       url: pageURL,
       image: jsonLdImage,

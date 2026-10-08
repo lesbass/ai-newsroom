@@ -289,6 +289,25 @@ function checkPage(rel, html, path) {
         console.warn(`⚠ ${rel}: NewsArticle missing article:published_time`);
         warnings++;
       }
+
+      // The structured-data headline must be the full article title, not the
+      // 65-char <title>/og:title truncation (which appends an ellipsis).
+      const articleLd = [...html.matchAll(/<script type="application\/ld\+json">([^<]*)<\/script>/g)]
+        .map((m) => { try { return JSON.parse(m[1]); } catch { return null; } })
+        .find((d) => d && d['@type'] === 'NewsArticle');
+      if (articleLd) {
+        const headline = decodeEntities(articleLd.headline || '').trim();
+        const h1Text = decodeEntities((html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/) || [])[1] || '')
+          .replace(/<[^>]*>/g, '')
+          .trim();
+        if (/…\s*$/.test(headline)) {
+          console.error(`❌ ${rel}: NewsArticle headline is truncated with an ellipsis: "${headline}"`);
+          errors++;
+        } else if (h1Text && headline !== h1Text) {
+          console.warn(`⚠ ${rel}: NewsArticle headline "${headline}" differs from <h1> "${h1Text}"`);
+          warnings++;
+        }
+      }
     }
 
     // 8. H1 count
