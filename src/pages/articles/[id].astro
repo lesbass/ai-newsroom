@@ -28,6 +28,11 @@ const wordCount = body.split(/\s+/).filter(Boolean).length;
 const readingTime = Math.max(1, Math.round(wordCount / 238));
 const displayTags = tags.slice(0, 6);
 const extraTagCount = Math.max(0, tags.length - 6);
+// The preferred article shape already ends with an authored `## Sources`
+// section. When the body carries one, rendering the frontmatter `sources` list
+// in a second `Sources` aside would produce two identical H2 headings on the
+// page, so only fall back to the generated list when the body has none.
+const bodyHasSources = /^#{1,6}\s+Sources\s*$/im.test(body);
 const headlineClass = title.length > 60 ? 'headline-long' : title.length > 45 ? 'headline-medium' : 'headline-short';
 const heroDimensions = image && image !== 'exception' ? resolveImageDimensions(image) : null;
 ---
@@ -83,7 +88,7 @@ const heroDimensions = image && image !== 'exception' ? resolveImageDimensions(i
       </figure>
     )}
     <Content />
-    {sources.length > 0 && (
+    {sources.length > 0 && !bodyHasSources && (
       <aside style="margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border);">
         <h2 style="font-size: 1.125rem; margin-bottom: 0.75rem;">Sources</h2>
         <ul class="sources-list">

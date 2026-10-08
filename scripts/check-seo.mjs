@@ -321,6 +321,15 @@ function checkPage(rel, html, path) {
       }
     }
 
+    // 7b. At most one "Sources" heading. The authored body section and the
+    // frontmatter-driven template aside must not both render an H2 labelled
+    // "Sources" (AIN-916).
+    const sourcesHeadings = html.match(/<h2[^>]*>\s*Sources\s*<\/h2>/gi);
+    if (sourcesHeadings && sourcesHeadings.length > 1) {
+      console.error(`❌ ${rel}: duplicate "Sources" heading (${sourcesHeadings.length})`);
+      errors++;
+    }
+
     // 8. H1 count
     const h1Matches = html.match(/<h1[^>]*>/g);
     if (!h1Matches || h1Matches.length === 0) {
