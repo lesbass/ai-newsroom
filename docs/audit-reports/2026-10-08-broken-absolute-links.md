@@ -34,6 +34,18 @@ An earlier attempt to solve this with an external `_redirects` rule
 Workers Builds run for that commit failed (build `4f856f97`). Correcting the links at
 source avoids the external-redirect dependency.
 
+## Final resolution for legacy inbound links (`fb72da5`)
+
+Source fixes stop the site from emitting the bad links, but cached/inbound
+`https://news.lesbass.com/paperclip/AIN-###` links still 404'd. `fb72da5` adds the
+provenance redirect directly in the Worker (`run_worker_first`) rather than via
+`_redirects`, which Workers Builds rejects for external targets:
+
+- `/paperclip/<issue>` (optionally trailing slash) → `301` to
+  `https://paperclip.lesbass.com/AIN/issues/<issue>`, query string preserved.
+- Bare `/paperclip/` and `/paperclip` deliberately fall through to the assets handler
+  (they were never article routes).
+
 ## Live verification — 2026-10-08 ~15:00 UTC (build `2cb0661`, RSS `lastBuildDate` 14:59:19 GMT)
 
 | Check | Result |
@@ -42,3 +54,16 @@ source avoids the external-redirect dependency.
 | All 12 target issue URLs | `200` |
 | Canonical / base URL | `/` canonical `https://news.lesbass.com/`; sitemap 197 `news.lesbass.com` refs, 0 `paperclip` |
 | `npm run build && check && lint && test:links && test:seo` | pass |
+
+## Live verification — 2026-10-08 ~15:20 UTC (build `fb72da5`, RSS `lastBuildDate` 15:03:09 GMT)
+
+Verified after the Worker-edge redirect shipped:
+
+| Request | Result |
+|---|---|
+| `/paperclip/AIN-918` | `301` → `https://paperclip.lesbass.com/AIN/issues/AIN-918` |
+| `/paperclip/AIN-918?ref=x` | `301` → `https://paperclip.lesbass.com/AIN/issues/AIN-918?ref=x` (query preserved) |
+| `/paperclip/AIN-918/` | `301` → `https://paperclip.lesbass.com/AIN/issues/AIN-918` (trailing slash stripped) |
+| `/paperclip/`, `/paperclip` | `404` (fall through to assets; never article routes) |
+| `/articles/`, `/` | `200` (normal routing unaffected) |
+| Canonical / base URL | `/` canonical + `og:url` = `https://news.lesbass.com/`; `sitemap.xml` 197 `news.lesbass.com` refs, 0 `paperclip`; `rss.xml` 68 links all `news.lesbass.com`; `robots.txt` `Sitemap: https://news.lesbass.com/sitemap.xml`; `http://` → `301` → `https://` |
