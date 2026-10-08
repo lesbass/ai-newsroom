@@ -5,7 +5,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { slugifyTag } from '../../lib/slugify';
-import { resolveImageDimensions } from '../../lib/ogImage';
+import { resolveImageDimensions, resolveHeroWebp } from '../../lib/ogImage';
 
 export async function getStaticPaths() {
   const posts = await getCollection('articles');
@@ -35,6 +35,7 @@ const extraTagCount = Math.max(0, tags.length - 6);
 const bodyHasSources = /^#{1,6}\s+Sources\s*$/im.test(body);
 const headlineClass = title.length > 60 ? 'headline-long' : title.length > 45 ? 'headline-medium' : 'headline-short';
 const heroDimensions = image && image !== 'exception' ? resolveImageDimensions(image) : null;
+const heroWebp = image && image !== 'exception' ? resolveHeroWebp(image) : null;
 ---
 
 <BaseLayout
@@ -83,7 +84,14 @@ const heroDimensions = image && image !== 'exception' ? resolveImageDimensions(i
     </div>
     {image && image !== 'exception' && (
       <figure class="article-hero">
-        <img src={image} alt={imageAlt || title} loading="eager" width={heroDimensions?.width} height={heroDimensions?.height} />
+        {heroWebp ? (
+          <picture>
+            <source type="image/webp" srcset={heroWebp.srcset} sizes={heroWebp.sizes} />
+            <img src={image} alt={imageAlt || title} loading="eager" width={heroDimensions?.width} height={heroDimensions?.height} />
+          </picture>
+        ) : (
+          <img src={image} alt={imageAlt || title} loading="eager" width={heroDimensions?.width} height={heroDimensions?.height} />
+        )}
         {imageCredit && <figcaption class="article-hero-credit">{imageCredit}</figcaption>}
       </figure>
     )}

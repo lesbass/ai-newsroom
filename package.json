@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "prebuild": "node scripts/clean-content-cache.mjs",
+    "prebuild": "node scripts/clean-content-cache.mjs && node scripts/optimize-hero-images.mjs",
     "build": "astro build",
     "preview": "npm run build && wrangler dev",
     "check": "astro check",

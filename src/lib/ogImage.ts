@@ -1,5 +1,5 @@
 import { existsSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readImageSizeFile } from '../../scripts/lib/image-size.mjs';
 
@@ -121,4 +121,50 @@ export function resolveImageDimensions(image?: string): OgImage | null {
 
   const size = readImageSizeFile(file);
   return size ? { src: raw, ...size } : null;
+}
+
+export interface HeroWebp {
+  srcset: string;
+  sizes: string;
+}
+
+/**
+ * WebP `<source>` for a locally hosted raster hero, if the build generated one.
+ *
+ * `scripts/optimize-hero-images.mjs` writes `<name>.webp` and
+ * `<name>-900.webp` next to each local PNG/JPEG hero. This returns the
+ * `srcset`/`sizes` for a `<picture>` only when at least one variant exists, so
+ * a missing variant (remote hero, SVG, unoptimized image, failed generation)
+ * cleanly falls back to the original `<img>`. `og:image` deliberately keeps the
+ * original PNG/JPEG so social fetchers get a universally supported format.
+ */
+export function resolveHeroWebp(image?: string): HeroWebp | null {
+  const raw = typeof image === 'string' ? image.trim() : '';
+  if (!raw || /^https?:\/\//i.test(raw) || !/\.(png|jpe?g)$/i.test(raw)) return null;
+
+  let pathname: string;
+  try {
+    pathname = new URL(raw, SITE).pathname;
+  } catch {
+    return null;
+  }
+  const file = join(PUBLIC_DIR, pathname.replace(/^\/+/, ''));
+  if (!existsSync(file)) return null;
+
+  const fullHref = pathname.replace(/\.(png|jpe?g)$/i, '.webp');
+  const mobileName = basename(pathname).replace(/\.(png|jpe?g)$/i, '');
+  const mobileHref = pathname.replace(/[^/]+$/, `${mobileName}-900.webp`);
+  const hasFull = existsSync(file.replace(/\.(png|jpe?g)$/i, '.webp'));
+  const hasMobile = existsSync(file.replace(/\.(png|jpe?g)$/i, '-900.webp'));
+
+  const size = readImageSizeFile(file);
+  const entries: string[] = [];
+  if (hasMobile) entries.push(`${mobileHref} 900w`);
+  if (hasFull) entries.push(size ? `${fullHref} ${size.width}w` : fullHref);
+  if (entries.length === 0) return null;
+
+  return {
+    srcset: entries.join(', '),
+    sizes: '(max-width: 800px) 100vw, 760px',
+  };
 }

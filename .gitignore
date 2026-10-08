@@ -29,3 +29,6 @@ core.*
 
 # generated audit scratch (durable reports live in docs/audit-reports/)
 .audit-reports/
+
+# generated WebP hero variants (produced by scripts/optimize-hero-images.mjs)
+public/images/**/*.webp
