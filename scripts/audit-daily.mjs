@@ -27,6 +27,7 @@ const checks = [
   ['Links', 'npm run test:links'],
   ['Mobile', 'npm run test:mobile'],
   ['SEO', 'npm run test:seo'],
+  ['SitemapLastmod', 'npm run test:sitemap-lastmod'],
   ['Images', 'npm run test:images'],
   ['Dates', 'npm run test:dates'],
   ['Contrast', 'npm run test:contrast'],
