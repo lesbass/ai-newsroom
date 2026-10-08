@@ -110,7 +110,7 @@ function checkPageHtml(html, rel, isRemote) {
     // shift the page down when it loads (Cumulative Layout Shift). Local
     // assets are always measurable, so a local hero without dimensions is an
     // error. Remote heroes instead rely on the CSS aspect-ratio fallback.
-    const heroMatch = html.match(/<figure class="article-hero">\s*<img\b([^>]*)>/);
+    const heroMatch = html.match(/<figure class="article-hero">[\s\S]*?<img\b([^>]*)>/);
     if (heroMatch) {
       const attrs = heroMatch[1];
       const src = (attrs.match(/src="([^"]*)"/) || [])[1] || '';
