@@ -1,71 +1,48 @@
 import { getCollection } from 'astro:content';
-import { articlePageCount } from '../lib/pagination';
+import { listingLastmods } from '../lib/sitemapLastmod';
 
 function xmlEscape(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
 
-function slugifyTag(tag) {
-  return tag
-    .toLowerCase()
-    .trim()
-    .replace(/&/g, 'and')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .replace(/-+/g, '-');
+function metaFor(path) {
+  if (/^\/articles\/page\/\d+\/$/.test(path)) return { changefreq: 'weekly', priority: '0.5' };
+  if (path.startsWith('/tags/') && path !== '/tags/') return { changefreq: 'weekly', priority: '0.5' };
+  switch (path) {
+    case '/': return { changefreq: 'daily', priority: '0.9' };
+    case '/articles/': return { changefreq: 'daily', priority: '0.8' };
+    case '/tags/': return { changefreq: 'weekly', priority: '0.7' };
+    case '/corrections/': return { changefreq: 'weekly', priority: '0.6' };
+    default: return { changefreq: 'weekly', priority: '0.5' };
+  }
 }
 
 export async function GET(context) {
   const articles = await getCollection('articles');
   const sorted = articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   const site = context.site;
-  const now = new Date().toISOString().split('T')[0];
 
-  const tagCount = new Map();
-  for (const article of articles) {
-    for (const tag of article.data.tags) {
-      const slug = slugifyTag(tag);
-      if (slug) {
-        tagCount.set(slug, (tagCount.get(slug) || 0) + 1);
-      }
-    }
-  }
-  const qualifyingTags = [...tagCount.entries()]
-    .filter(([, count]) => count >= 2)
-    .map(([slug]) => slug);
+  // Listing, archive, and tag pages derive <lastmod> from the newest article
+  // content they surface — not from the build date (AIN-913).
+  const lastmods = listingLastmods(articles);
 
-  const staticPages = [
-    { path: '/', priority: '0.9' },
-    { path: '/articles/', priority: '0.8' },
-    { path: '/tags/', priority: '0.7' },
-    { path: '/corrections/', priority: '0.6' },
-  ];
+  const listingUrls = [...lastmods.entries()].map(([path, date]) => {
+    const { changefreq, priority } = metaFor(path);
+    const lastmod = date ? `<lastmod>${date}</lastmod>` : '';
+    return `<url><loc>${xmlEscape(new URL(path, site).toString())}</loc>${lastmod}<changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`;
+  });
 
-  const urls = [
-    ...staticPages.map(p => {
-      const url = xmlEscape(new URL(p.path, site).toString());
-      return `<url><loc>${url}</loc><lastmod>${now}</lastmod><changefreq>daily</changefreq><priority>${p.priority}</priority></url>`;
-    }),
-    // Paged archive: page 1 is the staticPages /articles/ entry above, so only
-    // page 2+ gets a URL here (articlePageCount excludes page 1).
-    ...Array.from({ length: articlePageCount(sorted.length) - 1 }, (_, i) => i + 2).map(page => {
-      const url = xmlEscape(new URL(`/articles/page/${page}/`, site).toString());
-      return `<url><loc>${url}</loc><lastmod>${now}</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>`;
-    }),
-    ...qualifyingTags.map(tag => {
-      const url = xmlEscape(new URL(`/tags/${tag}/`, site).toString());
-      return `<url><loc>${url}</loc><lastmod>${now}</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>`;
-    }),
-    ...sorted.map(article => {
-      const url = xmlEscape(new URL(`/articles/${article.id}/`, site).toString());
-      const date = article.data.updatedDate || article.data.pubDate;
-      const d = date.toISOString().split('T')[0];
-      const imageTag = article.data.image
-        ? `<image:image><image:loc>${xmlEscape(new URL(article.data.image, site).toString())}</image:loc><image:caption><![CDATA[${article.data.imageAlt || article.data.title}]]></image:caption></image:image>`
-        : '';
-      return `<url><loc>${url}</loc><lastmod>${d}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority>${imageTag}</url>`;
-    }),
-  ].join('\n');
+  const articleUrls = sorted.map(article => {
+    const url = xmlEscape(new URL(`/articles/${article.id}/`, site).toString());
+    const date = article.data.updatedDate || article.data.pubDate;
+    const d = date.toISOString().split('T')[0];
+    const imageTag = article.data.image
+      ? `<image:image><image:loc>${xmlEscape(new URL(article.data.image, site).toString())}</image:loc><image:caption><![CDATA[${article.data.imageAlt || article.data.title}]]></image:caption></image:image>`
+      : '';
+    return `<url><loc>${url}</loc><lastmod>${d}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority>${imageTag}</url>`;
+  });
+
+  const urls = [...listingUrls, ...articleUrls].join('\n');
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
