@@ -32,11 +32,11 @@ sources:
     date: 2026-08-25
     type: primary
   - title: "AI Newsroom — AIN-633 Jalapeño first results radar (2026-08-26)"
-    url: "https://news.lesbass.com/paperclip/AIN-633"
+    url: "https://paperclip.lesbass.com/AIN/issues/AIN-633"
     date: 2026-08-26
     type: secondary
   - title: "AI Newsroom — AIN-634 commissioning record (2026-08-26)"
-    url: "https://news.lesbass.com/paperclip/AIN-634"
+    url: "https://paperclip.lesbass.com/AIN/issues/AIN-634"
     date: 2026-08-26
     type: secondary
   - title: "AI Newsroom — OpenAI and Broadcom unveil Jalapeño (AIN-206, 2026-06-25)"
@@ -123,8 +123,8 @@ OpenAI plans to deploy Jalapeño internally by end of year — not a product lau
 |---|---|---|---|
 | 1 | [OpenAI — Jalapeño's first results (Engineering)](https://openai.com/index/jalapeno-first-results/) | 2026-08-25 | All benchmark numbers: 1.5–1.9× TPS/kW, 1.7–3.6× latency, AI-kernel 1.5–1.8×, deployment timeline |
 | 2 | [OpenAI — The full stack behind abundant intelligence (Company)](https://openai.com/index/the-full-stack-behind-abundant-intelligence/) | 2026-08-25 | Portfolio strategy, Jevons paradox framing, full-stack advantage claim |
-| 3 | [AI Newsroom — AIN-633 radar](https://news.lesbass.com/paperclip/AIN-633) | 2026-08-26 | Editorial radar tracking this announcement |
-| 4 | [AI Newsroom — AIN-634 commissioning](https://news.lesbass.com/paperclip/AIN-634) | 2026-08-26 | Article task commissioning record |
+| 3 | [AI Newsroom — AIN-633 radar](https://paperclip.lesbass.com/AIN/issues/AIN-633) | 2026-08-26 | Editorial radar tracking this announcement |
+| 4 | [AI Newsroom — AIN-634 commissioning](https://paperclip.lesbass.com/AIN/issues/AIN-634) | 2026-08-26 | Article task commissioning record |
 | 5 | [AI Newsroom — Prior Jalapeño article (AIN-206)](https://news.lesbass.com/articles/openai-broadcom-jalapeno-inference-chip/) | 2026-06-25 | Prior coverage: unveiling, "substantially better per watt" claim, 9-month tape-out |
 | 6 | [OpenAI — OpenAI and Broadcom unveil LLM-optimized inference chip](https://openai.com/index/openai-broadcom-jalapeno-inference-chip/) | 2026-06-24 | Original Jalapeño announcement and unveiling |
 | 7 | [OpenAI Jalapeño chip photograph (CDN)](https://images.ctfassets.net/kftzwdyauwt9/3zePuVBRvgyZ4IgOwnI0jI/65ba02edadf6a0a1c33d2c2abf260fab/Jalapeno-chip-final.jpg) | 2026-08-25 | Article hero image asset |

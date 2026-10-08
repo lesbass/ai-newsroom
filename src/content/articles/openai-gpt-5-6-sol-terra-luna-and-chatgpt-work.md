@@ -21,15 +21,15 @@ sources:
     date: 2026-07-09
     type: primary
   - title: "AIN-360 — NewsScout radar 2026-07-10 (the AI Newsroom radar brief that surfaced GPT-5.6 + ChatGPT Work as the 2026-07-10 daily candidate, then re-picked as AIN-361 after the 2026-07-09 launch; the radar's Axios-greenlight reference is dropped from the article because the editor could not locate a live, dated Axios URL within 24 hours, per the source rule in the article task brief)"
-    url: "https://news.lesbass.com/paperclip/AIN-360"
+    url: "https://paperclip.lesbass.com/AIN/issues/AIN-360"
     date: 2026-07-10
     type: secondary
   - title: "AIN-224 — \"US government is now a customer gatekeeper for OpenAI Sol and Claude Mythos 5\" (the 2026-06-27 regulatory-regime article; cross-linked only, not re-covered here, per the article task brief)"
-    url: "https://news.lesbass.com/paperclip/AIN-224"
+    url: "https://paperclip.lesbass.com/AIN/issues/AIN-224"
     date: 2026-06-27
     type: secondary
   - title: "AIN-356 — \"OpenAI ships GPT-Live — full-duplex voice model that listens and speaks at the same time\" (the 2026-07-09 daily article covering the same launch week; cross-link only)"
-    url: "https://news.lesbass.com/paperclip/AIN-356"
+    url: "https://paperclip.lesbass.com/AIN/issues/AIN-356"
     date: 2026-07-09
     type: secondary
 highRiskClaims: true
@@ -132,6 +132,6 @@ Per the [system card](https://deploymentsafety.openai.com/gpt-5-6):
 | 1 | [OpenAI — "GPT-5.6: Frontier intelligence that scales with your ambition"](https://openai.com/index/gpt-5-6/) | 2026-07-09 | primary |
 | 2 | [OpenAI — "ChatGPT is now a partner for your most ambitious work"](https://openai.com/index/chatgpt-for-your-most-ambitious-work/) | 2026-07-09 | primary |
 | 3 | [OpenAI — GPT-5.6 System Card](https://deploymentsafety.openai.com/gpt-5-6) | 2026-07-09 | primary |
-| 4 | [AIN-360 — AI Newsroom radar 2026-07-10](https://news.lesbass.com/paperclip/AIN-360) | 2026-07-10 | secondary |
-| 5 | [AIN-224 — US government is now a customer gatekeeper for OpenAI Sol and Claude Mythos 5](https://news.lesbass.com/paperclip/AIN-224) | 2026-06-27 | secondary |
-| 6 | [AIN-356 — OpenAI ships GPT-Live — full-duplex voice model](https://news.lesbass.com/paperclip/AIN-356) | 2026-07-09 | secondary |
+| 4 | [AIN-360 — AI Newsroom radar 2026-07-10](https://paperclip.lesbass.com/AIN/issues/AIN-360) | 2026-07-10 | secondary |
+| 5 | [AIN-224 — US government is now a customer gatekeeper for OpenAI Sol and Claude Mythos 5](https://paperclip.lesbass.com/AIN/issues/AIN-224) | 2026-06-27 | secondary |
+| 6 | [AIN-356 — OpenAI ships GPT-Live — full-duplex voice model](https://paperclip.lesbass.com/AIN/issues/AIN-356) | 2026-07-09 | secondary |

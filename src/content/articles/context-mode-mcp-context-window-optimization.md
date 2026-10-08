@@ -50,11 +50,11 @@ sources:
     date: 2026-06-24
     type: secondary
   - title: "AIN-544 — RepoScout radar 2026-07-29 (Paperclip)"
-    url: "https://news.lesbass.com/paperclip/AIN-544"
+    url: "https://paperclip.lesbass.com/AIN/issues/AIN-544"
     date: 2026-07-29
     type: secondary
   - title: "AIN-545 — Article candidate: context-mode (Paperclip)"
-    url: "https://news.lesbass.com/paperclip/AIN-545"
+    url: "https://paperclip.lesbass.com/AIN/issues/AIN-545"
     date: 2026-07-29
     type: secondary
 ---
@@ -147,5 +147,5 @@ context-mode is licensed under the **Elastic License 2.0 (ELv2)** — the source
 - [Ratel: AI agent context engineering — AI Newsroom (2026-07-11)](https://news.lesbass.com/articles/ratel-context-engineering-tool-catalog/)
 - [Headroom: AI agent token compression — AI Newsroom (2026-06-24)](https://news.lesbass.com/articles/headroom-ai-agent-token-compression/)
 - [codebase-memory-mcp: zero-dependency code intelligence — AI Newsroom (2026-06-24)](https://news.lesbass.com/articles/codebase-memory-mcp-zero-dependency-code-intelligence/)
-- [AIN-544 — RepoScout radar 2026-07-29 (Paperclip)](https://news.lesbass.com/paperclip/AIN-544)
-- [AIN-545 — Article candidate: context-mode (Paperclip)](https://news.lesbass.com/paperclip/AIN-545)
+- [AIN-544 — RepoScout radar 2026-07-29 (Paperclip)](https://paperclip.lesbass.com/AIN/issues/AIN-544)
+- [AIN-545 — Article candidate: context-mode (Paperclip)](https://paperclip.lesbass.com/AIN/issues/AIN-545)

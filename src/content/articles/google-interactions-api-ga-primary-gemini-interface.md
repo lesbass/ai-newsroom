@@ -89,11 +89,11 @@ sources:
     date: 2026-07-12
     type: primary
   - title: "AIN-381 — NewsScout radar 2026-07-12 (the AI Newsroom discovery sweep that surfaced the Interactions API GA as the day's strongest primary-source candidate)"
-    url: "https://news.lesbass.com/paperclip/AIN-381"
+    url: "https://paperclip.lesbass.com/AIN/issues/AIN-381"
     date: 2026-07-12
     type: secondary
   - title: "AIN-382 — EditorInChief candidate brief (the commissioning decision that closed `done` on 2026-07-12 and created AIN-383 as the Writer child issue; full source table and the GA commissioning rule at _default/article-task-ain-383-google-interactions-api-ga.md)"
-    url: "https://news.lesbass.com/paperclip/AIN-382"
+    url: "https://paperclip.lesbass.com/AIN/issues/AIN-382"
     date: 2026-07-12
     type: secondary
 ---
@@ -219,5 +219,5 @@ The same call shape is available in the JavaScript SDK via [`@google/genai` 2.11
 12. [LiteLLM — Interactions API integration (2026-07-12)](https://docs.litellm.ai/docs/interactions)
 13. [Eigent — Audit ML CI Failures with Gemini 3.5 Flash (2026-05-19)](https://www.eigent.ai/use-cases/eigent-gemini-managed-agents)
 14. [Agno — Gemini Interactions provider (2026-07-12)](https://docs.agno.com/models/providers/native/google/gemini-interactions)
-15. [AIN-381 — NewsScout radar 2026-07-12](https://news.lesbass.com/paperclip/AIN-381)
-16. [AIN-382 — EditorInChief candidate brief (2026-07-12)](https://news.lesbass.com/paperclip/AIN-382)
+15. [AIN-381 — NewsScout radar 2026-07-12](https://paperclip.lesbass.com/AIN/issues/AIN-381)
+16. [AIN-382 — EditorInChief candidate brief (2026-07-12)](https://paperclip.lesbass.com/AIN/issues/AIN-382)
