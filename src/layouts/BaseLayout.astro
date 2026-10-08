@@ -18,10 +18,13 @@ export interface Props {
 const { title, description, image, imageAlt, canonicalURL, pubDate, updatedDate, author = 'AI Newsroom', article = false, tags = [], robots } = Astro.props;
 const site = 'https://news.lesbass.com/';
 const rawFullTitle = title === 'AI Newsroom' ? title : `${title} — AI Newsroom`;
-const fullTitle = rawFullTitle.length <= 65 ? rawFullTitle : title;
+// Title budget for <title>/og:title. No article title exceeds this today, so
+// real titles render in full; the word-boundary truncate below is only a safety
+// net for genuinely long titles.
+const TITLE_LIMIT = 70;
 const pageURL = canonicalURL || new URL(Astro.url.pathname, site).toString();
 
-function truncateTitle(text: string, maxLen = 65): string {
+function truncateTitle(text: string, maxLen = TITLE_LIMIT): string {
   if (text.length <= maxLen) return text;
   const cut = text.slice(0, maxLen + 1);
   const breaks = [':', ';', '—', '–', '|'];
@@ -36,8 +39,15 @@ function truncateTitle(text: string, maxLen = 65): string {
   return text.slice(0, maxLen).trimEnd() + '…';
 }
 
-const seoTitle = fullTitle.length <= 65 ? fullTitle : truncateTitle(fullTitle);
-const ogTitle = fullTitle.length <= 65 ? fullTitle : truncateTitle(fullTitle, 65);
+const brandedTitleFits = rawFullTitle.length <= TITLE_LIMIT;
+const seoTitle = brandedTitleFits
+  ? rawFullTitle
+  : title.length <= TITLE_LIMIT
+    ? title
+    : truncateTitle(title, TITLE_LIMIT);
+// Social previews get the real, untruncated title when the limit would force a
+// cut; platforms wrap it cleanly and a full title beats a mid-phrase ellipsis.
+const ogTitle = brandedTitleFits ? rawFullTitle : title;
 // Describe the image, not the page: og:image:alt / twitter:image:alt must carry
 // the article image's real alt text when one is provided (AIN-899). Listing
 // pages (no image alt) keep the sensible page-title fallback.

@@ -291,7 +291,7 @@ function checkPage(rel, html, path) {
       }
 
       // The structured-data headline must be the full article title, not the
-      // 65-char <title>/og:title truncation (which appends an ellipsis).
+      // <title>/og:title truncation (which appends an ellipsis).
       const articleLd = [...html.matchAll(/<script type="application\/ld\+json">([^<]*)<\/script>/g)]
         .map((m) => { try { return JSON.parse(m[1]); } catch { return null; } })
         .find((d) => d && d['@type'] === 'NewsArticle');
@@ -306,6 +306,17 @@ function checkPage(rel, html, path) {
         } else if (h1Text && headline !== h1Text) {
           console.warn(`⚠ ${rel}: NewsArticle headline "${headline}" differs from <h1> "${h1Text}"`);
           warnings++;
+        }
+
+        // The <title> budget is 70 chars (BaseLayout TITLE_LIMIT). If the full
+        // title fits but <title> still ends with an ellipsis, the truncation is
+        // dropping real words - that is a regression (AIN-915).
+        const titleTagVal = decodeEntities((html.match(/<title>([^<]+)<\/title>/) || [])[1] || '').trim();
+        if (/…\s*$/.test(titleTagVal) && headline.length <= 70) {
+          console.error(
+            `❌ ${rel}: <title> is truncated with an ellipsis but the full title fits (${headline.length} chars): "${titleTagVal}"`,
+          );
+          errors++;
         }
       }
     }
