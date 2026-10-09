@@ -11,6 +11,18 @@ const SITE = 'https://news.lesbass.com/';
 
 const RASTER_EXT = /\.(png|jpe?g|gif|webp|avif)$/i;
 
+// Social cards crop to ~1.91:1. `scripts/optimize-hero-images.mjs` writes a
+// `<name>-social.jpg` 1200x630 crop beside any local hero whose own aspect
+// ratio is far from that; those pages use it instead of the raw hero.
+const SOCIAL_WIDTH = 1200;
+const SOCIAL_HEIGHT = 630;
+
+/** `<name>-social.jpg` sibling for a locally hosted PNG/JPEG hero, else null. */
+function localSocialPath(pathname: string): string | null {
+  if (!/\.(png|jpe?g)$/i.test(pathname)) return null;
+  return pathname.replace(/\.(png|jpe?g)$/i, '-social.jpg');
+}
+
 /**
  * The frontmatter runs inside Astro's build bundle, where `import.meta.url`
  * is not the source file — so walk up from both that location and the working
@@ -77,6 +89,16 @@ export function resolveOgImage(image?: string): OgImage {
 
   const file = join(PUBLIC_DIR, pathname.replace(/^\/+/, ''));
   if (!existsSync(file)) return fallback;
+
+  // Prefer the build-generated social crop when the hero's own ratio would be
+  // cropped hard by social platforms (portrait / very narrow heroes).
+  const socialPath = localSocialPath(pathname);
+  if (socialPath) {
+    const socialFile = join(PUBLIC_DIR, socialPath.replace(/^\/+/, ''));
+    if (existsSync(socialFile)) {
+      return { src: socialPath, width: SOCIAL_WIDTH, height: SOCIAL_HEIGHT };
+    }
+  }
 
   const size = readImageSizeFile(file);
   return size ? { src: raw, ...size } : { src: raw };

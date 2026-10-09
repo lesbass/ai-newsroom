@@ -19,6 +19,7 @@
 
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { basename, dirname, join, resolve } from 'node:path';
+import { readImageSizeFile } from './lib/image-size.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const articlesDir = join(root, 'src/content/articles');
@@ -27,6 +28,16 @@ const publicDir = join(root, 'public');
 const RASTER = /\.(png|jpe?g)$/i;
 const MOBILE_WIDTH = 900;
 const QUALITY = 82;
+
+// Social cards (`summary_large_image`, Facebook, LinkedIn) are ~1.91:1. A hero
+// far from that ratio is cropped hard by the platform — a portrait screenshot
+// becomes a thin horizontal band that drops the headline and most of the
+// evidence. For those heroes only, emit a 1200x630 crop and let og:image use it.
+const SOCIAL_WIDTH = 1200;
+const SOCIAL_HEIGHT = 630;
+const SOCIAL_QUALITY = 82;
+const SOCIAL_MIN_AR = 1.4;
+const SOCIAL_MAX_AR = 2.6;
 
 function collectLocalHeroes() {
   const heroes = new Set();
@@ -98,6 +109,13 @@ async function main() {
     const name = basename(source).replace(RASTER, '');
     const full = join(dir, `${name}.webp`);
     const mobile = join(dir, `${name}-${MOBILE_WIDTH}.webp`);
+    const social = join(dir, `${name}-social.jpg`);
+
+    // Only heroes outside the social-card band need a crop; inside the band the
+    // original hero is already close enough to 2:1 that a crop adds no value.
+    const size = readImageSizeFile(source);
+    const ar = size ? size.width / size.height : null;
+    const needsSocial = ar !== null && (ar < SOCIAL_MIN_AR || ar > SOCIAL_MAX_AR);
 
     try {
       if (isStale(source, full)) {
@@ -110,6 +128,18 @@ async function main() {
         await generate(sharp, source, mobile, { resize: { width: MOBILE_WIDTH, withoutEnlargement: true } });
         generated++;
       } else {
+        current++;
+      }
+      if (needsSocial && isStale(source, social)) {
+        await sharp(source)
+          .resize(SOCIAL_WIDTH, SOCIAL_HEIGHT, {
+            fit: 'cover',
+            position: (sharp.strategy && sharp.strategy.attention) || 'centre',
+          })
+          .jpeg({ quality: SOCIAL_QUALITY })
+          .toFile(social);
+        generated++;
+      } else if (needsSocial) {
         current++;
       }
     } catch (error) {

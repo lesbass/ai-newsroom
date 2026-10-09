@@ -31,7 +31,7 @@ function prepareBuildRoot() {
     const modules = join(repoRoot, 'node_modules');
     if (existsSync(modules)) symlinkSync(modules, join(dir, 'node_modules'), 'dir');
     console.log(`ℹ Auditing an isolated export of HEAD: ${dir}`);
-    return { root: dir, cleanup: () => { try { rmSync(dir, { recursive: true, force: true }); } catch {} } };
+    return { root: dir, cleanup: () => { try { rmSync(dir, { recursive: true, force: true }); } catch { /* best-effort cleanup */ } } };
   } catch (e) {
     console.log(`ℹ Falling back to the working tree (${String(e.message).split('\n')[0]})`);
     return { root: repoRoot, cleanup: () => {} };

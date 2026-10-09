@@ -32,3 +32,6 @@ core.*
 
 # generated WebP hero variants (produced by scripts/optimize-hero-images.mjs)
 public/images/**/*.webp
+
+# generated 1200x630 social crops (produced by scripts/optimize-hero-images.mjs)
+public/images/**/*-social.jpg
