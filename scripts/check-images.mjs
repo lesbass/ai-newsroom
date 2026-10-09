@@ -122,6 +122,13 @@ function checkPageHtml(html, rel, isRemote) {
       // Remote heroes keep no width/height (their real size is not known at
       // build time) and instead rely on the `.article-hero img:not([width])`
       // aspect-ratio fallback in BaseLayout, so no warning here.
+
+      // The hero is the LCP element, so it must carry fetchpriority="high" to
+      // start downloading ahead of lower-priority subresources (AIN-921).
+      if (!/fetchpriority="high"/.test(attrs)) {
+        console.error(`❌ ${rel}: article hero <img> missing fetchpriority="high" (LCP hint)`);
+        errors++;
+      }
     }
 
     // Astro only evaluates `{...}` expressions in .mdx. A `.md` body that uses
