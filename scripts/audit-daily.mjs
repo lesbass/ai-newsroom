@@ -1,9 +1,10 @@
 import { execSync } from 'node:child_process';
-import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { writeFileSync, mkdirSync, existsSync, mkdtempSync, rmSync, symlinkSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { tmpdir } from 'node:os';
 
-const root = resolve('.');
-const reportsDir = join(root, '.audit-reports');
+const repoRoot = resolve('.');
+const reportsDir = join(repoRoot, '.audit-reports');
 if (!existsSync(reportsDir)) mkdirSync(reportsDir, { recursive: true });
 
 const now = new Date();
@@ -12,6 +13,32 @@ const dateFile = now.toISOString().split('T')[0];
 
 const checkUrl = process.env.CHECK_URL || '';
 const urlEnv = checkUrl ? { CHECK_URL: checkUrl, ...process.env } : process.env;
+
+// The deployed artifact is built from the committed tree (HEAD). Agent sandboxes
+// accumulate untracked, abandoned drafts under src/content and public/images, and
+// those would otherwise be built into dist/ and produce false link/image failures.
+// Unless AUDIT_WORKTREE=dirty is set, run the build and file-based checks against
+// an isolated export of HEAD so the audit reflects what actually ships.
+function prepareBuildRoot() {
+  if (process.env.AUDIT_WORKTREE === 'dirty') {
+    console.log('ℹ Auditing the working tree (AUDIT_WORKTREE=dirty)');
+    return { root: repoRoot, cleanup: () => {} };
+  }
+  try {
+    execSync('git rev-parse --verify HEAD', { cwd: repoRoot, stdio: 'ignore' });
+    const dir = mkdtempSync(join(tmpdir(), 'ai-newsroom-audit-'));
+    execSync(`git archive HEAD | tar -x -C ${JSON.stringify(dir)}`, { cwd: repoRoot, shell: '/bin/bash' });
+    const modules = join(repoRoot, 'node_modules');
+    if (existsSync(modules)) symlinkSync(modules, join(dir, 'node_modules'), 'dir');
+    console.log(`ℹ Auditing an isolated export of HEAD: ${dir}`);
+    return { root: dir, cleanup: () => { try { rmSync(dir, { recursive: true, force: true }); } catch {} } };
+  } catch (e) {
+    console.log(`ℹ Falling back to the working tree (${String(e.message).split('\n')[0]})`);
+    return { root: repoRoot, cleanup: () => {} };
+  }
+}
+
+const { root, cleanup } = prepareBuildRoot();
 
 if (checkUrl) {
   console.log(`ℹ Live-check mode: ${checkUrl}`);
@@ -69,5 +96,7 @@ const summary = [
 const reportPath = join(reportsDir, `${dateFile}.md`);
 writeFileSync(reportPath, summary);
 console.log(`\n📋 Report saved: ${reportPath}`);
+
+cleanup();
 
 process.exit(failed > 0 ? 1 : 0);
