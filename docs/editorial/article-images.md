@@ -25,7 +25,8 @@ When `image` is absent or empty, `og:image`, `twitter:image`, and JSON-LD `NewsA
 
 Social fetchers (Facebook, X, LinkedIn, Slack, Discord) do not render `image/svg+xml`. `src/lib/ogImage.ts` therefore resolves the social image independently of the visible hero:
 
-- Local raster hero (`png` / `jpg` / `gif` / `webp`) → that file, with `og:image:width`/`height` read from the real bytes.
+- Local raster hero (`png` / `jpg`) whose own aspect ratio is far from the ~1.91:1 social-card ratio (portrait or very narrow, e.g. a phone-screenshot hero) → a build-generated `<name>-social.jpg` 1200×630 cover crop (`scripts/optimize-hero-images.mjs`), so platforms do not crop the raw hero hard. `og:image:width`/`height` are 1200/630.
+- Any other local raster hero (`png` / `jpg` / `gif` / `webp`) → that file, with `og:image:width`/`height` read from the real bytes.
 - SVG hero, `image: exception`, missing file, or any other non-raster value → `/og-image.png`, the raster brand card. The rendered article `<img>` hero is unaffected.
 - Remote hero URL (anything except a remote `.svg`) → used as-is, with no `width`/`height` claim because the intrinsic size is not verified at build time.
 
