@@ -87,10 +87,10 @@ const heroWebp = image && image !== 'exception' ? resolveHeroWebp(image) : null;
         {heroWebp ? (
           <picture>
             <source type="image/webp" srcset={heroWebp.srcset} sizes={heroWebp.sizes} />
-            <img src={image} alt={imageAlt || title} loading="eager" width={heroDimensions?.width} height={heroDimensions?.height} />
+            <img src={image} alt={imageAlt || title} loading="eager" fetchpriority="high" width={heroDimensions?.width} height={heroDimensions?.height} />
           </picture>
         ) : (
-          <img src={image} alt={imageAlt || title} loading="eager" width={heroDimensions?.width} height={heroDimensions?.height} />
+          <img src={image} alt={imageAlt || title} loading="eager" fetchpriority="high" width={heroDimensions?.width} height={heroDimensions?.height} />
         )}
         {imageCredit && <figcaption class="article-hero-credit">{imageCredit}</figcaption>}
       </figure>
