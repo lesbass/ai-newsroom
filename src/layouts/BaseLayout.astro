@@ -18,25 +18,31 @@ export interface Props {
 const { title, description, image, imageAlt, canonicalURL, pubDate, updatedDate, author = 'AI Newsroom', article = false, tags = [], robots } = Astro.props;
 const site = 'https://news.lesbass.com/';
 const rawFullTitle = title === 'AI Newsroom' ? title : `${title} — AI Newsroom`;
-// Title budget for <title>/og:title. No article title exceeds this today, so
-// real titles render in full; the word-boundary truncate below is only a safety
-// net for genuinely long titles.
+// Title budget for <title>/og:title. Titles that fit render in full; the
+// word-boundary truncate below is the safety net for genuinely long titles.
+// The limit is inclusive of the trailing ellipsis, so a truncated <title> is
+// always <= TITLE_LIMIT (scripts/check-seo.mjs warns at >70 chars).
 const TITLE_LIMIT = 70;
+const TITLE_ELLIPSIS = '…';
 const pageURL = canonicalURL || new URL(Astro.url.pathname, site).toString();
 
 function truncateTitle(text: string, maxLen = TITLE_LIMIT): string {
   if (text.length <= maxLen) return text;
-  const cut = text.slice(0, maxLen + 1);
+  // Reserve one character for the ellipsis so the result never exceeds the
+  // budget. Appending '…' past maxLen used to yield a maxLen+1 title, which
+  // tripped the 70-char SERP warning on the first over-budget article title.
+  const budget = maxLen - TITLE_ELLIPSIS.length;
+  const cut = text.slice(0, budget + 1);
   const breaks = [':', ';', '—', '–', '|'];
   let best = -1;
   for (const b of breaks) {
     const idx = cut.lastIndexOf(b);
-    if (idx > maxLen * 0.5) best = Math.max(best, idx);
+    if (idx > budget * 0.5) best = Math.max(best, idx);
   }
   if (best > 0) return text.slice(0, best).trimEnd();
   const lastSpace = cut.lastIndexOf(' ');
-  if (lastSpace > maxLen * 0.5) return text.slice(0, lastSpace).trimEnd() + '…';
-  return text.slice(0, maxLen).trimEnd() + '…';
+  if (lastSpace > budget * 0.5) return text.slice(0, lastSpace).trimEnd() + TITLE_ELLIPSIS;
+  return text.slice(0, budget).trimEnd() + TITLE_ELLIPSIS;
 }
 
 const brandedTitleFits = rawFullTitle.length <= TITLE_LIMIT;
