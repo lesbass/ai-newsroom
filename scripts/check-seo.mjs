@@ -318,6 +318,60 @@ function checkPage(rel, html, path) {
           );
           errors++;
         }
+
+        // Google's Article structured-data guidance requires publisher.logo to
+        // be a resolvable image of at least 112x112; below that (or with no
+        // declared size) the logo can be dropped from Article rich results
+        // (AIN-923).
+        const publisherLogo = articleLd.publisher && articleLd.publisher.logo;
+        if (!publisherLogo) {
+          console.error(`❌ ${rel}: NewsArticle publisher.logo is missing`);
+          errors++;
+        } else {
+          const logoUrl = typeof publisherLogo === 'string' ? publisherLogo : publisherLogo.url;
+          const logoW = Number(publisherLogo.width);
+          const logoH = Number(publisherLogo.height);
+          if (!logoUrl) {
+            console.error(`❌ ${rel}: NewsArticle publisher.logo has no url`);
+            errors++;
+          }
+          if (!Number.isFinite(logoW) || !Number.isFinite(logoH) || logoW <= 0 || logoH <= 0) {
+            console.error(`❌ ${rel}: NewsArticle publisher.logo must declare positive width/height`);
+            errors++;
+          } else if (logoW < 112 || logoH < 112) {
+            console.error(
+              `❌ ${rel}: NewsArticle publisher.logo is ${logoW}x${logoH}, below Google's 112x112 minimum`,
+            );
+            errors++;
+          }
+          // Confirm the logo resolves to a real built image and that the
+          // declared size matches the bytes we ship.
+          if (logoUrl && existsSync(assetBase)) {
+            let logoPath = null;
+            if (logoUrl.startsWith('/')) logoPath = logoUrl;
+            else if (logoUrl.startsWith(`${CANONICAL_ORIGIN}/`)) {
+              logoPath = logoUrl.slice(CANONICAL_ORIGIN.length + 1);
+            }
+            if (logoPath) {
+              const file = join(assetBase, logoPath.split(/[?#]/)[0]);
+              if (!existsSync(file)) {
+                console.error(`❌ ${rel}: NewsArticle publisher.logo file missing from build output (${logoPath})`);
+                errors++;
+              } else if (Number.isFinite(logoW) && Number.isFinite(logoH)) {
+                const size = readImageSizeFile(file);
+                if (!size) {
+                  console.error(`❌ ${rel}: could not read dimensions of publisher.logo ${logoPath}`);
+                  errors++;
+                } else if (size.width !== logoW || size.height !== logoH) {
+                  console.error(
+                    `❌ ${rel}: publisher.logo claims ${logoW}x${logoH} but ${logoPath} is ${size.width}x${size.height}`,
+                  );
+                  errors++;
+                }
+              }
+            }
+          }
+        }
       }
     }
 

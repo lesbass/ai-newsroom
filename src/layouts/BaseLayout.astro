@@ -92,6 +92,10 @@ const jsonLd = article
         logo: {
           '@type': 'ImageObject',
           url: new URL('/favicon.svg', site).toString(),
+          // Google requires publisher.logo to be >= 112x112; declare the
+          // favicon's true intrinsic size so the ImageObject is explicit.
+          width: 512,
+          height: 512,
         },
       },
       mainEntityOfPage: {
