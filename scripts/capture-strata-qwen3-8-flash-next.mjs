@@ -4,9 +4,12 @@
  *
  * Source: https://github.com/Niko1221/Strata
  *
- * - hero.png:        repository home top — name, description, stars/license,
- *                    README intro and the "How fast is it?" table.
- * - hero-mobile.png: the same top-of-page at a 390px-wide phone viewport.
+ * - hero.png:        repository home top at a 1440x1100 viewport (viewport-only,
+ *                    deviceScaleFactor 2): repo name and description, star and fork
+ *                    counts, license, and the top of the file listing. The README
+ *                    body and its "How fast is it?" speed table sit far below the
+ *                    viewport and are NOT in this capture.
+ * - hero-mobile.png: the same top-of-page at a 390x844 phone viewport (scale factor 1).
  *
  * Output: public/images/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/
  *

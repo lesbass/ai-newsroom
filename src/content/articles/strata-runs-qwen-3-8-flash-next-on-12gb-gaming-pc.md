@@ -5,7 +5,7 @@ pubDate: 2026-10-10
 author: "AI Newsroom"
 tags: ["strata", "qwen", "qwen3-8-flash-next", "moe", "local-inference", "consumer-gpu", "open-weights"]
 image: "/images/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/hero.png"
-imageAlt: "Screenshot of the Niko1221/Strata GitHub repository home page showing the project title and description, a 20.2k-star and 1.8k-fork count, and the README's 'How fast is it?' table for an RTX 5070 with 12 GB of VRAM."
+imageAlt: "Screenshot of the Niko1221/Strata GitHub repository home page showing the project name and description, the 20.2k-star and 1.8k-fork counts, the MIT license, and the top of the repository file listing."
 imageCredit: "Source: https://github.com/Niko1221/Strata · Capture date: 2026-10-10 (UTC) via Playwright Chromium · Credit: Niko1221/Strata · License: Strata repository is MIT (screenshot of the project's own page)"
 canonicalURL: "https://news.lesbass.com/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/"
 highRiskClaims: false
@@ -63,6 +63,8 @@ Strata spreads one model across every tier of a normal PC instead of requiring a
 Frontier open-weight models normally need hundreds of gigabytes of GPU memory. Strata's pitch is that a one-time model download replaces pay-per-token API spend, and that nothing leaves the machine. [4]
 
 For agent builders, the practical value is a drop-in endpoint: point Claude Code at `ANTHROPIC_BASE_URL=http://127.0.0.1:8080`, or add an "OpenAI-compatible" provider, and the model behaves like a hosted API without a metered bill. Qwen's own framing centers the model family on cost efficiency at long context, which is what the local route trades against. [2]
+
+AI Newsroom has covered adjacent local-inference ground: [Meta's Muse Glimmer 30B](/articles/meta-muse-glimmer-30b-apache-agentic-local/), another open-weight model aimed at consumer GPUs, and [lean-ctx](/articles/lean-ctx-local-ai-value-gate-withdrawn-benchmark/), a local token-cost and context-compression layer for coding agents.
 
 ## Try it
 
