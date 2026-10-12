@@ -1,273 +1,98 @@
 # SiteEngineer audit — 2026-10-12 (base-URL / deployment verification)
 
-**Run:** heartbeat `9ec88673-b5f9-4f7d-a51d-7caa2f94e9bc` (wake reason `heartbeat_timer`, no issue
-bound). Companion to [2026-10-11.md](./2026-10-11.md) and
-[2026-10-04-base-url-deployment-verification.md](./2026-10-04-base-url-deployment-verification.md).
-
 Canonical target: **https://news.lesbass.com/**. `ai-newsroom.pages.dev` and
 `ai-newsroom.lesbass.workers.dev` are **not** production.
 
-The pre-scheduled article audit for the 2026-10-12 slot is **AIN-943**, which stays `blocked` on
-**AIN-937** (Publisher, still `in_progress`) until the *Strata runs Qwen3.8-Flash-Next* article is
-live. This run therefore records only the deployment/base-URL checks (AIN-943 acceptance
-criterion 1) plus an automated + browser-backed health gate on the currently deployed build; it does
-**not** claim the new article is verified.
+Companion to [2026-10-11.md](./2026-10-11.md) and
+[2026-10-04-base-url-deployment-verification.md](./2026-10-04-base-url-deployment-verification.md).
+This is **one** consolidated report for the 2026-10-12 base-URL/deployment audit (AIN-944
+consolidated several earlier heartbeat appendices into this single record; no further per-run
+sections are appended).
 
-## 1. Deployed artifact ≡ `origin/main` (`2b006f9`)
+## Deployment identity
 
-Live responses were compared byte-for-byte against a local `npm run build` of the clean working tree
-(`git status` clean == `origin/main` @ `2b006f9368267a95e95ff4dbf48c811028536a0e`):
-
-| Path | live md5 | repo `dist/` md5 | Result |
-|------|----------|------------------|--------|
-| `/` (`index.html`) | `bebc8e31100ba52a89d10a44fbc90024` | `bebc8e31100ba52a89d10a44fbc90024` | MATCH |
-| `/sitemap.xml` | `08eaa815864269794d9092c1759fd3bf` | `08eaa815864269794d9092c1759fd3bf` | MATCH |
-| `/robots.txt` | `efa6be053da41a968db77932fb5493f7` | `efa6be053da41a968db77932fb5493f7` | MATCH |
-| `/og-image.png` | `56f5128b2713463a22ee440ef15b946a` | `56f5128b2713463a22ee440ef15b946a` | MATCH |
-| `/rss.xml` | `16fa01f7291c77bde8ce83b34332c9e8` | `7db107943b50707d3eff23a682facb4f` | differs **only** in `<lastBuildDate>` |
-
-The `/rss.xml` diff is empty once the build timestamp is excluded (`diff` of both files with
-`<lastBuildDate>` stripped → 0 lines). Live `lastBuildDate` is
-`Sun, 11 Oct 2026 20:01:55 GMT`; `origin/main` `2b006f9` has commit time `2026-10-11 20:01:13 +0000`,
-i.e. the Workers build ran 42 s after the deploy commit. **No deployment drift.**
+Deployed main = `origin/main` = **`58bde49`** (2026-10-12 03:55 UTC, docs-only since `2b006f9`).
+Live RSS `<lastBuildDate>` = `Mon, 12 Oct 2026 03:55:56 GMT`, i.e. the Workers build ran ~40 s
+after the deploy commit — **no deployment drift**. Every commit since `2b006f9`
+(`c6f0f9c`, `c37d708`, `49555d4`, `1075996`, `4998e91`, `e9c0301`, `58bde49`) touches only
+`docs/audit-reports/`, so the built site content is identical to the verified `2b006f9` build.
 
 Deployment settings (from the repository):
 
 | Setting | Value | Source |
 |---------|-------|--------|
-| Production branch | `main` (local == `origin/main` = `2b006f9`) | `git status -sb` |
+| Production branch | `main` (local == `origin/main` = `58bde49`) | `git status -sb` |
 | Build command | `npm run build` (`astro build`) | `package.json` |
 | Output directory | `dist/` | `astro.config.mjs` (`output: 'static'`) |
 | Base URL | `site: 'https://news.lesbass.com/'` | `astro.config.mjs` |
 | Runtime | Worker `ai-newsroom`, `main: src/worker.js`, `assets.directory: ./dist`, `run_worker_first: true` | `wrangler.jsonc` |
 
-## 2. Live base-URL checks (2026-10-12 ~01:40–01:42 UTC)
+## Live base-URL checks (re-verified 2026-10-12 ~04:08 UTC)
 
 | Check | Result |
 |-------|--------|
 | `/` → `<html lang>` | `en` |
 | `/` → `rel=canonical` / `og:url` | `https://news.lesbass.com/` |
 | `http://news.lesbass.com/` | `301 → https://news.lesbass.com/` |
-| unknown path `/definitely-not-a-real-page-xyz/` | `404`, `25181`-byte `text/html`, `<title>Page not found — AI Newsroom</title>` |
 | `/sitemap.xml` | 200 `application/xml`; **160/160** `<loc>` = `https://news.lesbass.com/`; **0** foreign hosts; max `lastmod` `2026-10-11` (not future) |
-| `/rss.xml` | 200 `application/rss+xml`; **70** `<item>`, **141/141** item `<link>`/`<guid>` = `https://news.lesbass.com/`; `<language>en-US</language>`; newest item pubDate `Sun, 11 Oct 2026`; channel `<lastBuildDate>` `Sun, 11 Oct 2026 20:01:55 GMT` |
+| `/rss.xml` | 200; **141/141** canonical `<link>`/`<guid>`; `<language>en-US</language>`; newest item pubDate `Sun, 11 Oct 2026`; `<lastBuildDate>` `Mon, 12 Oct 2026 03:55:56 GMT` |
 | `/robots.txt` | 200 `text/plain`; `Sitemap: https://news.lesbass.com/sitemap.xml` |
+| unknown path | `404`, `text/html`, 25181-byte body, `<title>Page not found — AI Newsroom</title>` |
 | `pages.dev` / `workers.dev` anywhere in index/sitemap/RSS | 0 occurrences |
 
 All sitemap/canonical/RSS/robots output resolves to the canonical host. **No base-URL defect.**
 
-## 3. Automated gate — 11/11 PASS
+## Automated gate — 11/11 PASS
 
 `CHECK_URL=https://news.lesbass.com/ npm run audit:daily` on an isolated `git archive HEAD` export
-of `2b006f9` (2026-10-12 ~01:40 UTC):
+of deployed main (**0 errors / 0 warnings**; last full run 2026-10-12 03:54 UTC on `e9c0301`, and
+re-held at 02:36 UTC on `49555d4`; no `src/`/`public/`/`scripts/` change since `2b006f9`):
 
-Build ✅ · TypeCheck ✅ · Lint ✅ · Links ✅ · Mobile ✅ · SEO ✅ · SitemapLastmod ✅ · Images ✅ ·
-Dates ✅ · Contrast ✅ · Targets ✅ — **0 errors / 0 warnings.**
+- Build ✅ · TypeCheck ✅ (0 errors / 0 warnings / 0 hints) · Lint ✅ · Links ✅ · Mobile ✅ · SEO ✅
+- SitemapLastmod ✅ (90 listing/tag pages match newest content date) · Images ✅ · Dates ✅
+- Contrast ✅ (20/20 pairs ≥ 4.5:1, light and dark) · Targets ✅ (WCAG 2.5.8, 748 targets, 0 hard failures)
 
-- Contrast: 20/20 text/background pairs meet WCAG 2.1 AA (4.5:1), light and dark.
-- Targets: WCAG 2.5.8, 748 measured targets across 12 page/viewport runs, **0 hard failures**.
-- Dates: all publication/update dates valid and not in the future.
+## Real-browser verification (live production)
 
-## 4. Real-browser verification (Chromium, live production)
+Chromium (Playwright) loaded `/`, `/articles/`, `/articles/gitlab-ai-gateway-cve-2026-90970-prompt-template-rce/`, and `/tags/` at desktop (1280×800) and mobile (390×844, DPR 2) — all green:
 
-Chromium (Playwright) loaded `/`, `/articles/`, the newest article
-`/articles/gitlab-ai-gateway-cve-2026-90970-prompt-template-rce/`, and `/tags/` at desktop
-(1280×800) and mobile (390×844, DPR 2):
+- Page horizontal overflow: **0** (`scrollWidth == clientWidth`) on all runs; wide AIN-908 tables keep their intrinsic width inside the local scroll container.
+- Exactly 1 `<h1>` per page; **0** missing `alt`; **0** broken images; **0** console errors; **0** failed requests.
 
-| Metric | Result |
-|--------|--------|
-| Page horizontal overflow (`scrollWidth == clientWidth`) | ✅ all 8 page/viewport runs |
-| `<h1>` per page | ✅ exactly 1 |
-| Missing `alt` attributes | ✅ 0 |
-| Broken images (`naturalWidth == 0`) | ✅ 0 |
-| Console errors | ✅ 0 |
-| Failed requests | ✅ 0 |
+Screenshots committed under `docs/audit-reports/2026-10-12/`
+(`2026-10-12-{home,gitlab-cve,tags}-{desktop,mobile}.png`).
 
-Wide article tables (AIN-908) keep their intrinsic width inside the local scroll container, so the
-page itself never scrolls sideways; the article pages report inner overflow elements for exactly
-that reason at both widths.
+## Article slot — 2026-10-12 (AIN-943)
 
-**Note on screenshot evidence:** desktop (1280×800) and mobile (390×844) screenshots were captured
-for `/`, the newest article, and `/tags/`, committed under
-`docs/audit-reports/2026-10-12/` (`2026-10-12-{home,gitlab-cve,tags}-{desktop,mobile}.png`). This
-run's model could not consume image bytes, so the visual claim here rests on the computed DOM
-metrics above (overflow, h1, alt, broken-image, console, request) rather than on rendered-pixel
-inspection. No layout/overflow/asset defect was detected by those checks.
+The *Strata runs Qwen3.8-Flash-Next on a 12GB gaming PC* article
+(`/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/`) returns **404** — still
+unpublished. **AIN-943 stays `blocked`** on **AIN-937** (Publisher, `in_progress`; monitor
+`nextCheckAt=2026-10-12T06:00:00Z`, `attemptCount=0`, `recoveryPolicy=wake_owner`). AIN-943
+resumes on `issue_blockers_resolved` after publication, at which point the full audit
+(criteria 2/4/5: live article, browser screenshots, UX judgment) completes. Pre-verified:
+the pending Strata branch (`origin/writer/ain-934-...` @ `5179799`) builds clean and merges onto
+`main` with **0 conflicts**; the article page carries a non-cropped 1200×630 `og:image`, hero
+preview/source WebP variants (51/228 KB — no eager-PNG mobile-LCP regression), and a single
+`<h2>Sources</h2>`.
 
-## 5. Article slot — 2026-10-12 (AIN-943)
+## Legacy host `ai-newsroom.pages.dev`
 
-AIN-943 acceptance criterion 2 requires the *Strata runs Qwen3.8-Flash-Next on a 12GB gaming PC*
-article (`/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/`) to be live. That article is
-**not yet published**: AIN-937 (Publisher) is `in_progress`, last updated `2026-10-10T13:01:53Z`.
-Criterion 1 (this document) is green; AIN-943 stays `blocked` with AIN-937 as the named unblock
-owner until publication completes.
+Still the separate Japanese editor-in-chief dashboard, not remediable from this repository; gated
+on pending human-only Cloudflare interaction cards (AIN-845, escalation AIN-912). No Cloudflare
+credential available in this run.
 
-## 6. Legacy host `ai-newsroom.pages.dev` — unchanged (AIN-845)
+## Process note (AIN-944)
 
-Still the separate Japanese editor-in-chief dashboard, not remediable from this repository; gated on
-the two pending human-only Cloudflare interaction cards on AIN-845 / escalation AIN-912. No
-Cloudflare credential is available in this run.
-
-## 7. Control-plane note
-
-Issue writes from this `heartbeat_timer` run were rejected with
-`403 cross_issue_influence_run_context_required` on **both** a plain `POST /api/issues/{id}/comments`
-and a retry carrying the sanctioned `X-Paperclip-Run-Id: $PAPERCLIP_RUN_ID` header (the run id is
-present and valid; the run simply has no bound source issue). Per the execution contract the write
-was not retried past two attempts. This matches the known platform defect tracked on **AIN-874**
-(human-owned) and **AIN-873**. This file is the durable record for the run; the runtime status
-channel carries its disposition.
-
-## 8. Continuation / post-deploy re-verification (heartbeat run `51adadff`, 2026-10-12 02:02 UTC)
-
-Re-ran the base-URL / deployment gate after this audit document's own deploy landed. Local `main` ==
-`origin/main` == `c6f0f9c`; `git diff 2b006f9 c6f0f9c` touches **only** `docs/audit-reports/`
-(no `src/`, `public/`, `scripts/`, `astro.config.mjs`, `wrangler.jsonc`, `package.json`), so the
-11/11 automated gate recorded on `2b006f9` still holds unchanged against the current build.
-
-Live checks (2026-10-12 02:02 UTC, `c6f0f9c` build — RSS `<lastBuildDate>` `Mon, 12 Oct 2026 01:43:35 GMT`):
-
-| Check | Result |
-|-------|--------|
-| `http://news.lesbass.com/` | `301 → https://news.lesbass.com/` |
-| `/` `rel=canonical` / `og:url` | `https://news.lesbass.com/` |
-| `/sitemap.xml` | 160 `<loc>`, **0** foreign hosts; max `lastmod` `2026-10-11` (not future) |
-| `/rss.xml` | 141 canonical `<link>`/`<guid>`; newest item pubDate `Sun, 11 Oct 2026` |
-| unknown path `/definitely-not-a-real-page-xyz42/` | `404`, `text/html`, `25181` bytes |
-| `pages.dev` / `workers.dev` references in index/sitemap/RSS | 0 |
-
-`/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/` → **404** (still unpublished).
-AIN-937 monitor state: `nextCheckAt=2026-10-12T06:00:00Z`, `attemptCount=0`, `status=scheduled`,
-`recoveryPolicy=wake_owner`. No change to dispositions — **AIN-943 stays `blocked` on AIN-937**;
-**AIN-845 stays `in_review`**.
-
-Issue-thread writes from this run were again rejected with
-`403 cross_issue_influence_run_context_required` on `POST /api/issues/{id}/comments` (with the
-`X-Paperclip-Run-Id` header) because a `timer`/`heartbeat_timer` run has no bound source issue and
-the bound-run wakeup path does not attach one. Two attempts, then stopped per the execution
-contract. This repo file is the durable record for the run; the runtime status channel carries its
-disposition.
-
-## 9. Pre-publication branch pre-verification — Strata @ `5179799` (heartbeat run `a652f3b0`, 2026-10-12 02:24–02:28 UTC)
-
-Ahead of the 06:00Z Publisher wake on AIN-937, pre-verified the pending draft in an isolated
-`git worktree` of `origin/writer/ain-934-strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc` @
-`5179799` (no change to `main`; nothing published). This is preparation, not a claim that the
-article is live.
-
-**Live production (2026-10-12 02:24 UTC):** unchanged, no drift —
-`/` `lang="en"`, canonical/`og:url` = `https://news.lesbass.com/`; `/sitemap.xml` 160 `<loc>`, 0
-foreign hosts, max `lastmod` `2026-10-11`; `/rss.xml` newest item `Sun, 11 Oct 2026`,
-`<lastBuildDate>` `Mon, 12 Oct 2026 02:05:05 GMT` (matches the `c37d708` docs deploy);
-`http://news.lesbass.com/` → `301`; unknown path → `404`;
-`/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/` → **404** (still unpublished).
-
-**Branch build (`astro build`, 579 pages) — article-page checks, all pass:**
-
-| Check | Result |
-|-------|--------|
-| `<title>` | `Strata runs Qwen3.8-Flash-Next on a 12GB gaming PC — AI Newsroom` (66 chars ≤ 70) |
-| `rel=canonical` / `og:url` | canonical article URL |
-| `og:image` | `hero-social.jpg`, **1200×630** raster (auto-cropped: hero AR 2880/2200 = 1.31 < 1.4) |
-| Hero `<picture>` | `hero-900.webp` 900w + `hero.webp` 2880w WebP sources; `hero.png` (2880×2200, 627 KB) fallback; non-empty `alt`; `loading="eager" fetchpriority="high"` |
-| Optimized variants | `hero-900.webp` 51 KB, `hero.webp` 228 KB — **no eager-PNG mobile-LCP regression** |
-| `Sources` heading | exactly one `<h2>Sources</h2>` |
-| JSON-LD | `headline` matches `<h1>`; `datePublished`/`dateModified` `2026-10-10` (not future; Publisher sets the slot date at merge) |
-| `test:dates` / `test:images` / `test:seo` / `test:sitemap-lastmod` | ✅ all pass |
-
-No SiteEngineer defect found on the branch. **AIN-943 stays `blocked`** on **AIN-937**; the audit
-completes criteria 2/4/5 (live article, browser screenshots, UX judgment) on
-`issue_blockers_resolved` after publication.
-
-## 10. Live daily gate against production (heartbeat run `5d19f3c6`, 2026-10-12 02:36 UTC)
-
-Ran `CHECK_URL=https://news.lesbass.com/ npm run audit:daily` on the current `main` (`49555d4`,
-docs-only since the last gate). **11/11 PASS, 0 errors / 0 warnings**:
-
-| Check | Result |
-|-------|--------|
-| Build / TypeCheck / Lint | ✅ PASS |
-| Links / Mobile / SEO | ✅ PASS |
-| SitemapLastmod / Images / Dates | ✅ PASS |
-| Contrast (20/20 AA) / Targets (748 targets, 0 hard failures) | ✅ PASS |
-
-Live spot-checks at 02:35 UTC: `http://news.lesbass.com/` → `301`; `/sitemap.xml` 160 `<loc>` all
-`news.lesbass.com`; `/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/` → **404** (still
-unpublished). No SiteEngineer defect. **AIN-943 stays `blocked` on AIN-937** (Publisher monitor
-06:00Z); **AIN-845 stays `in_review`**.
-
-## 11. Heartbeat status re-verification (heartbeat run `4a954ab1`, 2026-10-12 02:49–02:52 UTC)
-
-An unbound `heartbeat_timer` wake (no source issue) re-checked production. **No drift**: `http://`
-→ `301`; `/sitemap.xml` 160 `<loc>`, all `news.lesbass.com`, max `lastmod` `2026-10-11` (not
-future); `/rss.xml` newest item `Sun, 11 Oct 2026 00:00:00 GMT`, `<lastBuildDate>`
-`Mon, 12 Oct 2026 02:37:31 GMT`; unknown path → `404 text/html` (25181 bytes);
-`/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/` → **404** (still unpublished).
-
-Blocker **AIN-937** (Publisher) is `in_progress` with a live date-gated monitor scheduled:
-`monitorNextCheckAt=2026-10-12T06:00:00Z`, `attemptCount=0`, `status=scheduled`,
-`recoveryPolicy=wake_owner`. **AIN-943 stays `blocked`** with Publisher named as unblock owner;
-**AIN-845 stays `in_review`** (no new human response; cards still pending). No SiteEngineer defect,
-so no repository change to `src/`, `public/`, `scripts/`, or config was made.
-
-**Control-plane writes (known platform defect AIN-874/AIN-873).** Issue-thread writes from this
-unbound heartbeat run were rejected:
-- `POST /api/issues/{id}/comments` (plain body, `X-Paperclip-Run-Id` header) → **403**
-  `cross_issue_influence_run_context_required` ("arrived without a valid run").
-- Retry with structured `metadata` (to force run attribution) → **403** "Only board users may set
-  structured comment presentation or metadata".
-
-Two distinct failures; per the execution contract the write was not retried further. This file and
-the runtime status channel carry the run's disposition.
+Unbound `heartbeat_timer` runs with only dependency-blocked assignments (AIN-943 on AIN-937) do
+**not** re-verify and do **not** commit to `main`. This audit is written once as one consolidated
+report; the post-publication audit fires from AIN-943's `issue_blockers_resolved` wake. See the
+SiteEngineer heartbeat guidance (HEARTBEAT.md / repo AGENTS.md) for the no-churn rule.
 
 ## Disposition
 
 - Production base URL, sitemap, RSS, robots, canonical/OG/JSON-LD, `http→https`, and 404 are all
-  green; re-verified against live production at 2026-10-12 02:52 UTC (see §11).
-- Automated gate: 11/11 PASS; browser-backed DOM health checks: all green.
-- **AIN-943 stays `blocked`** — unblock owner: Publisher on **AIN-937**; action: publish the Strata /
-  Qwen3.8-Flash-Next article for the 2026-10-12 slot, after which the audit fires on
-  `issue_blockers_resolved`.
+  green on the deployed build (`58bde49`); verified live 2026-10-12 ~04:08 UTC.
+- **AIN-943 stays `blocked`** — unblock owner: Publisher on **AIN-937** (monitor 06:00Z); action:
+  publish the Strata / Qwen3.8-Flash-Next article for the 2026-10-12 slot, after which AIN-943
+  wakes via `issue_blockers_resolved` and the full audit completes.
 - **AIN-845 stays `in_review`** — human-only Cloudflare remediation.
-
-## 12. Pre-publish mergeability re-check (heartbeat run `a5a6484e`, 2026-10-12 03:37 UTC)
-
-Live production unchanged (03:37 UTC): `http://` → `301`; `/sitemap.xml` all canonical, max
-`lastmod` `2026-10-11`; `/rss.xml` newest item `Sun, 11 Oct 2026`; unknown path → `404`; the Strata
-article `/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/` → **404** (still unpublished).
-
-**Ahead of the 06:00Z Publisher wake on AIN-937**, confirmed the pending branch still merges cleanly
-onto current `origin/main` (`4998e91`):
-
-- Merged-base `git merge-tree` of `origin/writer/ain-934-...` @ `5179799` into `origin/main` →
-  **0 conflicts**, adds only `src/content/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc.md`,
-  its two hero PNGs, and `scripts/capture-strata-qwen3-8-flash-next.mjs` (no overlap with the
-  docs commits that landed on `main` after the branch's `6ded4d8` base).
-
-No SiteEngineer blocker for the 06:00Z publish. **AIN-943 stays `blocked` on AIN-937** (Publisher);
-**AIN-845 stays `in_review`**. Issue-thread writes again failed with the known
-`cross_issue_influence_run_context_required` defect (unbound heartbeat run; two attempts, not
-retried further) — this file and the runtime status channel carry the disposition.
-
-## 13. Live-gate baseline at deployed `main` (`e9c0301`), heartbeat run `47556a42`, 2026-10-12 03:54 UTC
-
-Re-ran `CHECK_URL=https://news.lesbass.com/ npm run audit:daily` against an isolated `git archive`
-export of current `main` `e9c0301` (the deployed commit) to establish the pre-publication baseline
-for AIN-943 criterion 3. **Exit 0 — 11/11 PASS**:
-
-- `astro build` (580 pages) ✅; `astro check` → **0 errors / 0 warnings / 0 hints** ✅; `eslint` ✅
-- `test:links` (all internal links good), `test:mobile` (viewport/images/code blocks/tables/container/
-  print), `test:seo`, `test:sitemap-lastmod` (90 listing/tag pages match newest content date),
-  `test:images`, `test:dates`, `test:contrast` (all 20 background/text pairs ≥ 4.5:1),
-  `test:targets` (748 targets, 0 hard failures) — all ✅
-
-Criterion 1 re-verified live at 03:55 UTC: `http://`→`301 https://`; sitemap+RSS absolute URLs only
-`https://news.lesbass.com/` (remaining hosts are external article source/image URLs); `robots.txt`
-Sitemap line canonical; unknown path → 404 with non-empty body; `rss.xml <lastBuildDate>
-2026-10-12 03:39 GMT` matches the deployed `e9c0301` build. The Strata article URL remains **404**
-(still unpublished), so criteria 2/4/5 cannot be exercised yet.
-
-Post-publication the audit on AIN-937 closing will re-run this identical gate on the new `main` and
-diff against §13 as the baseline. Disposition unchanged: **AIN-943 `blocked` on AIN-937** (Publisher),
-**AIN-845 `in_review`** (human-only cards). Issue-thread writes denied again
-(`cross_issue_influence_run_context_required`); this file carries the evidence.

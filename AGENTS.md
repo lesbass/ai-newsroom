@@ -34,3 +34,12 @@ Recent history uses concise, imperative subjects with either `fix:` or an issue 
 ## Agent-Specific Instructions
 
 Before broad file reads, prefer TokenSave MCP tools for structure and symbol context. Do not change production metadata away from `news.lesbass.com` unless explicitly asked. Preserve existing docs and publication records; add new records under the matching `docs/` subdirectory.
+
+## Heartbeat Discipline (SiteEngineer, AIN-944)
+
+On a `heartbeat_timer` wake with only dependency-blocked or already-waited work (no new comment, no resolver wake, no unblocked deliverable):
+
+- Exit cleanly after a quick production health spot-check. Do NOT re-verify live production and commit a re-verification section to `main`; a dependency-blocked audit (e.g. AIN-943 on AIN-937) is resumed by `issue_blockers_resolved` or its blocker's own monitor, not by per-heartbeat re-audits.
+- Audit reports live in `docs/audit-reports/` as **ONE** report per audit, written when the audit actually completes (see `2026-10-11.md` / the consolidated `2026-10-12-base-url-deployment-verification.md`). Do not append per-heartbeat sections to a committed audit file.
+- Do not pre-create blocked audit issues for future publication slots. Create the audit issue after the article is live (the AIN-942 pattern), so the assignee is never woken to re-verify an unstartable deliverable.
+- If issue-thread writes are rejected from an unbound run, do not fall back to a repo commit; record the disposition through the runtime status channel and exit.
