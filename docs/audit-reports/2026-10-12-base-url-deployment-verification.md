@@ -148,6 +148,37 @@ the bound-run wakeup path does not attach one. Two attempts, then stopped per th
 contract. This repo file is the durable record for the run; the runtime status channel carries its
 disposition.
 
+## 9. Pre-publication branch pre-verification — Strata @ `5179799` (heartbeat run `a652f3b0`, 2026-10-12 02:24–02:28 UTC)
+
+Ahead of the 06:00Z Publisher wake on AIN-937, pre-verified the pending draft in an isolated
+`git worktree` of `origin/writer/ain-934-strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc` @
+`5179799` (no change to `main`; nothing published). This is preparation, not a claim that the
+article is live.
+
+**Live production (2026-10-12 02:24 UTC):** unchanged, no drift —
+`/` `lang="en"`, canonical/`og:url` = `https://news.lesbass.com/`; `/sitemap.xml` 160 `<loc>`, 0
+foreign hosts, max `lastmod` `2026-10-11`; `/rss.xml` newest item `Sun, 11 Oct 2026`,
+`<lastBuildDate>` `Mon, 12 Oct 2026 02:05:05 GMT` (matches the `c37d708` docs deploy);
+`http://news.lesbass.com/` → `301`; unknown path → `404`;
+`/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/` → **404** (still unpublished).
+
+**Branch build (`astro build`, 579 pages) — article-page checks, all pass:**
+
+| Check | Result |
+|-------|--------|
+| `<title>` | `Strata runs Qwen3.8-Flash-Next on a 12GB gaming PC — AI Newsroom` (66 chars ≤ 70) |
+| `rel=canonical` / `og:url` | canonical article URL |
+| `og:image` | `hero-social.jpg`, **1200×630** raster (auto-cropped: hero AR 2880/2200 = 1.31 < 1.4) |
+| Hero `<picture>` | `hero-900.webp` 900w + `hero.webp` 2880w WebP sources; `hero.png` (2880×2200, 627 KB) fallback; non-empty `alt`; `loading="eager" fetchpriority="high"` |
+| Optimized variants | `hero-900.webp` 51 KB, `hero.webp` 228 KB — **no eager-PNG mobile-LCP regression** |
+| `Sources` heading | exactly one `<h2>Sources</h2>` |
+| JSON-LD | `headline` matches `<h1>`; `datePublished`/`dateModified` `2026-10-10` (not future; Publisher sets the slot date at merge) |
+| `test:dates` / `test:images` / `test:seo` / `test:sitemap-lastmod` | ✅ all pass |
+
+No SiteEngineer defect found on the branch. **AIN-943 stays `blocked`** on **AIN-937**; the audit
+completes criteria 2/4/5 (live article, browser screenshots, UX judgment) on
+`issue_blockers_resolved` after publication.
+
 ## Disposition
 
 - Production base URL, sitemap, RSS, robots, canonical/OG/JSON-LD, `http→https`, and 404 are all
