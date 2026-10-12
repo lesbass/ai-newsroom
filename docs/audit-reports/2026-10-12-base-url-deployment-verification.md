@@ -229,3 +229,22 @@ the runtime status channel carry the run's disposition.
   Qwen3.8-Flash-Next article for the 2026-10-12 slot, after which the audit fires on
   `issue_blockers_resolved`.
 - **AIN-845 stays `in_review`** — human-only Cloudflare remediation.
+
+## 12. Pre-publish mergeability re-check (heartbeat run `a5a6484e`, 2026-10-12 03:37 UTC)
+
+Live production unchanged (03:37 UTC): `http://` → `301`; `/sitemap.xml` all canonical, max
+`lastmod` `2026-10-11`; `/rss.xml` newest item `Sun, 11 Oct 2026`; unknown path → `404`; the Strata
+article `/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/` → **404** (still unpublished).
+
+**Ahead of the 06:00Z Publisher wake on AIN-937**, confirmed the pending branch still merges cleanly
+onto current `origin/main` (`4998e91`):
+
+- Merged-base `git merge-tree` of `origin/writer/ain-934-...` @ `5179799` into `origin/main` →
+  **0 conflicts**, adds only `src/content/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc.md`,
+  its two hero PNGs, and `scripts/capture-strata-qwen3-8-flash-next.mjs` (no overlap with the
+  docs commits that landed on `main` after the branch's `6ded4d8` base).
+
+No SiteEngineer blocker for the 06:00Z publish. **AIN-943 stays `blocked` on AIN-937** (Publisher);
+**AIN-845 stays `in_review`**. Issue-thread writes again failed with the known
+`cross_issue_influence_run_context_required` defect (unbound heartbeat run; two attempts, not
+retried further) — this file and the runtime status channel carry the disposition.
