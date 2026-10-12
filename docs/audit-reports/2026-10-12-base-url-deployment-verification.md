@@ -118,6 +118,36 @@ was not retried past two attempts. This matches the known platform defect tracke
 (human-owned) and **AIN-873**. This file is the durable record for the run; the runtime status
 channel carries its disposition.
 
+## 8. Continuation / post-deploy re-verification (heartbeat run `51adadff`, 2026-10-12 02:02 UTC)
+
+Re-ran the base-URL / deployment gate after this audit document's own deploy landed. Local `main` ==
+`origin/main` == `c6f0f9c`; `git diff 2b006f9 c6f0f9c` touches **only** `docs/audit-reports/`
+(no `src/`, `public/`, `scripts/`, `astro.config.mjs`, `wrangler.jsonc`, `package.json`), so the
+11/11 automated gate recorded on `2b006f9` still holds unchanged against the current build.
+
+Live checks (2026-10-12 02:02 UTC, `c6f0f9c` build — RSS `<lastBuildDate>` `Mon, 12 Oct 2026 01:43:35 GMT`):
+
+| Check | Result |
+|-------|--------|
+| `http://news.lesbass.com/` | `301 → https://news.lesbass.com/` |
+| `/` `rel=canonical` / `og:url` | `https://news.lesbass.com/` |
+| `/sitemap.xml` | 160 `<loc>`, **0** foreign hosts; max `lastmod` `2026-10-11` (not future) |
+| `/rss.xml` | 141 canonical `<link>`/`<guid>`; newest item pubDate `Sun, 11 Oct 2026` |
+| unknown path `/definitely-not-a-real-page-xyz42/` | `404`, `text/html`, `25181` bytes |
+| `pages.dev` / `workers.dev` references in index/sitemap/RSS | 0 |
+
+`/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/` → **404** (still unpublished).
+AIN-937 monitor state: `nextCheckAt=2026-10-12T06:00:00Z`, `attemptCount=0`, `status=scheduled`,
+`recoveryPolicy=wake_owner`. No change to dispositions — **AIN-943 stays `blocked` on AIN-937**;
+**AIN-845 stays `in_review`**.
+
+Issue-thread writes from this run were again rejected with
+`403 cross_issue_influence_run_context_required` on `POST /api/issues/{id}/comments` (with the
+`X-Paperclip-Run-Id` header) because a `timer`/`heartbeat_timer` run has no bound source issue and
+the bound-run wakeup path does not attach one. Two attempts, then stopped per the execution
+contract. This repo file is the durable record for the run; the runtime status channel carries its
+disposition.
+
 ## Disposition
 
 - Production base URL, sitemap, RSS, robots, canonical/OG/JSON-LD, `http→https`, and 404 are all
