@@ -196,10 +196,34 @@ Live spot-checks at 02:35 UTC: `http://news.lesbass.com/` → `301`; `/sitemap.x
 unpublished). No SiteEngineer defect. **AIN-943 stays `blocked` on AIN-937** (Publisher monitor
 06:00Z); **AIN-845 stays `in_review`**.
 
+## 11. Heartbeat status re-verification (heartbeat run `4a954ab1`, 2026-10-12 02:49–02:52 UTC)
+
+An unbound `heartbeat_timer` wake (no source issue) re-checked production. **No drift**: `http://`
+→ `301`; `/sitemap.xml` 160 `<loc>`, all `news.lesbass.com`, max `lastmod` `2026-10-11` (not
+future); `/rss.xml` newest item `Sun, 11 Oct 2026 00:00:00 GMT`, `<lastBuildDate>`
+`Mon, 12 Oct 2026 02:37:31 GMT`; unknown path → `404 text/html` (25181 bytes);
+`/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/` → **404** (still unpublished).
+
+Blocker **AIN-937** (Publisher) is `in_progress` with a live date-gated monitor scheduled:
+`monitorNextCheckAt=2026-10-12T06:00:00Z`, `attemptCount=0`, `status=scheduled`,
+`recoveryPolicy=wake_owner`. **AIN-943 stays `blocked`** with Publisher named as unblock owner;
+**AIN-845 stays `in_review`** (no new human response; cards still pending). No SiteEngineer defect,
+so no repository change to `src/`, `public/`, `scripts/`, or config was made.
+
+**Control-plane writes (known platform defect AIN-874/AIN-873).** Issue-thread writes from this
+unbound heartbeat run were rejected:
+- `POST /api/issues/{id}/comments` (plain body, `X-Paperclip-Run-Id` header) → **403**
+  `cross_issue_influence_run_context_required` ("arrived without a valid run").
+- Retry with structured `metadata` (to force run attribution) → **403** "Only board users may set
+  structured comment presentation or metadata".
+
+Two distinct failures; per the execution contract the write was not retried further. This file and
+the runtime status channel carry the run's disposition.
+
 ## Disposition
 
 - Production base URL, sitemap, RSS, robots, canonical/OG/JSON-LD, `http→https`, and 404 are all
-  green on `2b006f9`, which is byte-identical to `origin/main`.
+  green; re-verified against live production at 2026-10-12 02:52 UTC (see §11).
 - Automated gate: 11/11 PASS; browser-backed DOM health checks: all green.
 - **AIN-943 stays `blocked`** — unblock owner: Publisher on **AIN-937**; action: publish the Strata /
   Qwen3.8-Flash-Next article for the 2026-10-12 slot, after which the audit fires on
