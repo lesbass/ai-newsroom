@@ -248,3 +248,26 @@ No SiteEngineer blocker for the 06:00Z publish. **AIN-943 stays `blocked` on AIN
 **AIN-845 stays `in_review`**. Issue-thread writes again failed with the known
 `cross_issue_influence_run_context_required` defect (unbound heartbeat run; two attempts, not
 retried further) — this file and the runtime status channel carry the disposition.
+
+## 13. Live-gate baseline at deployed `main` (`e9c0301`), heartbeat run `47556a42`, 2026-10-12 03:54 UTC
+
+Re-ran `CHECK_URL=https://news.lesbass.com/ npm run audit:daily` against an isolated `git archive`
+export of current `main` `e9c0301` (the deployed commit) to establish the pre-publication baseline
+for AIN-943 criterion 3. **Exit 0 — 11/11 PASS**:
+
+- `astro build` (580 pages) ✅; `astro check` → **0 errors / 0 warnings / 0 hints** ✅; `eslint` ✅
+- `test:links` (all internal links good), `test:mobile` (viewport/images/code blocks/tables/container/
+  print), `test:seo`, `test:sitemap-lastmod` (90 listing/tag pages match newest content date),
+  `test:images`, `test:dates`, `test:contrast` (all 20 background/text pairs ≥ 4.5:1),
+  `test:targets` (748 targets, 0 hard failures) — all ✅
+
+Criterion 1 re-verified live at 03:55 UTC: `http://`→`301 https://`; sitemap+RSS absolute URLs only
+`https://news.lesbass.com/` (remaining hosts are external article source/image URLs); `robots.txt`
+Sitemap line canonical; unknown path → 404 with non-empty body; `rss.xml <lastBuildDate>
+2026-10-12 03:39 GMT` matches the deployed `e9c0301` build. The Strata article URL remains **404**
+(still unpublished), so criteria 2/4/5 cannot be exercised yet.
+
+Post-publication the audit on AIN-937 closing will re-run this identical gate on the new `main` and
+diff against §13 as the baseline. Disposition unchanged: **AIN-943 `blocked` on AIN-937** (Publisher),
+**AIN-845 `in_review`** (human-only cards). Issue-thread writes denied again
+(`cross_issue_influence_run_context_required`); this file carries the evidence.
