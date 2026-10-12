@@ -179,6 +179,23 @@ No SiteEngineer defect found on the branch. **AIN-943 stays `blocked`** on **AIN
 completes criteria 2/4/5 (live article, browser screenshots, UX judgment) on
 `issue_blockers_resolved` after publication.
 
+## 10. Live daily gate against production (heartbeat run `5d19f3c6`, 2026-10-12 02:36 UTC)
+
+Ran `CHECK_URL=https://news.lesbass.com/ npm run audit:daily` on the current `main` (`49555d4`,
+docs-only since the last gate). **11/11 PASS, 0 errors / 0 warnings**:
+
+| Check | Result |
+|-------|--------|
+| Build / TypeCheck / Lint | ✅ PASS |
+| Links / Mobile / SEO | ✅ PASS |
+| SitemapLastmod / Images / Dates | ✅ PASS |
+| Contrast (20/20 AA) / Targets (748 targets, 0 hard failures) | ✅ PASS |
+
+Live spot-checks at 02:35 UTC: `http://news.lesbass.com/` → `301`; `/sitemap.xml` 160 `<loc>` all
+`news.lesbass.com`; `/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/` → **404** (still
+unpublished). No SiteEngineer defect. **AIN-943 stays `blocked` on AIN-937** (Publisher monitor
+06:00Z); **AIN-845 stays `in_review`**.
+
 ## Disposition
 
 - Production base URL, sitemap, RSS, robots, canonical/OG/JSON-LD, `http→https`, and 404 are all
