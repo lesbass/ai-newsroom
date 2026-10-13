@@ -45,6 +45,24 @@ completes and the article resolves at its canonical URL. If the suite stays
 `queued`, the stall is Cloudflare-side and needs Cloudflare access — the same
 capability gap tracked in AIN-845.
 
-## Resolution
+## Resolution (2026-10-13 20:34 UTC)
 
-_Appended after the re-trigger push and live verification._
+The re-trigger push (`267cdab`, the commit that added this report) started the
+Workers Build immediately at 20:33:19Z, confirming the stall was tied to the
+stalled `d61f8c9` push rather than a broken pipeline or config.
+
+| Signal | Before (`d61f8c9`) | After (`267cdab`) |
+|---|---|---|
+| `cloudflare-workers-and-pages` suite | `queued`, no check run, >30 min | `in_progress` → **`success`** |
+| `Workers Builds: ai-newsroom` run | none created | `success` (article live by 20:34:23Z) |
+| `https://news.lesbass.com/articles/openai-mathematics-frontier-model-release/` | HTTP 404 | **HTTP 200** |
+| Live sitemap | no `2026-10-13` `lastmod` | article present, `lastmod 2026-10-13` |
+
+Live metadata verified (cache-busted): `rel=canonical` and `og:url` =
+`https://news.lesbass.com/articles/openai-mathematics-frontier-model-release/`;
+`og:image` / `twitter:image` = self-hosted
+`https://news.lesbass.com/images/articles/openai-mathematics-frontier-model-release/hero.png`;
+`og:image:alt` / `twitter:image:alt` equal the hero image `alt`;
+JSON-LD `datePublished` = `2026-10-13T00:00:00.000Z`; the item is present in
+`rss.xml`. All sitemap URLs remain on the `https://news.lesbass.com/` host.
+
