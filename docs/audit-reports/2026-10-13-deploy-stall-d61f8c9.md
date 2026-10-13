@@ -66,3 +66,26 @@ Live metadata verified (cache-busted): `rel=canonical` and `og:url` =
 JSON-LD `datePublished` = `2026-10-13T00:00:00.000Z`; the item is present in
 `rss.xml`. All sitemap URLs remain on the `https://news.lesbass.com/` host.
 
+## Prevention (2026-10-13, AIN-953)
+
+This is the **second** occurrence of the same GitHub ↔ Cloudflare stall in six
+days (AIN-903 on 2026-10-07, `a5b1116`; AIN-953 on 2026-10-13, `d61f8c9`). Both
+were detected only because a human/agent noticed the article was still 404, then
+cleared by a harmless re-push to `main`.
+
+Added `scripts/check-deploy-freshness.mjs` (`npm run test:deploy-freshness`) and
+wired it into `scripts/audit-daily.mjs` as the `DeployFreshness` check. It
+compares the newest `main` commit time (`origin/main`, or `MAIN_COMMIT_DATE`
+when git is unavailable) against the live RSS `<lastBuildDate>` and exits
+non-zero when production is more than the grace window (`10` min by default;
+`DEPLOY_FRESHNESS_GRACE_MINUTES` to override) behind `main`. A stalled Workers
+Build now fails the daily audit instead of surfacing only as a 404.
+
+Verified live at `80c6f80` / `<lastBuildDate>` `Tue, 13 Oct 2026 20:35:31 GMT`:
+production ahead of `main` by 0.7 min → `✅ production is fresh`. A simulated
+`main` 60 min ahead of the live build triggers the failure path.
+
+The root cause is Cloudflare-side and still unreachable without Cloudflare API
+access (capability gap AIN-845); this check makes the failure fast and visible,
+while the re-push remediation stays a deliberate step.
+

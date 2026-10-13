@@ -12,7 +12,26 @@ const ts = now.toISOString().replace(/T/, ' ').replace(/\..+/, ' UTC');
 const dateFile = now.toISOString().split('T')[0];
 
 const checkUrl = process.env.CHECK_URL || '';
-const urlEnv = checkUrl ? { CHECK_URL: checkUrl, ...process.env } : process.env;
+
+// Deploy-provenance for the freshness check: the newest `main` commit must be on
+// production shortly after it lands. Captured here (before the isolated HEAD
+// export drops `.git`) so the live check can compare it against the deployed
+// RSS <lastBuildDate> even when run from the exported tree.
+function newestMainCommitDate() {
+  for (const ref of ['origin/main', 'HEAD']) {
+    try {
+      const iso = execSync(`git log -1 --format=%cI ${ref}`, { cwd: repoRoot, encoding: 'utf-8' }).trim();
+      if (iso) return iso;
+    } catch { /* ref or git unavailable — try the next source */ }
+  }
+  return '';
+}
+const mainCommitDate = newestMainCommitDate();
+const urlEnv = {
+  ...(checkUrl ? { CHECK_URL: checkUrl } : {}),
+  ...(mainCommitDate ? { MAIN_COMMIT_DATE: mainCommitDate } : {}),
+  ...process.env,
+};
 
 // The deployed artifact is built from the committed tree (HEAD). Agent sandboxes
 // accumulate untracked, abandoned drafts under src/content and public/images, and
@@ -59,6 +78,7 @@ const checks = [
   ['Dates', 'npm run test:dates'],
   ['Contrast', 'npm run test:contrast'],
   ['Targets', 'npm run test:targets'],
+  ['DeployFreshness', 'npm run test:deploy-freshness'],
 ];
 
 for (const [name, cmd] of checks) {

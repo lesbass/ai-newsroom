@@ -19,6 +19,7 @@
     "test:dates": "node scripts/check-dates.mjs",
     "test:contrast": "node scripts/check-contrast.mjs",
     "test:targets": "node scripts/check-targets.mjs",
+    "test:deploy-freshness": "node scripts/check-deploy-freshness.mjs",
     "generate:og-image": "node scripts/generate-og-image.mjs",
     "postinstall": "node scripts/setup-chromium.mjs",
     "test:screenshot": "node scripts/screenshot.mjs",
