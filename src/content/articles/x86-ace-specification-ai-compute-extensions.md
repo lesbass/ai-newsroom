@@ -4,9 +4,9 @@ description: "On 2026-06-15 the x86 EAG (Intel, AMD, Google, Microsoft, Meta, Br
 pubDate: 2026-06-18
 author: "AI Newsroom"
 tags: ["x86", "ace", "ai-compute-extensions", "intel", "amd", "avx10", "instruction-set", "matrix-multiplication", "inference", "cpu-acceleration", "x86-ecosystem-advisory-group", "specification", "white-paper"]
-image: "https://opengraph.githubassets.com/1/intel/x86-simd-sort"
+image: "/images/articles/x86-ace-specification-ai-compute-extensions/hero.jpg"
 imageAlt: "Intel x86 SIMD sort repository social preview card"
-imageCredit: "Image: GitHub / Intel x86-simd-sort repository"
+imageCredit: "Source: https://github.com/intel/x86-simd-sort · Credit: GitHub / Intel x86-simd-sort · License: BSD-3-Clause · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "x86 Ecosystem Advisory Group — 'AI Compute Extensions (ACE) Specification' (resource page, June 15, 2026)"
     url: "https://x86ecosystem.org/resource/ai-compute-extensions-ace-specification/"

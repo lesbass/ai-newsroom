@@ -4,9 +4,9 @@ description: "Anthropic launches Claude for Teachers \u2014 free, verified K-12 
 pubDate: 2026-07-15
 author: "AI Newsroom"
 tags: ["anthropic", "claude", "education", "nonprofit", "claude-code"]
-image: "https://www-cdn.anthropic.com/images/4zrzovbb/website/c39f489c0763bac41638f8ea29a0ae1335c3ecb2-1200x630.jpg"
+image: "/images/articles/anthropic-claude-for-teachers-k12-launch/hero.jpg"
 imageAlt: "Claude for Teachers announcement header image showing a teacher at a whiteboard with a glowing 'C' emblem, books, and geometric shapes"
-imageCredit: "Source: https://www.anthropic.com/news/claude-for-teachers · Announcement page header image (Jul 14, 2026) · Fair use editorial"
+imageCredit: "Source: https://www.anthropic.com/news/claude-for-teachers · Credit: Anthropic · Fair use editorial · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 canonicalURL: "https://news.lesbass.com/articles/anthropic-claude-for-teachers-k12-launch/"
 sources:
   - title: "Anthropic — Introducing Claude for Teachers"

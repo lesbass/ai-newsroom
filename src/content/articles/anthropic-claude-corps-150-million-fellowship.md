@@ -4,9 +4,9 @@ description: "Anthropic commits $150M to a national fellowship: 1,000 early-care
 pubDate: 2026-06-13
 author: "AI Newsroom"
 tags: ["anthropic", "claude", "nonprofit", "policy", "program"]
-image: "https://cdn.sanity.io/images/4zrzovbb/website/eb5d94573805e24cb381cd0676527cfada75c177-3840x2160.jpg"
+image: "/images/articles/anthropic-claude-corps-150-million-fellowship/hero.jpg"
 imageAlt: "Claude Corps fellow assisting at a nonprofit organization"
-imageCredit: "Image: Anthropic newsroom / Claude Corps announcement (June 11, 2026)"
+imageCredit: "Source: https://www.anthropic.com/news/claude-corps · Credit: Anthropic · License: no license stated; used editorially · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "Introducing Claude Corps (Anthropic newsroom)"
     url: "https://www.anthropic.com/news/claude-corps"

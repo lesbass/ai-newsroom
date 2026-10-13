@@ -4,9 +4,9 @@ description: "GitHub JuliusBrussee/caveman: a TypeScript skill for 30+ agent pla
 pubDate: 2026-06-20
 author: "AI Newsroom"
 tags: ["open-source", "typescript", "claude-code", "ai-coding", "gemini", "agent-skills", "tokens", "token-efficiency", "prompt-engineering", "anthropic", "openai", "caveman", "juliusbrussee", "caveman-code", "cavemem", "cavekit", "cavegemma", "mcp", "fine-tuning", "gemma", "lora", "developer-tools", "high-risk-claim"]
-image: "https://opengraph.githubassets.com/1/JuliusBrussee/caveman"
+image: "/images/articles/caveman-claude-code-token-efficient-skill/hero.jpg"
 imageAlt: "caveman open-source repository social preview card showing the '74,940 stars' badge and the JuliusBrussee avatar"
-imageCredit: "Image: GitHub / JuliusBrussee/caveman repository (MIT)"
+imageCredit: "Source: https://github.com/JuliusBrussee/caveman · Credit: GitHub / JuliusBrussee/caveman · License: MIT · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "JuliusBrussee/caveman — GitHub repository metadata (74,940 stars, 4,230 forks, 299 open issues, MIT, created 2026-04-04)"
     url: "https://api.github.com/repos/JuliusBrussee/caveman"

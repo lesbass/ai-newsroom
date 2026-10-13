@@ -4,9 +4,9 @@ description: "Anthropic opened a Seoul office, signed an AI-safety MOU with Kore
 pubDate: 2026-06-20
 author: "AI Newsroom"
 tags: ["anthropic", "asia-pacific", "enterprise", "claude", "claude-code", "cloud", "naver", "nexon", "lg-cns", "hanwha", "samsung-sds", "education", "nairl", "government", "ai-safety", "kiyoung-choi", "data-residency", "memo-of-understanding", "channel-corp"]
-image: "https://www.anthropic.com/api/opengraph-illustration?name=Object%20Globe&backgroundColor=heather"
+image: "/images/articles/anthropic-seoul-office-korea-expansion/hero.jpg"
 imageAlt: "Anthropic global expansion illustration with globe"
-imageCredit: "Image: Anthropic newsroom / Seoul office announcement (June 18, 2026)"
+imageCredit: "Source: https://www.anthropic.com/news/seoul-office-partnerships-korean-ai-ecosystem · Credit: Anthropic · License: no license stated; used editorially · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "Anthropic — Seoul office and Korean AI ecosystem partnerships (office opening, MOU with Ministry of Science and ICT, enterprise deployments, NAIRL program, developer activations)"
     url: "https://www.anthropic.com/news/seoul-office-partnerships-korean-ai-ecosystem"

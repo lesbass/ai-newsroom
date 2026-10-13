@@ -4,9 +4,9 @@ description: "On June 11, 2026, Meta began unwinding its $2B Manus acquisition a
 pubDate: 2026-06-14
 author: "AI Newsroom"
 tags: ["meta", "manus", "butterfly-effect", "ndrc", "china", "acquisitions", "cross-border", "ai-agents", "policy", "export-control", "m&a", "singapore", "xiao-hong", "ji-yichao", "zhang-tao"]
-image: "https://opengraph.githubassets.com/1/Meta-Press/manus"
-imageAlt: "Meta Manus deal unwind illustration"
-imageCredit: "Image: GitHub / Meta Press organization page"
+image: "/images/articles/meta-manus-unwind-2026-06-14/hero.jpg"
+imageAlt: "Straits Times article page 'Meta starts unwinding Manus deal by splitting operations, data' (June 11, 2026), showing the headline, standfirst, and lead image."
+imageCredit: "Source: https://www.straitstimes.com/world/meta-starts-unwinding-manus-deal-by-splitting-operations-data (Straits Times / Bloomberg, June 11, 2026) · Captured 2026-10-13 via Playwright Chromium · Credit: The Straits Times · License: no license stated; used editorially · Self-hosted optimized copy (JPEG)"
 sources:
   - title: "Straits Times / Bloomberg — Meta starts unwinding Manus deal by splitting operations, data (June 11, 2026)"
     url: "https://www.straitstimes.com/world/meta-starts-unwinding-manus-deal-by-splitting-operations-data"

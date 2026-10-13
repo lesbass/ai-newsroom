@@ -4,9 +4,9 @@ description: "MIT Chinese guide from Datawhale with 27 chapters on LangChain, La
 pubDate: 2026-06-13
 author: "AI Newsroom"
 tags: ["open-source", "langchain", "langgraph", "mcp", "rag", "skills", "datawhale", "didilili", "ai-agent", "tutorial", "developer-tools"]
-image: "https://opengraph.githubassets.com/1/didilili/ai-agents-from-zero"
+image: "/images/articles/didilili-ai-agents-from-zero-guide-open-source-2026/hero.jpg"
 imageAlt: "ai-agents-from-zero open-source repository social preview card"
-imageCredit: "Image: GitHub / didilili/ai-agents-from-zero repository (MIT)"
+imageCredit: "Source: https://github.com/didilili/ai-agents-from-zero · Credit: GitHub / didilili/ai-agents-from-zero · License: MIT · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "didilili/ai-agents-from-zero (GitHub repository)"
     url: "https://github.com/didilili/ai-agents-from-zero"

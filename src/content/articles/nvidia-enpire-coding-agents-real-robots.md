@@ -4,9 +4,9 @@ description: "NVIDIA GEAR, CMU, and UC Berkeley published ENPIRE, a four-module 
 pubDate: 2026-06-19
 author: "AI Newsroom"
 tags: ["nvidia", "cmu", "uc-berkeley", "enpire", "robotics", "manipulation", "coding-agents", "ai-coding", "claude-code", "kimi-code", "physical-autoresearch", "autoenvbench", "mean-robot-utilization", "mean-token-utilization", "push-t", "robocasa", "openai", "opus-4-7", "kimi-k2-6", "closed-loop", "robot-learning", "research-paper"]
-image: "https://opengraph.githubassets.com/1/NVIDIAGameWorks/kaolin-wisp"
+image: "/images/articles/nvidia-enpire-coding-agents-real-robots/hero.jpg"
 imageAlt: "NVIDIA research social preview card"
-imageCredit: "Image: GitHub / NVlabs organization page"
+imageCredit: "Source: https://github.com/NVIDIAGameWorks/kaolin-wisp · Credit: GitHub / NVIDIAGameWorks/kaolin-wisp · License: NVIDIA Source Code License · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "NVIDIA GEAR — ENPIRE project page (title, authors, institutions, 99% pass@8, four modules, task list, MRU/MTU, Limitations)"
     url: "https://research.nvidia.com/labs/gear/enpire/"

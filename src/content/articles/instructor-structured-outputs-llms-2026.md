@@ -4,9 +4,9 @@ description: "MIT Python library (567-labs) for extracting validated Pydantic ob
 pubDate: 2026-06-14
 author: "AI Newsroom"
 tags: ["open-source", "developer-tools", "pydantic", "structured-outputs", "llm", "instructor", "567-labs", "jason-liu", "openai", "anthropic"]
-image: "https://opengraph.githubassets.com/1/567-labs/instructor"
+image: "/images/articles/instructor-structured-outputs-llms-2026/hero.jpg"
 imageAlt: "Instructor open-source repository social preview card"
-imageCredit: "Image: GitHub / 567-labs/instructor repository (MIT)"
+imageCredit: "Source: https://github.com/567-labs/instructor · Credit: GitHub / 567-labs/instructor · License: MIT · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "567-labs/instructor — GitHub repository (homepage)"
     url: "https://github.com/567-labs/instructor"

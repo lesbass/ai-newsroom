@@ -4,9 +4,9 @@ description: "On June 8, 2026, OpenAI disclosed a confidential draft S-1 submiss
 pubDate: 2026-06-16
 author: "AI Newsroom"
 tags: ["openai", "ipo", "s-1", "sec", "edgar", "rule-135", "securities-act-1933", "jobs-act", "confidential-submission", "emerging-growth-company", "ai-lab", "frontier-ai"]
-image: "https://images.ctfassets.net/kftzwdyauwt9/1kKjVqt4LdJo6DAWO4rklb/93d7ae2d6a5cb70b17fd5ff440552291/confidential-submission-of-draft-s-1-to-the-sec-16x9.png?w=1600&h=900&fit=fill"
+image: "/images/articles/openai-confidential-s-1-filing-2026/hero.jpg"
 imageAlt: "OpenAI confidential S-1 submission announcement card"
-imageCredit: "Image: OpenAI / S-1 announcement (June 8, 2026)"
+imageCredit: "Source: https://openai.com/index/openai-submits-confidential-s-1/ · Credit: OpenAI · License: no license stated; used editorially · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "OpenAI — 'Confidential submission of draft S-1 to the SEC' (Company, June 8, 2026)"
     url: "https://openai.com/index/openai-submits-confidential-s-1/"

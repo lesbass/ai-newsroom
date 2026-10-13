@@ -4,9 +4,9 @@ description: "OpenAI's June 18, 2026 release: GPT-5.5 Instant rated higher than 
 pubDate: 2026-06-20
 author: "AI Newsroom"
 tags: ["openai", "chatgpt", "gpt-5-5-instant", "health-ai", "rare-disease", "boston-childrens", "nejm-ai", "o3-deep-research", "manton-center", "acmg-amp", "clinical-ai", "healthbench", "healthbench-professional", "physician-panel", "gpt-rosalind", "high-risk-claim"]
-image: "https://images.ctfassets.net/kftzwdyauwt9/42SsGr6pOo6F7fcF0VZGGV/25583b98cb667d103adb7bf0476cafc5/SEO_Card_new.png?w=1600&h=900&fit=fill"
+image: "/images/articles/openai-health-intelligence-chatgpt-boston-childrens-rare-disease/hero.jpg"
 imageAlt: "OpenAI health intelligence announcement card with the title 'Using AI to help physicians diagnose rare genetic diseases affecting children' over a dark background"
-imageCredit: "Image: OpenAI / rare disease diagnosis announcement (June 18, 2026)"
+imageCredit: "Source: https://openai.com/index/diagnose-rare-childhood-diseases/ · Credit: OpenAI · License: no license stated; used editorially · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "OpenAI — 'Using AI to help physicians diagnose rare genetic diseases affecting children' (Applied AI post, June 18, 2026)"
     url: "https://openai.com/index/diagnose-rare-childhood-diseases/"

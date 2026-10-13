@@ -4,9 +4,9 @@ description: "On June 10, 2026, Anthropic asked the US government for power to b
 pubDate: 2026-06-13
 author: "AI Newsroom"
 tags: ["anthropic", "policy", "regulation", "fable-5", "mythos-5", "export-control", "frontier-models"]
-image: "https://www.anthropic.com/api/opengraph-illustration?name=Shield%20with%20checkmark&backgroundColor=heather"
+image: "/images/articles/anthropic-proposes-block-then-gets-blocked/hero.jpg"
 imageAlt: "Anthropic policy framework illustration"
-imageCredit: "Image: Anthropic / Advanced AI Framework policy page (June 10, 2026)"
+imageCredit: "Source: https://www.anthropic.com/policy-on-the-ai-exponential · Credit: Anthropic · License: no license stated; used editorially · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "Anthropic: Policy on the AI Exponential"
     url: "https://www.anthropic.com/policy-on-the-ai-exponential"

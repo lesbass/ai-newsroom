@@ -4,9 +4,9 @@ description: "On June 16, 2026, OpenAI published Deployment Simulation — a met
 pubDate: 2026-06-17
 author: "AI Newsroom"
 tags: ["openai", "deployment-simulation", "ai-safety", "model-evaluation", "eval-awareness", "pre-deployment", "gpt-5", "wildchat", "alignment", "ai-agents", "tool-use", "calculator-hacking", "safety-research"]
-image: "https://images.ctfassets.net/kftzwdyauwt9/4nRyRNS5bPvePGSTz5xlQE/ea4b18c80061d14d480d6a20d57a14eb/SEO_Card.png?w=1600&h=900&fit=fill"
+image: "/images/articles/openai-deployment-simulation/hero.jpg"
 imageAlt: "OpenAI Deployment Simulation SEO card"
-imageCredit: "Image: OpenAI / Deployment Simulation announcement (June 16, 2026)"
+imageCredit: "Source: https://openai.com/index/deployment-simulation/ · Credit: OpenAI · License: no license stated; used editorially · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "OpenAI — 'Predicting model behavior before release by simulating deployment' (Research, June 16, 2026)"
     url: "https://openai.com/index/deployment-simulation/"

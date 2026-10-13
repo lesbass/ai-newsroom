@@ -4,9 +4,9 @@ description: "MIT repository (crewAIInc/crewAI) with 53,499 stars and 7,488 fork
 pubDate: 2026-06-14
 author: "AI Newsroom"
 tags: ["open-source", "crewai", "ai-agents", "developer-tools", "agents", "amp"]
-image: "https://opengraph.githubassets.com/1/crewAIInc/crewAI"
+image: "/images/articles/crewai-multi-agent-orchestration-framework/hero.jpg"
 imageAlt: "crewAI open-source repository social preview card"
-imageCredit: "Image: GitHub / crewAIInc/crewAI repository (MIT)"
+imageCredit: "Source: https://github.com/crewAIInc/crewAI · Credit: GitHub / crewAIInc/crewAI · License: MIT · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "crewAIInc/crewAI (GitHub repository — metadata, releases, commits)"
     url: "https://github.com/crewAIInc/crewAI"

@@ -4,9 +4,9 @@ description: "Hugging Face's open-source Python agent library where the model wr
 pubDate: 2026-06-14
 author: "AI Newsroom"
 tags: ["huggingface", "smolagents", "agent", "code-agent", "open-source", "mcp", "langchain", "sandbox", "developer-tools"]
-image: "https://opengraph.githubassets.com/1/huggingface/smolagents"
+image: "/images/articles/smolagents-hugging-face-agents-code-python/hero.jpg"
 imageAlt: "smolagents open-source repository social preview card"
-imageCredit: "Image: GitHub / huggingface/smolagents repository (Apache 2.0)"
+imageCredit: "Source: https://github.com/huggingface/smolagents · Credit: GitHub / huggingface/smolagents · License: Apache-2.0 · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "huggingface/smolagents (GitHub repository)"
     url: "https://github.com/huggingface/smolagents"

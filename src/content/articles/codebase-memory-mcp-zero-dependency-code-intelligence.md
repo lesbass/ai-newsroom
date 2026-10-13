@@ -4,9 +4,9 @@ description: "Pure-C, single-binary MCP server that indexes a codebase into a Tr
 pubDate: 2026-06-24
 author: "AI Newsroom"
 tags: ["codebase-memory-mcp", "mcp", "model-context-protocol", "developer-tools", "ai-agents", "ai-coding", "claude-code", "research", "people", "editorial"]
-image: "https://opengraph.githubassets.com/1/DeusData/codebase-memory-mcp"
+image: "/images/articles/codebase-memory-mcp-zero-dependency-code-intelligence/hero.jpg"
 imageAlt: "codebase-memory-mcp open-source repository social preview card"
-imageCredit: "Image: GitHub / DeusData/codebase-memory-mcp repository (MIT)"
+imageCredit: "Source: https://github.com/DeusData/codebase-memory-mcp · Credit: GitHub / DeusData/codebase-memory-mcp · License: MIT · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "DeusData/codebase-memory-mcp — GitHub repository"
     url: "https://github.com/DeusData/codebase-memory-mcp"

@@ -4,9 +4,9 @@ description: "OpenAI announces the acquisition of Ona (formerly Gitpod) to give 
 pubDate: 2026-06-16
 author: "AI Newsroom"
 tags: ["openai", "ona", "ai-coding", "acquisition", "m-and-a", "cloud-development-environments", "gitpod", "background-agents", "enterprise-ai", "agentic-coding"]
-image: "https://images.ctfassets.net/kftzwdyauwt9/3vpY0M1x6mrbhiFVcfTF4Y/99dae42f0ed1030d045f56249385ac3a/OAI-Ona-SEO.png?w=1600&h=900&fit=fill"
+image: "/images/articles/openai-ona-acquisition-2026/hero.jpg"
 imageAlt: "OpenAI Ona acquisition announcement card"
-imageCredit: "Image: OpenAI / Ona acquisition announcement (June 11, 2026)"
+imageCredit: "Source: https://openai.com/index/openai-to-acquire-ona/ · Credit: OpenAI · License: no license stated; used editorially · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "OpenAI — 'OpenAI to acquire Ona' (Company, June 11, 2026)"
     url: "https://openai.com/index/openai-to-acquire-ona/"

@@ -4,9 +4,9 @@ description: "Headroom v0.27.0 is an Apache-2.0 context-compression layer for AI
 pubDate: 2026-06-24
 author: "AI Newsroom"
 tags: ["headroom", "ai-agents", "token-optimization", "context-compression", "mcp", "claude-code", "ai-coding", "aider", "github", "open-source", "rag", "kv-cache", "rust", "developer-tools", "typescript"]
-image: "https://opengraph.githubassets.com/1/headroomlabs-ai/headroom"
+image: "/images/articles/headroom-ai-agent-token-compression/hero.jpg"
 imageAlt: "Headroom open-source repository social preview card"
-imageCredit: "Image: GitHub / headroomlabs-ai/headroom repository (Apache 2.0)"
+imageCredit: "Source: https://github.com/headroomlabs-ai/headroom · Credit: GitHub / headroomlabs-ai/headroom · License: Apache-2.0 · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "Headroom repository on GitHub (headroomlabs-ai/headroom)"
     url: "https://github.com/headroomlabs-ai/headroom"

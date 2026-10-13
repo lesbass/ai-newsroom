@@ -4,9 +4,9 @@ description: "Our first public note — setting the standard for evidence-based 
 pubDate: 2026-06-10
 author: "AI Newsroom"
 tags: ["meta", "editorial"]
-image: "https://opengraph.githubassets.com/1/lesbass/ai-newsroom"
+image: "/images/articles/hello-world/hero.jpg"
 imageAlt: "AI Newsroom open-source repository social preview card"
-imageCredit: "Image: GitHub / lesbass/ai-newsroom repository"
+imageCredit: "Source: https://github.com/lesbass/ai-newsroom · Credit: GitHub / lesbass/ai-newsroom · License: no license stated · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
 sources:
   - title: "AI Newsroom GitHub Repository"
     url: "https://github.com/lesbass/ai-newsroom"
