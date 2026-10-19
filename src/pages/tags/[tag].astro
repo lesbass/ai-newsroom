@@ -3,7 +3,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
-import ArrowIcon from '../../components/ArrowIcon.astro';
 import { getCollection } from 'astro:content';
 import { slugifyTag } from '../../lib/slugify';
 
@@ -46,7 +45,7 @@ const isThinTag = matchingArticles.length < 2;
     <div class="tag-page-header">
       <h1>{displayTag}</h1>
       <p class="tag-page-count">{matchingArticles.length} article{matchingArticles.length !== 1 ? 's' : ''}</p>
-      <p style="margin-top: 0.75rem;"><a href="/tags/"><ArrowIcon direction="left" />All topics</a></p>
+      <p style="margin-top: 0.75rem;"><a href="/tags/">&larr; All topics</a></p>
     </div>
     {matchingArticles.length > 0 ? (
       <div>
