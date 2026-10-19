@@ -1,8 +1,12 @@
 /**
- * Postinstall setup for Chromium screenshot capability.
- * Pre-extracts all assets from @sparticuz/chromium so they are cached
- * in /tmp/ before any agent needs them — chromium binary, fonts,
+ * Optional pre-extraction for Chromium screenshot capability.
+ * Warms the /tmp/ cache used by scripts/browser.mjs — chromium binary, fonts,
  * SwiftShader GPU libraries, and NSS/NSPR crypto libraries.
+ *
+ * Deliberately NOT wired to postinstall: the production (Workers Builds)
+ * install must not download/extract a browser, and browser.mjs extracts
+ * everything lazily on first launch anyway. Run `npm run setup:chromium`
+ * when you want the cache warm ahead of a screenshot session.
  */
 
 import Chromium, { inflate } from '@sparticuz/chromium';
