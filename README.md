@@ -67,6 +67,13 @@ npm run deploy
 `npm run deploy` builds the site and runs `wrangler deploy` against `wrangler.jsonc`. Run
 `npx wrangler deploy --dry-run` first to validate the artifact without uploading.
 
+`scripts/deploy-fallback.sh` wraps the same sequence: `npm ci`, build, the SEO/date/mobile
+checks, `wrangler deploy`, then the production freshness check with retries.
+
+```bash
+CLOUDFLARE_API_TOKEN=<token> CLOUDFLARE_ACCOUNT_ID=<account id> scripts/deploy-fallback.sh
+```
+
 ## Quality rules
 
 - Never publish claims without dated source links.
