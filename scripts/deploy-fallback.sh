@@ -24,19 +24,7 @@ CHECK_URL="${CHECK_URL:-https://news.lesbass.com}"
 
 # Deploy only reviewed content. The build reads the working tree, so an
 # uncommitted article draft or image would otherwise go straight to production.
-if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  echo "error: run this script from a git checkout of ai-newsroom" >&2
-  exit 1
-fi
-if [[ "${ALLOW_DIRTY:-0}" != "1" ]]; then
-  dirty="$(git status --porcelain --untracked-files=all -- src/content public)"
-  if [[ -n "$dirty" ]]; then
-    echo "error: uncommitted content under src/content or public; commit or clean it before deploying:" >&2
-    echo "$dirty" | sed 's/^/  /' >&2
-    echo "       (set ALLOW_DIRTY=1 only for a deliberate local deploy)" >&2
-    exit 1
-  fi
-fi
+node scripts/check-deploy-clean.mjs
 
 npm ci
 npm run build

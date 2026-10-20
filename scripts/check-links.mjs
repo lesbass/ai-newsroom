@@ -37,9 +37,9 @@ for (const path of walkAll(dist)) {
 }
 
 // Same-origin absolute links (https://news.lesbass.com/...) are internal links too.
-// They must resolve to a built file or to a declared `_redirects` rule, otherwise
-// they silently ship as 404s (e.g. the /paperclip/AIN-### provenance links found in the
-// 2026-10-08 audit).
+// They must resolve to a built file, a declared `_redirects` rule, or a redirect
+// implemented in the Worker, otherwise they silently ship as 404s (e.g. the
+// /paperclip/AIN-### provenance links found in the 2026-10-08 audit).
 const CANONICAL_ORIGIN = 'https://news.lesbass.com';
 const redirectSources = [];
 const redirectsPath = resolve('public/_redirects');
@@ -64,6 +64,16 @@ function isRedirected(pathname) {
     if (from.endsWith('/*')) return pathname.startsWith(from.slice(0, -1));
     return from === pathname;
   });
+}
+
+// `src/worker.js` 301s `/paperclip/AIN-###` provenance links to the public
+// Paperclip issue pages before the assets handler runs. Those paths never exist
+// in `dist/` or `_redirects`, so model that rule here to avoid false 404s.
+const workerRedirectPrefixes = ['/paperclip/'];
+function isWorkerRedirected(pathname) {
+  return workerRedirectPrefixes.some(
+    (prefix) => pathname.startsWith(prefix) && pathname.length > prefix.length,
+  );
 }
 
 const pagePaths = [...walkPages(dist)];
@@ -109,7 +119,7 @@ for (const path of pagePaths) {
       let pathname;
       try { pathname = new URL(href).pathname; } catch { continue; }
       if (pathname === '/') continue;
-      if (resolvesToBuiltFile(pathname) || isRedirected(pathname)) continue;
+      if (resolvesToBuiltFile(pathname) || isRedirected(pathname) || isWorkerRedirected(pathname)) continue;
       console.error(`❌ ${rel} → broken absolute link: ${href}`);
       errors++;
       continue;
