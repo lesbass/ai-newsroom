@@ -157,6 +157,12 @@ function checkPage(rel, html, path) {
         console.warn(`⚠ ${rel}: description may be too long for SERP (${desc.length} chars)`);
         warnings++;
       }
+      // Truncation must not strand a function word before the ellipsis: a
+      // snippet like "…weights promised by…" reads as broken text (AIN-972).
+      if (/(?:^|\s)(?:a|an|the|by|of|to|in|with|for|and|or|from|on|at|as|that|which|but|its|their|is|are|was|were|this|these|those)…$/i.test(desc)) {
+        console.error(`❌ ${rel}: description truncates after a function word: "${desc.slice(-40)}"`);
+        errors++;
+      }
     }
 
     // 3. Canonical URL
