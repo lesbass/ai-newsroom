@@ -64,6 +64,25 @@ function decodeEntities(s) {
     .replace(/&amp;/g, '&');
 }
 
+// True when a truncated snippet stops inside an unmatched "(", "[", or double
+// quote. A snippet like "…API (remember, recall, forget…" is as broken as a
+// dangling preposition in SERP/social previews (AIN-972 follow-up).
+function hasUnbalancedDelimiters(text) {
+  const openers = [];
+  let quoteOpen = false;
+  for (const ch of text) {
+    if (ch === '(' || ch === '[') {
+      openers.push(ch);
+    } else if (ch === ')' || ch === ']') {
+      const want = ch === ')' ? '(' : '[';
+      if (openers[openers.length - 1] === want) openers.pop();
+    } else if (ch === '"') {
+      quoteOpen = !quoteOpen;
+    }
+  }
+  return openers.length > 0 || quoteOpen;
+}
+
 // Collect pages: from dist/ or from URL
 const pagePaths = [...walk(dist)];
 
@@ -159,9 +178,17 @@ function checkPage(rel, html, path) {
       }
       // Truncation must not strand a function word before the ellipsis: a
       // snippet like "…weights promised by…" reads as broken text (AIN-972).
-      if (/(?:^|\s)(?:a|an|the|by|of|to|in|with|for|and|or|from|on|at|as|that|which|but|its|their|is|are|was|were|this|these|those)…$/i.test(desc)) {
-        console.error(`❌ ${rel}: description truncates after a function word: "${desc.slice(-40)}"`);
-        errors++;
+      if (desc.endsWith('…')) {
+        const plain = decodeEntities(desc);
+        if (/(?:^|\s)(?:a|an|the|by|of|to|in|with|for|and|or|from|on|at|as|that|which|but|its|their|is|are|was|were|this|these|those)…$/i.test(plain)) {
+          console.error(`❌ ${rel}: description truncates after a function word: "${plain.slice(-40)}"`);
+          errors++;
+        }
+        // A sentence/clause cut must also leave the snippet's delimiters closed.
+        if (hasUnbalancedDelimiters(plain.slice(0, -1))) {
+          console.error(`❌ ${rel}: description truncates inside an open parenthetical or quote: "${plain.slice(-40)}"`);
+          errors++;
+        }
       }
     }
 

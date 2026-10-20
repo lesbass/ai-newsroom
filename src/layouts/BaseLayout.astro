@@ -71,6 +71,33 @@ const DESCRIPTION_TRAILING_STOPWORDS = new Set([
   'were', 'this', 'these', 'those',
 ]);
 
+// Index of the earliest unmatched "(", "[", or double quote, or -1 when the
+// text's delimiters are balanced. Used to keep truncated snippets out of the
+// middle of a parenthetical list ("…API (remember, recall, forget…").
+function firstUnmatchedOpener(text: string): number {
+  const stack: number[] = [];
+  let quote = -1;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === '(' || ch === '[') {
+      stack.push(i);
+    } else if (ch === ')' || ch === ']') {
+      const want = ch === ')' ? '(' : '[';
+      const top = stack[stack.length - 1];
+      if (top !== undefined && text[top] === want) stack.pop();
+    } else if (ch === '"') {
+      quote = quote === -1 ? i : -1;
+    }
+  }
+  if (quote !== -1) stack.push(quote);
+  return stack.length > 0 ? Math.min(...stack) : -1;
+}
+
+function trimToBalanced(text: string): string {
+  const opener = firstUnmatchedOpener(text);
+  return opener === -1 ? text : text.slice(0, opener).trimEnd();
+}
+
 function truncateDescription(text: string, maxLen = 155): string {
   if (text.length <= maxLen) return text;
   const budget = maxLen - 1;
@@ -82,12 +109,27 @@ function truncateDescription(text: string, maxLen = 155): string {
   const lastQuest = cut.lastIndexOf('? ');
   const lastBreak = Math.max(lastPeriod, lastExcl, lastQuest);
   if (lastBreak > budget * 0.6 && lastBreak <= budget) return text.slice(0, lastBreak + 1);
-  let lastClause = -1;
+  // Skip clause boundaries that would leave an open parenthetical/quote.
+  const clauses: number[] = [];
   for (const breakText of DESCRIPTION_CLAUSE_BREAKS) {
-    const idx = cut.lastIndexOf(breakText);
-    if (idx > budget * 0.6 && idx <= budget) lastClause = Math.max(lastClause, idx);
+    let from = 0;
+    for (;;) {
+      const idx = cut.indexOf(breakText, from);
+      if (idx === -1) break;
+      if (
+        idx > budget * 0.6 &&
+        idx <= budget &&
+        firstUnmatchedOpener(text.slice(0, idx)) === -1
+      ) {
+        clauses.push(idx);
+      }
+      from = idx + 1;
+    }
   }
-  if (lastClause > 0) return text.slice(0, lastClause).trimEnd() + TITLE_ELLIPSIS;
+  if (clauses.length > 0) {
+    const lastClause = Math.max(...clauses);
+    return text.slice(0, lastClause).trimEnd() + TITLE_ELLIPSIS;
+  }
   let lastSpace = cut.lastIndexOf(' ', budget);
   // A word cut can still land after a function word ("…years of…"); step back
   // to the previous word so the snippet ends on content.
@@ -96,8 +138,9 @@ function truncateDescription(text: string, maxLen = 155): string {
     if (!DESCRIPTION_TRAILING_STOPWORDS.has(word)) break;
     lastSpace = text.lastIndexOf(' ', lastSpace - 1);
   }
-  if (lastSpace > budget * 0.5) return text.slice(0, lastSpace).trimEnd() + TITLE_ELLIPSIS;
-  return text.slice(0, budget).trimEnd() + TITLE_ELLIPSIS;
+  const cutEnd = lastSpace > budget * 0.5 ? lastSpace : budget;
+  const wordCut = trimToBalanced(text.slice(0, cutEnd).trimEnd());
+  return (wordCut || text.slice(0, budget).trimEnd()) + TITLE_ELLIPSIS;
 }
 
 const seoDescription = truncateDescription(description);
