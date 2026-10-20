@@ -65,6 +65,8 @@ Gate self-test: appending a Georgian `U+10C0` to `dist/index.html` made the chec
    Symbol font: 806 glyphs in 39172 bytes (38.3 KiB), 12 unicode-range segments
 ```
 
+After rebasing onto `origin/main` `fdc3e5a`, which makes `DeployFreshness` always contact production, the committed HEAD `0a113eb` passes **12/13** checks. Build, TypeCheck, Lint, Links, Mobile, SEO, SitemapLastmod, Images, Dates, Contrast, Targets, and **Glyphs** pass; `DeployFreshness` fails only because production still serves the 2026-10-13 build. That is the known AIN-969 Workers Builds blocker, described below, not a regression in this change.
+
 ## Real-browser evidence
 
 Chromium through `scripts/browser.mjs` against the local `dist/` build. For each target glyph the browser reported the custom `DejaVu Sans` face (the internal name of the bundled symbol font) with `glyphCount: 1`, not a system fallback:
