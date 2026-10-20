@@ -805,10 +805,6 @@ const jsonLd = article
     .breadcrumb { font-size: 0.8125rem; color: var(--color-muted); margin: 0.25rem 0 0.75rem; }
     .breadcrumb ol { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.25rem; align-items: center; }
     .breadcrumb li { display: flex; align-items: center; gap: 0.25rem; }
-    /* The current page repeats the H1; let it truncate to one line instead of
-       pushing the headline down with a second full copy of the title. */
-    .breadcrumb li:last-child { flex: 1 1 auto; min-width: 0; }
-    .breadcrumb li:last-child > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .breadcrumb a { color: var(--color-muted); }
     .breadcrumb a:hover { color: var(--color-accent); text-decoration: underline; }
     .breadcrumb-sep { color: var(--color-border); user-select: none; }
@@ -851,6 +847,12 @@ const jsonLd = article
       .meta-author-brand { display: none; }
       footer .container { grid-template-columns: 1fr; }
       .footer-links { justify-content: flex-start; }
+    }
+
+    /* At 320 px the five nav labels overflow one row by a few pixels and
+       strand RSS on its own line; tighten tracking instead of wrapping. */
+    @media (max-width: 340px) {
+      .nav-links a { margin-right: 0.5rem; font-size: 0.68rem; letter-spacing: 0.04em; }
     }
 
     @media print {

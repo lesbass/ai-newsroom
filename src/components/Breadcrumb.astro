@@ -4,17 +4,18 @@ interface Crumb {
   href?: string;
 }
 
-const { items = [] } = Astro.props as { items: Crumb[] };
+const { items = [], current } = Astro.props as { items: Crumb[]; current?: string };
 const site = 'https://news.lesbass.com/';
+const listItems = current ? [...items, { label: current }] : items;
 ---
 
 <nav aria-label="Breadcrumb" class="breadcrumb">
   <ol>
     {items.map((item, i) => (
       <li>
-        {item.href && i < items.length - 1
+        {item.href
           ? <a href={item.href}>{item.label}</a>
-          : <span aria-current={i === items.length - 1 ? 'page' : undefined}>{item.label}</span>
+          : <span>{item.label}</span>
         }
         {i < items.length - 1 && <span class="breadcrumb-sep" aria-hidden="true">/</span>}
       </li>
@@ -25,7 +26,7 @@ const site = 'https://news.lesbass.com/';
 <script type="application/ld+json" is:inline set:html={JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
-  itemListElement: items.map((item, i) => ({
+  itemListElement: listItems.map((item, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     name: item.label,
