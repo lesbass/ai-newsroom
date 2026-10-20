@@ -70,7 +70,9 @@ npm run deploy
 `npx wrangler deploy --dry-run` first to validate the artifact without uploading.
 
 `scripts/deploy-fallback.sh` wraps the same sequence: `npm ci`, build, the SEO/date/mobile
-checks, `wrangler deploy`, then the production freshness check with retries.
+checks, `wrangler deploy`, then the production freshness check with retries and a live
+verification that the canonical host, the AIN-969 arrow glyph, the symbol font, and the RSS
+`lastBuildDate` are all served from the new deployment.
 
 ```bash
 CLOUDFLARE_API_TOKEN=<token> scripts/deploy-fallback.sh

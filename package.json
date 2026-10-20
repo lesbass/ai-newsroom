@@ -21,6 +21,7 @@
     "test:targets": "node scripts/check-targets.mjs",
     "test:glyphs": "node scripts/check-glyphs.mjs",
     "test:deploy-freshness": "node scripts/check-deploy-freshness.mjs",
+    "test:live": "node scripts/check-live-deploy.mjs",
     "generate:og-image": "node scripts/generate-og-image.mjs",
     "setup:chromium": "node scripts/setup-chromium.mjs",
     "test:screenshot": "node scripts/screenshot.mjs",

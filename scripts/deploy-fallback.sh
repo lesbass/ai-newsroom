@@ -33,13 +33,18 @@ npm run test:dates
 npm run test:mobile
 npx wrangler deploy
 
+fresh=0
 for attempt in 1 2 3 4 5; do
   if CHECK_URL="$CHECK_URL" npm run test:deploy-freshness; then
-    exit 0
-  fi
-  if [[ "$attempt" == "5" ]]; then
-    echo "error: production did not become fresh at $CHECK_URL" >&2
-    exit 1
+    fresh=1
+    break
   fi
   sleep 15
 done
+
+if [[ "$fresh" != "1" ]]; then
+  echo "error: production did not become fresh at $CHECK_URL" >&2
+  exit 1
+fi
+
+CHECK_URL="$CHECK_URL" npm run test:live
