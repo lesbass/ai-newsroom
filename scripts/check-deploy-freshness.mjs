@@ -15,13 +15,11 @@ import { execSync } from 'node:child_process';
 // the grace window, so the check exits non-zero and the daily audit surfaces it.
 
 const GRACE_MINUTES = Number(process.env.DEPLOY_FRESHNESS_GRACE_MINUTES || 10);
-const baseUrl = (process.env.CHECK_URL || '').replace(/\/$/, '');
+// This check is inherently live: it compares the deployed RSS build time with the
+// newest local commit. Default to the canonical production host so the daily audit
+// cannot report a green deploy-freshness line without ever contacting production.
+const baseUrl = (process.env.CHECK_URL || 'https://news.lesbass.com').replace(/\/$/, '');
 const rssUrl = `${baseUrl}/rss.xml`;
-
-if (!baseUrl) {
-  console.log('ℹ deploy-freshness: skipped (set CHECK_URL=https://news.lesbass.com for the live check)');
-  process.exit(0);
-}
 
 function newestMainCommit() {
   if (process.env.MAIN_COMMIT_DATE) {
@@ -38,8 +36,8 @@ function newestMainCommit() {
 
 const main = newestMainCommit();
 if (!main || Number.isNaN(main.date.getTime())) {
-  console.log('ℹ deploy-freshness: skipped (could not determine the newest main commit; pass MAIN_COMMIT_DATE when git is unavailable)');
-  process.exit(0);
+  console.error('❌ deploy-freshness: could not determine the newest main commit; pass MAIN_COMMIT_DATE when git is unavailable');
+  process.exit(1);
 }
 
 let liveBuildDate;

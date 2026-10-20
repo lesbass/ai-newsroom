@@ -28,6 +28,8 @@ Run `npm run audit:daily` for the full gate. Individual checks:
 - `npm run test:seo` — titles, descriptions, canonical URLs, social metadata
 - `npm run test:sitemap-lastmod` / `test:dates` — sitemap and publication dates
 - `npm run test:images` / `test:contrast` / `test:targets` — asset and accessibility checks
+- `npm run test:deploy-freshness` — compare live production RSS build time with `main`; defaults
+  to `https://news.lesbass.com`, and fails when the newest commit cannot be determined
 
 ## Publication workflow
 
