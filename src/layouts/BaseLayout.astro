@@ -534,7 +534,15 @@ const jsonLd = article
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 0.25rem;
+      gap: 0.125rem;
+    }
+    /* Keep each separator with the value that follows it, so a wrapped line
+       never starts with a value whose dot was left behind on the line above. */
+    .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.125rem;
+      white-space: nowrap;
     }
     .article-desc {
       color: var(--color-muted);
@@ -797,6 +805,10 @@ const jsonLd = article
     .breadcrumb { font-size: 0.8125rem; color: var(--color-muted); margin: 0.25rem 0 0.75rem; }
     .breadcrumb ol { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.25rem; align-items: center; }
     .breadcrumb li { display: flex; align-items: center; gap: 0.25rem; }
+    /* The current page repeats the H1; let it truncate to one line instead of
+       pushing the headline down with a second full copy of the title. */
+    .breadcrumb li:last-child { flex: 1 1 auto; min-width: 0; }
+    .breadcrumb li:last-child > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .breadcrumb a { color: var(--color-muted); }
     .breadcrumb a:hover { color: var(--color-accent); text-decoration: underline; }
     .breadcrumb-sep { color: var(--color-border); user-select: none; }
@@ -834,6 +846,9 @@ const jsonLd = article
       .tags-index-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
       .nav-links { gap: 0; }
       .nav-links a { margin-right: 0.65rem; font-size: 0.72rem; }
+      /* The masthead already names the publication; dropping the duplicate
+         author item keeps the article meta on one line at 375 px. */
+      .meta-author-brand { display: none; }
       footer .container { grid-template-columns: 1fr; }
       .footer-links { justify-content: flex-start; }
     }

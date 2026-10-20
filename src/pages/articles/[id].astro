@@ -63,17 +63,11 @@ const heroWebp = image && image !== 'exception' ? resolveHeroWebp(image) : null;
     <div class="article-header">
       <h1 class={headlineClass}>{title}</h1>
       <div class="article-meta">
-        <span>{date}</span>
-        {updated && <span> (updated {updated})</span>}
-        <span class="sep-dot">&middot;</span>
-        <span>{author}</span>
-        <span class="sep-dot">&middot;</span>
-        <span class="reading-time">{readingTime} min read</span>
+        <span class="meta-item">{date}{updated && <span> (updated {updated})</span>}</span>
+        <span class:list={['meta-item', 'meta-author', author === 'AI Newsroom' && 'meta-author-brand']}><span class="sep-dot" aria-hidden="true">&middot;</span><span>{author}</span></span>
+        <span class="meta-item"><span class="sep-dot" aria-hidden="true">&middot;</span><span class="reading-time">{readingTime} min read</span></span>
         {sources.length > 0 && (
-          <>
-            <span class="sep-dot">&middot;</span>
-            <span>{sources.length} source{sources.length !== 1 ? 's' : ''}</span>
-          </>
+          <span class="meta-item"><span class="sep-dot" aria-hidden="true">&middot;</span><span>{sources.length} source{sources.length !== 1 ? 's' : ''}</span></span>
         )}
       </div>
       <div style="margin-top: 0.5rem;">
