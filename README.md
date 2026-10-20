@@ -73,8 +73,11 @@ npm run deploy
 checks, `wrangler deploy`, then the production freshness check with retries.
 
 ```bash
-CLOUDFLARE_API_TOKEN=<token> CLOUDFLARE_ACCOUNT_ID=<account id> scripts/deploy-fallback.sh
+CLOUDFLARE_API_TOKEN=<token> scripts/deploy-fallback.sh
 ```
+
+`scripts/deploy-fallback.sh` defaults `CLOUDFLARE_ACCOUNT_ID` to the production account, so a
+Workers Scripts:Edit token is the only required input.
 
 Both commands build the working tree, so deploy from a clean checkout of `main`. The fallback
 script refuses to run when `src/content` or `public` contains uncommitted or untracked files,

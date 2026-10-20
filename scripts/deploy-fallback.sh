@@ -3,15 +3,20 @@
 #
 # Requires:
 #   CLOUDFLARE_API_TOKEN  account API token with Workers Scripts:Edit
-#   CLOUDFLARE_ACCOUNT_ID Cloudflare account id
+#
+# Optional:
+#   CLOUDFLARE_ACCOUNT_ID defaults to the ai-newsroom production account
 #
 # Usage:
-#   CLOUDFLARE_API_TOKEN=... CLOUDFLARE_ACCOUNT_ID=... scripts/deploy-fallback.sh
+#   CLOUDFLARE_API_TOKEN=... scripts/deploy-fallback.sh
 
 set -euo pipefail
 
-if [[ -z "${CLOUDFLARE_API_TOKEN:-}" || -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]]; then
-  echo "error: set CLOUDFLARE_API_TOKEN (Workers Scripts:Edit) and CLOUDFLARE_ACCOUNT_ID" >&2
+CLOUDFLARE_ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-4adb3952e18826ca172f446428e1b2a3}"
+export CLOUDFLARE_ACCOUNT_ID
+
+if [[ -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
+  echo "error: set CLOUDFLARE_API_TOKEN (Workers Scripts:Edit)" >&2
   exit 1
 fi
 
