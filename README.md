@@ -76,6 +76,11 @@ checks, `wrangler deploy`, then the production freshness check with retries.
 CLOUDFLARE_API_TOKEN=<token> CLOUDFLARE_ACCOUNT_ID=<account id> scripts/deploy-fallback.sh
 ```
 
+Both commands build the working tree, so deploy from a clean checkout of `main`. The fallback
+script refuses to run when `src/content` or `public` contains uncommitted or untracked files,
+which prevents an unreviewed article draft from reaching production (`ALLOW_DIRTY=1` overrides
+this only for a deliberate local deploy).
+
 ## Quality rules
 
 - Never publish claims without dated source links.
