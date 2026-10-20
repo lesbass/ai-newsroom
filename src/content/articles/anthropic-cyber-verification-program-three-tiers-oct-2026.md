@@ -14,8 +14,8 @@ tags:
   - enterprise-frontier-safeguards
   - high-risk-claims
 image: "/images/articles/anthropic-cyber-verification-program-three-tiers-oct-2026/hero.png"
-imageAlt: "Screenshot of Anthropic's CyScenarioBench results figure from its Cyber Verification Program announcement: a chart above Anthropic's caption stating that safeguards blocked 46 of 50 tasks on Claude Opus 5.5 in the Defense Access tier, while the Red Team Access tier blocked none and completed 34 of 50."
-imageCredit: "Source: https://www.anthropic.com/news/cyber-verification-program · Capture date: 2026-10-07 (Europe/Rome) via Playwright Chromium · Credit: Anthropic · License: no license stated on page"
+imageAlt: "Screenshot of Anthropic's CyScenarioBench results figure from its Cyber Verification Program announcement, charting solve rate on Claude Opus 5.5 across four access tiers: Default, Defense Access, Red Team Access, and Specialized Access. Defense Access is far below the other two tiers."
+imageCredit: "Source: https://www.anthropic.com/news/cyber-verification-program · Capture date: 2026-10-07 (Europe/Rome) via Playwright Chromium · Credit: Anthropic · License: no license stated on page · Cropped to remove the source page's cookie-consent overlay; chart unchanged"
 canonicalURL: "https://news.lesbass.com/articles/anthropic-cyber-verification-program-three-tiers-oct-2026/"
 sources:
   - title: "Anthropic — Expanding the Cyber Verification Program (announcement, 2026-10-06)"

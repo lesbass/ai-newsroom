@@ -6,7 +6,7 @@ author: "AI Newsroom"
 tags: ["anthropic", "claude", "amazon", "microsoft", "google", "glasswing", "jailbreak", "ai-safety", "ai-policy", "export-controls", "caisi", "hackerone", "executive-order-14409", "us-government", "ai-regulation", "high-risk-claim"]
 image: "/images/articles/anthropic-fable-5-redeployed-2026-jailbreak-framework/hero-framework-dimensions.png"
 imageAlt: "Screenshot of the Anthropic 'Redeploying Fable 5' announcement page (anthropic.com/news/redeploying-fable-5, captured 2026-07-02), showing the section heading 'A consensus industry framework for jailbreaks' and the opening paragraph that motivates the four-dimension scoring proposal."
-imageCredit: "Source: https://www.anthropic.com/news/redeploying-fable-5 · Captured: 2026-07-02 via Playwright Chromium (headless, networkidle) · Section heading 'A consensus industry framework for jailbreaks' visible on the page at the time of capture · Use: editorial illustration for the four-dimension jailbreak severity framework described in the article body."
+imageCredit: "Source: https://www.anthropic.com/news/redeploying-fable-5 · Captured: 2026-07-02 via Playwright Chromium (headless, networkidle) · Section heading 'A consensus industry framework for jailbreaks' visible on the page at the time of capture · Cropped to remove the source page's cookie-consent overlay; text unchanged · Use: editorial illustration for the four-dimension jailbreak severity framework described in the article body."
 sources:
   - title: "Anthropic — \"Redeploying Fable 5\" (announcement, dated 2026-06-30)"
     url: "https://www.anthropic.com/news/redeploying-fable-5"
