@@ -8,6 +8,11 @@ import { execSync } from 'node:child_process';
 //   `queued` with no check run ever created, so production never rebuilt and the
 //   newest article served HTTP 404 until a harmless re-push to `main` re-triggered
 //   the Workers Build.
+//   AIN-969 (2026-10-13 onward): every push now gets a `Workers Builds` check run
+//   that fails in the same second with 0 annotations and no log, and re-pushing no
+//   longer helps. Production stays on the last good artifact until a human repairs
+//   Workers Builds in the Cloudflare dashboard or deploys with
+//   `scripts/deploy-fallback.sh` (Workers Scripts:Edit token).
 //
 // This check compares the newest `main` commit time with the deployed RSS build
 // timestamp (`<lastBuildDate>`, written at build time). A healthy deploy keeps
@@ -72,7 +77,7 @@ console.log(`ℹ live RSS <lastBuildDate>: ${liveBuildDate.toISOString()}`);
 console.log(`ℹ production is ${Math.abs(behindMinutes).toFixed(1)} min ${relation} main (grace ${GRACE_MINUTES} min)`);
 
 if (behindMinutes > GRACE_MINUTES) {
-  console.error(`❌ deploy-freshness: production has not rebuilt ${behindMinutes.toFixed(1)} min after the newest main commit — the Workers Build likely stalled (AIN-903/AIN-953). Re-push to main to re-trigger the build.`);
+  console.error(`❌ deploy-freshness: production has not rebuilt ${behindMinutes.toFixed(1)} min after the newest main commit — the Workers Build is stalled or failing (AIN-903/AIN-953/AIN-969). Re-pushing no longer helps: recover with CLOUDFLARE_API_TOKEN=<Workers Scripts:Edit> scripts/deploy-fallback.sh, or repair the Workers Build in the Cloudflare dashboard.`);
   process.exit(1);
 }
 console.log('✅ production is fresh (within the deploy-freshness grace window)');
