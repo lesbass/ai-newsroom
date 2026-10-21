@@ -2,6 +2,7 @@
 title: "Headroom: open-source token compression for AI agents"
 description: "Headroom v0.27.0 is an Apache-2.0 context-compression layer for AI agents: library, proxy, agent wrapper, and MCP server. Published savings reach 92% on code search and SRE debugging."
 pubDate: 2026-06-24
+updatedDate: 2026-10-21
 author: "AI Newsroom"
 tags: ["headroom", "ai-agents", "token-optimization", "context-compression", "mcp", "claude-code", "ai-coding", "aider", "github", "open-source", "rag", "kv-cache", "rust", "developer-tools", "typescript"]
 image: "/images/articles/headroom-ai-agent-token-compression/hero.jpg"
@@ -32,9 +33,9 @@ sources:
     url: "https://headroom-docs.vercel.app/docs/ccr"
     date: 2026-06-24
     type: primary
-  - title: "Headroom README — Output token reduction (verbosity shaper, effort routing, counterfactual savings)"
+  - title: "Headroom README — Output token reduction (verbosity steering, effort routing, holdout; checked 2026-10-21)"
     url: "https://github.com/headroomlabs-ai/headroom/blob/main/README.md#output-token-reduction"
-    date: 2026-06-24
+    date: 2026-10-21
     type: primary
   - title: "Headroom on PyPI (headroom-ai package)"
     url: "https://pypi.org/project/headroom-ai/"
@@ -91,7 +92,7 @@ The headline installer is `pip install "headroom-ai[all]"` (Python 3.10+); granu
 
 Accuracy: GSM8K ±0.000, TruthfulQA +0.030, SQuAD v2 97% at 19% compression, BFCL 97% at 32% — published in the [README proof section](https://github.com/headroomlabs-ai/headroom#proof).
 
-**2. v0.27.0 moves the project from "compress the prompt" to "compress both directions" — and the output side is where the money is on Opus-class models.** The README is explicit: *"on Opus-class models output costs 5× input."* Output-token reduction adds verbosity steering (a short "be terse" line appended to the system prompt) and effort routing (when a turn is just the model resuming after a tool result, the proxy dials the model's thinking effort down). `headroom output-savings` reports an **estimate with a confidence interval** by default; `HEADROOM_OUTPUT_HOLDOUT=0.1` leaves 10% of conversations unshaped as a control group ([README — output token reduction](https://github.com/headroomlabs-ai/headroom/blob/main/README.md#output-token-reduction)).
+**2. v0.27.0 moves the project from "compress the prompt" to "compress both directions" — and the output side is where the money is on Opus-class models.** The README is explicit: *"on Opus-class models output costs 5× input."* Output-token reduction adds verbosity steering (a short "be terse" line appended to the system prompt) and effort routing (when a turn is just the model resuming after a tool result, the proxy dials the model's thinking effort down). `headroom output-savings` reports an **estimate with a confidence interval** by default; `HEADROOM_OUTPUT_HOLDOUT=0.1` leaves 10% of conversations unshaped as a control group ([README — output token reduction](https://github.com/headroomlabs-ai/headroom/blob/main/README.md#output-token-reduction); [v0.27.0 release notes, 2026-06-22](https://github.com/headroomlabs-ai/headroom/releases/tag/v0.27.0)).
 
 **3. The compatibility matrix is broad.** `headroom wrap` works with Claude Code, Codex, Cursor, Aider, Copilot CLI, OpenClaw, OpenCode, and Cortex Code ([README](https://github.com/headroomlabs-ai/headroom#agent-compatibility-matrix)). OpenAI-compatible clients work through the proxy. Library integrations exist for the Vercel AI SDK, Anthropic and OpenAI SDKs, LiteLLM, LangChain, Agno, Strands, and ASGI apps. 48,803 stars in six months is unusually fast for a developer-tooling repo.
 
@@ -124,3 +125,5 @@ A concrete worked example: the README's headline GIF caption: *"Live: 10,144 →
 ## Verdict
 
 Headroom v0.27.0 is a working, well-documented, four-mode open-source context-compression layer with a published 60-95% savings range and accuracy preserved on standard QA benchmarks. The local-only model, broad compatibility matrix, and CCR reversibility make it the most credible "drop-in" compression option for AI agents in 2026. The headline numbers are the authors' own; the output-side savings are counterfactual by default. Independent reproductions and measured output-side numbers are the next-cycle signals ([README, 2026-06-24](https://github.com/headroomlabs-ai/headroom/blob/main/README.md); [docs, 2026-06-24](https://headroom-docs.vercel.app/docs/benchmarks)).
+
+**Update — October 21, 2026:** Replaced the deleted `docs/proposals/output-token-reduction.md` citation with the live README output-token-reduction section and the v0.27.0 release notes. No claim changed.

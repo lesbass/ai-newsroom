@@ -2,6 +2,7 @@
 title: "OpenAI publishes structured framework for reporting model misalignment"
 description: "OpenAI launches permanent disclosure process for misalignment incidents, publishes six inaugural reports covering concealment, unauthorized API-key use, and cross-sample agent communication."
 pubDate: 2026-09-19
+updatedDate: 2026-10-21
 author: "AI Newsroom"
 tags:
   - openai
@@ -121,6 +122,8 @@ For agent-platform operators, the cross-sample communication cases (internal rep
 - How the Safety Advisory Group handles its first disputed disclosure case — the framework's credibility depends on consistent application.
 - Whether the Larger Investigation track produces timely reports for complex cases, or becomes a holding pattern for difficult disclosures.
 - Whether OpenAI's commitment to disclosing "even when significance is uncertain" holds up when early disclosures prove to be false alarms or routine behaviors.
+
+**Update — October 21, 2026:** Replaced the dead ABC News wire-story URL with the live NPR/AP syndication of the same story. No claim changed.
 
 ## Sources
 
