@@ -1,0 +1,185 @@
+{
+  "issue": "AIN-1004",
+  "title": "Mobile headline polish: keep hyphenated model names from splitting across lines",
+  "capturedAt": "2026-10-21T16:26:00Z",
+  "canonicalHost": "https://news.lesbass.com/",
+  "commit": "f2c4d91d1a02abdb84e268ec962fba7637164194",
+  "deploy": {
+    "path": "main-branch Cloudflare Workers Build",
+    "workersBuilds": {
+      "status": "completed",
+      "conclusion": "success",
+      "completedAt": "2026-10-21T16:24:40Z"
+    },
+    "liveRssLastBuildDate": "2026-10-21T16:24:16Z"
+  },
+  "implementation": {
+    "helper": "src/lib/headline.ts",
+    "maxNoBreakLength": 20,
+    "renderedIn": [
+      "src/components/ArticleCard.astro",
+      "src/pages/articles/[id].astro"
+    ],
+    "css": ".no-break { white-space: nowrap; } in src/layouts/BaseLayout.astro",
+    "metadataUnchanged": "RSS and sitemap keep raw title strings; only rendered headline markup adds spans"
+  },
+  "screenshots": [
+    {
+      "file": "home-375.png",
+      "page": "https://news.lesbass.com/",
+      "viewport": "375x812",
+      "capturedAt": "2026-10-21",
+      "alt": "AI Newsroom homepage card at 375x812 showing the MultiLangBench headline with GPT-6 on one line",
+      "relevance": "Confirms short hyphenated model names stay intact in listing cards and the article headline.",
+      "h1": "AI Newsroom",
+      "noBreakSpans": [
+        {
+          "text": "GPT-6",
+          "renderedLines": 1
+        },
+        {
+          "text": "Qwen3.8-Flash-Next",
+          "renderedLines": 1
+        },
+        {
+          "text": "self-hosted",
+          "renderedLines": 1
+        },
+        {
+          "text": "1.05T-parameter",
+          "renderedLines": 1
+        },
+        {
+          "text": "open-weight",
+          "renderedLines": 1
+        },
+        {
+          "text": "three-tier",
+          "renderedLines": 1
+        },
+        {
+          "text": "on-device",
+          "renderedLines": 1
+        },
+        {
+          "text": "V4.1-Flash",
+          "renderedLines": 1
+        }
+      ],
+      "horizontalOverflow": {
+        "innerWidth": 375,
+        "scrollWidth": 375
+      }
+    },
+    {
+      "file": "article-375.png",
+      "page": "https://news.lesbass.com/articles/openai-multilangbench-sqlite-eval-20-languages/",
+      "viewport": "375x812",
+      "capturedAt": "2026-10-21",
+      "alt": "MultiLangBench article H1 at 375x812 showing GPT-6 on one line",
+      "relevance": "Confirms short hyphenated model names stay intact in listing cards and the article headline.",
+      "h1": "OpenAI's MultiLangBench scores models building SQLite in 20 languages — GPT-6 Astra at 87.4%, COBOL still hardest",
+      "noBreakSpans": [
+        {
+          "text": "GPT-6",
+          "renderedLines": 1
+        }
+      ],
+      "horizontalOverflow": {
+        "innerWidth": 375,
+        "scrollWidth": 375
+      }
+    },
+    {
+      "file": "home-1280.png",
+      "page": "https://news.lesbass.com/",
+      "viewport": "1280x800",
+      "capturedAt": "2026-10-21",
+      "alt": "AI Newsroom homepage card at 1280x800 showing the MultiLangBench headline with GPT-6 on one line",
+      "relevance": "Confirms short hyphenated model names stay intact in listing cards and the article headline.",
+      "h1": "AI Newsroom",
+      "noBreakSpans": [
+        {
+          "text": "GPT-6",
+          "renderedLines": 1
+        },
+        {
+          "text": "Qwen3.8-Flash-Next",
+          "renderedLines": 1
+        },
+        {
+          "text": "self-hosted",
+          "renderedLines": 1
+        },
+        {
+          "text": "1.05T-parameter",
+          "renderedLines": 1
+        },
+        {
+          "text": "open-weight",
+          "renderedLines": 1
+        },
+        {
+          "text": "three-tier",
+          "renderedLines": 1
+        },
+        {
+          "text": "on-device",
+          "renderedLines": 1
+        },
+        {
+          "text": "V4.1-Flash",
+          "renderedLines": 1
+        }
+      ],
+      "horizontalOverflow": {
+        "innerWidth": 1280,
+        "scrollWidth": 1280
+      }
+    },
+    {
+      "file": "article-1280.png",
+      "page": "https://news.lesbass.com/articles/openai-multilangbench-sqlite-eval-20-languages/",
+      "viewport": "1280x800",
+      "capturedAt": "2026-10-21",
+      "alt": "MultiLangBench article H1 at 1280x800 showing GPT-6 on one line",
+      "relevance": "Confirms short hyphenated model names stay intact in listing cards and the article headline.",
+      "h1": "OpenAI's MultiLangBench scores models building SQLite in 20 languages — GPT-6 Astra at 87.4%, COBOL still hardest",
+      "noBreakSpans": [
+        {
+          "text": "GPT-6",
+          "renderedLines": 1
+        }
+      ],
+      "horizontalOverflow": {
+        "innerWidth": 1280,
+        "scrollWidth": 1280
+      }
+    }
+  ],
+  "checks": {
+    "npm run build": "pass (573 pages)",
+    "npm run check": "pass (0 errors, 0 warnings, 0 hints)",
+    "npm run lint": "pass",
+    "npm run test:mobile": "pass",
+    "npm run test:seo": "pass",
+    "npm run test:glyphs": "pass (573 pages, 9108 non-ASCII characters, all covered)",
+    "npm run test:headline": "pass (9 formatter cases, 618 no-break spans across 573 pages)",
+    "npm run test:deploy-freshness": "pass (production 15.3 min ahead of main)",
+    "npm run test:live": "pass (5/5 canonical host, glyphs, symbol font, RSS)"
+  },
+  "canonicalMetadata": {
+    "sitemapHosts": [
+      "https://news.lesbass.com"
+    ],
+    "rssHosts": [
+      "https://news.lesbass.com"
+    ],
+    "robotsSitemapHosts": [
+      "https://news.lesbass.com"
+    ],
+    "rssTitle": "OpenAI's MultiLangBench scores models building SQLite in 20 languages — GPT-6 Astra at 87.4%, COBOL still hardest",
+    "rssContainsNoBreakMarkup": false,
+    "sitemapContainsNoBreakMarkup": false
+  }
+}
