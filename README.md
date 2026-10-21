@@ -50,7 +50,13 @@ Builds** (the `Workers Builds: ai-newsroom` check run).
 | Build command    | `npm run build`        |
 | Deploy command   | `npx wrangler deploy`  |
 | Build output     | `dist/`                |
-| Node version     | 22+ (`engines` field)  |
+| Node version     | `24.18.0` (`.nvmrc`)   |
+
+`.nvmrc` pins the last-known-good Workers Builds runtime (Cloudflare raised the default from
+24.18.0 to 24.21.0 on 2026-10-14). `.npmrc` sets `legacy-peer-deps=true`: Astro 7.0.2 declares
+an optional peer on `@astrojs/markdown-remark@7.2.0`, while the site intentionally uses 7.3.1
+for its `unified()` API. Without the flag, `npm ci` fails with `ERESOLVE` on the npm 10.9.2
+toolchain shipped in the Cloudflare build image.
 
 `public/_headers` and `public/_redirects` are copied into `dist/` and honoured by the Worker.
 
