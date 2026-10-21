@@ -2,6 +2,7 @@
 title: "oh-my-pi: a terminal agent that treats the harness as the product"
 description: "can1357/oh-my-pi: a Rust-based terminal AI coding agent (fork of Mario Zechner's pi-mono) with Hashline edits, an advisor model, 40+ providers, 18-hour release cadence."
 pubDate: 2026-06-26
+updatedDate: 2026-10-21
 author: "AI Newsroom"
 tags: ["oh-my-pi", "omp", "ai-coding", "harness", "harness-engineering", "hashline", "subagents", "advisor-model", "stream-rules", "lsp", "dap", "rust", "typescript", "bun", "claude", "openai", "gemini", "mcp", "terminal", "developer-tools", "pi-mono", "mario-zechner", "can1357", "can-boluk", "multi-provider", "open-source"]
 image: "/images/articles/oh-my-pi-ai-coding-agent-harness/section-readme-stats.png"
@@ -28,15 +29,19 @@ sources:
     url: "https://raw.githubusercontent.com/can1357/oh-my-pi/main/CONTRIBUTING.md"
     date: 2026-06-26
     type: primary
-  - title: "can1357/oh-my-pi — @oh-my-pi/hashline package README (line-anchored patch language, [PATH#TAG] sections, SWAP/INS/DEL operations, snapshot-store content hashes, 3-way-merge stale-anchor recovery)"
-    url: "https://raw.githubusercontent.com/can1357/oh-my-pi/main/packages/hashline/README.md"
+  - title: "can1357/oh-my-pi — hashline patch-format prompt (crates/pi-edit/prompts/hashline.md; [PATH#TAG] sections, TAG is a required 4-hex snapshot from the latest read/search, PUT/CUT/REM/MV operations)"
+    url: "https://raw.githubusercontent.com/can1357/oh-my-pi/main/crates/pi-edit/prompts/hashline.md"
+    date: 2026-10-21
+    type: primary
+  - title: "can1357/oh-my-pi — @oh-my-pi/hashline package README at the v16.1.21 release tag (format as of the article's publication date: [PATH#TAG] sections, 4-hex content hash of the full normalized file text, SWAP/INS/DEL operations, stale-anchor recovery)"
+    url: "https://raw.githubusercontent.com/can1357/oh-my-pi/v16.1.21/packages/hashline/README.md"
     date: 2026-06-26
     type: primary
   - title: "can1357/oh-my-pi — @oh-my-pi/pi-agent package README (Agent class, transformContext / convertToLlm pipeline, custom AgentMessage types, steering, follow-up, telemetry, per-event subscription)"
     url: "https://raw.githubusercontent.com/can1357/oh-my-pi/main/packages/agent/README.md"
     date: 2026-06-26
     type: primary
-  - title: "can1357/oh-my-pi — blog post 'I Improved 15 LLMs at Coding in One Afternoon. Only the Harness Changed.' (Can Bölük, 2026-02-12, blog.can.ac; documents the 540-task edit benchmark, the 16-model × 3-edit-format matrix, the 300 USD cost, the Hashline 2-3 char content-hash format, the per-model improvements, the patch failure rate on Grok 4 at 50.7% and GLM-4.7 at 46.2%)"
+  - title: "can1357/oh-my-pi — blog post 'I Improved 15 LLMs at Coding in One Afternoon. Only the Harness Changed.' (Can Bölük, 2026-02-12, blog.can.ac; documents the 540-task edit benchmark, the 16-model × 3-edit-format matrix, the 300 USD cost, the benchmark-era Hashline 2-3 character content-hash tags (not the current 4-hex implementation), the per-model improvements, the patch failure rate on Grok 4 at 50.7% and GLM-4.7 at 46.2%)"
     url: "https://blog.can.ac/2026/02/12/the-harness-problem/"
     date: 2026-02-12
     type: primary
@@ -69,7 +74,7 @@ On **2026-06-26**, [`can1357/oh-my-pi`](https://github.com/can1357/oh-my-pi) —
 
 The harness is the boundary between *"the model knows what to change"* and *"the change is on disk."* Most agents leave that boundary to a thin wrapper around `read`, `str_replace`, and `bash`. `omp` treats it as a product surface. Four mechanisms carry the load.
 
-**1 · Hashline — edit by content hash.** The harness tags every read line with a 2-3 hex character content hash; every patch is anchored to a `[PATH#TAG]` full-file content hash, and **rejects the patch before it corrupts anything** if the file has changed. The model never retypes the lines it wants to change; the harness resolves the anchor and applies SWAP / INS / DEL operations ([hashline README](https://raw.githubusercontent.com/can1357/oh-my-pi/main/packages/hashline/README.md)).
+**1 · Hashline — edit by content hash.** The harness anchors every patch to a `[PATH#TAG]` **4-hex snapshot tag** and **rejects the patch before it corrupts anything** if the file has changed. The model never retypes the lines it wants to change; the harness resolves the anchor and applies the patch operations — `PUT` / `CUT` / `REM` / `MV` in current builds, `SWAP` / `INS` / `DEL` at the v16.1.21 release ([current patch format](https://raw.githubusercontent.com/can1357/oh-my-pi/main/crates/pi-edit/prompts/hashline.md), [archived v16.1.21 README](https://raw.githubusercontent.com/can1357/oh-my-pi/v16.1.21/packages/hashline/README.md)). The **2-3 character tags** cited in Can Bölük's [February 2026 benchmark post](https://blog.can.ac/2026/02/12/the-harness-problem/) describe that benchmark's format, not current builds.
 
 **2 · First-class subagents with schema-validated yield.** The `task` tool fans out into isolated worktrees; the final yield is a **schema-validated object the parent reads directly** — no prose to parse.
 
@@ -96,7 +101,7 @@ The README publishes a 540-task, 16-model benchmark (3 runs per task, fresh sess
 
 - **For harness evaluators.** The right question is "which agent's tool boundary is best" — not "which agent is best." All of `omp`'s load-bearing moves are harness-side.
 - **For teams replacing Claude Code / Codex CLI today.** Migration cost is low — `omp` reads Cursor MDC, Cline `.clinerules`, Codex `AGENTS.md`, Copilot `applyTo` in their native shape, and the same binary runs against Anthropic, OpenAI, xAI, Google, Mistral, Groq, Ollama, or `llama.cpp`.
-- **For researchers.** Hashline lives in `packages/hashline`; the agent runtime in `packages/agent` exposes typed events.
+- **For researchers.** Hashline lives in `crates/pi-edit` (formerly `packages/hashline`); the agent runtime in `packages/agent` exposes typed events.
 
 ## What to watch
 
@@ -116,14 +121,17 @@ The README publishes a 540-task, 16-model benchmark (3 runs per task, fresh sess
 
 ## Verdict
 
-[`can1357/oh-my-pi`](https://github.com/can1357/oh-my-pi) — the fork of Mario Zechner's Pi shipping as `omp` — sat at **14,677 stars, 1,287 forks, 369 open issues, 10,671 commits, MIT**, with a Rust core of ~55k lines, 40+ LLM providers, and a project-published 16-model edit benchmark. The 18-hour release cadence is the second load-bearing signal: a project using its own binary. The takeaway is **harness engineering** — *the model is the moat, the harness is the bridge* — a working MIT-licensed demo of a serious agent boundary in 2026. *Pin a release tag, read `packages/hashline`.*
+[`can1357/oh-my-pi`](https://github.com/can1357/oh-my-pi) — the fork of Mario Zechner's Pi shipping as `omp` — sat at **14,677 stars, 1,287 forks, 369 open issues, 10,671 commits, MIT**, with a Rust core of ~55k lines, 40+ LLM providers, and a project-published 16-model edit benchmark. The 18-hour release cadence is the second load-bearing signal: a project using its own binary. The takeaway is **harness engineering** — *the model is the moat, the harness is the bridge* — a working MIT-licensed demo of a serious agent boundary in 2026. *Pin a release tag, read `crates/pi-edit`.*
+
+**Update — October 21, 2026:** Corrected the Hashline description to the current 4-hex `[PATH#TAG]` snapshot tag, attributed the older 2-3 character tags to the February 2026 benchmark post, and replaced the moved `packages/hashline` README link with the live patch-format doc plus the archived v16.1.21 README.
 
 ## Sources
 
 - [can1357/oh-my-pi — GitHub repository metadata (2026-06-26)](https://api.github.com/repos/can1357/oh-my-pi)
 - [can1357/oh-my-pi — main README (2026-06-26)](https://raw.githubusercontent.com/can1357/oh-my-pi/main/README.md)
 - [can1357/oh-my-pi — Releases API (2026-06-26)](https://api.github.com/repos/can1357/oh-my-pi/releases?per_page=10)
-- [can1357/oh-my-pi — hashline package README (2026-06-26)](https://raw.githubusercontent.com/can1357/oh-my-pi/main/packages/hashline/README.md)
+- [can1357/oh-my-pi — hashline patch-format prompt (2026-10-21)](https://raw.githubusercontent.com/can1357/oh-my-pi/main/crates/pi-edit/prompts/hashline.md)
+- [can1357/oh-my-pi — hashline package README at v16.1.21 (2026-06-26)](https://raw.githubusercontent.com/can1357/oh-my-pi/v16.1.21/packages/hashline/README.md)
 - [can1357/oh-my-pi — pi-agent package README (2026-06-26)](https://raw.githubusercontent.com/can1357/oh-my-pi/main/packages/agent/README.md)
 - [can1357/oh-my-pi — main LICENSE (2026-06-26)](https://raw.githubusercontent.com/can1357/oh-my-pi/main/LICENSE)
 - [can1357/oh-my-pi — CONTRIBUTING.md (2026-06-26)](https://raw.githubusercontent.com/can1357/oh-my-pi/main/CONTRIBUTING.md)
