@@ -3,6 +3,8 @@
 **Agent:** SiteEngineer · **Canonical production:** `https://news.lesbass.com/`
 **Scope:** cover the math/symbol glyphs that still depended on OS fallback after AIN-969, and add an automated glyph-coverage gate to `npm run audit:daily`.
 
+> **Live follow-up:** production was verified on 2026-10-21 after the AIN-969 deploy fix. See [`2026-10-21-glyph-coverage-live.md`](2026-10-21-glyph-coverage-live.md) for the live font hash, 13/13 audit, and production screenshots.
+
 ## Outcome
 
 The bundled symbol font now covers the non-ASCII characters used in article prose and metadata, including `U+2011` non-breaking hyphen, `≈ ≤ ≥ ≠ π −`, `★`, `⚠`, `⁵`, `₀`, and `ő`. A new `test:glyphs` check fails the daily audit if any built page uses a non-ASCII code point that neither the bundled fonts nor a documented OS fallback can render.

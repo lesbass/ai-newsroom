@@ -1,0 +1,53 @@
+{
+  "capturedAt": "2026-10-21T07:19:57.742Z",
+  "baseUrl": "https://news.lesbass.com",
+  "viewports": [
+    {
+      "name": "320",
+      "width": 320,
+      "height": 720,
+      "proof": {
+        "text": "★ ≈ ≤ ≥ ⚠ ‑",
+        "width": 280
+      }
+    },
+    {
+      "name": "375",
+      "width": 375,
+      "height": 812,
+      "proof": {
+        "text": "★ ≈ ≤ ≥ ⚠ ‑",
+        "width": 335
+      }
+    },
+    {
+      "name": "1280",
+      "width": 1280,
+      "height": 800,
+      "proof": {
+        "text": "★ ≈ ≤ ≥ ⚠ ‑",
+        "width": 720
+      }
+    }
+  ],
+  "fonts": {
+    "★": [
+      "DejaVu Sans (custom):1"
+    ],
+    "≈": [
+      "DejaVu Sans (custom):1"
+    ],
+    "≤": [
+      "DejaVu Sans (custom):1"
+    ],
+    "≥": [
+      "DejaVu Sans (custom):1"
+    ],
+    "⚠": [
+      "DejaVu Sans (custom):1"
+    ],
+    "‑": [
+      "DejaVu Sans (custom):1"
+    ]
+  }
+}
