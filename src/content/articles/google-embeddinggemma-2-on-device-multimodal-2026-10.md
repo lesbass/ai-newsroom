@@ -3,7 +3,7 @@ title: "EmbeddingGemma 2: on-device multimodal embeddings under Apache 2.0"
 description: "Google DeepMind's 740M open-weight EmbeddingGemma 2 maps text, images, video, and audio into one shared 768-dimensional vector space for local search and RAG."
 pubDate: 2026-10-07
 author: "AI Newsroom"
-tags: ["google", "google-deepmind", "embeddinggemma", "embeddings", "multimodal", "on-device", "rag", "apache-2.0", "gemma-4", "developer-tools"]
+tags: ["google", "google-deepmind", "embeddinggemma", "embeddings", "multimodal", "on-device", "rag", "open-source", "gemma-4", "developer-tools"]
 image: "/images/articles/google-embeddinggemma-2-on-device-multimodal-2026-10/hero.png"
 imageAlt: "Two-panel screenshot: the Google blog headline 'EmbeddingGemma 2: an open, lightweight multimodal embedding model' above the EmbeddingGemma 2 banner, and the Hugging Face model card table 'Evaluation Results with Vector Truncation' comparing 768d, 512d, 256d, and 128d vectors."
 imageCredit: "Sources: https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2/ and https://huggingface.co/google/embeddinggemma-2 · Capture date: 2026-10-07 · Credit: Google DeepMind · License: Apache 2.0 for the Hugging Face weights; blog and model-card screenshots used under fair use for editorial coverage"

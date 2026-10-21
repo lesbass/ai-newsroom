@@ -3,7 +3,7 @@ title: "OpenAI Deployment Simulation: 1.5× pre-release error"
 description: "On June 16, 2026, OpenAI published Deployment Simulation — a method to replay anonymized production conversations through candidate models. Pre-registered median error: 1.5× across 20 misbehavior categories."
 pubDate: 2026-06-17
 author: "AI Newsroom"
-tags: ["openai", "deployment-simulation", "ai-safety", "model-evaluation", "eval-awareness", "pre-deployment", "gpt-5", "wildchat", "alignment", "ai-agents", "tool-use", "calculator-hacking", "safety-research"]
+tags: ["openai", "deployment-simulation", "ai-safety", "benchmarks", "eval-awareness", "pre-deployment", "gpt-5", "wildchat", "alignment", "ai-agents", "tool-use", "calculator-hacking", "safety-research"]
 image: "/images/articles/openai-deployment-simulation/hero.jpg"
 imageAlt: "OpenAI Deployment Simulation SEO card"
 imageCredit: "Source: https://openai.com/index/deployment-simulation/ · Credit: OpenAI · License: no license stated; used editorially · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"

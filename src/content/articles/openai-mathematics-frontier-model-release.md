@@ -9,7 +9,7 @@ tags:
   - lean
   - formal-verification
   - frontier-models
-  - ai-governance
+  - policy
   - transparency
   - agmai
   - research-disclosure

@@ -683,6 +683,17 @@ if (existsSync(redirectsPath)) {
     }
   }
 
+  // Compare canonical slugs, not raw frontmatter strings: tags such as `m&a`
+  // or `apache-2.0` resolve to `/tags/m-and-a/` and `/tags/apache-2-0/`, so a
+  // literal comparison would miss a redirect that hijacks a live tag page.
+  const tagSlug = (tag) => String(tag)
+    .toLowerCase()
+    .trim()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .replace(/-+/g, '-');
+
   const articlesDir = resolve('src/content/articles');
   if (redirectSources.size > 0 && existsSync(articlesDir)) {
     const hijacks = new Map();
@@ -705,10 +716,11 @@ if (existsSync(redirectsPath)) {
         }
       }
       for (const tag of tags) {
-        usedTags.add(tag);
-        if (redirectSources.has(tag)) {
-          if (!hijacks.has(tag)) hijacks.set(tag, []);
-          hijacks.get(tag).push(entry);
+        const slug = tagSlug(tag);
+        usedTags.add(slug);
+        if (redirectSources.has(slug)) {
+          if (!hijacks.has(slug)) hijacks.set(slug, []);
+          hijacks.get(slug).push(entry);
         }
       }
     }
