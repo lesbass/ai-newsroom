@@ -24,6 +24,7 @@ Run `npm run audit:daily` for the full gate. Individual checks:
 
 - `npm run check` — Astro type checking
 - `npm run test:links` — verify internal links in built output
+- `npm run test:external-links` — advisory external citation health check (network-dependent; not part of `audit`)
 - `npm run test:mobile` — verify mobile viewport rendering
 - `npm run test:seo` — titles, descriptions, canonical URLs, social metadata
 - `npm run test:sitemap-lastmod` / `test:dates` — sitemap and publication dates
