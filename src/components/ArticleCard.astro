@@ -53,7 +53,10 @@ const date = new Date(pubDate).toLocaleDateString('en-US', { year: 'numeric', mo
 const wordCount = article.body?.split(/\s+/).filter(Boolean).length || 0;
 const readingTime = Math.max(1, Math.round(wordCount / 238));
 
-const MOBILE_VISIBLE_TAGS = 4;
+// Two chips plus the overflow count fit one line at 375 px. Showing four
+// pushed the "+N" chip onto its own row on every multi-tag card, adding a
+// largely empty line to each listing entry (AIN-1001).
+const MOBILE_VISIBLE_TAGS = 2;
 const maxTags = featured ? 8 : 5;
 const displayTags = tags.slice(0, maxTags);
 const extraTagCount = Math.max(0, tags.length - maxTags);
