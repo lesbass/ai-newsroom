@@ -380,23 +380,59 @@ const jsonLd = article
       outline: 3px solid var(--color-accent);
       outline-offset: 4px;
     }
-    @media (max-width: 640px) {
-      .table-scroll {
-        box-shadow: inset -12px 0 12px -12px rgba(11, 16, 32, 0.28);
-      }
-    }
     table {
       border-collapse: collapse;
       font-size: 0.9375rem;
-      width: max-content;
-      min-width: 100%;
+      width: 100%;
     }
     th, td {
       border: 1px solid var(--color-border);
       padding: 0.5rem 0.75rem;
       text-align: left;
+      vertical-align: top;
+      overflow-wrap: break-word;
     }
     th { background: var(--color-border); font-weight: 600; }
+    .sources-table table {
+      table-layout: fixed;
+      font-size: 0.875rem;
+    }
+    .sources-table th,
+    .sources-table td { padding: 0.4rem 0.5rem; }
+    @media (max-width: 640px) {
+      .table-scroll {
+        overflow-x: visible;
+        box-shadow: none;
+      }
+      .table-scroll :is(table, tbody, tr, td) {
+        display: block;
+        width: auto;
+      }
+      .table-scroll :is(colgroup, thead) { display: none; }
+      .table-scroll tr {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface);
+        margin: 0 0 0.75rem;
+        padding: 0.25rem 0.75rem;
+      }
+      .table-scroll td {
+        border: 0;
+        padding: 0.35rem 0;
+      }
+      .table-scroll td + td { border-top: 1px solid var(--color-border); }
+      .table-scroll td[data-label='#'] { display: none; }
+      .table-scroll td::before {
+        content: attr(data-label);
+        display: block;
+        font-family: var(--font-body);
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-muted);
+      }
+    }
     pre, code { font-family: var(--font-mono); font-size: 0.9em; }
     pre {
       background: var(--color-surface-strong);
