@@ -21,7 +21,7 @@ sources:
     date: 2026-05-19
     type: primary
   - title: "Google Developers blog — 'All the news from the Google I/O 2026 Developer keynote'"
-    url: "https://developers.googleblog.com/en/all-the-news-from-the-google-i-o-2026-developer-keynote/"
+    url: "https://developers.googleblog.com/en/all-the-news-from-the-google-io-2026-developer-keynote/"
     date: 2026-05-19
     type: primary
   - title: "Model Context Protocol (MCP) — official introduction"
@@ -118,7 +118,7 @@ On **May 19, 2026**, Google announced **Gemini Spark** — a 24/7 agent on **Gem
 - [Google blog — *The Gemini app becomes more agentic, delivering proactive, 24/7 help* (Josh Woodward, May 19, 2026)](https://blog.google/innovation-and-ai/products/gemini-app/next-evolution-gemini-app/)
 - [Google blog — *I/O 2026: Welcome to the agentic Gemini era* (Sundar Pichai keynote, May 19, 2026)](https://blog.google/innovation-and-ai/sundar-pichai-io-2026/)
 - [Google Developers blog — *Build with Google Antigravity* (May 19, 2026)](https://developers.googleblog.com/en/build-with-google-antigravity-our-new-agentic-development-platform/)
-- [Google Developers blog — *All the news from the Google I/O 2026 Developer keynote* (May 19, 2026)](https://developers.googleblog.com/en/all-the-news-from-the-google-i-o-2026-developer-keynote/)
+- [Google Developers blog — *All the news from the Google I/O 2026 Developer keynote* (May 19, 2026)](https://developers.googleblog.com/en/all-the-news-from-the-google-io-2026-developer-keynote/)
 - [Model Context Protocol — official introduction (May 19, 2026)](https://modelcontextprotocol.io/introduction)
 - [Google AI plans — Plus, Pro, Ultra (Italy, June 16, 2026)](https://one.google.com/about/google-ai-plans/)
 - [Google Workspace — *AI tools for business* (June 16, 2026)](https://workspace.google.com/solutions/ai/)

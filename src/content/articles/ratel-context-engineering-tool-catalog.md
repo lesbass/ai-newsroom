@@ -91,7 +91,7 @@ Ratel is the only open-source in-process BM25 catalog (no vector DB, no embeddin
 | **Python SDK** | `ratel-ai` on PyPI — PyO3-bound; `pip install ratel-ai` |
 | **Local distribution** | `@ratel-ai/mcp-server` / `ratel-mcp` — `npx -y @ratel-ai/mcp-server mcp import` drops Ratel in front of an existing Claude Code / Cursor / ChatGPT MCP setup with no code changes |
 | **Catalog contract** | [`protocol/`](https://github.com/ratel-ai/ratel/tree/main/protocol) — wire contract for catalog sources (Slack, Notion, custom tool stores) |
-| **Telemetry** | OpenTelemetry `ratel.*` / `gen_ai.*` funnel spans ([ADR-0007](https://github.com/ratel-ai/ratel/blob/main/docs/adr/0007-telemetry-conventions.md)) |
+| **Telemetry** | OpenTelemetry `ratel.*` / `gen_ai.*` funnel spans ([ADR-0007](https://github.com/ratel-ai/ratel/blob/main/docs/adr/0007-telemetry-two-streams.md)) |
 | **License** | Apache-2.0 for `ratel-ai-core` (explicit patent grant for the engine others embed), MIT for SDKs / telemetry helpers / examples (see [ADR-0009](https://github.com/ratel-ai/ratel/blob/main/docs/adr/0009-licensing.md)) |
 
 The core install is two lines per language:

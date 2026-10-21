@@ -69,7 +69,7 @@ The primary language is **Python**; the repository is independent from LangChain
 3. **The "vendor claim" of 100k+ certified developers should be read with caution.** The [DeepLearning.ai](https://www.deeplearning.ai/short-courses/multi-ai-agent-systems-with-crewai/) course pages are public and linked. The didactic pipeline is real; the number is **a vendor claim, not an independently verifiable metric**.
 4. **The integrated CLI lowers the entry barrier.** `crewai create crew <project_name>` generates a complete skeleton, `crewai run` executes it, `crewai install` locks dependencies, `crewai update` updates the package. The Quickstart reaches a `report.md` in minutes.
 5. **The enterprise AMP bundle (Crew Control Plane) answers a concrete question: how do you observe and manage crews in production?** Tracing, RBAC, team management, SaaS integrations, external event triggers, 24/7 support. **Pricing is not published** as of June 14, 2026.
-6. **The "5.76x faster than LangGraph" benchmark is vendor-produced.** The README's *How CrewAI Compares* section cites a notebook in [`crewAI-examples`](https://github.com/crewAIInc/crewAI-examples/blob/main/Notebooks/CrewAI%20Flows%20%26%20Langgraph/Coding%20Assistant/coding_assistant_eval.ipynb). Not independent.
+6. **The "5.76x faster than LangGraph" benchmark is vendor-produced.** The README's *How CrewAI Compares* section cites a notebook in [`crewAI-examples`](https://github.com/crewAIInc/crewAI-examples/blob/main/notebooks/Coding%20Assistant/coding_assistant_eval.ipynb). Not independent.
 
 ## What to watch
 
