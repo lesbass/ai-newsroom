@@ -187,3 +187,24 @@
 /tags/yt-dlp /tags/cli 301
 /tags/zapier-automationbench /tags/benchmarks 301
 /tags/zero-dependency /tags/developer-tools 301
+
+# Tag consolidation redirects (2026-10-21) — duplicate/typo tags merged (AIN-987)
+/tags/benchmark /tags/benchmarks 301
+/tags/evaluation /tags/benchmarks 301
+/tags/model-context-protocol /tags/mcp 301
+/tags/api-pricing /tags/pricing 301
+/tags/ai-policy /tags/policy 301
+/tags/ai-regulation /tags/policy 301
+/tags/coding-agents /tags/ai-coding 301
+/tags/agentic-coding /tags/ai-coding 301
+/tags/ai-coding-agent /tags/ai-coding 301
+/tags/ai-agent /tags/ai-agents 301
+/tags/agent /tags/ai-agents 301
+/tags/agents /tags/ai-agents 301
+/tags/deepmind /tags/google-deepmind 301
+/tags/hugging-face /tags/huggingface 301
+/tags/deploymentsafety /tags/deployment-safety 301
+/tags/ai-export-controls /tags/export-control 301
+/tags/export-controls /tags/export-control 301
+/tags/acquisition /tags/acquisitions 301
+/tags/m-and-a /tags/acquisitions 301

@@ -3,7 +3,7 @@ title: "crewAI: multi-agent orchestration framework at 53K GitHub stars"
 description: "MIT repository (crewAIInc/crewAI) with 53,499 stars and 7,488 forks as of June 14, 2026. Crews+Flows architecture, 14.27M PyPI downloads in the last month, stable release 1.14.7 from June 11, 2026."
 pubDate: 2026-06-14
 author: "AI Newsroom"
-tags: ["open-source", "crewai", "ai-agents", "developer-tools", "agents", "amp"]
+tags: ["open-source", "crewai", "ai-agents", "developer-tools", "amp"]
 image: "/images/articles/crewai-multi-agent-orchestration-framework/hero.jpg"
 imageAlt: "crewAI open-source repository social preview card"
 imageCredit: "Source: https://github.com/crewAIInc/crewAI · Credit: GitHub / crewAIInc/crewAI · License: MIT · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"

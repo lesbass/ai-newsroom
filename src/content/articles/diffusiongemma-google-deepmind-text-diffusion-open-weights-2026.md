@@ -3,7 +3,7 @@ title: "DiffusionGemma: 1,000+ tokens/sec open-weights text gen"
 description: "Google DeepMind's June 10, 2026 release: a 26B/3.8B text-diffusion model denoising 256 tokens in parallel; ~4x faster than AR on a single H100, Apache 2.0, explicitly experimental."
 pubDate: 2026-06-15
 author: "AI Newsroom"
-tags: ["google-deepmind", "gemma", "diffusiongemma", "text-diffusion", "open-weights", "open-source", "moe", "h100", "blackwell", "vllm", "hugging-face", "unsloth", "tensorrt-llm", "experimental", "high-risk-claim"]
+tags: ["google-deepmind", "gemma", "diffusiongemma", "text-diffusion", "open-weights", "open-source", "moe", "h100", "blackwell", "vllm", "huggingface", "unsloth", "tensorrt-llm", "experimental", "high-risk-claim"]
 image: "/images/articles/diffusiongemma-google-deepmind-text-diffusion-open-weights-2026/hero.jpg"
 imageAlt: "DiffusionGemma social card showing the text-diffusion approach with a Gemma 4 base and parallel token generation"
 imageCredit: "Source: https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/ · Credit: Google · License: no license stated; used editorially · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"

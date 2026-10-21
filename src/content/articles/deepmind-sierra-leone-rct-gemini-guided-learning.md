@@ -3,7 +3,7 @@ title: "DeepMind RCT: AI Tutoring Boosts Math in Sierra Leone"
 description: "Pre-registered RCT in 12 Sierra Leone schools (1,763 students): Gemini Guided Learning delivers +0.258 SD in math over 8 weeks (1.2–1.7 years of learning). Single trial, single country; the achievement gap widens."
 pubDate: 2026-06-10
 author: "AI Newsroom"
-tags: ["research", "education", "rct", "deepmind", "gemini"]
+tags: ["research", "education", "rct", "google-deepmind", "gemini"]
 image: "/images/articles/deepmind-sierra-leone-rct-gemini-guided-learning/hero.jpg"
 imageAlt: "Gemini guided learning RCT in Sierra Leone social card"
 imageCredit: "Source: https://deepmind.google/blog/measuring-the-impact-of-learning-with-ai-in-sierra-leone-and-beyond/ · Credit: Google DeepMind · License: no license stated; used editorially · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"

@@ -12,7 +12,7 @@ tags:
   - ai-sovereignty
   - pricing
   - security
-  - benchmark
+  - benchmarks
   - high-risk-claim
 image: "/images/articles/mistral-large-4-open-weight-public-preview-europe/hero.png"
 imageAlt: "Screenshot of Mistral's \"Introducing Mistral Large 4\" announcement page showing the dark hero artwork with the title \"Le Chonk / Introducing Mistral Large 4\" and the October 6, 2026 date."

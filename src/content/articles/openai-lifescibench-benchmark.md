@@ -3,7 +3,7 @@ title: "LifeSciBench: GPT-Rosalind 36.1%, artifact gap 17pts"
 description: "OpenAI published LifeSciBench, a 750-task life-sciences evaluation. GPT-Rosalind hits 36.1% vs GPT-5.5's 25.7%, but drops 17 points on tasks with artifacts."
 pubDate: 2026-06-20
 author: "AI Newsroom"
-tags: ["openai", "lifesci-bench", "lifescibench", "life-sciences", "benchmark", "gpt-rosalind", "biotech", "pharma", "drug-discovery", "phd-scientist-evaluators", "expert-review", "rubric", "scientific-communication", "translation", "design-optimization", "analysis", "artifact-handling", "evaluation"]
+tags: ["openai", "lifesci-bench", "lifescibench", "life-sciences", "benchmarks", "gpt-rosalind", "biotech", "pharma", "drug-discovery", "phd-scientist-evaluators", "expert-review", "rubric", "scientific-communication", "translation", "design-optimization", "analysis", "artifact-handling"]
 image: "/images/articles/openai-lifescibench-benchmark/hero.jpg"
 imageAlt: "LifeSciBench 16:9 illustration card"
 imageCredit: "Source: https://openai.com/index/introducing-life-sci-bench/ · Credit: OpenAI · License: no license stated; used editorially · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"
