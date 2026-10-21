@@ -15,18 +15,20 @@ Examples observed at the start of the run: `benchmark` (3) vs `benchmarks` (3),
 
 Metadata only — no article prose, dates, titles, images, or sources were edited.
 
-- Normalized 19 source tags to 11 canonical tags across 19 articles and removed duplicate
-  tag values per article.
+- Normalized 24 source tag values to 12 canonical tags across 24 articles and removed
+  duplicate tag values per article.
 - Added 301s in `public/_redirects` for every removed tag URL.
-- Added trailing-slash variants for **all** tag redirect rules (382 tag rules total). The
+- Added trailing-slash variants for **all** tag redirect rules (388 tag rules total). The
   previous tag consolidations only matched the non-slash path; the published canonical
   form is `/tags/<tag>/`, so those old URLs returned 404 instead of 301. This fixes that
   latent regression for every historical tag consolidation, not only the new ones.
+- Hardened the AIN-719 guard to compare **slugified** tags against redirect sources. Raw
+  comparisons missed values such as `m&a` (slug `m-and-a`) and `apache-2.0` (slug
+  `apache-2-0`), which could silently 301 a live tag page out from under its articles.
 
 | Removed | Canonical |
 |---|---|
 | `benchmark`, `evaluation` | `benchmarks` |
-| `model-context-protocol` | `mcp` |
 | `api-pricing` | `pricing` |
 | `ai-policy`, `ai-regulation` | `policy` |
 | `coding-agents`, `agentic-coding`, `ai-coding-agent` | `ai-coding` |
@@ -35,28 +37,33 @@ Metadata only — no article prose, dates, titles, images, or sources were edite
 | `hugging-face` | `huggingface` |
 | `deploymentsafety` | `deployment-safety` |
 | `ai-export-controls`, `export-controls` | `export-control` |
-| `acquisition`, `m-and-a` | `acquisitions` |
+| `acquisition`, `m-and-a`, `m&a` | `acquisitions` |
+| `ai-governance` | `policy` |
+| `model-evaluation` | `benchmarks` |
+| `model-context-protocol`, `mcp-server` | `mcp` |
+| `apache-2.0` | `open-source` |
 
-Commits: `f9b15ed` (tag normalization + 301s), `7ab578c` (trailing-slash coverage).
+Commits: `f9b15ed` (tag normalization + 301s), `7ab578c` (trailing-slash coverage),
+`11f6743` (remaining aliases + slug-aware guard).
 
-## Verification (2026-10-21 10:15–10:18 UTC)
+## Verification (2026-10-21 10:15–10:24 UTC)
 
 | Check | Result |
 |---|---|
-| `npm run build` | 574 pages, pass |
+| `npm run build` | 569 pages, pass |
 | `npm run test:seo` (includes AIN-719 tag-redirect guard) | pass |
 | `npm run test:links` | pass |
 | `npm run test:dates` | pass |
 | `npm run lint` | pass |
-| Removed tag URLs, both slash forms | 38/38 return `301` to the canonical tag |
+| Removed tag URLs, both slash forms | 46/46 return `301` to the canonical tag; resolved URLs return `200` |
 | Pre-existing tag redirect, e.g. `/tags/agent-memory/` | now `301` (was `404`) |
-| `/tags/benchmarks/` | `200`, 5 articles |
-| `/tags/policy/` | `200`, 7 articles |
+| `/tags/benchmarks/` | `200`, 6 articles |
+| `/tags/policy/` | `200`, 8 articles |
 | `/tags/ai-coding/` | `200`, 21 articles |
 | `/tags/ai-agents/` | `200`, 25 articles |
 | `/tags/` index | 78 topics across 72 articles (was 85) |
 | `/sitemap.xml` | 157 URLs, 79 tag URLs, 0 removed-alias URLs, 0 non-canonical hosts |
-| `npm run test:deploy-freshness` | pass — live `<lastBuildDate>` 10:15:39 UTC vs main 10:14:43 UTC |
+| `npm run test:deploy-freshness` | pass — live `<lastBuildDate>` 10:22:31 UTC vs main 10:20:23 UTC |
 | `npm run test:live` | pass — canonical host, symbol font, arrow glyphs, RSS |
 
-Rollback: `git revert 7ab578c f9b15ed` (metadata only; no data migrated).
+Rollback: `git revert 11f6743 7ab578c f9b15ed` (metadata only; no data migrated).
