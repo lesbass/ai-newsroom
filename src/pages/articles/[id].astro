@@ -5,6 +5,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { slugifyTag } from '../../lib/slugify';
+import { tagLabel } from '../../lib/tags';
 import { resolveImageDimensions, resolveHeroWebp } from '../../lib/ogImage';
 
 export async function getStaticPaths() {
@@ -71,9 +72,9 @@ const heroWebp = image && image !== 'exception' ? resolveHeroWebp(image) : null;
         )}
       </div>
       <div style="margin-top: 0.5rem;">
-        {displayTags.map(t => <a href={`/tags/${slugifyTag(t)}/`} class="tag">{t}</a>)}
+        {displayTags.map(t => <a href={`/tags/${slugifyTag(t)}/`} class="tag">{tagLabel(slugifyTag(t))}</a>)}
         {extraTagCount > 0 && <span class="tag">+{extraTagCount}</span>}
-        {highRiskClaims && <span class="tag tag-highlight">high-risk claims</span>}
+        {highRiskClaims && <span class="tag tag-highlight">High-Risk Claims</span>}
       </div>
     </div>
     {image && image !== 'exception' && (

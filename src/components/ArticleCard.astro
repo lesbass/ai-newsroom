@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { slugifyTag } from '../lib/slugify';
+import { tagLabel } from '../lib/tags';
 
 interface Props {
   article: CollectionEntry<'articles'>;
@@ -54,7 +55,7 @@ const sourceCount = sources.length;
         <a
           href={`/tags/${slugifyTag(t)}/`}
           class:list={['tag', i >= MOBILE_VISIBLE_TAGS && 'tag-overflow']}
-        >{t}</a>
+        >{tagLabel(slugifyTag(t))}</a>
       ))}
       {extraTagCount > 0 && <span class="tag tag-more tag-more-wide">+{extraTagCount}</span>}
       {mobileExtraTagCount > 0 && <span class="tag tag-more tag-more-narrow">+{mobileExtraTagCount}</span>}
