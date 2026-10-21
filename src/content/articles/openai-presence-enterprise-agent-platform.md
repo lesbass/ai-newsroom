@@ -10,7 +10,6 @@ tags:
   - customer-service
   - fde
   - limited-ga
-  - high-risk-claim
   - ai-agents
   - openai-deployment-company
   - ai-coding

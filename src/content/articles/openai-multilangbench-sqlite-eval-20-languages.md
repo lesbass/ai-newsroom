@@ -14,7 +14,6 @@ tags:
   - cobol
   - fortran
   - developer-tools
-  - high-risk-claim
 highRiskClaims: true
 sources:
   - title: "Advancing coding in low-resource programming languages"

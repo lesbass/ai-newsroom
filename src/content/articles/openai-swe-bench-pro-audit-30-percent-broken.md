@@ -11,7 +11,6 @@ tags:
   - openai-blog
   - benchmarks
   - ai-coding
-  - high-risk-claim
   - preparedness-framework
   - deployment-safety
   - ai-safety

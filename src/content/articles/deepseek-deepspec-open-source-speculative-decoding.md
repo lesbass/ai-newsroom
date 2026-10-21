@@ -19,7 +19,6 @@ tags:
   - specforge
   - sglang
   - open-source
-  - high-risk-claim
 image: "/images/articles/deepseek-deepspec-open-source-speculative-decoding/hero-desktop.png"
 imageAlt: "Screenshot of the deepseek-ai/DeepSpec GitHub repository landing page on 2026-06-28, showing the README's 'Supported Algorithms' line naming DSpark, DFlash, and Eagle3, the MIT license badge, the 1,546-star / 128-fork counts, the 8-GPU hardware assumption, the 38 TB target-cache storage warning for the Qwen3-4B default, and the nine-evaluation-benchmark set (gsm8k, math500, aime25, humaneval, mbpp, livecodebench, mt-bench, alpaca, arena-hard-v2)."
 imageCredit: "Source: github.com/deepseek-ai/DeepSpec · Captured 2026-06-28 via Chromium (desktop, 1280x800) using @sparticuz/chromium · License: MIT (project) / screenshot used editorially for the DeepSpec article"

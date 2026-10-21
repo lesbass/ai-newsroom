@@ -405,3 +405,9 @@
 /tags/mcp-server/ /tags/mcp 301
 /tags/model-evaluation /tags/benchmarks 301
 /tags/model-evaluation/ /tags/benchmarks 301
+
+# Internal-marker tag redirects (2026-10-21) — highRiskClaims is article metadata, not a topic (AIN-1005)
+/tags/high-risk-claim /articles/ 301
+/tags/high-risk-claim/ /articles/ 301
+/tags/high-risk-claims /articles/ 301
+/tags/high-risk-claims/ /articles/ 301

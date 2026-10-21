@@ -3,7 +3,7 @@ title: "OpenAI ships ChatGPT health; o3 re-solves 4.8% of rare"
 description: "OpenAI's June 18, 2026 release: GPT-5.5 Instant rated higher than physicians on a 3,500-response panel; o3 Deep Research surfaces 18 of 376 unsolved rare-disease cases (4.8%)."
 pubDate: 2026-06-20
 author: "AI Newsroom"
-tags: ["openai", "chatgpt", "gpt-5-5-instant", "health-ai", "rare-disease", "boston-childrens", "nejm-ai", "o3-deep-research", "manton-center", "acmg-amp", "clinical-ai", "healthbench", "healthbench-professional", "physician-panel", "gpt-rosalind", "high-risk-claim"]
+tags: ["openai", "chatgpt", "gpt-5-5-instant", "health-ai", "rare-disease", "boston-childrens", "nejm-ai", "o3-deep-research", "manton-center", "acmg-amp", "clinical-ai", "healthbench", "healthbench-professional", "physician-panel", "gpt-rosalind"]
 image: "/images/articles/openai-health-intelligence-chatgpt-boston-childrens-rare-disease/hero.jpg"
 imageAlt: "OpenAI health intelligence announcement card with the title 'Using AI to help physicians diagnose rare genetic diseases affecting children' over a dark background"
 imageCredit: "Source: https://openai.com/index/diagnose-rare-childhood-diseases/ · Credit: OpenAI · License: no license stated; used editorially · Self-hosted optimized copy (JPEG), retrieved 2026-10-13"

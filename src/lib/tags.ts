@@ -138,8 +138,6 @@ const TAG_LABELS: Record<string, string> = {
   'gpt-6': 'GPT-6',
   'gpt-live': 'GPT-Live',
   granite: 'Granite',
-  'high-risk-claim': 'High-Risk Claims',
-  'high-risk-claims': 'High-Risk Claims',
   'hybrid-inference': 'Hybrid Inference',
   ibm: 'IBM',
   'icml-2026': 'ICML 2026',
