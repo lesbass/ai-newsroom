@@ -34,7 +34,7 @@ Run from a checkout of `lesbass/ai-newsroom` on `main`:
 git fetch origin main
 npm run test:deploy-freshness   # live RSS <lastBuildDate> vs newest origin/main commit, 10 min grace
 npm run test:live               # canonical host, symbol font, arrow glyphs, RSS
-curl -s https://news.lesbass.com/sitemap.xml | grep -c '<loc>'   # expect 164, all canonical host
+curl -s https://news.lesbass.com/sitemap.xml | grep -c '<loc>'   # match the built dist/sitemap.xml; all canonical host
 curl -s https://news.lesbass.com/rss.xml | grep '<lastBuildDate>'
 curl -s https://news.lesbass.com/robots.txt
 ```
@@ -44,6 +44,9 @@ Pass conditions:
 - `test:deploy-freshness` reports production at or ahead of `origin/main` within the grace
   window.
 - `test:live` is 5/5.
+- The live `/sitemap.xml` `<loc>` count matches the freshly built `dist/sitemap.xml`. Do not
+  assert a fixed number: it moves when articles are added or tags are consolidated (157 on
+  2026-10-21, 164 on 2026-10-13). A mismatch against the built artifact is the signal.
 - Every absolute URL in `/sitemap.xml` and `/rss.xml`, plus the robots `Sitemap:` line, uses
   `https://news.lesbass.com/` — never `ai-newsroom.pages.dev` or
   `ai-newsroom.lesbass.workers.dev`.
