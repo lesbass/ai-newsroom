@@ -55,6 +55,10 @@ const OS_ALLOWLIST = [
   [0x4e00, 0x9fff],
   [0xf900, 0xfaff],
   [0xff00, 0xffef],
+  // Hangul syllables in article references to Korean-language resources
+  // (for example the README language list in the Agent-Reach article).
+  // Same reasoning as CJK: a Hangul face would add megabytes for a few words.
+  [0xac00, 0xd7af],
   // Emoji and their joiners/variation selectors.
   [0x1f000, 0x1faff],
   [0x200d, 0x200d],
