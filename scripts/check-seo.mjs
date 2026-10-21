@@ -149,7 +149,7 @@ function checkPage(rel, html, path) {
     } else {
       const titleMatch = html.match(/<title>([^<]+)<\/title>/);
       if (titleMatch) {
-        const title = titleMatch[1];
+        const title = decodeEntities(titleMatch[1]);
         if (title.length < 10) {
           console.warn(`⚠ ${rel}: title too short (${title.length} chars): "${title}"`);
           warnings++;
@@ -167,7 +167,7 @@ function checkPage(rel, html, path) {
       console.error(`❌ ${rel}: missing meta description`);
       errors++;
     } else {
-      const desc = descMatch[1];
+      const desc = decodeEntities(descMatch[1]);
       if (desc.length < 40) {
         console.warn(`⚠ ${rel}: description too short (${desc.length} chars)`);
         warnings++;
