@@ -60,7 +60,7 @@ const topTags = [...tagMap.entries()]
         <h2 class="section-label">Browse by topic</h2>
         <div class="tag-cloud">
           {topTags.map(([slug, count]) => (
-            <a href={`/tags/${slug}/`} class="tag">{tagLabel(slug)} <span style="opacity:0.65; font-size:0.7rem;">{count}</span></a>
+            <a href={`/tags/${slug}/`} class="tag">{tagLabel(slug)}<span class="tag-count">{count}</span></a>
           ))}
         </div>
         <p style="margin-top: 0.5rem;">
