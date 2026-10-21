@@ -880,6 +880,9 @@ const jsonLd = article
       margin: clamp(3rem, 8vw, 5rem) 0 2rem;
       text-align: left;
     }
+    /* Keep "showing 1–20 of 94" as one unit so the total never ends up alone
+       on its own line at 320 px. */
+    .listing-range { white-space: nowrap; }
     .tag-page-header h1 { font-size: clamp(2.4rem, 6vw, 4rem); margin-bottom: 0.35rem; }
     .tag-page-header .tag-page-count { color: var(--color-muted); font-size: 0.9375rem; }
     .tags-index-grid {
