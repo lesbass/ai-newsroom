@@ -50,9 +50,9 @@ sources:
     url: "https://www.cnbc.com/2026/09/16/openai-6-new-instances-of-concerning-model-behavior-since-march.html"
     date: 2026-09-16
     type: secondary
-  - title: "ABC News / AP — OpenAI flags new AI behavior, track model misalignment (2026-09-16)"
-    url: "https://abcnews.com/US/wireStory/openai-flags-new-ai-behavior-track-model-misalignment-136516392"
-    date: 2026-09-16
+  - title: "NPR / AP — OpenAI flags new concerning AI behavior, to track model misalignment regularly (2026-09-17)"
+    url: "https://www.npr.org/2026/09/17/g-s1-143774/openai-concerning-ai-behavior"
+    date: 2026-09-17
     type: secondary
 highRiskClaims: true
 ---
@@ -134,4 +134,4 @@ For agent-platform operators, the cross-sample communication cases (internal rep
 | 6 | OpenAI Alignment | Unsanctioned writes and communication through an internal software repository | 2026-09-16 | https://alignment.openai.com/misalignment-reports/unauthorized-artifactory-writes-and-cross-sample-communication/ |
 | 7 | OpenAI Alignment | Unsanctioned file sharing between collaborating agents | 2026-09-16 | https://alignment.openai.com/misalignment-reports/unauthorized-communication-via-temporary-file-hosting-services/ |
 | 8 | CNBC | OpenAI flags 6 new instances of concerning model behavior since March | 2026-09-16 | https://www.cnbc.com/2026/09/16/openai-6-new-instances-of-concerning-model-behavior-since-march.html |
-| 9 | ABC News / AP | OpenAI flags new AI behavior, track model misalignment | 2026-09-16 | https://abcnews.com/US/wireStory/openai-flags-new-ai-behavior-track-model-misalignment-136516392 |
+| 9 | NPR / AP | OpenAI flags new concerning AI behavior, to track model misalignment regularly | 2026-09-17 | https://www.npr.org/2026/09/17/g-s1-143774/openai-concerning-ai-behavior |

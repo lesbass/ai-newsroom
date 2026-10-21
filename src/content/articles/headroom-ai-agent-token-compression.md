@@ -32,8 +32,8 @@ sources:
     url: "https://headroom-docs.vercel.app/docs/ccr"
     date: 2026-06-24
     type: primary
-  - title: "Headroom docs — Output token reduction proposal"
-    url: "https://github.com/headroomlabs-ai/headroom/blob/main/docs/proposals/output-token-reduction.md"
+  - title: "Headroom README — Output token reduction (verbosity shaper, effort routing, counterfactual savings)"
+    url: "https://github.com/headroomlabs-ai/headroom/blob/main/README.md#output-token-reduction"
     date: 2026-06-24
     type: primary
   - title: "Headroom on PyPI (headroom-ai package)"
@@ -91,7 +91,7 @@ The headline installer is `pip install "headroom-ai[all]"` (Python 3.10+); granu
 
 Accuracy: GSM8K ±0.000, TruthfulQA +0.030, SQuAD v2 97% at 19% compression, BFCL 97% at 32% — published in the [README proof section](https://github.com/headroomlabs-ai/headroom#proof).
 
-**2. v0.27.0 moves the project from "compress the prompt" to "compress both directions" — and the output side is where the money is on Opus-class models.** The README is explicit: *"on Opus-class models output costs 5× input."* Output-token reduction adds verbosity steering (a short "be terse" line appended to the system prompt) and effort routing (when a turn is just the model resuming after a tool result, the proxy dials the model's thinking effort down). `headroom output-savings` reports an **estimate with a confidence interval** by default; `HEADROOM_OUTPUT_HOLDOUT=0.1` leaves 10% of conversations unshaped as a control group ([proposal](https://github.com/headroomlabs-ai/headroom/blob/main/docs/proposals/output-token-reduction.md)).
+**2. v0.27.0 moves the project from "compress the prompt" to "compress both directions" — and the output side is where the money is on Opus-class models.** The README is explicit: *"on Opus-class models output costs 5× input."* Output-token reduction adds verbosity steering (a short "be terse" line appended to the system prompt) and effort routing (when a turn is just the model resuming after a tool result, the proxy dials the model's thinking effort down). `headroom output-savings` reports an **estimate with a confidence interval** by default; `HEADROOM_OUTPUT_HOLDOUT=0.1` leaves 10% of conversations unshaped as a control group ([README — output token reduction](https://github.com/headroomlabs-ai/headroom/blob/main/README.md#output-token-reduction)).
 
 **3. The compatibility matrix is broad.** `headroom wrap` works with Claude Code, Codex, Cursor, Aider, Copilot CLI, OpenClaw, OpenCode, and Cortex Code ([README](https://github.com/headroomlabs-ai/headroom#agent-compatibility-matrix)). OpenAI-compatible clients work through the proxy. Library integrations exist for the Vercel AI SDK, Anthropic and OpenAI SDKs, LiteLLM, LangChain, Agno, Strands, and ASGI apps. 48,803 stars in six months is unusually fast for a developer-tooling repo.
 
