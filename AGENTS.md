@@ -27,6 +27,10 @@ Run `npm run audit` before publication or PRs that affect output. For smaller ch
 
 Every article must include frontmatter matching `src/content.config.ts`: `title`, `description`, `pubDate`, `author`, `tags`, and dated `sources` where applicable. Do not publish future-dated articles. Claims need dated, linkable sources; prefer primary sources. Keep quotations short, add `imageAlt` and `imageCredit`, and avoid internal Paperclip issue references in public articles.
 
+## Publication Completion
+
+A content or citation repair is complete only when its commit is on `origin/main` and the live URL at `https://news.lesbass.com/` reflects it. A commit that exists only in an agent workspace is not published: push it, or open an explicit handoff issue naming the unpushed commit. For citation repairs, verify that the live page no longer emits the dead URL and that each replacement URL resolves.
+
 ## Commit & Pull Request Guidelines
 
 Recent history uses concise, imperative subjects with either `fix:` or an issue prefix, for example `fix: remove robots.txt RSS block...` or `AIN-245: Publish CodeBurn article...`. PRs should summarize the user-visible change, list validation commands run, link the relevant AIN issue when available, and include screenshots for visual or mobile-impacting changes.
