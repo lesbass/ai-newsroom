@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { slugifyTag } from '../lib/slugify';
 import { tagLabel } from '../lib/tags';
+import { formatHeadline } from '../lib/headline';
 
 interface Props {
   article: CollectionEntry<'articles'>;
@@ -66,7 +67,7 @@ const sourceCount = sources.length;
 
 <div class={featured ? 'card-featured' : 'article-card'}>
   <Heading class="article-card-title">
-    <a href={url}>{title}</a>
+    <a href={url} set:html={formatHeadline(title)} />
   </Heading>
   <div class="article-meta">
     <span class="meta-item">{date}</span>

@@ -7,6 +7,7 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import { slugifyTag } from '../../lib/slugify';
 import { tagLabel } from '../../lib/tags';
 import { resolveImageDimensions, resolveHeroWebp } from '../../lib/ogImage';
+import { formatHeadline } from '../../lib/headline';
 
 export async function getStaticPaths() {
   const posts = await getCollection('articles');
@@ -62,7 +63,7 @@ const heroWebp = image && image !== 'exception' ? resolveHeroWebp(image) : null;
       current={title}
     />
     <div class="article-header">
-      <h1 class={headlineClass}>{title}</h1>
+      <h1 class={headlineClass} set:html={formatHeadline(title)} />
       <div class="article-meta">
         <span class="meta-item">{date}{updated && <span> (updated {updated})</span>}</span>
         <span class:list={['meta-item', 'meta-author', author === 'AI Newsroom' && 'meta-author-brand']}><span class="sep-dot" aria-hidden="true">&middot;</span><span>{author}</span></span>

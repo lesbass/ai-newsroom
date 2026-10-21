@@ -632,6 +632,9 @@ const jsonLd = article
       color: inherit;
       text-decoration: none;
     }
+    /* Keep short hyphenated names such as GPT-6 on one line; see
+       src/lib/headline.ts. Long compounds are left breakable. */
+    .no-break { white-space: nowrap; }
     .article-meta {
       color: var(--color-muted);
       font-family: var(--font-mono);

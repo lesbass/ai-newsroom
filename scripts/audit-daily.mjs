@@ -79,6 +79,7 @@ const checks = [
   ['Contrast', 'npm run test:contrast'],
   ['Targets', 'npm run test:targets'],
   ['Glyphs', 'npm run test:glyphs'],
+  ['HeadlineBreaks', 'npm run test:headline'],
   ['DeployFreshness', 'npm run test:deploy-freshness'],
 ];
 
