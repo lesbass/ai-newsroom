@@ -4,6 +4,10 @@ function isCurrent(href: string): boolean {
   if (href === '/') return currentPath === '/';
   return currentPath.startsWith(href);
 }
+const homeCurrent = isCurrent('/') && !isCurrent('/articles') && !isCurrent('/tags') && !isCurrent('/corrections');
+const articlesCurrent = isCurrent('/articles');
+const topicsCurrent = isCurrent('/tags');
+const correctionsCurrent = isCurrent('/corrections');
 ---
 <header>
   <div class="container">
@@ -14,11 +18,11 @@ function isCurrent(href: string): boolean {
         <span class="site-logo-kicker">lesbass signal desk</span>
       </span>
     </a>
-    <nav class="nav-links">
-      <a href="/" class={isCurrent('/') && !isCurrent('/articles') && !isCurrent('/tags') && !isCurrent('/corrections') ? 'current' : ''}>Home</a>
-      <a href="/articles/" class={isCurrent('/articles') ? 'current' : ''}>Articles</a>
-      <a href="/tags/" class={isCurrent('/tags') ? 'current' : ''}>Topics</a>
-      <a href="/corrections/" class={isCurrent('/corrections') ? 'current' : ''}>Corrections</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/" class={homeCurrent ? 'current' : ''} aria-current={homeCurrent ? 'page' : undefined}>Home</a>
+      <a href="/articles/" class={articlesCurrent ? 'current' : ''} aria-current={articlesCurrent ? 'page' : undefined}>Articles</a>
+      <a href="/tags/" class={topicsCurrent ? 'current' : ''} aria-current={topicsCurrent ? 'page' : undefined}>Topics</a>
+      <a href="/corrections/" class={correctionsCurrent ? 'current' : ''} aria-current={correctionsCurrent ? 'page' : undefined}>Corrections</a>
       <a href="/rss.xml">RSS</a>
     </nav>
   </div>
