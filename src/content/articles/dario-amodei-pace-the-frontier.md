@@ -13,11 +13,11 @@ sources:
     date: 2026-09-12
     type: primary
   - title: "Sam Altman on X — endorsed pacing the frontier, committed OpenAI to matching embedded-evaluator model (Sep 12 2026)"
-    url: "https://x.com/sama/status/2033088329838413030"
+    url: "https://x.com/sama/status/2098811563415150910"
     date: 2026-09-12
     type: primary
   - title: "Elon Musk on X — \"Dario is right\" (Sep 12 2026)"
-    url: "https://x.com/elonmusk/status/2033097429553438924"
+    url: "https://x.com/elonmusk/status/2098789109980332057"
     date: 2026-09-12
     type: primary
   - title: "OpenAI — \"The AI Policy Window\" (essay, Sep 9 2026; mandatory national safety regulation, industry standards)"
@@ -46,7 +46,7 @@ sources:
 highRiskClaims: true
 ---
 
-On September 12, 2026, Anthropic CEO Dario Amodei published an essay titled ["We Must Pace the Frontier"](https://darioamodei.com/post/we-must-pace-the-frontier), committing Anthropic unilaterally to giving embedded external evaluators employee-like access to its systems. Within hours, Sam Altman [pledged OpenAI would do the same](https://x.com/sama/status/2033088329838413030), and Elon Musk [posted "Dario is right"](https://x.com/elonmusk/status/2033097429553438924). For the first time, three rival frontier-lab CEOs publicly converged on slowing capability progress — and one put a concrete commitment on the table.
+On September 12, 2026, Anthropic CEO Dario Amodei published an essay titled ["We Must Pace the Frontier"](https://darioamodei.com/post/we-must-pace-the-frontier), committing Anthropic unilaterally to giving embedded external evaluators employee-like access to its systems. Within hours, Sam Altman [pledged OpenAI would do the same](https://x.com/sama/status/2098811563415150910), and Elon Musk [posted "Dario is right"](https://x.com/elonmusk/status/2098789109980332057). For the first time, three rival frontier-lab CEOs publicly converged on slowing capability progress — and one put a concrete commitment on the table.
 
 ## Why it matters
 
@@ -101,8 +101,8 @@ METR — the organization that investigated the [OpenAI-Hugging Face incident](h
 ## Sources
 
 - Amodei, Dario. ["We Must Pace the Frontier"](https://darioamodei.com/post/we-must-pace-the-frontier). September 12, 2026.
-- Altman, Sam. [Post on X](https://x.com/sama/status/2033088329838413030). September 12, 2026.
-- Musk, Elon. [Post on X](https://x.com/elonmusk/status/2033097429553438924). September 12, 2026.
+- Altman, Sam. [Post on X](https://x.com/sama/status/2098811563415150910). September 12, 2026.
+- Musk, Elon. [Post on X](https://x.com/elonmusk/status/2098789109980332057). September 12, 2026.
 - OpenAI. ["The AI Policy Window"](https://openai.com/index/ai-policy-window/). September 9, 2026.
 - Pachocki, Jakub. ["An Alien Mind"](https://openai.com/index/an-alien-mind/). September 6, 2026.
 - Anthropic. [Threat intelligence report](https://www.anthropic.com/threat-intelligence-report-september-2026). September 10, 2026.
@@ -116,8 +116,8 @@ METR — the organization that investigated the [OpenAI-Hugging Face incident](h
 | Anthropic unilaterally commits to embedded evaluators | https://darioamodei.com/post/we-must-pace-the-frontier | 2026-09-12 | Amodei essay |
 | "pacing does not mean halting model training or technical progress" | https://darioamodei.com/post/we-must-pace-the-frontier | 2026-09-12 | Amodei essay |
 | "in 6–12 months such a swarm could be capable of taking over the entire internet" | https://darioamodei.com/post/we-must-pace-the-frontier | 2026-09-12 | Amodei's prediction |
-| Sam Altman pledged to adopt embedded-evaluators model | https://x.com/sama/status/2033088329838413030 | 2026-09-12 | Altman X post |
-| Elon Musk wrote "Dario is right" | https://x.com/elonmusk/status/2033097429553438924 | 2026-09-12 | Musk X post |
+| Sam Altman pledged to adopt embedded-evaluators model | https://x.com/sama/status/2098811563415150910 | 2026-09-12 | Altman X post |
+| Elon Musk wrote "Dario is right" | https://x.com/elonmusk/status/2098789109980332057 | 2026-09-12 | Musk X post |
 | OpenAI called for mandatory national AI safety regulation | https://openai.com/index/ai-policy-window/ | 2026-09-09 | OpenAI essay |
 | Jakub Pachocki warned "no lab has solved alignment" | https://openai.com/index/an-alien-mind/ | 2026-09-06 | Pachocki essay |
 | Anthropic documented 8 months of disrupted AI misuse | https://www.anthropic.com/threat-intelligence-report-september-2026 | 2026-09-10 | Anthropic threat-intelligence report |
