@@ -51,6 +51,22 @@ Pass conditions:
 `DEPLOY_FRESHNESS_GRACE_MINUTES` and `CHECK_URL` override the defaults when testing another
 target; production runs use the defaults.
 
+### Build latency before you escalate
+
+Cloudflare only posts the `Workers Builds` check run when the build **completes**, so a
+queued build is invisible on GitHub. Normal builds today finish in 1–3 minutes, but on
+2026-10-21 a docs-only commit at `15:18:05Z` did not complete until `15:36:26Z` — about 18
+minutes, with no failing check and no Cloudflare incident. During that window
+`test:deploy-freshness` correctly reported production behind `origin/main`.
+
+Before treating a stale reading as an outage:
+
+1. `gh api "repos/lesbass/ai-newsroom/commits/$(git rev-parse origin/main)/check-runs"` —
+   if a `Workers Builds` run exists, read its `conclusion`.
+2. If no check run exists yet, give the queue up to ~20 minutes and re-check the RSS
+   `lastBuildDate`; a delayed build is not a failed deploy.
+3. Only `conclusion: failure`, or no build after ~20 minutes, is an escalation signal.
+
 ## Disposition
 
 - **Green:** post one compact evidence line (commit, live build time, sitemap URL count,
