@@ -125,7 +125,9 @@ for (const path of pagePaths) {
       continue;
     }
     if (href.startsWith('http') || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('data:')) continue;
-    let target = href;
+    // Resolve the file path only: fragments (#anchor) and query strings are not
+    // part of the built filename, so `/page/#section` must check `/page/`.
+    let target = href.split(/[?#]/, 1)[0];
     if (target.startsWith('/')) {
       // absolute
     } else {

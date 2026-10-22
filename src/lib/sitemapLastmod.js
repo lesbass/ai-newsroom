@@ -132,5 +132,8 @@ export function listingLastmods(articles) {
   // build date is a content modification.
   map.set('/corrections/', null);
 
+  // Editorial standards is hand-edited policy copy, not dated article content.
+  map.set('/editorial-standards/', null);
+
   return map;
 }

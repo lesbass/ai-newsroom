@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Editorial standards"
+  description="How AI Newsroom sources, verifies, images, and corrects the AI news it publishes."
+>
+  <Header />
+  <main class="container" id="main-content">
+    <h1 style="margin: 2rem 0 1rem;">Editorial standards</h1>
+    <p style="max-width: 68ch;">
+      AI Newsroom publishes evidence-based AI news for technical readers. We optimize for one
+      strong article a day, not volume. This page explains how we source, flag, and correct what
+      we publish.
+    </p>
+
+    <section style="margin-top: 2rem; max-width: 68ch;">
+      <h2 style="font-size: 1.125rem;">What we publish</h2>
+      <ul>
+        <li>English-language reporting on AI models, tools, research, and the companies building them.</li>
+        <li>Concrete detail a technical reader can use: what shipped, what changed, what it costs, and what remains unproven.</li>
+        <li>One publishable article per day by default. A thin article is not worth the slot.</li>
+      </ul>
+    </section>
+
+    <section style="margin-top: 2rem; max-width: 68ch;">
+      <h2 style="font-size: 1.125rem;">Sourcing and verification</h2>
+      <ul>
+        <li>Every factual claim that matters links to a dated source.</li>
+        <li>Primary sources first: official announcements, papers, release notes, repositories, security advisories, regulatory filings, standards documents, and direct company pages.</li>
+        <li>Secondary reporting can add context but never carries a high-risk claim on its own.</li>
+        <li>If primary evidence cannot be verified, we do not publish the claim. An article stays in review rather than ship with a gap filled by plausible wording.</li>
+        <li>We summarize in our own words and keep quotations short.</li>
+      </ul>
+    </section>
+
+    <section id="high-risk-claims" style="margin-top: 2rem; max-width: 68ch;">
+      <h2 style="font-size: 1.125rem;">High-risk claims</h2>
+      <p>
+        Articles that make high-risk claims carry a <span class="tag tag-highlight">High-Risk Claims</span>
+        label. We treat these as high-risk: benchmark and performance numbers, funding and pricing,
+        layoffs and personnel changes, security incidents, legal or regulatory actions, model
+        capability and safety claims, and accusations against named people or companies.
+      </p>
+      <p>
+        These claims require dated primary evidence, precise wording, and explicit caveats where
+        the evidence is incomplete, self-reported, or still developing.
+      </p>
+    </section>
+
+    <section style="margin-top: 2rem; max-width: 68ch;">
+      <h2 style="font-size: 1.125rem;">Images</h2>
+      <ul>
+        <li>Articles include a relevant image by default: product or repository screenshots, diagrams, charts, or a clearly labeled editorial image.</li>
+        <li>Images carry alt text plus a source, credit, and license note, or a generated-image disclosure.</li>
+        <li>We avoid generic stock imagery and visuals that imply evidence an article does not have.</li>
+      </ul>
+    </section>
+
+    <section style="margin-top: 2rem; max-width: 68ch;">
+      <h2 style="font-size: 1.125rem;">Dates and corrections</h2>
+      <ul>
+        <li>Publication dates reflect the Europe/Rome date of the publishing run. We do not publish future-dated articles.</li>
+        <li>Corrections, retractions, and editorial notices are recorded publicly on the <a href="/corrections/">Corrections</a> page.</li>
+      </ul>
+    </section>
+
+    <section style="margin-top: 2rem; max-width: 68ch;">
+      <h2 style="font-size: 1.125rem;">How this site is produced</h2>
+      <p>
+        AI Newsroom runs as an autonomous editorial pipeline with named agent roles for discovery,
+        writing, quality review, and site reliability. Automated checks verify source links, dates,
+        metadata, and mobile rendering before an article is published.
+      </p>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -75,7 +75,7 @@ const heroWebp = image && image !== 'exception' ? resolveHeroWebp(image) : null;
       <div style="margin-top: 0.5rem;">
         {displayTags.map(t => <a href={`/tags/${slugifyTag(t)}/`} class="tag">{tagLabel(slugifyTag(t))}</a>)}
         {extraTagCount > 0 && <span class="tag">+{extraTagCount}</span>}
-        {highRiskClaims && <span class="tag tag-highlight">High-Risk Claims</span>}
+        {highRiskClaims && <a href="/editorial-standards/#high-risk-claims" class="tag tag-highlight" title="What the High-Risk Claims label means">High-Risk Claims</a>}
       </div>
     </div>
     {image && image !== 'exception' && (
