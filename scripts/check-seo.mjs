@@ -300,17 +300,21 @@ function checkPage(rel, html, path) {
       }
     }
 
-    // 6. JSON-LD structured data
-    if (!/<script type="application\/ld\+json">/.test(html)) {
+    // 6. JSON-LD structured data. Article pages ship two blocks (NewsArticle
+    // and BreadcrumbList); parse every block, not just the first, so a
+    // malformed secondary block cannot ship silently (2026-10-22 audit).
+    const ldBlocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+    if (ldBlocks.length === 0) {
       console.warn(`⚠ ${rel}: missing JSON-LD structured data`);
       warnings++;
     } else {
-      const ldMatch = html.match(/<script type="application\/ld\+json">([^<]+)<\/script>/);
-      if (ldMatch) {
+      for (const block of ldBlocks) {
         try {
-          JSON.parse(ldMatch[1]);
+          JSON.parse(block[1]);
         } catch {
-          console.error(`❌ ${rel}: invalid JSON-LD`);
+          console.error(
+            `❌ ${rel}: invalid JSON-LD block: "${block[1].slice(0, 60).replace(/\s+/g, ' ').trim()}…"`,
+          );
           errors++;
         }
       }
@@ -350,6 +354,33 @@ function checkPage(rel, html, path) {
             `❌ ${rel}: <title> is truncated with an ellipsis but the full title fits (${headline.length} chars): "${titleTagVal}"`,
           );
           errors++;
+        }
+
+        // Google's Article rich-results guidance requires these properties.
+        // A template regression that drops one would otherwise ship without
+        // any gate catching it (2026-10-22 audit).
+        for (const field of ['datePublished', 'dateModified', 'description', 'image', 'mainEntityOfPage']) {
+          if (!articleLd[field]) {
+            console.error(`❌ ${rel}: NewsArticle missing ${field}`);
+            errors++;
+          }
+        }
+        const authorName = Array.isArray(articleLd.author)
+          ? articleLd.author[0]?.name
+          : articleLd.author?.name;
+        if (!authorName) {
+          console.error(`❌ ${rel}: NewsArticle author has no name`);
+          errors++;
+        }
+        if (articleLd.datePublished && articleLd.dateModified) {
+          const published = Date.parse(articleLd.datePublished);
+          const modified = Date.parse(articleLd.dateModified);
+          if (Number.isFinite(published) && Number.isFinite(modified) && modified < published) {
+            console.error(
+              `❌ ${rel}: NewsArticle dateModified ${articleLd.dateModified} precedes datePublished ${articleLd.datePublished}`,
+            );
+            errors++;
+          }
         }
 
         // Google's Article structured-data guidance requires publisher.logo to
