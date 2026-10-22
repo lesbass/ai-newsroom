@@ -1,6 +1,6 @@
 import type { Element, Root, RootContent } from 'hast';
 import { existsSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readImageSizeFile } from '../../scripts/lib/image-size.mjs';
 
@@ -28,6 +28,58 @@ function findPublicDir(): string | null {
 }
 
 const PUBLIC_DIR = findPublicDir();
+
+/**
+ * WebP `<source>` data for a local inline raster, if the build generated
+ * variants for it.
+ *
+ * `scripts/optimize-hero-images.mjs` writes `<name>.webp` and `<name>-900.webp`
+ * beside every local article image, including Markdown body images. Returning
+ * null when no variant exists keeps the plain `<img>` fallback intact for
+ * remote images, SVGs, and failed generations.
+ */
+function resolveInlineWebp(src: string): { srcset: string; sizes: string } | null {
+  if (!PUBLIC_DIR || !src.startsWith('/') || /^\/\//.test(src)) return null;
+  if (!/\.(png|jpe?g)$/i.test(src)) return null;
+  const file = join(PUBLIC_DIR, src.replace(/^\/+/, ''));
+  if (!existsSync(file)) return null;
+
+  const fullHref = src.replace(/\.(png|jpe?g)$/i, '.webp');
+  const mobileHref = src.replace(
+    /[^/]+$/,
+    `${basename(src).replace(/\.(png|jpe?g)$/i, '')}-900.webp`,
+  );
+  const hasFull = existsSync(join(PUBLIC_DIR, fullHref.replace(/^\/+/, '')));
+  const hasMobile = existsSync(join(PUBLIC_DIR, mobileHref.replace(/^\/+/, '')));
+  if (!hasFull && !hasMobile) return null;
+
+  const entries: string[] = [];
+  if (hasMobile) entries.push(`${mobileHref} 900w`);
+  if (hasFull) {
+    const size = readImageSizeFile(file);
+    entries.push(size ? `${fullHref} ${size.width}w` : fullHref);
+  }
+
+  return {
+    srcset: entries.join(', '),
+    sizes: '(max-width: 800px) 100vw, 760px',
+  };
+}
+
+function wrapInPicture(node: Element, webp: { srcset: string; sizes: string }): Element {
+  const source: Element = {
+    type: 'element',
+    tagName: 'source',
+    properties: { type: 'image/webp', srcset: webp.srcset, sizes: webp.sizes },
+    children: [],
+  };
+  return {
+    type: 'element',
+    tagName: 'picture',
+    properties: {},
+    children: [source, node],
+  };
+}
 
 /**
  * Normalize an image `src` / frontmatter path so the same asset compares equal
@@ -131,8 +183,9 @@ export function rehypeLazyImages() {
 
     if (heroPath) dedupeHero(tree.children, heroPath);
 
-    const visitImgs = (children: RootContent[]) => {
-      for (const node of children) {
+    const visitImgs = (children: RootContent[], insidePicture = false) => {
+      for (let i = 0; i < children.length; i++) {
+        const node = children[i];
         if (node.type !== 'element') continue;
         if (node.tagName === 'img') {
           const props = node.properties || {};
@@ -158,8 +211,20 @@ export function rehypeLazyImages() {
             }
           }
           node.properties = props;
+
+          // Serve inline body rasters from the WebP variants generated at
+          // build time, with the original PNG/JPEG as the fallback `src`.
+          if (!insidePicture) {
+            const webp = resolveInlineWebp(src);
+            if (webp) {
+              children[i] = wrapInPicture(node, webp);
+              continue;
+            }
+          }
         }
-        if (node.children) visitImgs(node.children);
+        if (node.children) {
+          visitImgs(node.children, insidePicture || node.tagName === 'picture');
+        }
       }
     };
     visitImgs(tree.children);

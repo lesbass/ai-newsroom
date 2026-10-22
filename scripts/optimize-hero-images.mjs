@@ -1,15 +1,22 @@
 /**
- * Generate WebP variants for locally hosted article hero images.
+ * Generate WebP variants for locally hosted article images.
  *
  * Local PNG/JPEG heroes are the mobile LCP element on article pages
  * (`loading="eager"`), and the captured screenshots are large (up to ~860 KB).
  * WebP cuts them by roughly an order of magnitude at equivalent visual quality,
  * which matters most on the narrow viewports the site targets.
  *
- * For every local raster hero referenced by an article's `image:` frontmatter
- * this writes, next to the source file in `public/`:
+ * The same applies to inline body images (Markdown `![alt](/images/...)`):
+ * they are lazy-loaded, but a ~0.5 MB PNG is still 8-20x the weight of a 900 px
+ * WebP on a phone. Both frontmatter heroes and inline rasters are collected.
+ *
+ * For every local raster article image this writes, next to the source file in
+ * `public/`:
  *   - `<name>.webp`        full-resolution (quality 82)
  *   - `<name>-900.webp`    max 900 px wide (quality 82) for phones/high-DPR
+ *
+ * Heroes additionally get a `<name>-social.jpg` crop when their aspect ratio is
+ * far from the social-card band (see below).
  *
  * Outputs are build artifacts (git-ignored) and are regenerated whenever the
  * source is newer. The article renderer only emits a WebP `<source>` when the
@@ -39,29 +46,60 @@ const SOCIAL_QUALITY = 82;
 const SOCIAL_MIN_AR = 1.4;
 const SOCIAL_MAX_AR = 2.6;
 
-function collectLocalHeroes() {
-  const heroes = new Set();
+function localRaster(href) {
+  const value = typeof href === 'string' ? href.trim() : '';
+  if (!value.startsWith('/') || /^\/\//.test(value)) return '';
+  return RASTER.test(value) ? value : '';
+}
+
+function readArticleFiles() {
   let entries;
   try {
     entries = readdirSync(articlesDir);
   } catch {
     return [];
   }
+  const articles = [];
   for (const file of entries) {
     if (!file.endsWith('.md')) continue;
-    let text;
     try {
-      text = readFileSync(join(articlesDir, file), 'utf8');
+      articles.push(readFileSync(join(articlesDir, file), 'utf8'));
     } catch {
-      continue;
+      /* skip unreadable article */
     }
+  }
+  return articles;
+}
+
+function collectLocalHeroes(articles) {
+  const heroes = new Set();
+  for (const text of articles) {
     const match = text.match(/^image:\s*"?([^"\n]+?)"?\s*$/m);
     if (!match) continue;
-    const href = match[1].trim();
-    if (!href.startsWith('/') || !RASTER.test(href)) continue;
-    heroes.add(href);
+    const href = localRaster(match[1]);
+    if (href) heroes.add(href);
   }
-  return [...heroes];
+  return heroes;
+}
+
+/**
+ * Local raster images referenced in Markdown bodies, either as
+ * `![alt](/path.png)` or as an HTML `<img src="/path.png">`. Remote URLs and
+ * data URIs are ignored. Deduped against the hero set by the caller.
+ */
+function collectInlineImages(articles) {
+  const images = new Set();
+  for (const text of articles) {
+    for (const match of text.matchAll(/!\[[^\]]*\]\(\s*<?([^)\s>]+)>?(?:\s+["'][^"']*["'])?\s*\)/g)) {
+      const href = localRaster(match[1]);
+      if (href) images.add(href);
+    }
+    for (const match of text.matchAll(/<img\b[^>]*\bsrc\s*=\s*["']([^"']+)["']/gi)) {
+      const href = localRaster(match[1]);
+      if (href) images.add(href);
+    }
+  }
+  return images;
 }
 
 function isStale(source, output) {
@@ -92,13 +130,16 @@ async function main() {
     return;
   }
 
-  const heroes = collectLocalHeroes();
+  const articles = readArticleFiles();
+  const heroes = collectLocalHeroes(articles);
+  const inline = collectInlineImages(articles);
+  const images = [...new Set([...heroes, ...inline])];
   let generated = 0;
   let current = 0;
   let missing = 0;
   let failed = 0;
 
-  for (const href of heroes) {
+  for (const href of images) {
     const source = join(publicDir, href.replace(/^\/+/, ''));
     if (!existsSync(source)) {
       console.warn(`[optimize-hero-images] source not found: ${href}`);
@@ -113,9 +154,10 @@ async function main() {
 
     // Only heroes outside the social-card band need a crop; inside the band the
     // original hero is already close enough to 2:1 that a crop adds no value.
+    // Inline body images are never used as social cards, so no crop for them.
     const size = readImageSizeFile(source);
     const ar = size ? size.width / size.height : null;
-    const needsSocial = ar !== null && (ar < SOCIAL_MIN_AR || ar > SOCIAL_MAX_AR);
+    const needsSocial = heroes.has(href) && ar !== null && (ar < SOCIAL_MIN_AR || ar > SOCIAL_MAX_AR);
 
     try {
       if (isStale(source, full)) {
@@ -150,7 +192,8 @@ async function main() {
 
   console.log(
     `[optimize-hero-images] ${generated} generated, ${current} up-to-date, ` +
-      `${missing} missing, ${failed} failed (${heroes.length} local heroes)`,
+      `${missing} missing, ${failed} failed (${images.length} local images: ` +
+      `${heroes.size} heroes, ${inline.size} inline)`,
   );
 }
 

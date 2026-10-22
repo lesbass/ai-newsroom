@@ -59,6 +59,8 @@ Or in HTML:
 <figcaption>Source: Cloudflare Dashboard, captured 2026-06-24. Credit: Cloudflare.</figcaption>
 ```
 
+Local PNG/JPEG body images get the same build-time treatment as heroes: `scripts/optimize-hero-images.mjs` writes `<name>.webp` and `<name>-900.webp` beside the source, and `src/lib/rehype-lazy-images.ts` wraps the Markdown image in a `<picture>` with the original PNG/JPEG as fallback. Writers keep using the original path; no markup change is needed. When no variant exists (remote URL, SVG, failed generation) the renderer emits the plain `<img>`.
+
 ## Image Metadata Checklist
 
 QualityGate should verify:
