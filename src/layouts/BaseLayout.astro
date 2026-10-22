@@ -1005,6 +1005,11 @@ const jsonLd = article
       .footer-links { justify-content: flex-start; }
     }
 
+    @media (max-width: 420px) {
+      .article-meta { column-gap: 0.7rem; row-gap: 0.15rem; }
+      .article-meta .sep-dot { display: none; }
+    }
+
     /* At 320 px the five nav labels overflow one row by a few pixels and
        strand RSS on its own line; tighten tracking instead of wrapping. */
     @media (max-width: 340px) {
