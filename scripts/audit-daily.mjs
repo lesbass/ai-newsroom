@@ -78,6 +78,7 @@ const checks = [
   ['Dates', 'npm run test:dates'],
   ['Contrast', 'npm run test:contrast'],
   ['Targets', 'npm run test:targets'],
+  ['A11y', 'npm run test:a11y'],
   ['Glyphs', 'npm run test:glyphs'],
   ['HeadlineBreaks', 'npm run test:headline'],
   ['HeadlineOverflow', 'npm run test:headline-overflow'],
@@ -86,8 +87,8 @@ const checks = [
 
 for (const [name, cmd] of checks) {
   try {
-    // Browser-backed checks (test:targets) launch Chromium twice and navigate
-    // a page set, so they need more headroom than the static scripts.
+    // Browser-backed checks (test:targets, test:a11y) launch Chromium and
+    // navigate a page set, so they need more headroom than the static scripts.
     const out = execSync(`${cmd} 2>&1`, { cwd: root, encoding: 'utf-8', timeout: 300000, env: urlEnv });
     const text = out.trim();
     const pass = !text.includes('❌');
