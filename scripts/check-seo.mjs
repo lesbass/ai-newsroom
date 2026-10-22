@@ -651,6 +651,24 @@ if (rssFeed) {
     );
     errors++;
   }
+
+  // RSS 2.0 requires an enclosure `length` in bytes. Readers may drop artwork
+  // without it, and a feed validator flags the feed as invalid.
+  const enclosures = [...rssFeed.matchAll(/<enclosure\b[^>]*>/g)].map((m) => m[0]);
+  const missingLength = enclosures.filter((tag) => !/\blength="\d+"/.test(tag));
+  if (missingLength.length > 0) {
+    console.error(
+      `❌ rss.xml: ${missingLength.length}/${enclosures.length} <enclosure> entries have no byte length`,
+    );
+    errors++;
+  }
+
+  // A self-referencing atom:link lets aggregators discover the feed URL.
+  const selfLinks = atomHrefs.filter((href) => href.endsWith('/rss.xml'));
+  if (selfLinks.length !== 1) {
+    console.warn(`⚠ rss.xml: expected one <atom:link rel="self"> to /rss.xml, found ${selfLinks.length}`);
+    warnings++;
+  }
 }
 
 const robotsTxt = await loadArtifact('robots.txt', '/robots.txt');

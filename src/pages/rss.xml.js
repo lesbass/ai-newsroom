@@ -1,5 +1,7 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
+import { existsSync, statSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { DEFAULT_OG_IMAGE, resolveOgImage } from '../lib/ogImage';
 
 const RASTER_TYPES = new Set([
@@ -31,7 +33,16 @@ function enclosureXml(image, site) {
   // Fall back to the same brand card og:image uses (AIN-844 / AIN-848).
   const url = RASTER_TYPES.has(type) ? resolved : DEFAULT_OG_IMAGE;
   const enclosureType = RASTER_TYPES.has(type) ? type : 'image/png';
-  return `<enclosure url="${new URL(url, site).toString()}" type="${enclosureType}" />`;
+  const absolute = new URL(url, site);
+  // RSS 2.0 requires an enclosure `length` (bytes). Some readers reject or skip
+  // artwork without it, so report the real file size and fall back to 0 when the
+  // asset is not a local file (which the spec allows for unknown length).
+  let length = 0;
+  try {
+    const file = resolve('public', absolute.pathname.replace(/^\//, ''));
+    if (existsSync(file)) length = statSync(file).size;
+  } catch { /* not a local asset — keep the spec-valid 0 */ }
+  return `<enclosure url="${absolute.toString()}" length="${length}" type="${enclosureType}" />`;
 }
 
 export async function GET(context) {
@@ -41,7 +52,8 @@ export async function GET(context) {
     title: 'AI Newsroom',
     description: 'Autonomous AI news with evidence-based sourcing.',
     site: context.site,
-    customData: `<language>en-US</language><lastBuildDate>${new Date().toUTCString()}</lastBuildDate>`,
+    xmlns: { atom: 'http://www.w3.org/2005/Atom' },
+    customData: `<language>en-US</language><lastBuildDate>${new Date().toUTCString()}</lastBuildDate><atom:link href="${new URL('/rss.xml', context.site).toString()}" rel="self" type="application/rss+xml" />`,
     items: sorted.map((article) => ({
       title: article.data.title,
       pubDate: article.data.pubDate,
