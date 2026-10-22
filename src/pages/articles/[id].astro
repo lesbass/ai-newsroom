@@ -47,19 +47,38 @@ const extraTagCount = Math.max(0, topicTags.length - 6);
 // in a second `Sources` aside would produce two identical H2 headings on the
 // page, so only fall back to the generated list when the body has none.
 const bodyHasSources = /^#{1,6}\s+Sources\s*$/im.test(body);
+// Every article ends with its evidence. The meta line's source count links to
+// that section so a reader can verify a claim without scrolling a long column.
+// Body `## Sources` wins; when only the generated aside renders, it carries a
+// stable `id="sources"` instead.
+const sourcesHeading = headings.find((h) => h.depth === 2 && h.text.trim().toLowerCase() === 'sources');
+const sourcesAnchor = sourcesHeading
+  ? sourcesHeading.slug
+  : sources.length > 0 && !bodyHasSources
+    ? 'sources'
+    : null;
 const headlineClass = title.length > 60 ? 'headline-long' : title.length > 45 ? 'headline-medium' : 'headline-short';
 const heroDimensions = image && image !== 'exception' ? resolveImageDimensions(image) : null;
 const heroWebp = image && image !== 'exception' ? resolveHeroWebp(image) : null;
 // "In this article" navigation. Articles use a fixed H2 section shape
 // (What happened / Why it matters / Practical implications / Risks and caveats
 // / What to watch), so a compact list of those sections lets readers scan and
-// jump on mobile, where a long single column is hardest to navigate. Only the
-// body H2s are listed; the authored `Sources` section is a reference list, not
-// a section to navigate to, so it is excluded. Rendered collapsed (see
-// `article-toc`) so it never pushes the article body below the fold.
+// jump on mobile, where a long single column is hardest to navigate. The
+// authored `Sources` section is included as the final entry: for an
+// evidence-first publication it is a destination, not just a reference list.
+// Rendered collapsed (see `article-toc`) so it never pushes the body below the
+// fold.
 const tocHeadings = headings
-  .filter((h) => h.depth === 2 && h.text.trim().toLowerCase() !== 'sources')
+  .filter((h) => h.depth === 2)
   .map((h) => ({ slug: h.slug, text: h.text }));
+// The 3-section threshold counts real body sections; Sources is a destination,
+// not a reason to add navigation to an otherwise short piece.
+const showToc = tocHeadings.length >= 3;
+// Older pieces keep their evidence in the generated frontmatter aside instead
+// of an authored H2, so surface that same `#sources` destination in the ToC.
+if (!bodyHasSources && sources.length > 0) {
+  tocHeadings.push({ slug: 'sources', text: 'Sources' });
+}
 
 const allArticles = await getCollection('articles');
 const relatedArticles = getRelatedArticles(post, allArticles, topicTagSlugs, 3);
@@ -98,7 +117,12 @@ const formatRelatedDate = (date: Date) => date.toLocaleDateString('en-US', { yea
         <span class:list={['meta-item', 'meta-author', author === 'AI Newsroom' && 'meta-author-brand']}><span class="sep-dot" aria-hidden="true">&middot;</span><span>{author}</span></span>
         <span class="meta-item"><span class="sep-dot" aria-hidden="true">&middot;</span><span class="reading-time">{readingTime} min read</span></span>
         {sources.length > 0 && (
-          <span class="meta-item"><span class="sep-dot" aria-hidden="true">&middot;</span><span>{sources.length} source{sources.length !== 1 ? 's' : ''}</span></span>
+          <span class="meta-item">
+            <span class="sep-dot" aria-hidden="true">&middot;</span>
+            {sourcesAnchor
+              ? <a class="meta-sources" href={`#${sourcesAnchor}`}>{sources.length} source{sources.length !== 1 ? 's' : ''}</a>
+              : <span>{sources.length} source{sources.length !== 1 ? 's' : ''}</span>}
+          </span>
         )}
       </div>
       <div style="margin-top: 0.5rem;">
@@ -120,7 +144,7 @@ const formatRelatedDate = (date: Date) => date.toLocaleDateString('en-US', { yea
         {imageCredit && <figcaption class="article-hero-credit">{imageCredit}</figcaption>}
       </figure>
     )}
-    {tocHeadings.length >= 3 && (
+    {showToc && (
       <nav class="article-toc" aria-label="In this article">
         <details>
           <summary>In this article</summary>
@@ -135,7 +159,7 @@ const formatRelatedDate = (date: Date) => date.toLocaleDateString('en-US', { yea
     <Content />
     {sources.length > 0 && !bodyHasSources && (
       <aside style="margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border);">
-        <h2 style="font-size: 1.125rem; margin-bottom: 0.75rem;">Sources</h2>
+        <h2 id="sources" style="font-size: 1.125rem; margin-bottom: 0.75rem;">Sources</h2>
         <ul class="sources-list">
           {sources.map(source => (
             <li>

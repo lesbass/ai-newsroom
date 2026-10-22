@@ -681,6 +681,20 @@ const jsonLd = article
       gap: 0.125rem;
       white-space: nowrap;
     }
+    /* The source count is the article's verification affordance. A dotted
+       underline marks it as a jump link without turning the meta line into a
+       row of blue links. */
+    a.meta-sources {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-decoration-color: var(--color-faint);
+      text-underline-offset: 0.2em;
+    }
+    a.meta-sources:hover {
+      color: var(--color-accent);
+      text-decoration-color: currentColor;
+    }
     .article-desc {
       color: var(--color-muted);
       font-size: 0.98rem;
