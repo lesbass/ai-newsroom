@@ -13,9 +13,11 @@ export interface Props {
   article?: boolean;
   tags?: string[];
   robots?: string;
+  wordCount?: number;
+  section?: string;
 }
 
-const { title, description, image, imageAlt, canonicalURL, pubDate, updatedDate, author = 'AI Newsroom', article = false, tags = [], robots } = Astro.props;
+const { title, description, image, imageAlt, canonicalURL, pubDate, updatedDate, author = 'AI Newsroom', article = false, tags = [], robots, wordCount, section } = Astro.props;
 const site = 'https://news.lesbass.com/';
 const rawFullTitle = title === 'AI Newsroom' ? title : `${title} — AI Newsroom`;
 // Title budget for <title>/og:title. Titles that fit render in full; the
@@ -159,6 +161,15 @@ const jsonLd = article
       description: description,
       url: pageURL,
       image: jsonLdImage,
+      inLanguage: 'en',
+      isAccessibleForFree: true,
+      // Google's Article rich-results guidance lists these as recommended
+      // properties. They are emitted only when known so the block stays valid:
+      // `wordCount` from the rendered body, `articleSection` from the primary
+      // topic tag, `keywords` from the article's tags.
+      wordCount: typeof wordCount === 'number' && wordCount > 0 ? wordCount : undefined,
+      articleSection: section || undefined,
+      keywords: tags.length > 0 ? tags.join(', ') : undefined,
       datePublished: pubDate ? pubDate.toISOString() : undefined,
       dateModified: updatedDate ? updatedDate.toISOString() : pubDate ? pubDate.toISOString() : undefined,
       author: {

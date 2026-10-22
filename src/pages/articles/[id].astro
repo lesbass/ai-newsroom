@@ -77,6 +77,8 @@ const formatRelatedDate = (date: Date) => date.toLocaleDateString('en-US', { yea
   article={true}
   canonicalURL={canonicalURL}
   tags={tags}
+  wordCount={wordCount}
+  section={topicTags[0] ? tagLabel(slugifyTag(topicTags[0])) : tags[0]}
 >
   <Header />
   <main id="main-content">

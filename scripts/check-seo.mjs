@@ -383,6 +383,26 @@ function checkPage(rel, html, path) {
             errors++;
           }
         }
+        // Recommended Article properties. `inLanguage` and a positive
+        // `wordCount` are always derivable for an article, so their absence is
+        // a template regression (2026-10-22 audit). `articleSection`/`keywords`
+        // come from the article's tags, so only warn when they are absent.
+        if (!articleLd.inLanguage) {
+          console.error(`❌ ${rel}: NewsArticle missing inLanguage`);
+          errors++;
+        }
+        if (!Number.isInteger(articleLd.wordCount) || articleLd.wordCount <= 0) {
+          console.error(`❌ ${rel}: NewsArticle wordCount must be a positive integer (got ${JSON.stringify(articleLd.wordCount)})`);
+          errors++;
+        }
+        if (!articleLd.articleSection) {
+          console.warn(`⚠ ${rel}: NewsArticle has no articleSection`);
+          warnings++;
+        }
+        if (!articleLd.keywords) {
+          console.warn(`⚠ ${rel}: NewsArticle has no keywords`);
+          warnings++;
+        }
         const authorName = Array.isArray(articleLd.author)
           ? articleLd.author[0]?.name
           : articleLd.author?.name;
