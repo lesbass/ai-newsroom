@@ -25,6 +25,12 @@ const { Content } = await render(post);
 const { title, description, pubDate, updatedDate, author, tags, sources, highRiskClaims, canonicalURL, image, imageAlt, imageCredit } = post.data;
 const date = new Date(pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 const updated = updatedDate ? new Date(updatedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : null;
+// The preferred article shape starts with a dek/summary. Frontmatter
+// `description` is authored for exactly that role (it also feeds the meta
+// description), so surface it under the headline instead of leaving it only in
+// the document head. Backticks are stripped because this is rendered as plain
+// text, not Markdown.
+const dek = description.replace(/`/g, '').trim();
 
 const body = post.body || '';
 const wordCount = body.split(/\s+/).filter(Boolean).length;
@@ -67,6 +73,7 @@ const heroWebp = image && image !== 'exception' ? resolveHeroWebp(image) : null;
     />
     <div class="article-header">
       <h1 class={headlineClass} set:html={formatHeadline(title)} />
+      {dek && dek !== title && <p class="article-dek">{dek}</p>}
       <div class="article-meta">
         <span class="meta-item meta-item-date">{date}{updated && <span> (updated {updated})</span>}</span>
         <span class:list={['meta-item', 'meta-author', author === 'AI Newsroom' && 'meta-author-brand']}><span class="sep-dot" aria-hidden="true">&middot;</span><span>{author}</span></span>
