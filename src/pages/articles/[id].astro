@@ -6,7 +6,7 @@ import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { slugifyTag } from '../../lib/slugify';
 import { tagLabel } from '../../lib/tags';
-import { getTopicTagSlugs } from '../../lib/topicTags';
+import { getRelatedArticles, getTopicTagSlugs } from '../../lib/topicTags';
 import { resolveImageDimensions, resolveHeroWebp } from '../../lib/ogImage';
 import { formatHeadline } from '../../lib/headline';
 
@@ -47,6 +47,10 @@ const bodyHasSources = /^#{1,6}\s+Sources\s*$/im.test(body);
 const headlineClass = title.length > 60 ? 'headline-long' : title.length > 45 ? 'headline-medium' : 'headline-short';
 const heroDimensions = image && image !== 'exception' ? resolveImageDimensions(image) : null;
 const heroWebp = image && image !== 'exception' ? resolveHeroWebp(image) : null;
+
+const allArticles = await getCollection('articles');
+const relatedArticles = getRelatedArticles(post, allArticles, topicTagSlugs, 3);
+const formatRelatedDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
 
 <BaseLayout
@@ -111,6 +115,22 @@ const heroWebp = image && image !== 'exception' ? resolveHeroWebp(image) : null;
               <a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a>
               {source.date && <span style="color: var(--color-muted);"> ({new Date(source.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })})</span>}
               {source.type === 'secondary' && <span class="source-type"> [secondary]</span>}
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+    {relatedArticles.length > 0 && (
+      <aside class="related-articles" aria-labelledby="related-articles-heading">
+        <h2 id="related-articles-heading">Related articles</h2>
+        <ul class="related-list">
+          {relatedArticles.map(({ article, sharedTags }) => (
+            <li class="related-item">
+              <a class="related-link" href={`/articles/${article.id}/`}>{article.data.title}</a>
+              <span class="related-meta">
+                <time datetime={article.data.pubDate.toISOString()}>{formatRelatedDate(article.data.pubDate)}</time>
+                <span class="related-topics">{sharedTags.map(tagLabel).join(' · ')}</span>
+              </span>
             </li>
           ))}
         </ul>

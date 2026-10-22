@@ -38,3 +38,67 @@ export function getTopicTagSlugs(): Promise<Set<string>> {
 
   return topicSlugs;
 }
+
+export interface TaggedArticle {
+  id: string;
+  data: {
+    title: string;
+    tags: string[];
+    pubDate: Date;
+  };
+}
+
+export interface RelatedArticle<T extends TaggedArticle> {
+  article: T;
+  sharedTags: string[];
+}
+
+/**
+ * Pick up to `limit` other articles that share at least one indexable topic
+ * tag with `current`, ranked by shared-tag count and then recency. Pass the
+ * `getTopicTagSlugs()` set so related links use exactly the same indexability
+ * rule as the topic pages. Returns an empty list when the article has no
+ * indexable tag or no candidate shares one.
+ */
+export function getRelatedArticles<T extends TaggedArticle>(
+  current: T,
+  articles: readonly T[],
+  indexableTags: ReadonlySet<string>,
+  limit = 3,
+): RelatedArticle<T>[] {
+  if (limit <= 0) return [];
+
+  const currentTags = new Set(
+    current.data.tags
+      .map(slugifyTag)
+      .filter((slug) => slug && indexableTags.has(slug)),
+  );
+  if (currentTags.size === 0) return [];
+
+  const ranked: Array<RelatedArticle<T> & { score: number }> = [];
+  for (const candidate of articles) {
+    if (candidate.id === current.id) continue;
+
+    const candidateTags = new Set(
+      candidate.data.tags.map(slugifyTag).filter(Boolean),
+    );
+    const sharedTags = [...currentTags].filter((slug) =>
+      candidateTags.has(slug),
+    );
+    if (sharedTags.length === 0) continue;
+
+    ranked.push({ article: candidate, sharedTags, score: sharedTags.length });
+  }
+
+  ranked.sort(
+    (a, b) =>
+      b.score - a.score ||
+      b.article.data.pubDate.valueOf() - a.article.data.pubDate.valueOf() ||
+      a.article.id.localeCompare(b.article.id),
+  );
+
+  return ranked.slice(0, limit).map(({ article, sharedTags }) => ({
+    article,
+    sharedTags,
+  }));
+}
