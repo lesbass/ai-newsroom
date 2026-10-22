@@ -59,11 +59,14 @@ const ogTitle = brandedTitleFits ? rawFullTitle : title;
 // pages (no image alt) keep the sensible page-title fallback.
 const ogImageAlt = imageAlt || ogTitle;
 
-// Meta descriptions are often a single long sentence, so a hard word cut at
-// 155 chars leaves dangling prepositions in SERP/social snippets
-// ("…weights promised by…"). Prefer the last sentence boundary, then the last
-// clause boundary, and only fall back to a word cut. The ellipsis is inside the
-// budget so the generated description never exceeds maxLen (AIN-972).
+// Meta descriptions are often a single long sentence, so a hard word cut
+// leaves dangling prepositions in SERP/social snippets ("…weights promised
+// by…"). Prefer the last sentence boundary, then the last clause boundary, and
+// only fall back to a word cut. The ellipsis is inside the budget so the
+// generated description never exceeds maxLen (AIN-972). maxLen matches the
+// 160-char upper bound enforced by scripts/check-seo.mjs: descriptions the SEO
+// gate accepts (156–160 chars) must render in full, otherwise authored caveats
+// such as "vendor-reported" can be truncated away silently.
 const DESCRIPTION_CLAUSE_BREAKS = [', ', '; ', ': ', ' — ', ' – '];
 const DESCRIPTION_TRAILING_STOPWORDS = new Set([
   'a', 'an', 'the', 'by', 'of', 'to', 'in', 'with', 'for', 'and', 'or', 'from',
@@ -98,7 +101,7 @@ function trimToBalanced(text: string): string {
   return opener === -1 ? text : text.slice(0, opener).trimEnd();
 }
 
-function truncateDescription(text: string, maxLen = 155): string {
+function truncateDescription(text: string, maxLen = 160): string {
   if (text.length <= maxLen) return text;
   const budget = maxLen - 1;
   // Read one character past the ellipsis budget so a sentence ending exactly at
