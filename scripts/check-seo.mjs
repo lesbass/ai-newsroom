@@ -64,6 +64,22 @@ function decodeEntities(s) {
     .replace(/&amp;/g, '&');
 }
 
+// Titles and descriptions are emitted as plain text in <title>, meta, Open
+// Graph/Twitter cards, RSS, and JSON-LD. Markdown authored for the article body
+// (inline code, bold, links) is not rendered in those fields, so it leaks
+// literally into SERPs and feed readers. Backticks and emphasis markers are
+// never legitimate in a plain-text title or description.
+const PLAIN_TEXT_MARKDOWN = /(`|\*\*|__|\[[^\]]*\]\([^)]*\))/;
+
+function checkPlainTextField(where, field, value) {
+  const leak = value.match(PLAIN_TEXT_MARKDOWN);
+  if (!leak) return;
+  console.error(
+    `❌ ${where}: ${field} contains literal Markdown syntax (${JSON.stringify(leak[1])}): "${value.slice(0, 80)}"`,
+  );
+  errors++;
+}
+
 // True when a truncated snippet stops inside an unmatched "(", "[", or double
 // quote. A snippet like "…API (remember, recall, forget…" is as broken as a
 // dangling preposition in SERP/social previews (AIN-972 follow-up).
@@ -150,6 +166,7 @@ function checkPage(rel, html, path) {
       const titleMatch = html.match(/<title>([^<]+)<\/title>/);
       if (titleMatch) {
         const title = decodeEntities(titleMatch[1]);
+        checkPlainTextField(rel, '<title>', title);
         if (title.length < 10) {
           console.warn(`⚠ ${rel}: title too short (${title.length} chars): "${title}"`);
           warnings++;
@@ -168,6 +185,7 @@ function checkPage(rel, html, path) {
       errors++;
     } else {
       const desc = decodeEntities(descMatch[1]);
+      checkPlainTextField(rel, 'meta description', desc);
       if (desc.length < 40) {
         console.warn(`⚠ ${rel}: description too short (${desc.length} chars)`);
         warnings++;
