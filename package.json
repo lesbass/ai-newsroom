@@ -15,6 +15,7 @@
     "test:external-links": "node scripts/check-external-links.mjs",
     "test:mobile": "node scripts/check-mobile.mjs",
     "test:images": "node scripts/check-images.mjs",
+    "test:images-fixtures": "node --test scripts/check-images.test.mjs",
     "test:seo": "node scripts/check-seo.mjs",
     "test:sitemap-lastmod": "node scripts/check-sitemap-lastmod.mjs",
     "test:dates": "node scripts/check-dates.mjs",

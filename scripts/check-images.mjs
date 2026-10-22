@@ -20,6 +20,68 @@ function* walk(dir) {
 let errors = 0;
 let warnings = 0;
 
+// A disclosure is only counted when it is labelled (Source:, Credit:, ...) or
+// uses the capture/generation wording the editorial policy calls for. This
+// avoids treating an ordinary paragraph that happens to mention "source code"
+// or "generated output" as an image credit.
+const DISCLOSURE_RE = /\b(?:sources?|credits?|licen[sc]es?|screenshots?)\s*[:：]|\bcaptured\b|\bgenerated\b/i;
+
+function visibleText(fragment) {
+  return fragment
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&[a-z#0-9]+;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function findImgMatches(html) {
+  const matches = [];
+  const re = /<img\b[^>]*>/g;
+  let match;
+  while ((match = re.exec(html))) {
+    const src = (match[0].match(/src="([^"]*)"/) || [])[1] || '';
+    matches.push({ src, tag: match[0], start: match.index, end: re.lastIndex });
+  }
+  return matches;
+}
+
+function findHeroFigures(html) {
+  const figures = [];
+  const re = /<figure\b[^>]*\bclass="[^"]*\barticle-hero\b[^"]*"[^>]*>[\s\S]*?<\/figure>/g;
+  let match;
+  while ((match = re.exec(html))) {
+    figures.push({ start: match.index, end: re.lastIndex, html: match[0] });
+  }
+  return figures;
+}
+
+function enclosingFigure(html, imageStart) {
+  const open = html.lastIndexOf('<figure', imageStart);
+  if (open === -1) return null;
+  // The nearest preceding <figure> must still be open at the image position.
+  if (html.lastIndexOf('</figure>', imageStart) > open) return null;
+  const close = html.indexOf('</figure>', imageStart);
+  if (close === -1) return null;
+
+  const block = html.slice(open, close + '</figure>'.length);
+  let caption = '';
+  const capRe = /<figcaption\b[^>]*>([\s\S]*?)<\/figcaption>/g;
+  let cap;
+  while ((cap = capRe.exec(block))) {
+    caption += ` ${visibleText(cap[1])}`;
+  }
+  return { block, caption: caption.trim() };
+}
+
+function followingParagraph(html, imageEnd) {
+  // Markdown wraps a screenshot in <p><picture>…</picture></p> and writers put
+  // the credit in the next <p><em>…</em></p>. Allow closing wrappers only, so
+  // an unrelated paragraph after a heading or another image is not a credit.
+  const rest = html.slice(imageEnd, imageEnd + 2000);
+  const match = rest.match(/^(?:\s|<\/(?:picture|a|span|div|p|figure)>)*(<p\b[^>]*>([\s\S]*?)<\/p>)/);
+  return match ? visibleText(match[2]) : '';
+}
+
 const pagePaths = [...walk(dist)];
 const fetchedPages = [];
 
@@ -63,6 +125,15 @@ function checkPageHtml(html, rel, isRemote) {
     !isArchivePage &&
     !rel.endsWith('/articles/index.html') &&
     !rel.endsWith('/articles/');
+
+  const heroFigures = findHeroFigures(html);
+  const heroRanges = heroFigures.map(f => [f.start, f.end]);
+  const heroSrcs = new Set();
+  for (const figure of heroFigures) {
+    const heroImg = figure.html.match(/<img\b[^>]*>/);
+    const heroSrc = heroImg ? (heroImg[0].match(/src="([^"]*)"/) || [])[1] : '';
+    if (heroSrc) heroSrcs.add(heroSrc);
+  }
 
   const imgTags = html.match(/<img[^>]*>/g) || [];
   const internalImgs = imgTags.filter(tag => {
@@ -110,6 +181,19 @@ function checkPageHtml(html, rel, isRemote) {
     // shift the page down when it loads (Cumulative Layout Shift). Local
     // assets are always measurable, so a local hero without dimensions is an
     // error. Remote heroes instead rely on the CSS aspect-ratio fallback.
+    for (const figure of heroFigures) {
+      // Editorial policy requires every hero image to carry a visible source,
+      // credit, license, or generated-image disclosure. The article template
+      // renders `imageCredit` as `figcaption.article-hero-credit`; if that
+      // caption is dropped from the frontmatter or template, the article must
+      // not pass the image gate.
+      const creditMatch = figure.html.match(/<figcaption\b[^>]*class="[^"]*\barticle-hero-credit\b[^"]*"[^>]*>([\s\S]*?)<\/figcaption>/);
+      if (!creditMatch || visibleText(creditMatch[1]).length < 3) {
+        console.error(`❌ ${rel}: article hero <figure> missing visible .article-hero-credit caption (source/credit/license disclosure required)`);
+        errors++;
+      }
+    }
+
     const heroMatch = html.match(/<figure class="article-hero">[\s\S]*?<img\b([^>]*)>/);
     if (heroMatch) {
       const attrs = heroMatch[1];
@@ -200,15 +284,23 @@ function checkPageHtml(html, rel, isRemote) {
   }
 
   if (imgTags.length > 0 && isArticle) {
-    const imgContent = html.split(/<img[^>]*>/);
-    for (let i = 0; i < imgTags.length; i++) {
-      const afterText = imgContent[i + 1] ? imgContent[i + 1].slice(0, 500).toLowerCase() : '';
-      const hasCredit = /source\s*:|credit\s*:|image\s*:|generated\s|license\s*:|photo\s*:|screenshot\s*:|diagram\s*:|created\s+with|dall-e|midjourney|stable\s*diffusion|imagen/i.test(afterText);
-      if (!hasCredit) {
-        console.warn(`⚠  ${rel}: <img> may be missing source/credit/license caption (check nearby text)`);
-        warnings++;
-        break;
-      }
+    // Inline article images need the same editorial disclosure as the hero:
+    // either a <figcaption> in the enclosing <figure> or a credit paragraph
+    // immediately after the image. Only article-owned assets under
+    // /images/articles/ are in scope; the hero itself is covered above.
+    for (const img of findImgMatches(html)) {
+      if (!img.src.startsWith('/images/articles/')) continue;
+      if (heroSrcs.has(img.src)) continue;
+      if (heroRanges.some(([start, end]) => img.start >= start && img.end <= end)) continue;
+
+      const figure = enclosingFigure(html, img.start);
+      if (figure && DISCLOSURE_RE.test(figure.caption)) continue;
+
+      const afterParagraph = followingParagraph(html, img.end);
+      if (afterParagraph && DISCLOSURE_RE.test(afterParagraph)) continue;
+
+      console.error(`❌ ${rel}: inline article image ${img.src} missing source/credit/license caption (add a <figcaption> or an immediately following credit paragraph)`);
+      errors++;
     }
   }
 
