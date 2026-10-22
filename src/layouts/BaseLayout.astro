@@ -562,6 +562,14 @@ const jsonLd = article
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
+    /* Separators live inside the link that follows them so a wrapped row can
+       never end with an orphaned middot (AIN-1033). Targeting links only keeps
+       the copyright span separator-free, as before. The right margin
+       reproduces the previous gap between each separator and its label. */
+    .footer-links > * + a::before {
+      content: "\00b7";
+      margin-right: 0.85rem;
+    }
     .nav-links { display: flex; gap: 0.35rem 0.85rem; flex-wrap: wrap; align-items: center; }
     .nav-links a {
       font-family: var(--font-mono);
