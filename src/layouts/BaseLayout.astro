@@ -455,6 +455,16 @@ const jsonLd = article
         text-transform: uppercase;
         color: var(--color-muted);
       }
+      /* A phone column fits roughly 37 code characters; most Shiki blocks
+         carry longer lines and were clipped mid-token with no affordance that
+         the block scrolls. Wrap long lines on small screens so the whole
+         snippet is readable without horizontal panning. Wider viewports keep
+         the horizontal scroll and the original line layout. */
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        padding: 0.875rem 1rem;
+      }
     }
     pre, code { font-family: var(--font-mono); font-size: 0.9em; }
     pre {

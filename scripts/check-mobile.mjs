@@ -112,6 +112,13 @@ function checkPage(html, rel) {
     console.error(`❌ ${rel}: missing print styles`);
     errors++;
   }
+
+  // 11. Code blocks must stay readable on phones: long lines wrap instead of
+  // being clipped at the right edge with no scroll affordance.
+  if (html.includes('<pre') && !/white-space:\s*pre-wrap/.test(html)) {
+    console.error(`❌ ${rel}: code blocks do not wrap long lines on mobile`);
+    errors++;
+  }
 }
 
 if (errors) {
