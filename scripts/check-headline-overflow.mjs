@@ -1,12 +1,19 @@
 /**
- * AIN-1020 — narrow-viewport horizontal-overflow guard.
+ * AIN-1023 — narrow-viewport horizontal-overflow guard.
  *
  * `scripts/check-mobile.mjs` is a static scan: it never measures a rendered
  * page, so it could not catch a long hyphenated headline (`codebase-memory-mcp`,
  * `Qwen3.8-Flash-Next`, `ai-agents-from-zero`) pushing the article column past a
- * 320 px phone. This script is the real-browser rule: it loads article pages at
- * 320 px and 390 px and fails when `document.documentElement.scrollWidth` is
- * wider than `window.innerWidth`.
+ * 320 px phone, or a long topic label colliding with a count on `/tags/`. This
+ * script is the real-browser rule: it loads article and core listing pages at
+ * 320 px, 390 px and 768 px and fails when
+ * `document.documentElement.scrollWidth` is wider than `window.innerWidth`.
+ *
+ * The 768 px run covers the tablet/landscape-phone band around the 600/640 px
+ * CSS breakpoints and the ~760 px shell cap, which 320/390 px never exercise.
+ * AIN-1020 regressions came from ad-hoc sweeps of individual pages, so the
+ * default set includes both headline fixtures and the core listing/static
+ * pages (home, article index, tags, corrections, editorial standards).
  *
  * `<pre>` and `.table-scroll` blocks legitimately scroll horizontally; they
  * contain their own overflow, so the page-level `scrollWidth` stays at the
@@ -32,18 +39,32 @@ const baseUrl = (process.env.CHECK_URL || '').replace(/\/$/, '');
 const VIEWPORTS = [
   { name: '320', width: 320, height: 640 },
   { name: '390', width: 390, height: 844 },
+  { name: '768', width: 768, height: 1024 },
 ];
 
 // The five headlines that overflowed in the AIN-1020 sweep. The default run
 // checks these so the guard stays fast in the daily audit; set
 // HEADLINE_OVERFLOW_ALL=1 to sweep every article page.
-const FIXTURES = [
+const ARTICLE_FIXTURES = [
   '/articles/codebase-memory-mcp-zero-dependency-code-intelligence/',
   '/articles/deepseek-v4-flash-vision-exp/',
   '/articles/strata-runs-qwen-3-8-flash-next-on-12gb-gaming-pc/',
   '/articles/didilili-ai-agents-from-zero-guide-open-source-2026/',
   '/articles/openai-misalignment-reporting-framework-2026-09/',
 ];
+
+// Core listing/static pages. `/tags/` shipped a long-label collision (AIN-1018)
+// and article dates/updated meta overflowed (AIN-1020); listing pages are not
+// article fixtures, so they need their own coverage.
+const PAGE_FIXTURES = [
+  '/',
+  '/articles/',
+  '/tags/',
+  '/corrections/',
+  '/editorial-standards/',
+];
+
+const DEFAULT_PAGES = [...ARTICLE_FIXTURES, ...PAGE_FIXTURES];
 
 function* walk(dir) {
   if (!existsSync(dir)) return;
@@ -78,10 +99,10 @@ function pagePaths() {
     .filter(Boolean);
   if (override.length) return override;
   if (process.env.HEADLINE_OVERFLOW_ALL === '1') {
-    const all = allArticlePages();
+    const all = [...PAGE_FIXTURES, ...allArticlePages()];
     if (all.length) return all;
   }
-  return FIXTURES;
+  return DEFAULT_PAGES;
 }
 
 const MIME = {
@@ -163,7 +184,7 @@ function measureOverflow() {
 
 const pages = pagePaths();
 if (pages.length === 0) {
-  console.error('❌ No article pages found — run `npm run build` first');
+  console.error('❌ No pages found — run `npm run build` first');
   process.exit(1);
 }
 
@@ -221,4 +242,7 @@ if (failures.length) {
   }
   process.exit(1);
 }
-console.log(`✅ No horizontal page overflow across ${runs} page/viewport runs at 320/390 px`);
+console.log(
+  `✅ No horizontal page overflow across ${runs} page/viewport runs ` +
+    `(${pages.length} pages at ${VIEWPORTS.map((v) => `${v.name}px`).join('/')})`,
+);
