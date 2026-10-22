@@ -21,7 +21,7 @@ sources:
     date: 2026-06-17
     type: primary
   - title: "OpenAI — Deployment Simulation (sister release, 2026-06-16, link present on the LifeSciBench announcement page under 'Keep reading')"
-    url: "https://openai.com/index/predicting-model-behavior-before-release/"
+    url: "https://openai.com/index/deployment-simulation/"
     date: 2026-06-16
     type: primary
 highRiskClaims: false
