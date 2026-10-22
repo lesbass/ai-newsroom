@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
+import githubDark from 'shiki/themes/github-dark.mjs';
 import { rehypeLazyImages } from './src/lib/rehype-lazy-images.ts';
 import { rehypeTableScroll } from './src/lib/rehype-table-scroll.ts';
 
@@ -12,7 +13,12 @@ export default defineConfig({
       rehypePlugins: [rehypeLazyImages, rehypeTableScroll],
     }),
     shikiConfig: {
-      theme: 'github-dark',
+      theme: {
+        ...githubDark,
+        colorReplacements: {
+          '#6a737d': '#8b949e',
+        },
+      },
     },
   },
 });
