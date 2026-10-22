@@ -18,6 +18,7 @@
  *   A11Y_ALL_ARTICLES=1     also check every article page
  *   A11Y_BEST_PRACTICE=1    include axe best-practice rules
  *   A11Y_VIEWPORTS=390,1440 comma-separated viewport widths
+ *   A11Y_COLOR_SCHEMES=light,dark  comma-separated colour schemes
  */
 
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
@@ -121,6 +122,17 @@ function viewports() {
   }));
 }
 
+// The site ships a full `prefers-color-scheme: dark` token set, but axe only
+// sees the scheme Chromium actually renders. Checking light alone let dark-only
+// contrast/visibility regressions pass the gate, so both schemes run by default.
+function colorSchemes() {
+  const requested = (process.env.A11Y_COLOR_SCHEMES || 'light,dark')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+  return requested.length ? requested : ['light'];
+}
+
 async function serveDist() {
   const server = createServer((req, res) => {
     const urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
@@ -164,53 +176,59 @@ if (process.env.A11Y_BEST_PRACTICE === '1') tags.push('best-practice');
 
 const paths = pagePaths();
 const vps = viewports();
+const schemes = colorSchemes();
 let failures = 0;
 let warnings = 0;
 let checks = 0;
 
 for (const vp of vps) {
-  let browser;
-  try {
-    browser = await launchBrowser();
-    const context = await browser.newContext({ viewport: { width: vp.width, height: vp.height } });
-    const page = await context.newPage();
-    for (const path of paths) {
-      const url = `${origin}${path}`;
-      try {
-        await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
-        await page.addScriptTag({ content: axeSource });
-        const result = await page.evaluate(async (runTags) => {
-          return await window.axe.run(document, { runOnly: { type: 'tag', values: runTags } });
-        }, tags);
-        checks++;
-        if (result.violations.length) {
-          console.log(`\n${path} @ ${vp.width}px`);
-        }
-        for (const v of result.violations) {
-          const isFail = FAIL_IMPACTS.has(v.impact);
-          const mark = isFail ? '❌' : '⚠';
-          console.log(`${mark} [${v.impact}] ${v.id}: ${v.help} (${v.nodes.length} node${v.nodes.length === 1 ? '' : 's'})`);
-          for (const node of v.nodes.slice(0, 3)) {
-            console.log(`    ${node.target.join(' ')}`);
-            const summary = String(node.failureSummary || '').split('\n')[0];
-            if (summary) console.log(`    ${summary}`);
+  for (const scheme of schemes) {
+    let browser;
+    try {
+      browser = await launchBrowser();
+      const context = await browser.newContext({
+        viewport: { width: vp.width, height: vp.height },
+        colorScheme: scheme,
+      });
+      const page = await context.newPage();
+      for (const path of paths) {
+        const url = `${origin}${path}`;
+        try {
+          await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
+          await page.addScriptTag({ content: axeSource });
+          const result = await page.evaluate(async (runTags) => {
+            return await window.axe.run(document, { runOnly: { type: 'tag', values: runTags } });
+          }, tags);
+          checks++;
+          if (result.violations.length) {
+            console.log(`\n${path} @ ${vp.width}px (${scheme})`);
           }
-          if (isFail) failures += v.nodes.length;
-          else warnings += v.nodes.length;
+          for (const v of result.violations) {
+            const isFail = FAIL_IMPACTS.has(v.impact);
+            const mark = isFail ? '❌' : '⚠';
+            console.log(`${mark} [${v.impact}] ${v.id}: ${v.help} (${v.nodes.length} node${v.nodes.length === 1 ? '' : 's'})`);
+            for (const node of v.nodes.slice(0, 3)) {
+              console.log(`    ${node.target.join(' ')}`);
+              const summary = String(node.failureSummary || '').split('\n')[0];
+              if (summary) console.log(`    ${summary}`);
+            }
+            if (isFail) failures += v.nodes.length;
+            else warnings += v.nodes.length;
+          }
+        } catch (e) {
+          console.error(`❌ ${path} @ ${vp.width}px (${scheme}): ${String(e.message).split('\n')[0]}`);
+          failures++;
         }
-      } catch (e) {
-        console.error(`❌ ${path} @ ${vp.width}px: ${String(e.message).split('\n')[0]}`);
-        failures++;
       }
+    } finally {
+      if (browser) await closeBrowser(browser);
     }
-  } finally {
-    if (browser) await closeBrowser(browser);
   }
 }
 
 if (server) await new Promise((done) => server.close(done));
 
-console.log(`\n${checks} page/viewport checks — ${failures} serious/critical node(s), ${warnings} minor/moderate node(s)`);
+console.log(`\n${checks} page/viewport/scheme checks — ${failures} serious/critical node(s), ${warnings} minor/moderate node(s)`);
 if (failures > 0) {
   console.error('❌ Accessibility check failed');
   process.exit(1);
