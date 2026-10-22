@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'articles'>;
 
 const post = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 const { title, description, pubDate, updatedDate, author, tags, sources, highRiskClaims, canonicalURL, image, imageAlt, imageCredit } = post.data;
 const date = new Date(pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 const updated =
@@ -50,6 +50,16 @@ const bodyHasSources = /^#{1,6}\s+Sources\s*$/im.test(body);
 const headlineClass = title.length > 60 ? 'headline-long' : title.length > 45 ? 'headline-medium' : 'headline-short';
 const heroDimensions = image && image !== 'exception' ? resolveImageDimensions(image) : null;
 const heroWebp = image && image !== 'exception' ? resolveHeroWebp(image) : null;
+// "In this article" navigation. Articles use a fixed H2 section shape
+// (What happened / Why it matters / Practical implications / Risks and caveats
+// / What to watch), so a compact list of those sections lets readers scan and
+// jump on mobile, where a long single column is hardest to navigate. Only the
+// body H2s are listed; the authored `Sources` section is a reference list, not
+// a section to navigate to, so it is excluded. Rendered collapsed (see
+// `article-toc`) so it never pushes the article body below the fold.
+const tocHeadings = headings
+  .filter((h) => h.depth === 2 && h.text.trim().toLowerCase() !== 'sources')
+  .map((h) => ({ slug: h.slug, text: h.text }));
 
 const allArticles = await getCollection('articles');
 const relatedArticles = getRelatedArticles(post, allArticles, topicTagSlugs, 3);
@@ -107,6 +117,18 @@ const formatRelatedDate = (date: Date) => date.toLocaleDateString('en-US', { yea
         )}
         {imageCredit && <figcaption class="article-hero-credit">{imageCredit}</figcaption>}
       </figure>
+    )}
+    {tocHeadings.length >= 3 && (
+      <nav class="article-toc" aria-label="In this article">
+        <details>
+          <summary>In this article</summary>
+          <ol>
+            {tocHeadings.map((h) => (
+              <li><a href={`#${h.slug}`}>{h.text}</a></li>
+            ))}
+          </ol>
+        </details>
+      </nav>
     )}
     <Content />
     {sources.length > 0 && !bodyHasSources && (

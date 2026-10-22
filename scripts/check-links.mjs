@@ -124,7 +124,22 @@ for (const path of pagePaths) {
       errors++;
       continue;
     }
-    if (href.startsWith('http') || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('data:')) continue;
+    if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('data:')) continue;
+    // In-page anchors (skip link, editorial-standards deep link, the article
+    // "In this article" table of contents) must point at an id that actually
+    // exists in the same document; a renamed heading would otherwise ship a
+    // dead jump link silently.
+    if (href.startsWith('#')) {
+      const id = href.slice(1);
+      if (!id) continue;
+      const hasTarget =
+        html.includes(`id="${id}"`) || html.includes(`id='${id}'`) || html.includes(`name="${id}"`);
+      if (!hasTarget) {
+        console.error(`❌ ${rel} → broken in-page anchor: ${href}`);
+        errors++;
+      }
+      continue;
+    }
     // Resolve the file path only: fragments (#anchor) and query strings are not
     // part of the built filename, so `/page/#section` must check `/page/`.
     let target = href.split(/[?#]/, 1)[0];
