@@ -752,6 +752,38 @@ for (const file of walk(assetBase)) {
   }
 }
 
+// 20. Topic links must resolve to an indexable topic page. One-article tags
+// still render a noindex page for old inbound links, but linking to them from
+// cards or article headers is a dead end and wastes internal-link equity
+// (src/lib/topicTags.ts). Skip in live mode, where dist/ may not hold the site.
+const builtTagsDir = join(assetBase, 'tags');
+if (pagePaths.length > 0 && existsSync(builtTagsDir)) {
+  const thinTags = new Set();
+  for (const entry of readdirSync(builtTagsDir)) {
+    const tagIndex = join(builtTagsDir, entry, 'index.html');
+    if (!existsSync(tagIndex)) continue;
+    if (/<meta name="robots" content="noindex/.test(readFileSync(tagIndex, 'utf-8'))) {
+      thinTags.add(entry);
+    }
+  }
+
+  const badLinks = [];
+  for (const path of pagePaths) {
+    if (!path.endsWith('.html')) continue;
+    const rel = path.slice(dist.length);
+    for (const match of readFileSync(path, 'utf-8').matchAll(/href="\/tags\/([^"/]+)\//g)) {
+      if (thinTags.has(match[1])) badLinks.push(`${rel} -> /tags/${match[1]}/`);
+    }
+  }
+  if (badLinks.length > 0) {
+    for (const link of badLinks.slice(0, 10)) {
+      console.error(`❌ topic link points at a noindex single-article tag: ${link}`);
+    }
+    if (badLinks.length > 10) console.error(`… and ${badLinks.length - 10} more`);
+    errors += badLinks.length;
+  }
+}
+
 if (errors > 0) {
   console.error(`\n${errors} SEO error(s) found`);
 }

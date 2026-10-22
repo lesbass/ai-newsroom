@@ -6,6 +6,7 @@ import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { slugifyTag } from '../../lib/slugify';
 import { tagLabel } from '../../lib/tags';
+import { getTopicTagSlugs } from '../../lib/topicTags';
 import { resolveImageDimensions, resolveHeroWebp } from '../../lib/ogImage';
 import { formatHeadline } from '../../lib/headline';
 
@@ -28,8 +29,10 @@ const updated = updatedDate ? new Date(updatedDate).toLocaleDateString('en-US', 
 const body = post.body || '';
 const wordCount = body.split(/\s+/).filter(Boolean).length;
 const readingTime = Math.max(1, Math.round(wordCount / 238));
-const displayTags = tags.slice(0, 6);
-const extraTagCount = Math.max(0, tags.length - 6);
+const topicTagSlugs = await getTopicTagSlugs();
+const topicTags = tags.filter((tag) => topicTagSlugs.has(slugifyTag(tag)));
+const displayTags = topicTags.slice(0, 6);
+const extraTagCount = Math.max(0, topicTags.length - 6);
 // The preferred article shape already ends with an authored `## Sources`
 // section. When the body carries one, rendering the frontmatter `sources` list
 // in a second `Sources` aside would produce two identical H2 headings on the

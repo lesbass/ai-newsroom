@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.astro';
 import { getCollection } from 'astro:content';
 import { slugifyTag } from '../../lib/slugify';
 import { tagLabel } from '../../lib/tags';
+import { TOPIC_MIN_ARTICLES } from '../../lib/topicTags';
 
 const allArticles = await getCollection('articles');
 const tagMap = new Map<string, number>();
@@ -21,7 +22,7 @@ for (const article of allArticles) {
 const sortedTags = [...tagMap.entries()]
   .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
-const filteredTags = sortedTags.filter(([, count]) => count >= 2);
+const filteredTags = sortedTags.filter(([, count]) => count >= TOPIC_MIN_ARTICLES);
 const totalArticles = allArticles.length;
 ---
 
