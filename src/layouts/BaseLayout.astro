@@ -633,7 +633,8 @@ const jsonLd = article
       text-decoration: none;
     }
     /* Keep short hyphenated names such as GPT-6 on one line; see
-       src/lib/headline.ts. Long compounds are left breakable. */
+       src/lib/headline.ts. Long compounds carry `.no-break-long` and are
+       allowed to wrap at their hyphens on narrow viewports (AIN-1020). */
     .no-break { white-space: nowrap; }
     .article-meta {
       color: var(--color-muted);
@@ -979,6 +980,16 @@ const jsonLd = article
         font-size: clamp(1.75rem, 7.5vw, 2.1rem);
         line-height: 1.1;
       }
+      /* AIN-1020: at the mobile H1 size a 15-20 char hyphen compound such as
+         `codebase-memory-mcp` is wider than the 320 px column. Let those long
+         compounds wrap at their hyphens here; short names (GPT-6, Claude-3,
+         DeepSeek-V4) keep their `.no-break` nowrap above this breakpoint. */
+      .no-break-long { white-space: normal; }
+      /* Let the date + "(updated …)" run wrap onto a second line instead of
+         forcing one unbreakable line past the viewport (AIN-1020). The updated
+         phrase stays whole so it never splits mid-date. */
+      .meta-item-date { flex-wrap: wrap; white-space: normal; }
+      .meta-item-date > span { white-space: nowrap; }
       .card-featured .article-card-title {
         font-size: clamp(1.55rem, 6.6vw, 1.75rem);
         line-height: 1.14;

@@ -10,6 +10,11 @@
 const NO_BREAK_TOKEN =
   /(?<![\w.-])[A-Za-z0-9]+(?:[.-][A-Za-z0-9]+)*-[A-Za-z0-9]+(?:[.-][A-Za-z0-9]+)*(?![\w.-])/g;
 const MAX_NO_BREAK_LENGTH = 20;
+// Compounds at or above this length can be wider than the 320 px article
+// column at the mobile H1 size (AIN-1020). They still get a no-break span so
+// desktop keeps them whole, but carry a modifier class that a <=600 px media
+// query switches back to normal wrapping so they break at their hyphens.
+const LONG_NO_BREAK_MIN_LENGTH = 15;
 
 export function escapeHtml(value: string): string {
   return value
@@ -21,9 +26,9 @@ export function escapeHtml(value: string): string {
 }
 
 export function formatHeadline(value: string): string {
-  return escapeHtml(value).replace(NO_BREAK_TOKEN, (token) =>
-    token.length <= MAX_NO_BREAK_LENGTH
-      ? `<span class="no-break">${token}</span>`
-      : token,
-  );
+  return escapeHtml(value).replace(NO_BREAK_TOKEN, (token) => {
+    if (token.length > MAX_NO_BREAK_LENGTH) return token;
+    const modifier = token.length >= LONG_NO_BREAK_MIN_LENGTH ? ' no-break-long' : '';
+    return `<span class="no-break${modifier}">${token}</span>`;
+  });
 }

@@ -80,6 +80,7 @@ const checks = [
   ['Targets', 'npm run test:targets'],
   ['Glyphs', 'npm run test:glyphs'],
   ['HeadlineBreaks', 'npm run test:headline'],
+  ['HeadlineOverflow', 'npm run test:headline-overflow'],
   ['DeployFreshness', 'npm run test:deploy-freshness'],
 ];
 
