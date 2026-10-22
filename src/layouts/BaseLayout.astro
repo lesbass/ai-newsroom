@@ -1161,7 +1161,12 @@ const jsonLd = article
          author item keeps the article meta on one line at 375 px. */
       .meta-author-brand { display: none; }
       footer .container { grid-template-columns: 1fr; }
-      .footer-links { justify-content: flex-start; }
+      .footer-links { justify-content: flex-start; gap: 0.35rem 1rem; }
+      /* When the footer links wrap, a separator that travels with its link
+         lands at the start of the next row ("· Corrections"). Drop the
+         middle dots on the single-column mobile footer and let the gaps
+         separate the labels (AIN-1033 follow-up). */
+      .footer-links > * + a::before { content: none; }
     }
 
     @media (max-width: 420px) {

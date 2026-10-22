@@ -19,6 +19,10 @@
  * contain their own overflow, so the page-level `scrollWidth` stays at the
  * viewport width and they are not flagged.
  *
+ * It also guards the footer row: a separator that moves with its link (the
+ * AIN-1033 fix) must not lead a wrapped row at narrow widths. The mobile
+ * single-column footer therefore drops the middots and relies on gaps.
+ *
  * Usage:
  *   node scripts/check-headline-overflow.mjs                 # serves dist/
  *   CHECK_URL=https://news.lesbass.com node scripts/check-headline-overflow.mjs
@@ -182,6 +186,41 @@ function measureOverflow() {
   return { inner, scrollWidth: doc.scrollWidth, delta, offenders };
 }
 
+/**
+ * Runs in the page. Returns footer link items whose `::before` separator
+ * starts a wrapped row instead of following a label.
+ */
+function measureFooterSeparators() {
+  const rows = new Map();
+  for (const el of document.querySelectorAll('.footer-links > *')) {
+    const r = el.getBoundingClientRect();
+    if (r.width === 0 && r.height === 0) continue;
+    const top = Math.round(r.top);
+    if (!rows.has(top)) rows.set(top, []);
+    rows.get(top).push({ el, left: r.left });
+  }
+
+  const tops = [...rows.keys()].sort((a, b) => a - b);
+  const offenders = [];
+  for (let i = 1; i < tops.length; i++) {
+    const first = rows.get(tops[i]).sort((a, b) => a.left - b.left)[0];
+    const before = getComputedStyle(first.el, '::before');
+    if (
+      before.content &&
+      before.content !== 'none' &&
+      before.content !== 'normal' &&
+      before.content !== '""'
+    ) {
+      offenders.push({
+        text: (first.el.textContent || '').trim(),
+        top: tops[i],
+        content: before.content,
+      });
+    }
+  }
+  return offenders;
+}
+
 const pages = pagePaths();
 if (pages.length === 0) {
   console.error('❌ No pages found — run `npm run build` first');
@@ -217,9 +256,13 @@ try {
         await page.goto(origin + path, { waitUntil: 'domcontentloaded', timeout: 45000 });
         await page.evaluate(() => document.fonts && document.fonts.ready);
         const { inner, scrollWidth, delta, offenders } = await page.evaluate(measureOverflow);
+        const separatorOffenders = await page.evaluate(measureFooterSeparators);
         if (delta > 0) {
           failures.push({ viewport: viewport.name, path, inner, scrollWidth, delta, offenders });
           console.log(`❌ ${viewport.name}px ${path.padEnd(64)} scrollWidth ${scrollWidth} > innerWidth ${inner} (+${delta})`);
+        } else if (separatorOffenders.length > 0) {
+          failures.push({ viewport: viewport.name, path, separatorOffenders });
+          console.log(`❌ ${viewport.name}px ${path.padEnd(64)} footer separator leads a wrapped row: ${separatorOffenders.map((o) => o.text).join(', ')}`);
         } else {
           console.log(`✅ ${viewport.name}px ${path.padEnd(64)} scrollWidth ${scrollWidth} = innerWidth ${inner}`);
         }
@@ -233,8 +276,15 @@ try {
 }
 
 if (failures.length) {
-  console.error(`\n❌ ${failures.length} of ${runs} page/viewport runs overflow horizontally:`);
+  console.error(`\n❌ ${failures.length} of ${runs} page/viewport runs failed the narrow-layout guard:`);
   for (const f of failures) {
+    if (f.separatorOffenders) {
+      console.error(`   ${f.viewport}px ${f.path} footer separator leads a wrapped row`);
+      for (const o of f.separatorOffenders.slice(0, 5)) {
+        console.error(`      "${o.text}" starts row at y=${o.top} with ::before ${o.content}`);
+      }
+      continue;
+    }
     console.error(`   ${f.viewport}px ${f.path} (+${f.delta}px)`);
     for (const o of f.offenders.slice(0, 5)) {
       console.error(`      <${o.tag} class="${o.cls}"> right=${o.right} left=${o.left} "${o.text}"`);
@@ -243,6 +293,6 @@ if (failures.length) {
   process.exit(1);
 }
 console.log(
-  `✅ No horizontal page overflow across ${runs} page/viewport runs ` +
+  `✅ No horizontal page overflow or leading footer separator across ${runs} page/viewport runs ` +
     `(${pages.length} pages at ${VIEWPORTS.map((v) => `${v.name}px`).join('/')})`,
 );
