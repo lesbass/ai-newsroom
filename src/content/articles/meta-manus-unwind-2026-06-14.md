@@ -40,7 +40,7 @@ On **2026-06-11**, *Straits Times* and Bloomberg reported that **Meta has comple
 
 **The deal.** Meta announced the Manus acquisition in **December 2025**. Manus — a Singapore-based autonomous AI agents startup founded by **Xiao Hong, Ji Yichao, and Zhang Tao** — was Meta's attempt to enter the *agentic AI* race. The three founders had relocated from Beijing to Singapore in 2025; early investors — **Tencent, ZhenFund, HSG, Benchmark** — received their shares from the acquisition ([Straits Times / Bloomberg, June 11, 2026](https://www.straitstimes.com/world/meta-starts-unwinding-manus-deal-by-splitting-operations-data)).
 
-**April 2026 — the NDRC order.** Four months after the announcement, on **April 27, 2026**, the NDRC ordered the transaction dismantled, saying only that the decision followed "laws and regulations" ([NDRC, April 27, 2026](https://zfxxgk.ndrc.gov.cn/web/iteminfo.jsp?id=20623); [AP, April 27, 2026](https://apnews.com/article/china-meta-manus-ai-acquisition-5f8012791f86f719a24a3ebac06d9b0a)). Manus was — formally — a Singaporean entity, with relocated founders. That didn't stop Beijing. TechCrunch reads the action as *"Beijing's determination to maintain control over strategically sensitive technology, regardless of offshore incorporation"* ([TechCrunch, June 13, 2026](https://techcrunch.com/2026/06/13/meta-reportedly-moves-to-unwind-2b-manus-deal-after-beijings-demand/)).
+**April 2026 — the NDRC order.** Four months after the announcement, on **April 27, 2026**, the NDRC ordered the transaction dismantled, saying only that the decision followed "laws and regulations" ([NDRC, April 27, 2026](https://zfxxgk.ndrc.gov.cn/web/iteminfo.jsp?id=20623); [AP, April 27, 2026](https://apnews.com/article/china-meta-manus-ai-acquisition-5f8012791f86f719a24a3ebac06d9b0a)). Manus was — formally — a Singaporean entity, with relocated founders. That didn't stop Beijing. TechCrunch reads the action as *"Beijing's determination to retain control over strategically sensitive technology, regardless of a company's offshore incorporation"* ([TechCrunch, June 13, 2026](https://techcrunch.com/2026/06/13/meta-reportedly-moves-to-unwind-2b-manus-deal-after-beijings-demand/)).
 
 **The negotiated exit.** The three founders, per Bloomberg, have begun preliminary discussions to raise **approximately $1 billion** at a valuation *"at least equal to the $2 billion paid by Meta"* ([Straits Times / Bloomberg, June 11, 2026](https://www.straitstimes.com/world/meta-starts-unwinding-manus-deal-by-splitting-operations-data)). TechCrunch adds that the structure under study is a **Chinese joint venture** with a **Hong Kong IPO** path and describes the talks as preliminary ([TechCrunch, June 13, 2026](https://techcrunch.com/2026/06/13/meta-reportedly-moves-to-unwind-2b-manus-deal-after-beijings-demand/)).
 
@@ -64,17 +64,17 @@ On **2026-06-11**, *Straits Times* and Bloomberg reported that **Meta has comple
 
 1. Closing (or failure) of the **$1 billion USD buyback** at ≥ $2 billion valuation — preliminary, not advanced.
 2. Post-deal structure: **Chinese JV, Hong Kong IPO, or other**.
-3. The first **official Meta or Manus statement** on the operation.
+3. Any further **official Meta or Manus statement** on the unwind timeline.
 4. **Extension of the pattern** to other completed deals (MiniMax and Zhipu).
-5. **Text of the NDRC restriction** — currently *"unspecified laws and regulations"*.
+5. **The full legal basis of the NDRC order** — only a short statement citing *"laws and regulations"* has been reported.
 
 ## Risks and caveats
 
 - **The exit-ban detail rests on TechCrunch's reporting.** A companion *Straits Times* article on the travel ban could not be independently recovered, so the restriction is attributed to TechCrunch, not ST text.
-- **The founders' names are three (ST) or two (TC).** ST and Bloomberg cite **Xiao Hong, Ji Yichao, Zhang Tao**; TC cites only **Xiao Hong, Ji Yichao**. The article uses the three names from ST and flags the discrepancy.
-- **No specific NDRC regulation has been named.** Sources use *"unspecified laws and regulations."*
+- **Founder naming varies slightly by source.** ST and Bloomberg cite **Xiao Hong, Ji Yichao, Zhang Tao** as founders; the exit-ban reporting names Hong and Ji. The article uses all three founder names from the deal coverage.
+- **No specific NDRC regulation has been named.** Sources say the order cited *"laws and regulations"* without identifying a particular rule.
 - **The $1 billion buyback is *exploring*, not *agreed*.**
-- **No official Meta or Manus statement** was publicly released as of June 13, 2026.
+- **Meta disputed the finding.** A Meta spokesperson told TechCrunch in April that the transaction *"complied fully with applicable law"* and that the company anticipated *"an appropriate resolution to the inquiry"* ([TechCrunch, April 27, 2026](https://techcrunch.com/2026/04/27/china-vetoes-metas-2b-manus-deal-after-months-long-probe/)); Manus did not respond to requests for comment in April or June ([TechCrunch, April 27, 2026](https://techcrunch.com/2026/04/27/china-vetoes-metas-2b-manus-deal-after-months-long-probe/); [TechCrunch, June 13, 2026](https://techcrunch.com/2026/06/13/meta-reportedly-moves-to-unwind-2b-manus-deal-after-beijings-demand/)).
 - **The "extension to Moonshot, StepFun, ByteDance" is reported by TC, not independently verified.**
 
 ## Verdict
