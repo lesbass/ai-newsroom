@@ -152,6 +152,27 @@ const seoDescription = truncateDescription(description);
 
 const ogImage = resolveOgImage(image);
 const jsonLdImage = new URL(ogImage.src, site).toString();
+// Publisher entity shared by the Article and WebSite graphs. NewsMediaOrganization
+// is the schema.org type for a news publisher and lets us point crawlers at the
+// visible policies the site already maintains (editorial standards + corrections).
+const publisherOrganization = {
+  '@type': 'NewsMediaOrganization',
+  '@id': `${site}#organization`,
+  name: 'AI Newsroom',
+  url: site,
+  logo: {
+    '@type': 'ImageObject',
+    // Google requires publisher.logo to be a raster image (not SVG) of at
+    // least 112x112. `logo.png` is generated from `favicon.svg` by
+    // `npm run generate:logo` so both stay visually identical.
+    url: new URL('/logo.png', site).toString(),
+    width: 512,
+    height: 512,
+  },
+  ethicsPolicy: new URL('editorial-standards/', site).toString(),
+  publishingPrinciples: new URL('editorial-standards/', site).toString(),
+  correctionsPolicy: new URL('corrections/', site).toString(),
+};
 const jsonLd = article
   ? {
       '@context': 'https://schema.org',
@@ -177,21 +198,7 @@ const jsonLd = article
         name: author,
         url: site,
       },
-      publisher: {
-        '@type': 'Organization',
-        '@id': `${site}#organization`,
-        name: 'AI Newsroom',
-        url: site,
-        logo: {
-          '@type': 'ImageObject',
-          // Google requires publisher.logo to be a raster image (not SVG) of at
-          // least 112x112. `logo.png` is generated from `favicon.svg` by
-          // `npm run generate:logo` so both stay visually identical.
-          url: new URL('/logo.png', site).toString(),
-          width: 512,
-          height: 512,
-        },
-      },
+      publisher: publisherOrganization,
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id': pageURL,
@@ -204,6 +211,8 @@ const jsonLd = article
       name: 'AI Newsroom',
       url: site,
       description: description,
+      inLanguage: 'en',
+      publisher: publisherOrganization,
     };
 ---
 
@@ -220,7 +229,9 @@ const jsonLd = article
   <meta name="description" content={seoDescription} />
   <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)" />
-  {robots && <meta name="robots" content={robots} />}
+  {robots
+    ? <meta name="robots" content={robots} />
+    : <meta name="robots" content="max-image-preview:large" />}
   <link rel="canonical" href={pageURL} />
   <link rel="sitemap" href="/sitemap.xml" />
   <link rel="alternate" type="application/rss+xml" title="AI Newsroom" href="/rss.xml" />

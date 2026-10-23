@@ -178,6 +178,23 @@ function checkPage(rel, html, path) {
       }
     }
 
+    // 1b. Robots meta. Every indexable page must opt into large image previews
+    // in Google Search/Discover; otherwise previews are capped at the small
+    // default even though each article ships a 1200x630 card (2026-10-23 audit).
+    const robotsMeta = html.match(/<meta name="robots" content="([^"]*)"/);
+    if (!robotsMeta) {
+      console.error(`❌ ${rel}: missing robots meta (max-image-preview:large)`);
+      errors++;
+    } else if (
+      !/\bnoindex\b/i.test(robotsMeta[1]) &&
+      !/max-image-preview:large/i.test(robotsMeta[1])
+    ) {
+      console.error(
+        `❌ ${rel}: indexable page does not allow max-image-preview:large (robots="${robotsMeta[1]}")`,
+      );
+      errors++;
+    }
+
     // 2. Meta description
     const descMatch = html.match(/<meta name="description" content="([^"]*)"/);
     if (!descMatch) {
@@ -480,6 +497,45 @@ function checkPage(rel, html, path) {
                 }
               }
             }
+          }
+        }
+
+        // The publisher should be a news organization that exposes the
+        // editorial policies readers can inspect. Both pages are already linked
+        // from the footer; a missing or rotated URL is a template regression
+        // (2026-10-23 audit).
+        const publisherType = articleLd.publisher && articleLd.publisher['@type'];
+        if (publisherType !== 'Organization' && publisherType !== 'NewsMediaOrganization') {
+          console.error(`❌ ${rel}: NewsArticle publisher has unexpected @type ${JSON.stringify(publisherType)}`);
+          errors++;
+        }
+        for (const [field, pagePath] of [
+          ['ethicsPolicy', 'editorial-standards'],
+          ['correctionsPolicy', 'corrections'],
+        ]) {
+          const policyUrl = articleLd.publisher && articleLd.publisher[field];
+          if (!policyUrl) {
+            console.error(`❌ ${rel}: NewsArticle publisher.${field} is missing`);
+            errors++;
+            continue;
+          }
+          let parsed = null;
+          try {
+            parsed = new URL(policyUrl);
+          } catch {
+            console.error(`❌ ${rel}: NewsArticle publisher.${field} is not an absolute URL: ${policyUrl}`);
+            errors++;
+            continue;
+          }
+          if (parsed.origin !== CANONICAL_ORIGIN) {
+            console.error(
+              `❌ ${rel}: NewsArticle publisher.${field} points at ${parsed.origin}, expected ${CANONICAL_ORIGIN}`,
+            );
+            errors++;
+          }
+          if (existsSync(assetBase) && !existsSync(join(assetBase, pagePath, 'index.html'))) {
+            console.error(`❌ ${rel}: NewsArticle publisher.${field} target /${pagePath}/ is missing from the build`);
+            errors++;
           }
         }
       }
