@@ -403,8 +403,8 @@ function checkPage(rel, html, path) {
     // 7. Article-specific checks
     if (html.includes('"@type":"NewsArticle"') || html.includes('"@type": "NewsArticle"')) {
       if (!/<meta property="article:published_time"/.test(html)) {
-        console.warn(`⚠ ${rel}: NewsArticle missing article:published_time`);
-        warnings++;
+        console.error(`❌ ${rel}: NewsArticle missing article:published_time`);
+        errors++;
       }
 
       // The structured-data headline must be the full article title, not the
@@ -472,6 +472,28 @@ function checkPage(rel, html, path) {
           console.error(`❌ ${rel}: NewsArticle author has no name`);
           errors++;
         }
+        // The visible publication date in the article header must be a
+        // machine-readable <time datetime> that agrees with datePublished
+        // (AIN-1042). Scope to the header meta line: related-article cards also
+        // use <time>, but only the header date describes this article. A
+        // styled-but-dateless <span> silently loses the machine-readable value
+        // even though the date is on screen, so an empty or absent <time> is an
+        // error rather than a cosmetic warning.
+        const articleMetaHtml = (html.match(/<div class="article-meta">([\s\S]*?)<\/div>/) || [])[1] || '';
+        const metaTimes = [
+          ...articleMetaHtml.matchAll(/<time\b[^>]*\bdatetime="([^"]+)"[^>]*>([\s\S]*?)<\/time>/g),
+        ];
+        const visibleTime = metaTimes.find(([, , text]) => text.replace(/<[^>]*>/g, '').trim());
+        if (!visibleTime) {
+          console.error(`❌ ${rel}: NewsArticle has no visible <time datetime> for its publication date`);
+          errors++;
+        } else if (articleLd.datePublished && decodeEntities(visibleTime[1]) !== articleLd.datePublished) {
+          console.error(
+            `❌ ${rel}: visible <time datetime="${decodeEntities(visibleTime[1])}"> does not match datePublished ${articleLd.datePublished}`,
+          );
+          errors++;
+        }
+
         if (articleLd.datePublished && articleLd.dateModified) {
           const published = Date.parse(articleLd.datePublished);
           const modified = Date.parse(articleLd.dateModified);

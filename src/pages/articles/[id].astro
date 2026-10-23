@@ -113,7 +113,7 @@ const formatRelatedDate = (date: Date) => date.toLocaleDateString('en-US', { yea
       <h1 class={headlineClass} set:html={formatHeadline(title)} />
       {dek && dek !== title && <p class="article-dek">{dek}</p>}
       <div class="article-meta">
-        <span class="meta-item meta-item-date">{date}{updated && <span> (updated {updated})</span>}</span>
+        <span class="meta-item meta-item-date"><time datetime={new Date(pubDate).toISOString()}>{date}</time>{updated && <span> (updated <time datetime={new Date(updatedDate).toISOString()}>{updated}</time>)</span>}</span>
         <span class:list={['meta-item', 'meta-author', author === 'AI Newsroom' && 'meta-author-brand']}><span class="sep-dot" aria-hidden="true">&middot;</span><span>{author}</span></span>
         <span class="meta-item"><span class="sep-dot" aria-hidden="true">&middot;</span><span class="reading-time">{readingTime} min read</span></span>
         {sources.length > 0 && (

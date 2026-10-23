@@ -75,7 +75,7 @@ const sourceCount = sources.length;
     <a href={url} set:html={formatHeadline(title)} />
   </Heading>
   <div class="article-meta">
-    <span class="meta-item">{date}</span>
+    <span class="meta-item"><time datetime={new Date(pubDate).toISOString()}>{date}</time></span>
     <span class="meta-item"><span class="sep-dot" aria-hidden="true">&middot;</span><span class="reading-time">{readingTime} min read</span></span>
     {sourceCount > 0 && (
       <span class="meta-item"><span class="sep-dot" aria-hidden="true">&middot;</span><span title={`${sourceCount} cited source${sourceCount !== 1 ? 's' : ''}`}>{sourceCount} source{sourceCount !== 1 ? 's' : ''}</span></span>
