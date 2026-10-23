@@ -176,6 +176,18 @@ function checkPageHtml(html, rel, isRemote) {
             console.error(`❌ ${rel}: og:image is ${(ogBytes / 1024).toFixed(0)} KB (${ogPath}) — a 1200x630 social card is required so social and feed fetches stay light`);
             errors++;
           }
+          // `max-image-preview:large` only helps when the preview asset itself
+          // meets the large-card floor (AIN-1040). Google Discover and social
+          // crawlers drop previews narrower than 1200 px, so every local
+          // article og:image must be at least that wide.
+          const ogSize = readImageSizeFile(ogFile);
+          if (!ogSize) {
+            console.warn(`⚠  ${rel}: og:image dimensions unreadable (${ogPath}) — cannot verify the 1200 px social-card floor`);
+            warnings++;
+          } else if (ogSize.width < 1200) {
+            console.error(`❌ ${rel}: og:image is ${ogSize.width}x${ogSize.height} (${ogPath}) — must be at least 1200px wide for large social/Discover previews`);
+            errors++;
+          }
         }
       }
     }

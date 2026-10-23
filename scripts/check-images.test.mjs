@@ -8,14 +8,29 @@ import { fileURLToPath } from 'node:url';
 
 const script = join(dirname(fileURLToPath(import.meta.url)), 'check-images.mjs');
 
-function makeFixture({ heroCredit = true, inlineCredit = 'paragraph' } = {}) {
+// Minimal PNG header with a real IHDR width/height. The image checker reads
+// dimensions from bytes 16-23 and does not decode pixels, so this is enough to
+// exercise the 1200 px og:image floor without shipping binary fixtures.
+function makePng(width, height) {
+  const buf = Buffer.alloc(33);
+  Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]).copy(buf, 0);
+  buf.writeUInt32BE(13, 8);
+  buf.write('IHDR', 12, 'latin1');
+  buf.writeUInt32BE(width, 16);
+  buf.writeUInt32BE(height, 20);
+  buf[24] = 8;
+  buf[25] = 6;
+  return buf;
+}
+
+function makeFixture({ heroCredit = true, inlineCredit = 'paragraph', ogWidth = 1200, ogHeight = 630 } = {}) {
   const root = mkdtempSync(join(tmpdir(), 'check-images-'));
   const articleDir = join(root, 'dist', 'articles', 'fixture-article');
   const imageDir = join(root, 'dist', 'images', 'articles', 'fixture');
   mkdirSync(articleDir, { recursive: true });
   mkdirSync(imageDir, { recursive: true });
-  writeFileSync(join(imageDir, 'hero.png'), '\x89PNG\r\n\x1a\n');
-  writeFileSync(join(imageDir, 'inline.png'), '\x89PNG\r\n\x1a\n');
+  writeFileSync(join(imageDir, 'hero.png'), makePng(ogWidth, ogHeight));
+  writeFileSync(join(imageDir, 'inline.png'), makePng(1200, 630));
   writeFileSync(join(root, 'dist', 'favicon.svg'), '<svg xmlns="http://www.w3.org/2000/svg"></svg>');
 
   const heroCaption = heroCredit
@@ -69,6 +84,21 @@ test('fails when the hero caption is missing', (t) => {
   const result = runCheck(fixture.root);
   assert.equal(result.code, 1, result.output);
   assert.match(result.output, /article hero <figure> missing visible \.article-hero-credit caption/);
+});
+
+test('fails when the og:image is narrower than 1200px', (t) => {
+  const fixture = makeFixture({ ogWidth: 800, ogHeight: 450 });
+  t.after(fixture.cleanup);
+  const result = runCheck(fixture.root);
+  assert.equal(result.code, 1, result.output);
+  assert.match(result.output, /og:image is 800x450 .* must be at least 1200px wide/);
+});
+
+test('passes when the og:image is exactly 1200px wide', (t) => {
+  const fixture = makeFixture({ ogWidth: 1200, ogHeight: 630 });
+  t.after(fixture.cleanup);
+  const result = runCheck(fixture.root);
+  assert.equal(result.code, 0, result.output);
 });
 
 test('fails when the inline image disclosure is missing', (t) => {

@@ -168,8 +168,13 @@ async function main() {
     const ar = size ? size.width / size.height : null;
     const outsideBand = ar !== null && (ar < SOCIAL_MIN_AR || ar > SOCIAL_MAX_AR);
     const heavySource = statSync(source).size > SOCIAL_MAX_SOURCE_BYTES;
-    const needsSocial = heroes.has(href) && ar !== null && (outsideBand || heavySource);
-    const letterbox = needsSocial && !outsideBand;
+    // A hero narrower than the 1200 px social-card floor is upscaled even when
+    // its ratio and weight are fine: Google Discover and large social cards
+    // reject undersized previews, and og:image would otherwise point at the
+    // small source.
+    const tooNarrow = size !== null && size.width < SOCIAL_WIDTH;
+    const needsSocial = heroes.has(href) && ar !== null && (outsideBand || heavySource || tooNarrow);
+    const letterbox = needsSocial && !outsideBand && !tooNarrow;
 
     try {
       if (isStale(source, full)) {
