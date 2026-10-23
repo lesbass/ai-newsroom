@@ -73,6 +73,7 @@ const checks = [
   ['Links', 'npm run test:links'],
   ['Mobile', 'npm run test:mobile'],
   ['SEO', 'npm run test:seo'],
+  ['FeedSitemap', 'npm run test:feed-sitemap'],
   ['SitemapLastmod', 'npm run test:sitemap-lastmod'],
   ['ImageFixtures', 'npm run test:images-fixtures'],
   ['Worker', 'npm run test:worker'],
