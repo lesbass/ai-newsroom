@@ -436,6 +436,14 @@ function checkPage(rel, html, path) {
           if (!logoUrl) {
             console.error(`❌ ${rel}: NewsArticle publisher.logo has no url`);
             errors++;
+          } else if (!/\.(png|jpe?g|webp|gif)(?:[?#]|$)/i.test(logoUrl)) {
+            // Google rejects vector logos for publisher.logo even when the
+            // declared dimensions are valid, so an SVG (our old favicon) would
+            // silently disqualify every article from Article rich results.
+            console.error(
+              `❌ ${rel}: NewsArticle publisher.logo must be a raster image (png/jpeg/webp/gif), got ${logoUrl}`,
+            );
+            errors++;
           }
           if (!Number.isFinite(logoW) || !Number.isFinite(logoH) || logoW <= 0 || logoH <= 0) {
             console.error(`❌ ${rel}: NewsArticle publisher.logo must declare positive width/height`);

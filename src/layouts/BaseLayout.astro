@@ -184,9 +184,10 @@ const jsonLd = article
         url: site,
         logo: {
           '@type': 'ImageObject',
-          url: new URL('/favicon.svg', site).toString(),
-          // Google requires publisher.logo to be >= 112x112; declare the
-          // favicon's true intrinsic size so the ImageObject is explicit.
+          // Google requires publisher.logo to be a raster image (not SVG) of at
+          // least 112x112. `logo.png` is generated from `favicon.svg` by
+          // `npm run generate:logo` so both stay visually identical.
+          url: new URL('/logo.png', site).toString(),
           width: 512,
           height: 512,
         },
