@@ -50,6 +50,51 @@ function checkCanonicalOrigin(where, field, url) {
   }
 }
 
+// The publisher entity in Article/WebSite JSON-LD must be an organization that
+// points crawlers at the editorial policies the site publishes. Every policy
+// URL is checked for presence, canonical origin, and a built target so a
+// template regression cannot silently strip the machine-readable trust graph
+// (AIN-1039).
+const PUBLISHER_POLICIES = [
+  ['ethicsPolicy', 'editorial-standards'],
+  ['publishingPrinciples', 'editorial-standards'],
+  ['correctionsPolicy', 'corrections'],
+];
+
+function checkPublisherPolicies(where, ldType, publisher) {
+  const publisherType = publisher && publisher['@type'];
+  if (publisherType !== 'Organization' && publisherType !== 'NewsMediaOrganization') {
+    console.error(`❌ ${where}: ${ldType} publisher has unexpected @type ${JSON.stringify(publisherType)}`);
+    errors++;
+  }
+  for (const [field, pagePath] of PUBLISHER_POLICIES) {
+    const policyUrl = publisher && publisher[field];
+    if (!policyUrl) {
+      console.error(`❌ ${where}: ${ldType} publisher.${field} is missing`);
+      errors++;
+      continue;
+    }
+    let parsed = null;
+    try {
+      parsed = new URL(policyUrl);
+    } catch {
+      console.error(`❌ ${where}: ${ldType} publisher.${field} is not an absolute URL: ${policyUrl}`);
+      errors++;
+      continue;
+    }
+    if (parsed.origin !== CANONICAL_ORIGIN) {
+      console.error(
+        `❌ ${where}: ${ldType} publisher.${field} points at ${parsed.origin}, expected ${CANONICAL_ORIGIN}`,
+      );
+      errors++;
+    }
+    if (existsSync(assetBase) && !existsSync(join(assetBase, pagePath, 'index.html'))) {
+      console.error(`❌ ${where}: ${ldType} publisher.${field} target /${pagePath}/ is missing from the build`);
+      errors++;
+    }
+  }
+}
+
 // Decode the HTML entities Astro escapes into attribute/text values so social
 // tags and hero alt text can be compared literally.
 function decodeEntities(s) {
@@ -503,42 +548,23 @@ function checkPage(rel, html, path) {
         // The publisher should be a news organization that exposes the
         // editorial policies readers can inspect. Both pages are already linked
         // from the footer; a missing or rotated URL is a template regression
-        // (2026-10-23 audit).
-        const publisherType = articleLd.publisher && articleLd.publisher['@type'];
-        if (publisherType !== 'Organization' && publisherType !== 'NewsMediaOrganization') {
-          console.error(`❌ ${rel}: NewsArticle publisher has unexpected @type ${JSON.stringify(publisherType)}`);
-          errors++;
-        }
-        for (const [field, pagePath] of [
-          ['ethicsPolicy', 'editorial-standards'],
-          ['correctionsPolicy', 'corrections'],
-        ]) {
-          const policyUrl = articleLd.publisher && articleLd.publisher[field];
-          if (!policyUrl) {
-            console.error(`❌ ${rel}: NewsArticle publisher.${field} is missing`);
-            errors++;
-            continue;
-          }
-          let parsed = null;
-          try {
-            parsed = new URL(policyUrl);
-          } catch {
-            console.error(`❌ ${rel}: NewsArticle publisher.${field} is not an absolute URL: ${policyUrl}`);
-            errors++;
-            continue;
-          }
-          if (parsed.origin !== CANONICAL_ORIGIN) {
-            console.error(
-              `❌ ${rel}: NewsArticle publisher.${field} points at ${parsed.origin}, expected ${CANONICAL_ORIGIN}`,
-            );
-            errors++;
-          }
-          if (existsSync(assetBase) && !existsSync(join(assetBase, pagePath, 'index.html'))) {
-            console.error(`❌ ${rel}: NewsArticle publisher.${field} target /${pagePath}/ is missing from the build`);
-            errors++;
-          }
-        }
+        // (AIN-1039).
+        checkPublisherPolicies(rel, 'NewsArticle', articleLd.publisher);
       }
+    }
+
+    // 7a. WebSite JSON-LD uses the same publisher entity on listing pages, so
+    // the trust graph stays intact even when the first page a crawler sees is
+    // not an article (AIN-1039).
+    const websiteLd = [...html.matchAll(/<script type="application\/ld\+json">([^<]*)<\/script>/g)]
+      .map((m) => { try { return JSON.parse(m[1]); } catch { return null; } })
+      .find((d) => d && d['@type'] === 'WebSite');
+    if (websiteLd) {
+      if (websiteLd.inLanguage !== 'en') {
+        console.error(`❌ ${rel}: WebSite inLanguage must be "en" (got ${JSON.stringify(websiteLd.inLanguage)})`);
+        errors++;
+      }
+      checkPublisherPolicies(rel, 'WebSite', websiteLd.publisher);
     }
 
     // 7b. At most one "Sources" heading. The authored body section and the
