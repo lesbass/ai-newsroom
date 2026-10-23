@@ -445,6 +445,34 @@ function checkPage(rel, html, path) {
             errors++;
           }
         }
+        // `image` must be an ImageObject so Google can read intrinsic
+        // dimensions when choosing a preview. Its URL must agree with
+        // og:image, and any declared dimensions must match the og:image
+        // claim (which section 5b already validated against the real file).
+        const ldImage = articleLd.image;
+        const ldImageUrl = typeof ldImage === 'string' ? ldImage : ldImage?.url;
+        if (!ldImageUrl) {
+          console.error(`❌ ${rel}: NewsArticle image has no URL`);
+          errors++;
+        } else if (typeof ldImage === 'string') {
+          console.error(`❌ ${rel}: NewsArticle image is a bare URL; expected an ImageObject with dimensions`);
+          errors++;
+        } else {
+          if (ogImageMatch && ldImageUrl !== ogImageMatch[1]) {
+            console.error(`❌ ${rel}: NewsArticle image ${ldImageUrl} does not match og:image ${ogImageMatch[1]}`);
+            errors++;
+          }
+          const ogWidth = Number((html.match(/<meta property="og:image:width" content="(\d+)"/) || [])[1]);
+          const ogHeight = Number((html.match(/<meta property="og:image:height" content="(\d+)"/) || [])[1]);
+          if (ldImage.width !== undefined && ldImage.width !== ogWidth) {
+            console.error(`❌ ${rel}: NewsArticle image width ${ldImage.width} does not match og:image:width ${ogWidth}`);
+            errors++;
+          }
+          if (ldImage.height !== undefined && ldImage.height !== ogHeight) {
+            console.error(`❌ ${rel}: NewsArticle image height ${ldImage.height} does not match og:image:height ${ogHeight}`);
+            errors++;
+          }
+        }
         // Recommended Article properties. `inLanguage` and a positive
         // `wordCount` are always derivable for an article, so their absence is
         // a template regression (2026-10-22 audit). `articleSection`/`keywords`

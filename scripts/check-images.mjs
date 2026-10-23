@@ -213,7 +213,8 @@ function checkPageHtml(html, rel, isRemote) {
     if (jsonLdMatch) {
       try {
         const ld = JSON.parse(jsonLdMatch[1]);
-        if (ld['@type'] === 'NewsArticle' && ld.image && ld.image.toString().includes('favicon.svg')) {
+        const ldImageUrl = typeof ld.image === 'string' ? ld.image : ld.image?.url || '';
+        if (ld['@type'] === 'NewsArticle' && ldImageUrl.includes('favicon.svg')) {
           console.warn(`⚠  ${rel}: JSON-LD image is favicon fallback (article should have a real image)`);
           warnings++;
         }

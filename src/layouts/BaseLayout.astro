@@ -152,6 +152,17 @@ const seoDescription = truncateDescription(description);
 
 const ogImage = resolveOgImage(image);
 const jsonLdImage = new URL(ogImage.src, site).toString();
+// Google's Article guidance accepts a bare URL for `image` but prefers an
+// ImageObject with intrinsic dimensions, which it uses to choose the best
+// preview. Emit width/height only when resolveOgImage measured the real file,
+// so the structured data never claims dimensions the bytes do not have.
+const jsonLdImageObject = {
+  '@type': 'ImageObject',
+  url: jsonLdImage,
+  ...(ogImage.width ? { width: ogImage.width } : {}),
+  ...(ogImage.height ? { height: ogImage.height } : {}),
+  ...(imageAlt ? { caption: imageAlt } : {}),
+};
 // Publisher entity shared by the Article and WebSite graphs. NewsMediaOrganization
 // is the schema.org type for a news publisher and lets us point crawlers at the
 // visible policies the site already maintains (editorial standards + corrections).
@@ -181,7 +192,7 @@ const jsonLd = article
       headline: title,
       description: description,
       url: pageURL,
-      image: jsonLdImage,
+      image: jsonLdImageObject,
       inLanguage: 'en',
       isAccessibleForFree: true,
       // Google's Article rich-results guidance lists these as recommended
