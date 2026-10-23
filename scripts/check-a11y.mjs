@@ -157,6 +157,10 @@ async function serveDist() {
 }
 
 const FAIL_IMPACTS = new Set(['serious', 'critical']);
+// `landmark-unique` is moderate but deterministic: it fires when two `region`
+// table wrappers on one page carry the same accessible name. The browser
+// fixtures only sample a few articles, so it is also gated statically below.
+const FAIL_RULES = new Set(['landmark-unique']);
 
 let server;
 let origin = baseUrl;
@@ -181,6 +185,41 @@ let failures = 0;
 let warnings = 0;
 let checks = 0;
 
+// Static per-page landmark gate. Every horizontally scrollable markdown table
+// is wrapped in `role="region"` with an accessible name derived from its
+// position and header row (src/lib/rehype-table-scroll.ts). Two regions with the
+// same name on one page violate WCAG 1.3.1 and axe `landmark-unique`, but the
+// fixture set does not include multi-table articles, so scan every built page.
+function checkUniqueRegionLabels() {
+  if (baseUrl || !existsSync(dist)) return;
+  let duplicatePages = 0;
+  for (const path of walk(dist)) {
+    if (!path.endsWith('.html')) continue;
+    const html = readFileSync(path, 'utf-8');
+    const labels = [...html.matchAll(/<[^>]*\brole="region"[^>]*\baria-label="([^"]*)"[^>]*>/g)].map(
+      (m) => m[1],
+    );
+    if (labels.length < 2) continue;
+    const seen = new Set();
+    const duplicates = new Set();
+    for (const label of labels) {
+      if (seen.has(label)) duplicates.add(label);
+      seen.add(label);
+    }
+    if (duplicates.size === 0) continue;
+    duplicatePages += 1;
+    console.error(
+      `❌ ${path.slice(dist.length)}: duplicate region landmark label(s): ${[...duplicates].join(', ')}`,
+    );
+    failures += duplicates.size;
+  }
+  if (duplicatePages === 0) {
+    console.log('✅ region landmark labels are unique on every page');
+  }
+}
+
+checkUniqueRegionLabels();
+
 for (const vp of vps) {
   for (const scheme of schemes) {
     let browser;
@@ -204,7 +243,7 @@ for (const vp of vps) {
             console.log(`\n${path} @ ${vp.width}px (${scheme})`);
           }
           for (const v of result.violations) {
-            const isFail = FAIL_IMPACTS.has(v.impact);
+            const isFail = FAIL_IMPACTS.has(v.impact) || FAIL_RULES.has(v.id);
             const mark = isFail ? '❌' : '⚠';
             console.log(`${mark} [${v.impact}] ${v.id}: ${v.help} (${v.nodes.length} node${v.nodes.length === 1 ? '' : 's'})`);
             for (const node of v.nodes.slice(0, 3)) {

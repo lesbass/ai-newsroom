@@ -1,6 +1,8 @@
 import type { Element, Root, RootContent } from 'hast';
 
-const LABEL = 'Table';
+interface WrapState {
+  tableCount: number;
+}
 
 /**
  * Preferred width share for the columns used by the citation table in the
@@ -95,9 +97,17 @@ function prepareSourcesTable(table: Element, headers: string[]): void {
  * keyboard-focusable cannot be scrolled without a pointer (WCAG 2.1.1
  * Keyboard), so the wrapper gets `tabindex="0"` and a `region` role with an
  * accessible name. The `<table>` element itself keeps its native table
- * semantics — only the wrapper carries the landmark role.
+ * semantics — only the wrapper carries the landmark role. Articles can contain
+ * several tables, and two `region` landmarks on one page must not share an
+ * accessible name (WCAG 1.3.1 / axe `landmark-unique`), so each label carries
+ * the table's position and its header row.
  */
-function wrapTables(children: RootContent[]): void {
+function tableLabel(state: WrapState, headers: string[]): string {
+  const name = headers.filter(Boolean).join(', ');
+  return name ? `Table ${state.tableCount}: ${name}` : `Table ${state.tableCount}`;
+}
+
+function wrapTables(children: RootContent[], state: WrapState): void {
   for (let i = 0; i < children.length; i++) {
     const node = children[i];
     if (node.type !== 'element') continue;
@@ -109,6 +119,7 @@ function wrapTables(children: RootContent[]): void {
       const sources = isSourcesTable(headers);
       labelCells(node, headers);
       if (sources) prepareSourcesTable(node, headers);
+      state.tableCount += 1;
       const wrapper: Element = {
         type: 'element',
         tagName: 'div',
@@ -118,7 +129,7 @@ function wrapTables(children: RootContent[]): void {
             : ['table-scroll'],
           tabIndex: 0,
           role: 'region',
-          'aria-label': LABEL,
+          'aria-label': tableLabel(state, headers),
         },
         children: [node],
       };
@@ -126,12 +137,12 @@ function wrapTables(children: RootContent[]): void {
       continue;
     }
 
-    if (node.children) wrapTables(node.children);
+    if (node.children) wrapTables(node.children, state);
   }
 }
 
 export function rehypeTableScroll() {
   return (tree: Root) => {
-    wrapTables(tree.children);
+    wrapTables(tree.children, { tableCount: 0 });
   };
 }
