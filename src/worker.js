@@ -48,9 +48,17 @@ export default {
 			return Response.redirect(url.href, 301);
 		}
 		const response = await env.ASSETS.fetch(request);
-		if (!isAliasHost(url.hostname)) return response;
+		const aliasHost = isAliasHost(url.hostname);
+		// Clean URLs (`/`, `/articles/`, `/tags/<slug>/`) map to `index.html`
+		// internally, so they never match the `/*.html` rule in public/_headers.
+		// Apply the same 5-minute HTML cache here; assets keep their own rules.
+		const cacheHtml =
+			response.status === 200 &&
+			/^text\/html\b/i.test(response.headers.get('content-type') || '');
+		if (!aliasHost && !cacheHtml) return response;
 		const headers = new Headers(response.headers);
-		headers.set('X-Robots-Tag', 'noindex');
+		if (cacheHtml) headers.set('Cache-Control', 'public, max-age=300, must-revalidate');
+		if (aliasHost) headers.set('X-Robots-Tag', 'noindex');
 		return new Response(response.body, {
 			status: response.status,
 			statusText: response.statusText,

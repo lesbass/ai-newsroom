@@ -83,6 +83,28 @@ try {
   fail(`HEAD ${baseUrl}/ could not be fetched (${e.message})`);
 }
 
+// Clean URLs never match the `/*.html` rule in public/_headers, so the Worker
+// applies the 5-minute HTML cache itself. Without it every navigation
+// revalidates (AIN-1046).
+try {
+  for (const path of ['/', '/articles/']) {
+    const resp = await fetch(`${baseUrl}${path}`, {
+      method: 'HEAD',
+      headers: { 'Cache-Control': 'no-cache' },
+    });
+    const cacheControl = resp.headers.get('cache-control') || '';
+    if (/max-age=300/.test(cacheControl)) {
+      pass(`HTML ${path} is browser-cacheable (${cacheControl})`);
+    } else {
+      fail(
+        `HTML ${path} cache-control is "${cacheControl || 'missing'}" — expected max-age=300 (AIN-1046)`,
+      );
+    }
+  }
+} catch (e) {
+  fail(`HTML cache-control could not be checked (${e.message})`);
+}
+
 // The Worker also answers on its *.workers.dev deployment hostname, which serves
 // the same pages. That copy must stay out of search indexes so it cannot rank as
 // a duplicate of the canonical site. Only checked when the target is production.

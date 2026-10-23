@@ -10,7 +10,9 @@
  *    `X-Robots-Tag: noindex`, so the duplicate host cannot be indexed;
  *  - local development is not redirected or marked noindex;
  *  - http upgrades, slashless page 301s, provenance 301s, and asset/404
- *    pass-through still behave as before.
+ *    pass-through still behave as before;
+ *  - clean-URL HTML responses carry the 5-minute cache policy; non-HTML assets
+ *    and 404 pages keep their own upstream Cache-Control.
  */
 
 import assert from 'node:assert/strict';
@@ -21,7 +23,7 @@ const assets = {
   fetch: () =>
     new Response(ASSETS_BODY, {
       status: 200,
-      headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=300' },
+      headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=0, must-revalidate' },
     }),
 };
 
@@ -92,11 +94,75 @@ await check('plain http is 301ed to https on the same host', async () => {
 });
 
 await check('assets with a dot are passed through untouched', async () => {
+  const assetBody = 'body{}';
+  const assetAssets = {
+    fetch: () =>
+      new Response(assetBody, {
+        status: 200,
+        headers: { 'content-type': 'text/css', 'cache-control': 'public, max-age=3600' },
+      }),
+  };
   for (const path of ['/rss.xml', '/sitemap.xml', '/logo.png', '/_astro/app.css']) {
-    const res = await call(`https://news.lesbass.com${path}`);
+    const res = await worker.fetch(
+      new Request(`https://news.lesbass.com${path}`),
+      { ASSETS: assetAssets },
+    );
     assert.equal(res.status, 200, path);
-    assert.equal(await res.text(), ASSETS_BODY, path);
+    assert.equal(await res.text(), assetBody, path);
+    assert.equal(res.headers.get('cache-control'), 'public, max-age=3600', path);
+    assert.equal(res.headers.get('x-robots-tag'), null, path);
   }
+});
+
+// Clean URLs map to index.html internally, so the `/*.html` rule in
+// public/_headers never matches them. The Worker must apply the 5-minute HTML
+// cache itself, otherwise every navigation revalidates (AIN-1046).
+await check('clean-URL HTML responses get the 5-minute cache policy', async () => {
+  for (const path of ['/', '/articles/', '/articles/example/', '/tags/security/']) {
+    const res = await call(`https://news.lesbass.com${path}`);
+    assert.equal(
+      res.headers.get('cache-control'),
+      'public, max-age=300, must-revalidate',
+      path,
+    );
+  }
+});
+
+await check('the workers.dev alias also gets the 5-minute HTML cache policy', async () => {
+  const res = await call('https://ai-newsroom.lesbass.workers.dev/');
+  assert.equal(res.headers.get('cache-control'), 'public, max-age=300, must-revalidate');
+  assert.equal(res.headers.get('x-robots-tag'), 'noindex');
+});
+
+await check('non-HTML assets keep their upstream cache-control', async () => {
+  const imageAssets = {
+    fetch: () =>
+      new Response('png', {
+        status: 200,
+        headers: { 'content-type': 'image/png', 'cache-control': 'public, max-age=86400' },
+      }),
+  };
+  const res = await worker.fetch(
+    new Request('https://news.lesbass.com/logo.png'),
+    { ASSETS: imageAssets },
+  );
+  assert.equal(res.headers.get('cache-control'), 'public, max-age=86400');
+});
+
+await check('404 HTML is not cached as fresh', async () => {
+  const notFoundAssets = {
+    fetch: () =>
+      new Response('<!doctype html><title>Not found</title>', {
+        status: 404,
+        headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' },
+      }),
+  };
+  const res = await worker.fetch(
+    new Request('https://news.lesbass.com/missing/'),
+    { ASSETS: notFoundAssets },
+  );
+  assert.equal(res.status, 404);
+  assert.equal(res.headers.get('cache-control'), 'no-store');
 });
 
 const failed = results.filter((r) => !r.pass);
