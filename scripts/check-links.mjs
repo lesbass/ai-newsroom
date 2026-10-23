@@ -42,13 +42,30 @@ for (const path of walkAll(dist)) {
 // /paperclip/AIN-### provenance links found in the 2026-10-08 audit).
 const CANONICAL_ORIGIN = 'https://news.lesbass.com';
 const redirectSources = [];
+const redirectRules = [];
 const redirectsPath = resolve('public/_redirects');
 if (existsSync(redirectsPath)) {
   for (const line of readFileSync(redirectsPath, 'utf-8').split('\n')) {
     const trimmed = line.trim();
     if (!trimmed || trimmed.startsWith('#')) continue;
-    const from = trimmed.split(/\s+/)[0];
-    if (from?.startsWith('/')) redirectSources.push(from);
+    const [from, to, code] = trimmed.split(/\s+/);
+    if (from?.startsWith('/')) {
+      redirectSources.push(from);
+      redirectRules.push({ from, to, code });
+    }
+  }
+}
+
+// Exact-path 301s must cover both request forms. Astro serves pages with a
+// trailing slash and Cloudflare matches `_redirects` literally, so a rule for
+// `/old` alone still leaves `/old/` as a 404 — the form legacy links, RSS
+// entries, and old sitemaps actually used (AIN-1035).
+for (const { from, code } of redirectRules) {
+  if (code !== '301' || from.endsWith('/*')) continue;
+  const alternate = from.endsWith('/') ? from.slice(0, -1) : `${from}/`;
+  if (!redirectSources.includes(alternate)) {
+    console.error(`❌ _redirects: 301 for ${from} has no ${alternate} variant`);
+    errors++;
   }
 }
 
