@@ -46,6 +46,38 @@ if (home !== null) {
   }
 }
 
+// Security headers come from public/_headers at the edge. A dropped CSP or
+// HSTS is invisible in the page HTML, so gate the set from the live response.
+const REQUIRED_SECURITY_HEADERS = [
+  ['content-security-policy', /default-src 'self'/],
+  ['strict-transport-security', /max-age=31536000/],
+  ['x-content-type-options', /^nosniff$/i],
+  ['x-frame-options', /^DENY$/i],
+  ['referrer-policy', /^strict-origin-when-cross-origin$/i],
+  ['permissions-policy', /camera=\(\)/],
+];
+
+try {
+  const resp = await fetch(`${baseUrl}/`, {
+    method: 'HEAD',
+    headers: { 'Cache-Control': 'no-cache' },
+  });
+  if (!resp.ok) {
+    fail(`HEAD ${baseUrl}/ returned HTTP ${resp.status}`);
+  } else {
+    for (const [name, pattern] of REQUIRED_SECURITY_HEADERS) {
+      const value = resp.headers.get(name);
+      if (value && pattern.test(value)) {
+        pass(`security header ${name} present`);
+      } else {
+        fail(`security header ${name} is ${value ? `"${value}"` : 'missing'}`);
+      }
+    }
+  }
+} catch (e) {
+  fail(`HEAD ${baseUrl}/ could not be fetched (${e.message})`);
+}
+
 const fontUrl = `${baseUrl}/fonts/ai-newsroom-symbols.woff`;
 try {
   const resp = await fetch(fontUrl, { headers: { 'Cache-Control': 'no-cache' } });
@@ -79,4 +111,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log('✅ live deploy serves the arrow fix, symbol font, canonical host, and RSS');
+console.log('✅ live deploy serves the arrow fix, symbol font, canonical host, RSS, and security headers');
