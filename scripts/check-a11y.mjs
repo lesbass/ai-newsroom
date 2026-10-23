@@ -289,7 +289,10 @@ for (const vp of vps) {
         const url = `${origin}${path}`;
         try {
           await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
-          await page.addScriptTag({ content: axeSource });
+          // Evaluate axe through CDP instead of injecting a <script> tag:
+          // production sets `script-src 'none'` via CSP, which blocks
+          // addScriptTag and would make a live CHECK_URL run a false red.
+          await page.evaluate(axeSource);
           const result = await page.evaluate(async (runTags) => {
             return await window.axe.run(document, { runOnly: { type: 'tag', values: runTags } });
           }, tags);
