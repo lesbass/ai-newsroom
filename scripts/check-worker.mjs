@@ -93,6 +93,57 @@ await check('plain http is 301ed to https on the same host', async () => {
   assert.equal(res.headers.get('location'), 'https://news.lesbass.com/articles');
 });
 
+await check('duplicate slashes 301 to the canonical directory path', async () => {
+  for (const [path, expected] of [
+    ['//articles//', 'https://news.lesbass.com/articles/'],
+    ['/tags//security/', 'https://news.lesbass.com/tags/security/'],
+  ]) {
+    const res = await call(`https://news.lesbass.com${path}`);
+    assert.equal(res.status, 301, path);
+    assert.equal(res.headers.get('location'), expected, path);
+  }
+});
+
+await check('explicit /index.html 301s to the directory URL', async () => {
+  for (const [path, expected] of [
+    ['/index.html', 'https://news.lesbass.com/'],
+    ['/articles/index.html', 'https://news.lesbass.com/articles/'],
+  ]) {
+    const res = await call(`https://news.lesbass.com${path}`);
+    assert.equal(res.status, 301, path);
+    assert.equal(res.headers.get('location'), expected, path);
+  }
+});
+
+await check('_redirects page destinations skip the extra trailing-slash hop', async () => {
+  const redirectAssets = {
+    fetch: () =>
+      new Response(null, {
+        status: 301,
+        headers: { location: '/tags/security' },
+      }),
+  };
+  const res = await worker.fetch(
+    new Request('https://news.lesbass.com/tags/agent-auth/'),
+    { ASSETS: redirectAssets },
+  );
+  assert.equal(res.status, 301);
+  assert.equal(res.headers.get('location'), 'https://news.lesbass.com/tags/security/');
+});
+
+await check('_redirects external and file destinations stay untouched', async () => {
+  for (const location of ['https://example.com/x', '/rss.xml']) {
+    const redirectAssets = {
+      fetch: () => new Response(null, { status: 301, headers: { location } }),
+    };
+    const res = await worker.fetch(
+      new Request('https://news.lesbass.com/tags/agent-auth/'),
+      { ASSETS: redirectAssets },
+    );
+    assert.equal(res.headers.get('location'), location);
+  }
+});
+
 await check('assets with a dot are passed through untouched', async () => {
   const assetBody = 'body{}';
   const assetAssets = {

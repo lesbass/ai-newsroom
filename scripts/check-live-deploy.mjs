@@ -179,6 +179,53 @@ for (const path of SLASHLESS_PAGE_ROUTES) {
   }
 }
 
+// `_redirects` destinations are written without the trailing slash, so the
+// Worker upgrades them to the canonical directory URL to avoid a second hop.
+const REDIRECT_HOPS = [
+  ['/tags/agent-auth/', '/tags/security/'],
+  [
+    '/articles/smolagents-hugging-face-agenti-codice-python/',
+    '/articles/smolagents-hugging-face-agents-code-python/',
+  ],
+];
+for (const [path, expected] of REDIRECT_HOPS) {
+  try {
+    const resp = await fetch(`${baseUrl}${path}`, {
+      redirect: 'manual',
+      headers: { 'Cache-Control': 'no-cache' },
+    });
+    const location = resp.headers.get('location') || '';
+    let locationPath = '';
+    try {
+      locationPath = new URL(location, baseUrl).pathname;
+    } catch { /* unparsable Location — reported below */ }
+    if (resp.status === 301 && locationPath === expected) {
+      pass(`${path} resolves to ${expected} in one hop`);
+    } else {
+      fail(`${path} returned HTTP ${resp.status} with Location "${location}", expected 301 to ${expected}`);
+    }
+  } catch (e) {
+    fail(`${baseUrl}${path} could not be fetched (${e.message})`);
+  }
+}
+
+// An explicit /index.html is a duplicate copy of a directory URL and must not
+// be served with a temporary redirect.
+try {
+  const resp = await fetch(`${baseUrl}/index.html`, {
+    redirect: 'manual',
+    headers: { 'Cache-Control': 'no-cache' },
+  });
+  const location = resp.headers.get('location') || '';
+  if (resp.status === 301 && new URL(location, baseUrl).pathname === '/') {
+    pass('/index.html 301s to /');
+  } else {
+    fail(`/index.html returned HTTP ${resp.status} with Location "${location}", expected 301 to /`);
+  }
+} catch (e) {
+  fail(`${baseUrl}/index.html could not be fetched (${e.message})`);
+}
+
 if (failures.length > 0) {
   console.error(`❌ live-deploy verification failed (${failures.length} issue${failures.length === 1 ? '' : 's'})`);
   process.exit(1);
