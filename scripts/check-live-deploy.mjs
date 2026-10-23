@@ -152,6 +152,69 @@ if (rss !== null) {
   }
 }
 
+// The sitemap, feed, and robots file are fetched directly by crawlers and feed
+// readers, bypassing the HTML cache and the page-level checks above. A base-URL
+// or deployment regression (the exact failure the board keeps flagging) shows
+// up here first, so gate the live artifacts themselves rather than relying on
+// an operator remembering the manual curl steps.
+function absoluteUrls(xml) {
+  return [...xml.matchAll(/(?:<loc>|<link>|<guid[^>]*>|<enclosure[^>]*url=")([^"<]+)/g)]
+    .map(match => match[1])
+    .filter(value => /^https?:\/\//i.test(value));
+}
+
+function assertCanonicalUrls(label, xml) {
+  const urls = absoluteUrls(xml);
+  if (urls.length === 0) {
+    fail(`${label} contains no absolute URLs`);
+    return;
+  }
+  const foreign = urls.filter(value => {
+    try {
+      return new URL(value).origin !== CANONICAL_ORIGIN;
+    } catch {
+      return true;
+    }
+  });
+  if (foreign.length > 0) {
+    fail(`${label} has ${foreign.length} URL(s) outside ${CANONICAL_ORIGIN} (e.g. ${foreign[0]})`);
+  } else {
+    pass(`${label} uses only ${CANONICAL_ORIGIN} (${urls.length} URLs)`);
+  }
+}
+
+async function fetchArtifact(path, expectedType) {
+  const url = `${baseUrl}${path}`;
+  try {
+    const resp = await fetch(url, { headers: { 'Cache-Control': 'no-cache' } });
+    if (!resp.ok) {
+      fail(`${url} returned HTTP ${resp.status}`);
+      return null;
+    }
+    const type = resp.headers.get('content-type') || '';
+    if (!expectedType.test(type)) {
+      fail(`${url} content-type is "${type || 'missing'}"`);
+      return null;
+    }
+    return resp.text();
+  } catch (e) {
+    fail(`${url} could not be fetched (${e.message})`);
+    return null;
+  }
+}
+
+if (rss !== null) assertCanonicalUrls('/rss.xml', rss);
+
+const sitemap = await fetchArtifact('/sitemap.xml', /xml/i);
+if (sitemap !== null) assertCanonicalUrls('/sitemap.xml', sitemap);
+
+const robots = await fetchText('/robots.txt');
+if (robots !== null && !robots.includes(`Sitemap: ${CANONICAL_ORIGIN}/sitemap.xml`)) {
+  fail(`/robots.txt does not point at ${CANONICAL_ORIGIN}/sitemap.xml`);
+} else if (robots !== null) {
+  pass('/robots.txt points at the canonical sitemap');
+}
+
 // Page routes are directories with an index.html, so the canonical form ends in
 // `/`. The Worker must answer the slashless form with a 301 (permanent), not the
 // asset handler's 307 (temporary), so search engines consolidate on the slash

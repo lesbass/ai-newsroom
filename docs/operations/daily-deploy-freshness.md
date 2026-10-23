@@ -43,7 +43,9 @@ Pass conditions:
 
 - `test:deploy-freshness` reports production at or ahead of `origin/main` within the grace
   window.
-- `test:live` is 5/5.
+- `test:live` reports all checks passing: canonical host, security headers, HTML cache
+  policy, workers.dev `noindex`, RSS `<lastBuildDate>`, live `/sitemap.xml` + `/rss.xml` +
+  `/robots.txt` canonical URLs, and the single-hop redirect cases.
 - The live `/sitemap.xml` `<loc>` count matches the freshly built `dist/sitemap.xml`. Do not
   assert a fixed number: it moves when articles are added or tags are consolidated (157 on
   2026-10-21, 164 on 2026-10-13). A mismatch against the built artifact is the signal.
