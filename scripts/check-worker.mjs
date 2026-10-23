@@ -11,6 +11,7 @@
  *  - local development is not redirected or marked noindex;
  *  - http upgrades, slashless page 301s, provenance 301s, and asset/404
  *    pass-through still behave as before;
+ *  - a slashless URL that has no page returns 404 instead of a 301 chain;
  *  - clean-URL HTML responses carry the 5-minute cache policy; non-HTML assets
  *    and 404 pages keep their own upstream Cache-Control.
  */
@@ -25,6 +26,22 @@ const assets = {
       status: 200,
       headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=0, must-revalidate' },
     }),
+};
+
+// The real ASSETS binding 307s a slashless directory to its trailing-slash
+// form only when that page exists. Model that so the Worker's 301 upgrade is
+// exercised against the same signal production sees.
+const pageAssets = {
+  fetch: (request) => {
+    const { pathname } = new URL(request.url);
+    if (!pathname.endsWith('/')) {
+      return new Response(null, { status: 307, headers: { location: `${pathname}/` } });
+    }
+    return new Response(ASSETS_BODY, {
+      status: 200,
+      headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=0, must-revalidate' },
+    });
+  },
 };
 
 async function call(url, init = {}) {
@@ -69,8 +86,39 @@ await check('workers.dev alias keeps the upstream status', async () => {
   assert.equal(res.headers.get('x-robots-tag'), 'noindex');
 });
 
+await check('existing slashless pages 301 to the canonical trailing-slash URL', async () => {
+  for (const path of ['/articles', '/tags/security', '/articles/example']) {
+    const res = await worker.fetch(
+      new Request(`https://news.lesbass.com${path}`),
+      { ASSETS: pageAssets },
+    );
+    assert.equal(res.status, 301, path);
+    assert.equal(res.headers.get('location'), `https://news.lesbass.com${path}/`, path);
+  }
+});
+
+await check('a nonexistent slashless URL returns 404 without a redirect', async () => {
+  const notFoundAssets = {
+    fetch: () =>
+      new Response('<!doctype html><title>Not found</title>', {
+        status: 404,
+        headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' },
+      }),
+  };
+  const res = await worker.fetch(
+    new Request('https://news.lesbass.com/does-not-exist-xyz'),
+    { ASSETS: notFoundAssets },
+  );
+  assert.equal(res.status, 404);
+  assert.equal(res.headers.get('location'), null);
+  assert.equal(res.headers.get('cache-control'), 'no-store');
+});
+
 await check('workers.dev alias still 301s slashless page routes', async () => {
-  const res = await call('https://ai-newsroom.lesbass.workers.dev/articles');
+  const res = await worker.fetch(
+    new Request('https://ai-newsroom.lesbass.workers.dev/articles'),
+    { ASSETS: pageAssets },
+  );
   assert.equal(res.status, 301);
   assert.equal(res.headers.get('location'), 'https://ai-newsroom.lesbass.workers.dev/articles/');
 });

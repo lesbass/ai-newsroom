@@ -20,6 +20,27 @@ function canonicalPagePath(pathname) {
 	return collapsed === pathname ? null : collapsed;
 }
 
+// The ASSETS binding answers a slashless directory with a 307 to its
+// trailing-slash form only when the page exists, and with a 404 otherwise.
+// Return the canonical path for a real page so the Worker can upgrade the
+// temporary redirect to a permanent one, and leave a missing page as a direct
+// 404 instead of chaining a 301 into it.
+function slashlessPageTarget(response, requestUrl) {
+	if (!isPageRoute(requestUrl.pathname)) return null;
+	if (response.status !== 307 && response.status !== 308) return null;
+	const location = response.headers.get('location');
+	if (!location) return null;
+	let target;
+	try {
+		target = new URL(location, requestUrl);
+	} catch {
+		return null;
+	}
+	if (target.origin !== requestUrl.origin) return null;
+	const canonicalPath = `${requestUrl.pathname}/`;
+	return target.pathname === canonicalPath ? canonicalPath : null;
+}
+
 // Cloudflare `_redirects` destinations are written without the trailing slash
 // (`/tags/security`), so following one costs a second hop through the Worker's
 // slashless-page 301. Rewrite same-origin page destinations to their canonical
@@ -80,11 +101,12 @@ export default {
 		// non-authoritative. Emit a 301 (permanent) instead so the canonical form
 		// consolidates. A final path segment containing a dot is a file (feeds,
 		// images, `_astro` assets, robots.txt) and is served untouched.
-		if (isPageRoute(url.pathname)) {
-			url.pathname += '/';
+		const response = await env.ASSETS.fetch(request);
+		const slashlessTarget = slashlessPageTarget(response, url);
+		if (slashlessTarget) {
+			url.pathname = slashlessTarget;
 			return Response.redirect(url.href, 301);
 		}
-		const response = await env.ASSETS.fetch(request);
 		const aliasHost = isAliasHost(url.hostname);
 		const redirectLocation = canonicalRedirectLocation(response, url);
 		// Clean URLs (`/`, `/articles/`, `/tags/<slug>/`) map to `index.html`
