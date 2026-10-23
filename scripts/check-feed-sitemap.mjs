@@ -137,6 +137,36 @@ function extractArticleSlugs(label, urls) {
   return slugs;
 }
 
+/**
+ * Google's image sitemap extension only supports raster image formats. An SVG
+ * `<image:loc>` is silently ignored, so these entries have to be replaced by
+ * the article's committed social card — or omitted — before the sitemap ships.
+ */
+function checkSitemapImages(label, xml) {
+  const values = [...xml.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)].map((m) => m[1]);
+  let checked = 0;
+  for (const value of values) {
+    const parsed = parseUrl(value);
+    if (!parsed) {
+      console.error(`❌ feed-sitemap: ${label} contains an invalid image URL: ${value}`);
+      errors++;
+      continue;
+    }
+    if (parsed.origin !== CANONICAL_ORIGIN) {
+      console.error(`❌ feed-sitemap: ${label} image URL outside ${CANONICAL_ORIGIN}: ${value}`);
+      errors++;
+      continue;
+    }
+    if (/\.svg$/i.test(parsed.pathname)) {
+      console.error(`❌ feed-sitemap: ${label} image URL is an SVG, which Google's image sitemap extension does not support: ${value}`);
+      errors++;
+      continue;
+    }
+    checked++;
+  }
+  return checked;
+}
+
 const sitemap = await loadArtifact('sitemap.xml', '/sitemap.xml');
 if (sitemap === null) {
   console.error('❌ feed-sitemap: sitemap.xml not found — run "npm run build" first or set CHECK_URL');
@@ -144,6 +174,7 @@ if (sitemap === null) {
 } else if (expected.size > 0) {
   const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
   compare('sitemap.xml', extractArticleSlugs('sitemap.xml', urls));
+  checkSitemapImages('sitemap.xml', sitemap);
 }
 
 const rss = await loadArtifact('rss.xml', '/rss.xml');

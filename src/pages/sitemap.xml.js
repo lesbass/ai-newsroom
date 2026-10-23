@@ -1,5 +1,19 @@
 import { getCollection } from 'astro:content';
 import { listingLastmods } from '../lib/sitemapLastmod';
+import { DEFAULT_OG_IMAGE, resolveOgImage } from '../lib/ogImage';
+
+/**
+ * Google's image sitemap extension only accepts raster formats (BMP, GIF,
+ * JPEG, PNG, WebP, TIFF). Articles whose hero is an SVG use the committed
+ * `<name>-social-svg.jpg` card instead; a missing card omits the image entry
+ * rather than pointing crawlers at an unsupported SVG or a generic brand card.
+ */
+function sitemapImagePath(image) {
+  if (!image) return null;
+  if (!/\.svg$/i.test(image)) return image;
+  const social = resolveOgImage(image).src;
+  return social === DEFAULT_OG_IMAGE ? null : social;
+}
 
 function xmlEscape(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
@@ -36,8 +50,9 @@ export async function GET(context) {
     const url = xmlEscape(new URL(`/articles/${article.id}/`, site).toString());
     const date = article.data.updatedDate || article.data.pubDate;
     const d = date.toISOString().split('T')[0];
-    const imageTag = article.data.image
-      ? `<image:image><image:loc>${xmlEscape(new URL(article.data.image, site).toString())}</image:loc><image:caption><![CDATA[${article.data.imageAlt || article.data.title}]]></image:caption></image:image>`
+    const imagePath = sitemapImagePath(article.data.image);
+    const imageTag = imagePath
+      ? `<image:image><image:loc>${xmlEscape(new URL(imagePath, site).toString())}</image:loc><image:caption><![CDATA[${article.data.imageAlt || article.data.title}]]></image:caption></image:image>`
       : '';
     return `<url><loc>${url}</loc><lastmod>${d}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority>${imageTag}</url>`;
   });
