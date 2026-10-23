@@ -73,9 +73,33 @@ try {
         fail(`security header ${name} is ${value ? `"${value}"` : 'missing'}`);
       }
     }
+    if (/noindex/i.test(resp.headers.get('x-robots-tag') || '')) {
+      fail(`canonical host sends X-Robots-Tag: noindex — the site would drop out of search`);
+    } else {
+      pass('canonical host is indexable (no X-Robots-Tag noindex)');
+    }
   }
 } catch (e) {
   fail(`HEAD ${baseUrl}/ could not be fetched (${e.message})`);
+}
+
+// The Worker also answers on its *.workers.dev deployment hostname, which serves
+// the same pages. That copy must stay out of search indexes so it cannot rank as
+// a duplicate of the canonical site. Only checked when the target is production.
+if (baseUrl === CANONICAL_ORIGIN) {
+  const aliasUrl = 'https://ai-newsroom.lesbass.workers.dev/';
+  try {
+    const resp = await fetch(aliasUrl, { method: 'HEAD', headers: { 'Cache-Control': 'no-cache' } });
+    if (!resp.ok) {
+      fail(`${aliasUrl} returned HTTP ${resp.status}`);
+    } else if (/noindex/i.test(resp.headers.get('x-robots-tag') || '')) {
+      pass('workers.dev alias host sends X-Robots-Tag: noindex');
+    } else {
+      fail(`${aliasUrl} is indexable (missing X-Robots-Tag: noindex)`);
+    }
+  } catch (e) {
+    fail(`${aliasUrl} could not be fetched (${e.message})`);
+  }
 }
 
 const fontUrl = `${baseUrl}/fonts/ai-newsroom-symbols.woff`;

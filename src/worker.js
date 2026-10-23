@@ -12,6 +12,14 @@ function isPageRoute(pathname) {
 	return lastSegment.length > 0 && !lastSegment.includes('.');
 }
 
+// The Worker also answers on its `*.workers.dev` deployment hostname. That host
+// serves the same pages as the canonical domain but is not part of the public
+// site, so keep it out of search indexes: without this, crawlers can discover
+// and rank a duplicate copy of every article on the workers.dev subdomain.
+function isAliasHost(hostname) {
+	return hostname.endsWith('.workers.dev');
+}
+
 export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
@@ -39,6 +47,14 @@ export default {
 			url.pathname += '/';
 			return Response.redirect(url.href, 301);
 		}
-		return env.ASSETS.fetch(request);
+		const response = await env.ASSETS.fetch(request);
+		if (!isAliasHost(url.hostname)) return response;
+		const headers = new Headers(response.headers);
+		headers.set('X-Robots-Tag', 'noindex');
+		return new Response(response.body, {
+			status: response.status,
+			statusText: response.statusText,
+			headers,
+		});
 	},
 };
