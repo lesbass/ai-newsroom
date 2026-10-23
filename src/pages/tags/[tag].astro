@@ -44,7 +44,7 @@ const isThinTag = matchingArticles.length < TOPIC_MIN_ARTICLES;
   robots={isThinTag ? 'noindex, follow' : undefined}
 >
   <Header />
-  <main class="container" id="main-content">
+  <main class="container" id="main-content" tabindex="-1">
     <div class="tag-page-header">
       <h1>{displayTag}</h1>
       <p class="tag-page-count">{matchingArticles.length} article{matchingArticles.length !== 1 ? 's' : ''}</p>

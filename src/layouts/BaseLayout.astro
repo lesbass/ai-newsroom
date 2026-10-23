@@ -1005,6 +1005,9 @@ const jsonLd = article
       border-radius: 0 0 var(--radius-sm) 0;
     }
     .skip-link:focus { top: 0; }
+    /* The skip link targets this container programmatically; it is not an
+       interactive control, so do not paint a full-page focus ring on it. */
+    #main-content:focus { outline: none; }
     .breadcrumb { font-size: 0.8125rem; color: var(--color-muted); margin: 0.25rem 0 0.75rem; }
     .breadcrumb ol { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.25rem; align-items: center; }
     .breadcrumb li { display: flex; align-items: center; gap: 0.25rem; }

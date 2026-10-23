@@ -100,7 +100,7 @@ const formatRelatedDate = (date: Date) => date.toLocaleDateString('en-US', { yea
   section={topicTags[0] ? tagLabel(slugifyTag(topicTags[0])) : tags[0]}
 >
   <Header />
-  <main id="main-content">
+  <main id="main-content" tabindex="-1">
   <article class="container article-body" data-image-policy={image === 'exception' ? 'exception' : undefined}>
     <Breadcrumb
       items={[

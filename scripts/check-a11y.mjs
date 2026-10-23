@@ -218,7 +218,62 @@ function checkUniqueRegionLabels() {
   }
 }
 
+// Static skip-link gate. The skip link must target a landmark that can take
+// programmatic focus (`tabindex="-1"`); otherwise activating it scrolls the
+// page but leaves keyboard focus on <body>, so the next Tab restarts at the
+// top of the page (WCAG 2.4.1). Scan every built page because the browser
+// fixtures sample only a few.
+function checkSkipLinkTargets() {
+  if (baseUrl || !existsSync(dist)) return;
+  let bad = 0;
+  for (const path of walk(dist)) {
+    if (!path.endsWith('.html')) continue;
+    const html = readFileSync(path, 'utf-8');
+    const link = html.match(/<a[^>]*class="skip-link"[^>]*>/);
+    if (!link) continue;
+    const href = link[0].match(/href="#([^"]+)"/);
+    if (!href) continue;
+    const target = html.match(new RegExp(`<[^>]*\\bid="${href[1]}"[^>]*>`));
+    if (!target || !/\btabindex="-1"/.test(target[0])) {
+      bad += 1;
+      console.error(
+        `❌ ${path.slice(dist.length)}: skip link targets #${href[1]} without tabindex="-1"`,
+      );
+    }
+  }
+  if (bad === 0) {
+    console.log('✅ skip links target a focusable main landmark');
+  } else {
+    failures += bad;
+  }
+}
+
+// Real-browser proof that activating the skip link moves focus. Fragment
+// navigation alone leaves document.activeElement on <body> in Chromium.
+async function checkSkipLinkFocus(page, url, path) {
+  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await page.keyboard.press('Tab');
+  const onSkipLink = await page.evaluate(() =>
+    document.activeElement?.classList?.contains('skip-link'),
+  );
+  if (!onSkipLink) {
+    failures += 1;
+    console.error(`❌ ${path}: first Tab stop is not the skip link`);
+    return;
+  }
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(150);
+  const focusedId = await page.evaluate(() => document.activeElement?.id);
+  if (focusedId !== 'main-content') {
+    failures += 1;
+    console.error(
+      `❌ ${path}: skip link did not move focus to #main-content (activeElement #${focusedId || 'none'})`,
+    );
+  }
+}
+
 checkUniqueRegionLabels();
+checkSkipLinkTargets();
 
 for (const vp of vps) {
   for (const scheme of schemes) {
@@ -257,6 +312,16 @@ for (const vp of vps) {
         } catch (e) {
           console.error(`❌ ${path} @ ${vp.width}px (${scheme}): ${String(e.message).split('\n')[0]}`);
           failures++;
+        }
+        // One viewport/scheme is enough to prove the skip-link behaviour; it
+        // does not depend on width or colour scheme.
+        if (vp === vps[0] && scheme === schemes[0]) {
+          try {
+            await checkSkipLinkFocus(page, url, path);
+          } catch (e) {
+            console.error(`❌ ${path}: skip-link focus check failed: ${String(e.message).split('\n')[0]}`);
+            failures++;
+          }
         }
       }
     } finally {

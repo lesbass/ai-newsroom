@@ -44,7 +44,7 @@ const to = from + items.length - 1;
   description={`Evidence-based AI news articles with dated sources and strict editorial quality gates. Page ${page} of ${pages}, showing ${from}–${to} of ${total}.`}
 >
   <Header />
-  <main class="container" id="main-content">
+  <main class="container" id="main-content" tabindex="-1">
     <h1 style="margin: 2rem 0 1rem;">All articles</h1>
     <p style="color: var(--color-muted); margin-bottom: 1.5rem;">
       {total} article{total !== 1 ? 's' : ''} published, <span class="listing-range">showing {from}–{to} of {total}</span>
