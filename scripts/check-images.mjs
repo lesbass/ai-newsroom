@@ -159,6 +159,27 @@ function checkPageHtml(html, rel, isRemote) {
       warnings++;
     }
 
+    // Heavy source rasters (0.2-0.9 MB screenshots) make social crawlers and
+    // feed readers fetch the full screenshot only to draw a preview card. A
+    // generated `<name>-social.jpg` (1200x630) keeps that fetch light.
+    if (ogImgMatch && ogImgMatch[1]) {
+      let ogPath = ogImgMatch[1];
+      try {
+        const ogUrl = new URL(ogPath, 'https://news.lesbass.com');
+        if (ogUrl.hostname === 'news.lesbass.com') ogPath = ogUrl.pathname;
+      } catch { /* leave non-URL values untouched */ }
+      if (ogPath.startsWith('/images/')) {
+        const ogFile = join(assetBase, ogPath.replace(/^\/+/, ''));
+        if (existsSync(ogFile)) {
+          const ogBytes = statSync(ogFile).size;
+          if (ogBytes > 200 * 1024) {
+            console.error(`❌ ${rel}: og:image is ${(ogBytes / 1024).toFixed(0)} KB (${ogPath}) — a 1200x630 social card is required so social and feed fetches stay light`);
+            errors++;
+          }
+        }
+      }
+    }
+
     const twitterImgMatch = html.match(/<meta name="twitter:image" content="([^"]*)"/);
     if (twitterImgMatch && twitterImgMatch[1].includes('favicon.svg')) {
       console.warn(`⚠  ${rel}: twitter:image is favicon fallback (article should have a real image)`);
@@ -354,7 +375,22 @@ if (existsSync(articlesDir)) {
       continue;
     }
     const image = (text.match(/^image:\s*"?([^"\n]+?)"?\s*$/m) || [])[1] || '';
-    if (!image.startsWith('/') || !/\.svg$/i.test(image)) continue;
+    if (!image.startsWith('/')) continue;
+    if (/\.(png|jpe?g)$/i.test(image)) {
+      // Raster cards are build artifacts, so absence is not an error here; the
+      // og:image weight check above enforces them for any heavy source. When
+      // present, the card must still be the standard 1.91:1 social size.
+      const social = join(resolve('public'), image.replace(/^\/+/, '').replace(/\.(png|jpe?g)$/i, '-social.jpg'));
+      if (existsSync(social)) {
+        const size = readImageSizeFile(social);
+        if (!size || size.width !== 1200 || size.height !== 630) {
+          console.error(`❌ ${entry}: social card is not 1200x630 (${size ? `${size.width}x${size.height}` : 'unreadable'})`);
+          errors++;
+        }
+      }
+      continue;
+    }
+    if (!/\.svg$/i.test(image)) continue;
     const social = join(resolve('public'), image.replace(/^\/+/, '').replace(/\.svg$/i, '-social-svg.jpg'));
     if (!existsSync(social)) {
       console.error(`❌ ${entry}: SVG hero has no social card — run npm run generate:svg-socials (${social})`);

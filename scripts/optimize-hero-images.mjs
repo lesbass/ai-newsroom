@@ -15,8 +15,10 @@
  *   - `<name>.webp`        full-resolution (quality 82)
  *   - `<name>-900.webp`    max 900 px wide (quality 82) for phones/high-DPR
  *
- * Heroes additionally get a `<name>-social.jpg` crop when their aspect ratio is
- * far from the social-card band (see below).
+ * Heroes additionally get a `<name>-social.jpg` card (1200x630) when their
+ * aspect ratio is far from the social-card band, or when the source raster is
+ * heavy enough that handing it to social crawlers and feed readers wastes
+ * bandwidth (see below).
  *
  * Outputs are build artifacts (git-ignored) and are regenerated whenever the
  * source is newer. The article renderer only emits a WebP `<source>` when the
@@ -39,12 +41,18 @@ const QUALITY = 82;
 // Social cards (`summary_large_image`, Facebook, LinkedIn) are ~1.91:1. A hero
 // far from that ratio is cropped hard by the platform — a portrait screenshot
 // becomes a thin horizontal band that drops the headline and most of the
-// evidence. For those heroes only, emit a 1200x630 crop and let og:image use it.
+// evidence. For those heroes emit a 1200x630 cover crop and let og:image use
+// it. Mid-ratio heroes normally stay as-is, unless the source raster is heavy:
+// a 0.5-0.9 MB screenshot is a slow social/feed fetch, so those get a
+// letterboxed card that keeps every pixel of the evidence instead of cropping.
 const SOCIAL_WIDTH = 1200;
 const SOCIAL_HEIGHT = 630;
 const SOCIAL_QUALITY = 82;
 const SOCIAL_MIN_AR = 1.4;
 const SOCIAL_MAX_AR = 2.6;
+const SOCIAL_MAX_SOURCE_BYTES = 200 * 1024;
+const SOCIAL_BACKDROP_BLUR = 28;
+const SOCIAL_BACKDROP_BRIGHTNESS = 0.55;
 
 function localRaster(href) {
   const value = typeof href === 'string' ? href.trim() : '';
@@ -152,12 +160,16 @@ async function main() {
     const mobile = join(dir, `${name}-${MOBILE_WIDTH}.webp`);
     const social = join(dir, `${name}-social.jpg`);
 
-    // Only heroes outside the social-card band need a crop; inside the band the
-    // original hero is already close enough to 2:1 that a crop adds no value.
-    // Inline body images are never used as social cards, so no crop for them.
+    // Heroes outside the social-card band need a cover crop; mid-ratio heroes
+    // are left alone unless the source raster is heavy, in which case a
+    // letterboxed card cuts the fetch weight without cropping evidence. Inline
+    // body images are never used as social cards, so no card for them.
     const size = readImageSizeFile(source);
     const ar = size ? size.width / size.height : null;
-    const needsSocial = heroes.has(href) && ar !== null && (ar < SOCIAL_MIN_AR || ar > SOCIAL_MAX_AR);
+    const outsideBand = ar !== null && (ar < SOCIAL_MIN_AR || ar > SOCIAL_MAX_AR);
+    const heavySource = statSync(source).size > SOCIAL_MAX_SOURCE_BYTES;
+    const needsSocial = heroes.has(href) && ar !== null && (outsideBand || heavySource);
+    const letterbox = needsSocial && !outsideBand;
 
     try {
       if (isStale(source, full)) {
@@ -173,13 +185,35 @@ async function main() {
         current++;
       }
       if (needsSocial && isStale(source, social)) {
-        await sharp(source)
-          .resize(SOCIAL_WIDTH, SOCIAL_HEIGHT, {
-            fit: 'cover',
-            position: (sharp.strategy && sharp.strategy.attention) || 'centre',
-          })
-          .jpeg({ quality: SOCIAL_QUALITY })
-          .toFile(social);
+        if (letterbox) {
+          // Keep the whole screenshot (announcement bars, captions, evidence)
+          // and fill the 1.91:1 side bands with a blurred, dimmed copy so the
+          // card still reads as one image.
+          const backdrop = await sharp(source)
+            .resize(SOCIAL_WIDTH, SOCIAL_HEIGHT, { fit: 'cover' })
+            .blur(SOCIAL_BACKDROP_BLUR)
+            .modulate({ brightness: SOCIAL_BACKDROP_BRIGHTNESS })
+            .toBuffer();
+          const foreground = await sharp(source)
+            .resize(SOCIAL_WIDTH, SOCIAL_HEIGHT, {
+              fit: 'contain',
+              background: { r: 0, g: 0, b: 0, alpha: 0 },
+            })
+            .png()
+            .toBuffer();
+          await sharp(backdrop)
+            .composite([{ input: foreground }])
+            .jpeg({ quality: SOCIAL_QUALITY })
+            .toFile(social);
+        } else {
+          await sharp(source)
+            .resize(SOCIAL_WIDTH, SOCIAL_HEIGHT, {
+              fit: 'cover',
+              position: (sharp.strategy && sharp.strategy.attention) || 'centre',
+            })
+            .jpeg({ quality: SOCIAL_QUALITY })
+            .toFile(social);
+        }
         generated++;
       } else if (needsSocial) {
         current++;
