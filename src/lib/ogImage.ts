@@ -17,8 +17,14 @@ const RASTER_EXT = /\.(png|jpe?g|gif|webp|avif)$/i;
 const SOCIAL_WIDTH = 1200;
 const SOCIAL_HEIGHT = 630;
 
-/** `<name>-social.jpg` sibling for a locally hosted PNG/JPEG hero, else null. */
+/**
+ * `<name>-social.jpg` / `<name>-social-svg.jpg` sibling for a locally hosted
+ * hero, else null. Raster crops are build artifacts; SVG cards are committed
+ * by `scripts/generate-svg-socials.mjs` because only Chromium has the symbol
+ * font needed to render their arrows and checks without tofu.
+ */
 function localSocialPath(pathname: string): string | null {
+  if (/\.svg$/i.test(pathname)) return pathname.replace(/\.svg$/i, '-social-svg.jpg');
   if (!/\.(png|jpe?g)$/i.test(pathname)) return null;
   return pathname.replace(/\.(png|jpe?g)$/i, '-social.jpg');
 }
@@ -58,10 +64,11 @@ export interface OgImage {
 /**
  * Resolves the social-preview image for a page.
  *
- * Social fetchers ignore SVG, so anything that is not a readable local raster
- * (missing file, `image: exception`, SVG hero, unknown format) falls back to
- * the raster brand card. Rendered article heroes are untouched — this only
- * feeds og:image, twitter:image and JSON-LD.
+ * Social fetchers ignore SVG, so a local SVG hero uses its pre-rendered
+ * `-social-svg.jpg` card when one exists. Anything unreadable (missing file,
+ * `image: exception`, remote SVG, unknown format) falls back to the raster
+ * brand card. Rendered article heroes are untouched — this only feeds
+ * og:image, twitter:image and JSON-LD.
  *
  * og:image:width/height are only emitted when the intrinsic size of the
  * emitted file is known, so the claim is never false.
@@ -85,13 +92,15 @@ export function resolveOgImage(image?: string): OgImage {
     return { src: new URL(raw, SITE).toString() };
   }
 
-  if (!RASTER_EXT.test(pathname)) return fallback;
+  const isSvg = /\.svg$/i.test(pathname);
+  if (!RASTER_EXT.test(pathname) && !isSvg) return fallback;
 
   const file = join(PUBLIC_DIR, pathname.replace(/^\/+/, ''));
   if (!existsSync(file)) return fallback;
 
-  // Prefer the build-generated social crop when the hero's own ratio would be
-  // cropped hard by social platforms (portrait / very narrow heroes).
+  // Prefer the pre-rendered social card: raster crops exist when the hero's
+  // own ratio would be cropped hard by social platforms, and SVG cards exist
+  // because social fetchers cannot render SVG at all.
   const socialPath = localSocialPath(pathname);
   if (socialPath) {
     const socialFile = join(PUBLIC_DIR, socialPath.replace(/^\/+/, ''));
@@ -99,6 +108,8 @@ export function resolveOgImage(image?: string): OgImage {
       return { src: socialPath, width: SOCIAL_WIDTH, height: SOCIAL_HEIGHT };
     }
   }
+
+  if (isSvg) return fallback;
 
   const size = readImageSizeFile(file);
   return size ? { src: raw, ...size } : { src: raw };

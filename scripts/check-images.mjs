@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
+import { readImageSizeFile } from './lib/image-size.mjs';
 
 const dist = resolve('dist');
 const baseUrl = process.env.CHECK_URL || '';
@@ -336,6 +337,34 @@ function checkPageHtml(html, rel, isRemote) {
           warnings++;
         }
       }
+    }
+  }
+}
+
+// Every local SVG hero needs a committed 1200x630 raster card, otherwise
+// og:image/twitter:image/RSS silently fall back to the generic brand card.
+const articlesDir = resolve('src/content/articles');
+if (existsSync(articlesDir)) {
+  for (const entry of readdirSync(articlesDir)) {
+    if (!entry.endsWith('.md')) continue;
+    let text;
+    try {
+      text = readFileSync(join(articlesDir, entry), 'utf-8');
+    } catch {
+      continue;
+    }
+    const image = (text.match(/^image:\s*"?([^"\n]+?)"?\s*$/m) || [])[1] || '';
+    if (!image.startsWith('/') || !/\.svg$/i.test(image)) continue;
+    const social = join(resolve('public'), image.replace(/^\/+/, '').replace(/\.svg$/i, '-social-svg.jpg'));
+    if (!existsSync(social)) {
+      console.error(`❌ ${entry}: SVG hero has no social card — run npm run generate:svg-socials (${social})`);
+      errors++;
+      continue;
+    }
+    const size = readImageSizeFile(social);
+    if (!size || size.width !== 1200 || size.height !== 630) {
+      console.error(`❌ ${entry}: social card is not 1200x630 (${size ? `${size.width}x${size.height}` : 'unreadable'})`);
+      errors++;
     }
   }
 }

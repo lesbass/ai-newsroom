@@ -28,6 +28,7 @@
     "test:deploy-freshness": "node scripts/check-deploy-freshness.mjs",
     "test:live": "node scripts/check-live-deploy.mjs",
     "generate:og-image": "node scripts/generate-og-image.mjs",
+    "generate:svg-socials": "node scripts/generate-svg-socials.mjs",
     "setup:chromium": "node scripts/setup-chromium.mjs",
     "test:screenshot": "node scripts/screenshot.mjs",
     "audit": "npm run build && npm run check && npm run lint && npm run test:links && npm run test:mobile && npm run test:seo && npm run test:sitemap-lastmod && npm run test:images-fixtures && npm run test:images && npm run test:dates && npm run test:contrast && npm run test:targets && npm run test:a11y && npm run test:glyphs && npm run test:headline && npm run test:headline-overflow",
