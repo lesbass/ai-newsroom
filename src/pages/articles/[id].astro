@@ -23,11 +23,15 @@ type Props = CollectionEntry<'articles'>;
 const post = Astro.props;
 const { Content, headings } = await render(post);
 const { title, description, pubDate, updatedDate, author, tags, sources, highRiskClaims, canonicalURL, image, imageAlt, imageCredit } = post.data;
-const date = new Date(pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-const updated =
-  updatedDate && new Date(updatedDate).toDateString() !== new Date(pubDate).toDateString()
-    ? new Date(updatedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-    : null;
+const pubDateValue = new Date(pubDate);
+const pubDateIso = pubDateValue.toISOString();
+const date = pubDateValue.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const updatedDateValue = updatedDate ? new Date(updatedDate) : null;
+const hasVisibleUpdate = updatedDateValue !== null && updatedDateValue.toDateString() !== pubDateValue.toDateString();
+const updated = hasVisibleUpdate
+  ? updatedDateValue.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  : null;
+const updatedIso = hasVisibleUpdate ? updatedDateValue.toISOString() : null;
 // The preferred article shape starts with a dek/summary. Frontmatter
 // `description` is authored for exactly that role (it also feeds the meta
 // description), so surface it under the headline instead of leaving it only in
@@ -113,7 +117,7 @@ const formatRelatedDate = (date: Date) => date.toLocaleDateString('en-US', { yea
       <h1 class={headlineClass} set:html={formatHeadline(title)} />
       {dek && dek !== title && <p class="article-dek">{dek}</p>}
       <div class="article-meta">
-        <span class="meta-item meta-item-date"><time datetime={new Date(pubDate).toISOString()}>{date}</time>{updated && <span> (updated <time datetime={new Date(updatedDate).toISOString()}>{updated}</time>)</span>}</span>
+        <span class="meta-item meta-item-date"><time datetime={pubDateIso}>{date}</time>{updatedIso && <span> (updated <time datetime={updatedIso}>{updated}</time>)</span>}</span>
         <span class:list={['meta-item', 'meta-author', author === 'AI Newsroom' && 'meta-author-brand']}><span class="sep-dot" aria-hidden="true">&middot;</span><span>{author}</span></span>
         <span class="meta-item"><span class="sep-dot" aria-hidden="true">&middot;</span><span class="reading-time">{readingTime} min read</span></span>
         {sources.length > 0 && (
