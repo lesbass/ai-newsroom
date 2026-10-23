@@ -60,10 +60,14 @@ if (existsSync(redirectsPath)) {
 // trailing slash and Cloudflare matches `_redirects` literally, so a rule for
 // `/old` alone still leaves `/old/` as a 404 — the form legacy links, RSS
 // entries, and old sitemaps actually used (AIN-1035).
+const exactRedirectSources = new Set(redirectSources);
 for (const { from, code } of redirectRules) {
-  if (code !== '301' || from.endsWith('/*')) continue;
+  if (code !== '301') continue;
+  // Wildcard/splat/placeholder rules match both forms themselves, and `/` has
+  // no meaningful slashless variant.
+  if (from === '/' || from.includes('*') || from.includes(':')) continue;
   const alternate = from.endsWith('/') ? from.slice(0, -1) : `${from}/`;
-  if (!redirectSources.includes(alternate)) {
+  if (!exactRedirectSources.has(alternate)) {
     console.error(`❌ _redirects: 301 for ${from} has no ${alternate} variant`);
     errors++;
   }
