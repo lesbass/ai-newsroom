@@ -106,6 +106,33 @@ if (rss !== null) {
   }
 }
 
+// Page routes are directories with an index.html, so the canonical form ends in
+// `/`. The Worker must answer the slashless form with a 301 (permanent), not the
+// asset handler's 307 (temporary), so search engines consolidate on the slash
+// URL. Files keep their extension and must not be rewritten.
+const SLASHLESS_PAGE_ROUTES = ['/articles', '/tags', '/corrections'];
+for (const path of SLASHLESS_PAGE_ROUTES) {
+  const expected = `${path}/`;
+  try {
+    const resp = await fetch(`${baseUrl}${path}`, {
+      redirect: 'manual',
+      headers: { 'Cache-Control': 'no-cache' },
+    });
+    const location = resp.headers.get('location') || '';
+    let locationPath = '';
+    try {
+      locationPath = new URL(location, baseUrl).pathname;
+    } catch { /* unparsable Location — reported below */ }
+    if (resp.status === 301 && locationPath === expected) {
+      pass(`${path} 301s to ${expected}`);
+    } else {
+      fail(`${path} returned HTTP ${resp.status} with Location "${location}", expected 301 to ${expected}`);
+    }
+  } catch (e) {
+    fail(`${baseUrl}${path} could not be fetched (${e.message})`);
+  }
+}
+
 if (failures.length > 0) {
   console.error(`❌ live-deploy verification failed (${failures.length} issue${failures.length === 1 ? '' : 's'})`);
   process.exit(1);
