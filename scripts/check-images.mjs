@@ -1,5 +1,5 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
-import { join, resolve, dirname } from 'node:path';
+import { join, resolve, dirname, extname } from 'node:path';
 import { readImageSizeFile } from './lib/image-size.mjs';
 
 const dist = resolve('dist');
@@ -15,6 +15,17 @@ function* walk(dir) {
     try { s = statSync(path); } catch { continue; }
     if (s.isDirectory()) yield* walk(path);
     else if (path.endsWith('.html')) yield path;
+  }
+}
+
+function* walkFiles(dir) {
+  if (!existsSync(dir)) return;
+  for (const entry of readdirSync(dir)) {
+    const path = join(dir, entry);
+    let s;
+    try { s = statSync(path); } catch { continue; }
+    if (s.isDirectory()) yield* walkFiles(path);
+    else yield path;
   }
 }
 
@@ -414,6 +425,49 @@ if (existsSync(articlesDir)) {
       console.error(`❌ ${entry}: social card is not 1200x630 (${size ? `${size.width}x${size.height}` : 'unreadable'})`);
       errors++;
     }
+  }
+}
+
+// A raster's real bytes must match its extension. Cloudflare sets
+// Content-Type from the path, so a WebP saved as .png is served as image/png
+// and strict social crawlers can drop the preview even when the dimensions
+// pass the 1200 px gate (AIN-1041).
+const IMAGE_EXTENSIONS = new Map([
+  ['.png', 'png'],
+  ['.jpg', 'jpeg'],
+  ['.jpeg', 'jpeg'],
+  ['.webp', 'webp'],
+  ['.gif', 'gif'],
+]);
+
+function sniffRasterFormat(buf) {
+  if (
+    buf.length >= 8 &&
+    buf.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))
+  ) return 'png';
+  if (buf.length >= 3 && buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) return 'jpeg';
+  if (
+    buf.length >= 12 &&
+    buf.subarray(0, 4).toString('latin1') === 'RIFF' &&
+    buf.subarray(8, 12).toString('latin1') === 'WEBP'
+  ) return 'webp';
+  if (buf.length >= 6 && /^GIF8[79]a$/.test(buf.subarray(0, 6).toString('latin1'))) return 'gif';
+  return null;
+}
+
+for (const path of walkFiles(resolve('public'))) {
+  const ext = extname(path).toLowerCase();
+  const expected = IMAGE_EXTENSIONS.get(ext);
+  if (!expected) continue;
+  let actual = null;
+  try {
+    actual = sniffRasterFormat(readFileSync(path));
+  } catch {
+    continue;
+  }
+  if (actual && actual !== expected) {
+    console.error(`❌ ${path}: file is ${actual.toUpperCase()} but named ${ext} — Content-Type and crawler parsing depend on the real format`);
+    errors++;
   }
 }
 
