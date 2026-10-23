@@ -116,6 +116,26 @@ curl -sS  https://news.lesbass.com/rss.xml         # <link> + lastBuildDate pres
 curl -sSI https://ai-newsroom.lesbass.workers.dev/ # 200, canonical → news.lesbass.com
 ```
 
+## Related gap to fix in the same Cloudflare session — `www` has no DNS record
+
+Observed 2026-10-23 22:03 UTC: `getent hosts www.news.lesbass.com` returns nothing and an
+HTTPS connection fails (`curl` exit 000). The `public/_redirects` header already documents
+the intended rule (`www.news.lesbass.com/*` → `https://news.lesbass.com/:splat`, 301), but
+`_redirects` only supports path sources — the record and redirect must live in the
+`lesbass.com` Cloudflare zone.
+
+This is **not** a duplicate-content risk today (the hostname does not resolve, so nothing is
+served), but anyone typing `www.news.lesbass.com` gets a connection error. Fix it while the
+Cloudflare session for AIN-845 is open: add a proxied `www` CNAME (or A/AAAA record) for
+`news.lesbass.com`, then attach a Redirect Rule `http.host eq "www.news.lesbass.com"` →
+`https://news.lesbass.com${uri.path}` (301). Verify with:
+
+```bash
+getent hosts www.news.lesbass.com                     # resolves
+curl -sSI https://www.news.lesbass.com/               # 301 → https://news.lesbass.com/
+curl -sSI https://www.news.lesbass.com/articles/      # same, path preserved
+```
+
 ## Sequencing
 
 1. Board answers the **Remediation choice** card on AIN-845 (A / B / C).
