@@ -10,14 +10,16 @@
  *
  * It also fails when an AIN- process identifier appears anywhere else in the
  * reader-facing article content (prose, caption, credit): those ids belong to
- * the Paperclip thread, not to public copy.
+ * the Paperclip thread, not to public copy. Inline `<style>` blocks are
+ * scanned separately because they ship to every page while the reader-facing
+ * extraction strips them.
  *
  * Reads `dist/` (or `dist/client/` for the Cloudflare adapter layout), so run
  * it after `npm run build`.
  */
 
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join, relative, resolve } from 'node:path';
 
 const CANONICAL_HOST = 'news.lesbass.com';
 const INTERNAL_HOST = 'paperclip.lesbass.com';
@@ -60,6 +62,23 @@ function articlePages() {
     }
   }
   return pages;
+}
+
+function builtHtmlPages(dir) {
+  const pages = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      pages.push(...builtHtmlPages(path));
+    } else if (entry.name.endsWith('.html')) {
+      pages.push(path);
+    }
+  }
+  return pages;
+}
+
+function inlineStyles(html) {
+  return [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map((match) => match[1]).join('\n');
 }
 
 function readerFacingContent(html) {
@@ -143,6 +162,16 @@ for (const { slug, file } of pages) {
     fail(slug, 'article meta line has no "N sources" verification link');
   } else if (Number(meta[1]) < 1) {
     fail(slug, 'article meta line reports zero sources');
+  }
+}
+
+// Inline <style> blocks are served to every visitor, so internal AIN- process
+// ids in CSS comments leak editorial bookkeeping into the public page source.
+// The reader-facing check above deliberately strips <style>, so scan it here.
+for (const file of builtHtmlPages(assetBase)) {
+  const leaked = inlineStyles(readFileSync(file, 'utf-8')).match(/\bAIN-\d+\b/gi);
+  if (leaked) {
+    fail(relative(assetBase, file), `inline <style> cites internal process id(s) ${[...new Set(leaked)].join(', ')}`);
   }
 }
 

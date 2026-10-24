@@ -596,9 +596,9 @@ const jsonLd = article
       text-transform: uppercase;
     }
     /* Separators live inside the link that follows them so a wrapped row can
-       never end with an orphaned middot (AIN-1033). Targeting links only keeps
-       the copyright span separator-free, as before. The right margin
-       reproduces the previous gap between each separator and its label. */
+       never end with an orphaned middot. Targeting links only keeps the
+       copyright span separator-free, as before. The right margin reproduces
+       the previous gap between each separator and its label. */
     .footer-links > * + a::before {
       content: "\00b7";
       margin-right: 0.85rem;
@@ -700,7 +700,7 @@ const jsonLd = article
     }
     /* Keep short hyphenated names such as GPT-6 on one line; see
        src/lib/headline.ts. Long compounds carry `.no-break-long` and are
-       allowed to wrap at their hyphens on narrow viewports (AIN-1020). */
+       allowed to wrap at their hyphens on narrow viewports. */
     .no-break { white-space: nowrap; }
     .article-meta {
       color: var(--color-muted);
@@ -888,9 +888,9 @@ const jsonLd = article
       position: relative;
       width: min(1120px, calc(100% - 2rem));
       margin: 0 auto;
-      /* AIN-881: the headline must start on .container's content edge. 100%
-         here is the hero's containing block — the same width .container centres
-         in — so the middle term reproduces the container offset exactly while
+      /* The headline must start on .container's content edge. 100% here is
+         the hero's containing block — the same width .container centres in —
+         so the middle term reproduces the container offset exactly while
          the hero frame is 1rem from each edge (below 1152px) and the cap holds
          it once the frame starts tracking the viewport. The floor is the same
          value at 768px, which keeps the headline clear of the 0.42rem tick rail
@@ -1167,14 +1167,14 @@ const jsonLd = article
         font-size: clamp(1.75rem, 7.5vw, 2.1rem);
         line-height: 1.1;
       }
-      /* AIN-1020: at the mobile H1 size a 15-20 char hyphen compound such as
+      /* At the mobile H1 size a 15-20 char hyphen compound such as
          `codebase-memory-mcp` is wider than the 320 px column. Let those long
          compounds wrap at their hyphens here; short names (GPT-6, Claude-3,
          DeepSeek-V4) keep their `.no-break` nowrap above this breakpoint. */
       .no-break-long { white-space: normal; }
       /* Let the date + "(updated …)" run wrap onto a second line instead of
-         forcing one unbreakable line past the viewport (AIN-1020). The updated
-         phrase stays whole so it never splits mid-date. */
+         forcing one unbreakable line past the viewport. The updated phrase
+         stays whole so it never splits mid-date. */
       .meta-item-date { flex-wrap: wrap; white-space: normal; }
       .meta-item-date > span { white-space: nowrap; }
       .card-featured .article-card-title {
@@ -1192,7 +1192,7 @@ const jsonLd = article
       /* When the footer links wrap, a separator that travels with its link
          lands at the start of the next row ("· Corrections"). Drop the
          middle dots on the single-column mobile footer and let the gaps
-         separate the labels (AIN-1033 follow-up). */
+         separate the labels. */
       .footer-links > * + a::before { content: none; }
     }
 
