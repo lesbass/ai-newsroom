@@ -49,14 +49,6 @@ sources:
     url: "https://news.lesbass.com/articles/codebase-memory-mcp-zero-dependency-code-intelligence/"
     date: 2026-06-24
     type: secondary
-  - title: "AIN-544 — RepoScout radar 2026-07-29 (Paperclip)"
-    url: "https://paperclip.lesbass.com/AIN/issues/AIN-544"
-    date: 2026-07-29
-    type: secondary
-  - title: "AIN-545 — Article candidate: context-mode (Paperclip)"
-    url: "https://paperclip.lesbass.com/AIN/issues/AIN-545"
-    date: 2026-07-29
-    type: secondary
 ---
 
 [mksglu/context-mode](https://github.com/mksglu/context-mode) is a 19,414&starf; MCP server that combines a 98% tool-output reduction sandbox, SQLite + FTS5 session-continuity across conversation compactions, a "think in code" paradigm, and 17 supported AI coding agent platforms — all under an ELv2 (source-available) license. Per the project's own [BENCHMARK.md](https://github.com/mksglu/context-mode/blob/main/BENCHMARK.md): 21 scenarios, 376 KB raw data processed into 16.5 KB of context, for a 96% overall savings with 100% code-example preservation.
@@ -147,5 +139,3 @@ context-mode is licensed under the **Elastic License 2.0 (ELv2)** — the source
 - [Ratel: AI agent context engineering — AI Newsroom (2026-07-11)](https://news.lesbass.com/articles/ratel-context-engineering-tool-catalog/)
 - [Headroom: AI agent token compression — AI Newsroom (2026-06-24)](https://news.lesbass.com/articles/headroom-ai-agent-token-compression/)
 - [codebase-memory-mcp: zero-dependency code intelligence — AI Newsroom (2026-06-24)](https://news.lesbass.com/articles/codebase-memory-mcp-zero-dependency-code-intelligence/)
-- [AIN-544 — RepoScout radar 2026-07-29 (Paperclip)](https://paperclip.lesbass.com/AIN/issues/AIN-544)
-- [AIN-545 — Article candidate: context-mode (Paperclip)](https://paperclip.lesbass.com/AIN/issues/AIN-545)

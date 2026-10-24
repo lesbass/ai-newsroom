@@ -47,11 +47,11 @@ sources:
     url: "https://pypi.org/project/reverify/"
     date: 2026-09-05
     type: primary
-  - title: "context-mode — AI Newsroom coverage (AIN-546, 2026-07-29)"
+  - title: "context-mode — AI Newsroom coverage (2026-07-29)"
     url: "https://news.lesbass.com/articles/context-mode-mcp-context-window-optimization/"
     date: 2026-09-05
     type: secondary
-  - title: "DeepSeek dsh — AI Newsroom coverage (AIN-609, 2026-08-19)"
+  - title: "DeepSeek dsh — AI Newsroom coverage (2026-08-19)"
     url: "https://news.lesbass.com/articles/deepseek-harness-dsh/"
     date: 2026-09-05
     type: secondary
@@ -134,5 +134,5 @@ The MCP server covers Claude Code and Cursor. **Caveat:** review before running 
 | [v0.11.0 release](https://github.com/2akouwu/reverify/releases/tag/v0.11.0) | Lossless context rollover, four CLI harnesses | 2026-09-05 |
 | [v0.10.0 release](https://github.com/2akouwu/reverify/releases/tag/v0.10.0) | Semantic layer on angr, 208 unit tests | 2026-09-05 |
 | [PyPI project](https://pypi.org/project/reverify/) | 0.10.0, Python ≥3.8, release history | 2026-09-05 |
-| [context-mode coverage](https://news.lesbass.com/articles/context-mode-mcp-context-window-optimization/) | Complementary context-engineering coverage (AIN-546) | 2026-09-05 |
-| [DeepSeek dsh coverage](https://news.lesbass.com/articles/deepseek-harness-dsh/) | Complementary agent-harness coverage (AIN-609) | 2026-09-05 |
+| [context-mode coverage](https://news.lesbass.com/articles/context-mode-mcp-context-window-optimization/) | Complementary context-engineering coverage | 2026-09-05 |
+| [DeepSeek dsh coverage](https://news.lesbass.com/articles/deepseek-harness-dsh/) | Complementary agent-harness coverage | 2026-09-05 |

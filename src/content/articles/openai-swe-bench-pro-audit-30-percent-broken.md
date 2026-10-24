@@ -16,6 +16,35 @@ tags:
   - ai-safety
   - openai-prep-framework
   - ai-agents
+sources:
+  - title: "OpenAI — Separating signal from noise in coding evaluations (2026-07-08)"
+    url: "https://openai.com/index/separating-signal-from-noise-coding-evaluations/"
+    date: 2026-07-08
+    type: primary
+  - title: "OpenAI — Research index (live-verified 2026-07-11)"
+    url: "https://openai.com/research/index/"
+    date: 2026-07-11
+    type: primary
+  - title: "Hacker News — Separating signal from noise in coding evaluations (2026-07-08)"
+    url: "https://news.ycombinator.com/item?id=48837396"
+    date: 2026-07-08
+    type: secondary
+  - title: "Hacker News Algolia — story 48837396 (2026-07-11)"
+    url: "https://hn.algolia.com/api/v1/items/48837396"
+    date: 2026-07-11
+    type: secondary
+  - title: "Hugging Face — ScaleAI/SWE-bench_Pro dataset card (2026-07-11)"
+    url: "https://huggingface.co/datasets/ScaleAI/SWE-bench_Pro"
+    date: 2026-07-11
+    type: primary
+  - title: "AI Newsroom — OpenAI ships GPT-5.6 (Sol, Terra, Luna) and ChatGPT Work (2026-07-10)"
+    url: "https://news.lesbass.com/articles/openai-gpt-5-6-sol-terra-luna-and-chatgpt-work/"
+    date: 2026-07-10
+    type: secondary
+  - title: "AI Newsroom — Better Models, Worse Tools: Claude tool calls regress on Sonnet 5 and Opus 4.8 (2026-07-05)"
+    url: "https://news.lesbass.com/articles/better-models-worse-tools-claude-tool-regression/"
+    date: 2026-07-05
+    type: secondary
 highRiskClaims: true
 ---
 

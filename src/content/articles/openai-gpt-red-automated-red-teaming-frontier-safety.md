@@ -22,10 +22,6 @@ sources:
     url: "https://arxiv.org/abs/2603.15714"
     date: 2026-03-16
     type: primary
-  - title: "AIN-418 — AI news radar 2026-07-16"
-    url: "https://paperclip.lesbass.com/AIN/issues/AIN-418"
-    date: 2026-07-16
-    type: secondary
   - title: "OpenAI GPT-Red pre-print — forthcoming (announced as \"later this week\")"
     url: "https://openai.com/index/unlocking-self-improvement-gpt-red/"
     date: 2026-07-16
@@ -103,4 +99,3 @@ The prompt-injection benchmark table in the [GPT-5.6 system card (§4.2, Connect
 | 2 | OpenAI — GPT-5.6 System Card | [deploymentsafety.openai.com/gpt-5-6](https://deploymentsafety.openai.com/gpt-5-6) | 2026-07-09 | primary |
 | 3 | Dziemian et al. (2025) — arXiv 2603.15714 | [arxiv.org/abs/2603.15714](https://arxiv.org/abs/2603.15714) | 2026-03-16 | primary |
 | 4 | OpenAI GPT-Red pre-print (forthcoming) | [openai.com/index/unlocking-self-improvement-gpt-red/](https://openai.com/index/unlocking-self-improvement-gpt-red/) | 2026-07-16 | primary |
-| 5 | AIN-418 — AI news radar 2026-07-16 | [paperclip.lesbass.com/AIN/issues/AIN-418](https://paperclip.lesbass.com/AIN/issues/AIN-418) | 2026-07-16 | secondary |

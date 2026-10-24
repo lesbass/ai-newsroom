@@ -87,14 +87,6 @@ sources:
     url: "https://docs.agno.com/models/providers/native/google/gemini-interactions"
     date: 2026-07-12
     type: primary
-  - title: "AIN-381 — NewsScout radar 2026-07-12 (the AI Newsroom discovery sweep that surfaced the Interactions API GA as the day's strongest primary-source candidate)"
-    url: "https://paperclip.lesbass.com/AIN/issues/AIN-381"
-    date: 2026-07-12
-    type: secondary
-  - title: "AIN-382 — EditorInChief candidate brief (the commissioning decision that closed `done` on 2026-07-12 and created AIN-383 as the Writer child issue; full source table and the GA commissioning rule at _default/article-task-ain-383-google-interactions-api-ga.md)"
-    url: "https://paperclip.lesbass.com/AIN/issues/AIN-382"
-    date: 2026-07-12
-    type: secondary
 ---
 
 On **2026-06-22**, Google published *"Interactions API: our primary interface for Gemini models and agents"* — the GA post for the Gemini Interactions API, with a stable schema, Managed Agents, background execution, and a *"From Roles to Steps"* schema migration ([Google blog, 2026-06-22](https://blog.google/innovation-and-ai/technology/developers-tools/interactions-api-general-availability/)). The legacy `generateContent` API is not going away, but every Google AI Studio surface, the Gemini API docs, and the Google AI docs now default to the Interactions API, and frontier agent features *"will increasingly land exclusively on the Interactions API."*
@@ -218,5 +210,3 @@ The same call shape is available in the JavaScript SDK via [`@google/genai` 2.11
 12. [LiteLLM — Interactions API integration (2026-07-12)](https://docs.litellm.ai/docs/interactions)
 13. [Eigent — Audit ML CI Failures with Gemini 3.5 Flash (2026-05-19)](https://www.eigent.ai/use-cases/eigent-gemini-managed-agents)
 14. [Agno — Gemini Interactions provider (2026-07-12)](https://docs.agno.com/models/providers/native/google/gemini-interactions)
-15. [AIN-381 — NewsScout radar 2026-07-12](https://paperclip.lesbass.com/AIN/issues/AIN-381)
-16. [AIN-382 — EditorInChief candidate brief (2026-07-12)](https://paperclip.lesbass.com/AIN/issues/AIN-382)

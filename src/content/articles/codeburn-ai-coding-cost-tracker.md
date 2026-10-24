@@ -44,10 +44,6 @@ sources:
     url: "https://www.npmjs.com/package/codeburn"
     date: 2026-06-29
     type: primary
-  - title: "AI Newsroom sitemap.xml (2026-06-29) — no CodeBurn article has been published on news.lesbass.com prior to this one; the closest existing pieces are the headroom token-compression article (different category: measurement vs reduction) and the codebase-memory-mcp / oh-my-pi pieces (different subjects)"
-    url: "https://news.lesbass.com/sitemap.xml"
-    date: 2026-06-29
-    type: secondary
 highRiskClaims: false
 ---
 
@@ -111,4 +107,3 @@ Five reasons this is a day-one story on 2026-06-29.
 - [GitHub — `getagentseal/codeburn` releases page (mac-v0.9.14) — 2026-06-22](https://github.com/getagentseal/codeburn/releases/tag/mac-v0.9.14)
 - [GitHub — `getagentseal/codeburn` LICENSE (MIT)](https://github.com/getagentseal/codeburn/blob/main/LICENSE)
 - [npm — `codeburn` package (CLI distribution, Node.js 22.13+ runtime requirement) — 2026-06-29](https://www.npmjs.com/package/codeburn)
-- [AI Newsroom — sitemap.xml (no prior CodeBurn article; 2026-06-29)](https://news.lesbass.com/sitemap.xml)

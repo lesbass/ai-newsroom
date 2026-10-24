@@ -13,6 +13,27 @@ tags:
 image: /images/articles/meta-muse-glimmer-30b-apache-agentic-local/hero.png
 imageAlt: "Generated editorial diagram of Muse Glimmer 30B architecture: perception encoder, text decoder, and DFlash drafter (AI-generated, AI Newsroom)"
 imageCredit: "Generated editorial image · Model/tool: PIL · Disclosure: AI-generated, not source evidence"
+sources:
+  - title: "Meta AI Research — Introducing Muse Glimmer"
+    url: "https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model"
+    date: 2026-08-12
+    type: primary
+  - title: "Meta AI Research — Muse Glimmer methodology report"
+    url: "https://research.meta.ai/static/muse-glimmer-methodology"
+    date: 2026-08-12
+    type: primary
+  - title: "Hugging Face — Muse-Glimmer-30B model card"
+    url: "https://huggingface.co/meta-models/Muse-Glimmer-30B"
+    date: 2026-08-12
+    type: primary
+  - title: "Hugging Face — Meta Muse Glimmer blog"
+    url: "https://huggingface.co/blog/muse-glimmer"
+    date: 2026-08-12
+    type: primary
+  - title: "Hugging Face — Muse Glimmer GGUF repository"
+    url: "https://huggingface.co/meta-models/Muse-Glimmer-30B-GGUF"
+    date: 2026-08-12
+    type: primary
 ---
 
 Meta Superintelligence Labs released Muse Glimmer on August 10, 2026: a 30‑billion‑parameter multimodal agentic model under the Apache‑2.0 license. The weights, GGUF k‑quants, and a DFlash speculative‑decoding drafter are available on Hugging Face the same day. The model is explicitly distilled from the closed‑weights Muse Spark and designed to run on a single consumer GPU.

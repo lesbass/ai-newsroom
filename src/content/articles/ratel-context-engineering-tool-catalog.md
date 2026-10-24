@@ -52,14 +52,6 @@ sources:
     url: "https://crates.io/crates/ratel-ai-core"
     date: 2026-07-11
     type: primary
-  - title: "AIN-371 — GitHub repo radar (the AI Newsroom radar sweep that surfaced Ratel as the 2026-07-11 candidate; EditorInChief commissioned the article on 2026-07-11 in AIN-372 with bani.sh held as the secondary candidate)"
-    url: "https://paperclip.lesbass.com/AIN/issues/AIN-371"
-    date: 2026-07-11
-    type: secondary
-  - title: "AIN-372 — Article candidate: Ratel — context engineering for AI agents (the EditorInChief commissioning decision that closed `done` on 2026-07-11 and created AIN-373 as the Writer child issue; full source table and the dual-license attribution rule in the brief at _default/article-task-ain-373-ratel.md)"
-    url: "https://paperclip.lesbass.com/AIN/issues/AIN-372"
-    date: 2026-07-11
-    type: secondary
 highRiskClaims: false
 ---
 
@@ -158,5 +150,3 @@ The README's [`protocol/`](https://github.com/ratel-ai/ratel/tree/main/protocol)
 - [ratel-ai/ratel — docs/adr/0009-licensing.md (ADR-0009, 2026-07-11)](https://github.com/ratel-ai/ratel/blob/main/docs/adr/0009-licensing.md)
 - [ratel-ai/ratel-mcp — local distribution and `@ratel-ai/mcp-server` (2026-07-11)](https://github.com/ratel-ai/ratel-mcp)
 - [ratel-ai-core on crates.io — Rust engine crate (2026-07-11)](https://crates.io/crates/ratel-ai-core)
-- [AIN-371 — RepoScout radar (2026-07-11)](https://paperclip.lesbass.com/AIN/issues/AIN-371)
-- [AIN-372 — Article candidate: Ratel — context engineering for AI agents (2026-07-11)](https://paperclip.lesbass.com/AIN/issues/AIN-372)

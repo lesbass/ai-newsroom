@@ -74,6 +74,7 @@ const checks = [
   ['LinkFixtures', 'npm run test:links-fixtures'],
   ['Mobile', 'npm run test:mobile'],
   ['SEO', 'npm run test:seo'],
+  ['Sources', 'npm run test:sources'],
   ['FeedSitemap', 'npm run test:feed-sitemap'],
   ['SitemapLastmod', 'npm run test:sitemap-lastmod'],
   ['ImageFixtures', 'npm run test:images-fixtures'],

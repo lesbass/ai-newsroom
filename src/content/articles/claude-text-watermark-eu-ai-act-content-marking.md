@@ -14,6 +14,22 @@ tags:
 image: /images/articles/claude-text-watermark-eu-ai-act-content-marking/hero.svg
 imageAlt: "Generated editorial diagram: Claude text generation settles low-stakes token choices with a secret key, leaving a detectable watermark, with separate C2PA content credentials for images and files (AI-generated, AI Newsroom)"
 imageCredit: "Generated editorial image · Model/tool: hand-authored SVG · Disclosure: AI-generated, not source evidence"
+sources:
+  - title: "Anthropic — How Claude's text watermark works"
+    url: "https://www.anthropic.com/news/claude-text-watermark"
+    date: 2026-08-14
+    type: primary
+  - title: "Nature — Scalable watermarking for identifying large language model outputs (Nature 634, pp. 818–823)"
+    url: "https://www.nature.com/articles/s41586-024-08025-4"
+    date: 2024-10-23
+    type: primary
+  - title: "European Commission — Strong backing for the Code of Practice on Transparency of AI-generated Content"
+    url: "https://digital-strategy.ec.europa.eu/en/news/strong-backing-code-practice-transparency-ai-generated-content"
+    date: 2026-07-31
+    type: primary
+  - title: "Coalition for Content Provenance and Authenticity — C2PA Content Credentials"
+    url: "https://c2pa.org/"
+    type: primary
 highRiskClaims: true
 ---
 

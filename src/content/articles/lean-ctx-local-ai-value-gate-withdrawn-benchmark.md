@@ -28,11 +28,11 @@ sources:
     url: "https://github.com/yvgude/lean-ctx/blob/main/README.md"
     date: 2026-09-12
     type: primary
-  - title: "Headroom open-source token compression — AI Newsroom (AIN-372, 2026-06-24)"
+  - title: "Headroom open-source token compression — AI Newsroom (2026-06-24)"
     url: "https://news.lesbass.com/articles/headroom-ai-agent-token-compression/"
     date: 2026-09-12
     type: secondary
-  - title: "context-mode MCP context window optimization — AI Newsroom (AIN-546, 2026-07-29)"
+  - title: "context-mode MCP context window optimization — AI Newsroom (2026-07-29)"
     url: "https://news.lesbass.com/articles/context-mode-mcp-context-window-optimization/"
     date: 2026-09-12
     type: secondary
@@ -105,5 +105,5 @@ The proxy also offers effort and verbosity knobs: `proxy.effort` pins one reason
 | [yvgude/lean-ctx](https://github.com/yvgude/lean-ctx) | Repo stats (3.8k★, 345 forks, Apache-2.0, 8,032 commits, 257 releases) | 2026-09-12 |
 | [BENCHMARKS.md](https://github.com/yvgude/lean-ctx/blob/main/BENCHMARKS.md) | "Withdrawn Historical Snapshot" — figures withdrawn, must not be used in product copy | 2026-09-12 |
 | [README.md](https://github.com/yvgude/lean-ctx/blob/main/README.md) | Benchmarks table, proxy docs, agent matrix, feature surface | 2026-09-12 |
-| [Headroom coverage](https://news.lesbass.com/articles/headroom-ai-agent-token-compression/) | Complementary context-engineering coverage (AIN-372, 2026-06-24) | 2026-09-12 |
-| [context-mode coverage](https://news.lesbass.com/articles/context-mode-mcp-context-window-optimization/) | Complementary context-engineering coverage (AIN-546, 2026-07-29) | 2026-09-12 |
+| [Headroom coverage](https://news.lesbass.com/articles/headroom-ai-agent-token-compression/) | Complementary context-engineering coverage (2026-06-24) | 2026-09-12 |
+| [context-mode coverage](https://news.lesbass.com/articles/context-mode-mcp-context-window-optimization/) | Complementary context-engineering coverage (2026-07-29) | 2026-09-12 |

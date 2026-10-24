@@ -59,10 +59,6 @@ sources:
   - title: "GitHub — oOo0oOo/lean-lsp-mcp (the optional MCP integration)"
     url: "https://github.com/oOo0oOo/lean-lsp-mcp"
     type: secondary
-  - title: "AI Newsroom — sitemap (no prior Leanstral or Mistral article on news.lesbass.com before 2026-07-04)"
-    url: "https://news.lesbass.com/sitemap.xml"
-    date: 2026-07-04
-    type: secondary
 highRiskClaims: false
 canonicalURL: "https://news.lesbass.com/articles/leanstral-mistral-open-source-proof-engineering/"
 ---
@@ -159,4 +155,3 @@ vibe --agent lean
 - [GitHub — `datrs/varinteger` (U64 overflow case) — 2026-07-02](https://github.com/datrs/varinteger)
 - [Lean 4 reference site](https://leanprover.github.io/)
 - [GitHub — `oOo0oOo/lean-lsp-mcp` (optional MCP integration)](https://github.com/oOo0oOo/lean-lsp-mcp)
-- [AI Newsroom — sitemap (no prior Leanstral or Mistral article on news.lesbass.com before 2026-07-04)](https://news.lesbass.com/sitemap.xml)

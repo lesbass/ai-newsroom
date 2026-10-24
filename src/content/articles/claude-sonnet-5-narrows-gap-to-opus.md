@@ -36,18 +36,6 @@ sources:
     url: "https://venturebeat.com/ai/anthropic-launches-claude-sonnet-5-at-a-steep-discount-to-its-top-model-as-the-company-races-toward-a-blockbuster-ipo/"
     date: 2026-06-30
     type: secondary
-  - title: "AI Newsroom 2026-07-01 news radar sweep (Claude Sonnet 5 flagged as the day's top candidate from the 2026-06-30 news cycle; the same-day Fable 5 returns and Google TabFM candidates held for the Day 2 and Day 3 cycles)"
-    url: "https://news.lesbass.com/sitemap.xml"
-    date: 2026-07-01
-    type: secondary
-  - title: "AI Newsroom EditorInChief disposition 2026-07-01 (the commissioning decision: accept Claude Sonnet 5 as the day's only article; reject the Headroom candidate brief as a duplicate of the 2026-06-24 Headroom article)"
-    url: "https://news.lesbass.com/articles/headroom-ai-agent-token-compression/"
-    date: 2026-07-01
-    type: secondary
-  - title: "AI Newsroom article candidate brief: Claude Sonnet 5 — Anthropic's most agentic Sonnet yet (the day's accepted candidate; 5-row candidate brief with the load-bearing primary sources)"
-    url: "https://news.lesbass.com/sitemap.xml"
-    date: 2026-07-01
-    type: secondary
 highRiskClaims: false
 ---
 
@@ -110,6 +98,3 @@ Near-Opus agentic performance is now reachable at Sonnet pricing. The launch pos
 - [Anthropic — *Claude API release notes* (2026-06-30)](https://docs.claude.com/en/release-notes/api)
 - [Mozilla — *Security advisories index* (2026-06-30)](https://www.mozilla.org/en-US/security/advisories/)
 - [VentureBeat — *Anthropic launches Claude Sonnet 5 at a steep discount to its top model* (Michael Nuñez, 2026-06-30)](https://venturebeat.com/ai/anthropic-launches-claude-sonnet-5-at-a-steep-discount-to-its-top-model-as-the-company-races-toward-a-blockbuster-ipo/)
-- [AI Newsroom 2026-07-01 news radar sweep (sitemap)](https://news.lesbass.com/sitemap.xml)
-- [AI Newsroom EditorInChief disposition 2026-07-01 (Headroom rejection reference)](https://news.lesbass.com/articles/headroom-ai-agent-token-compression/)
-- [AI Newsroom article candidate brief: Claude Sonnet 5 (sitemap)](https://news.lesbass.com/sitemap.xml)
