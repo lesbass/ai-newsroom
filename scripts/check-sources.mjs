@@ -8,6 +8,10 @@
  * it finds any of those artifacts, when no real external source remains, or
  * when the article meta line drops its "N sources" verification link.
  *
+ * It also fails when an AIN- process identifier appears anywhere else in the
+ * reader-facing article content (prose, caption, credit): those ids belong to
+ * the Paperclip thread, not to public copy.
+ *
  * Reads `dist/` (or `dist/client/` for the Cloudflare adapter layout), so run
  * it after `npm run build`.
  */
@@ -56,6 +60,14 @@ function articlePages() {
     }
   }
   return pages;
+}
+
+function readerFacingContent(html) {
+  return html
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/<head[\s\S]*?<\/head>/i, '');
 }
 
 function sourcesRegion(html) {
@@ -116,6 +128,9 @@ for (const { slug, file } of pages) {
   }
   if (/\bAIN-\d+\b/i.test(text) || /\bAIN-\d+\b/i.test(region)) {
     fail(slug, 'Sources cites an AIN- editorial process reference');
+  }
+  if (/\bAIN-\d+\b/i.test(readerFacingContent(html))) {
+    fail(slug, 'reader-facing content cites an internal AIN- process reference');
   }
 
   const links = sourceLinks(region);

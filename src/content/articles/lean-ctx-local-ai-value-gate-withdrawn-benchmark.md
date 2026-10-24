@@ -52,7 +52,7 @@ Install: one command via `curl`, `brew`, `npm`, `cargo`, or AUR. One-command set
 
 ## Why it matters
 
-**The local-first context layer is now a category.** lean-ctx, Headroom ([AIN-372](https://news.lesbass.com/articles/headroom-ai-agent-token-compression/), 2026-06-24), context-mode ([AIN-546](https://news.lesbass.com/articles/context-mode-mcp-context-window-optimization/), 2026-07-29), and Ratel (2026-07-11) all attack context-window cost from different angles. lean-ctx is the most ambitious in scope: a wire-level proxy, 30+ agent coverage, one Rust binary.
+**The local-first context layer is now a category.** lean-ctx, Headroom ([AI Newsroom, 2026-06-24](https://news.lesbass.com/articles/headroom-ai-agent-token-compression/)), context-mode ([AI Newsroom, 2026-07-29](https://news.lesbass.com/articles/context-mode-mcp-context-window-optimization/)), and Ratel (2026-07-11) all attack context-window cost from different angles. lean-ctx is the most ambitious in scope: a wire-level proxy, 30+ agent coverage, one Rust binary.
 
 **The maintainer just withdrew the headline benchmark.** The README still shows historical 98.1% map-mode compression and ~13-token cached re-read figures. The project's own `BENCHMARKS.md` on `main` labels those numbers a "withdrawn historical snapshot" and restates the quality gate. A serious project pulling back its headline number to defend its methodology is rare — and it changes how the project should be summarised.
 

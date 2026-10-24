@@ -6,7 +6,7 @@ author: "AI Newsroom"
 tags: ["amazon", "mechanical-turk", "cloud", "ai-training", "data", "policy"]
 image: "/images/articles/amazon-mechanical-turk-new-customers-closed/hero-mturk-announcement.png"
 imageAlt: "Screenshot of the Mechanical Turk homepage (mturk.com, captured 2026-07-06) showing the dark announcement banner at the top: 'Amazon Mechanical Turk will be closed to new customers, effective July 30, 2026. Existing users will not be impacted by this change. More information is available here.' Below the banner the standard MTurk navigation and 'Get started with Amazon Mechanical Turk' landing are visible."
-imageCredit: "Screenshot of https://www.mturk.com/ — captured 2026-07-06 via Playwright Chromium (headless, networkidle, 1280x900) · License: no license stated on the MTurk homepage; screenshot used editorially for the AIN-328 article."
+imageCredit: "Screenshot of https://www.mturk.com/ — captured 2026-07-06 via Playwright Chromium (headless, networkidle, 1280x900) · License: no license stated on the MTurk homepage; screenshot used editorially to illustrate this article."
 canonicalURL: "https://news.lesbass.com/articles/amazon-mechanical-turk-new-customers-closed/"
 sources:
   - title: "Mechanical Turk homepage — announcement banner: 'Amazon Mechanical Turk will be closed to new customers, effective July 30, 2026. Existing users will not be impacted by this change. More information is available here.'"

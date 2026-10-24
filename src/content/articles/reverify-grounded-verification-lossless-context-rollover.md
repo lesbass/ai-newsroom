@@ -67,7 +67,7 @@ On **2026-09-05**, [`2akouwu/reverify`](https://github.com/2akouwu/reverify) sit
 
 ## Why it matters
 
-**The "deterministic tool as judge" pattern is a concrete alternative to trust-and-summarize agent loops.** Where context-mode ([AIN-546](https://news.lesbass.com/articles/context-mode-mcp-context-window-optimization/), 2026-07-29) attacks context-window bloat through compression and session continuity, and DeepSeek dsh ([AIN-609](https://news.lesbass.com/articles/deepseek-harness-dsh/), 2026-08-19) provides a plugin-first agent harness, reverify tackles a different root problem: the agent's claims are not grounded in reality. The model proposes; the tools decide. Only what survives verification becomes a fact.
+**The "deterministic tool as judge" pattern is a concrete alternative to trust-and-summarize agent loops.** Where context-mode ([AI Newsroom, 2026-07-29](https://news.lesbass.com/articles/context-mode-mcp-context-window-optimization/)) attacks context-window bloat through compression and session continuity, and DeepSeek dsh ([AI Newsroom, 2026-08-19](https://news.lesbass.com/articles/deepseek-harness-dsh/)) provides a plugin-first agent harness, reverify tackles a different root problem: the agent's claims are not grounded in reality. The model proposes; the tools decide. Only what survives verification becomes a fact.
 
 **For binary and structural claims it directly attacks hallucination and context rot.** `reverify equiv` extends the same pattern to Python and C rewrites: an AI's refactor is tested against shared inputs, not trusted on authority alone ([README, 2026-09-05](https://github.com/2akouwu/reverify/blob/main/README.md)).
 
