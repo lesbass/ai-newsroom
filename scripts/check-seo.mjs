@@ -279,6 +279,15 @@ function checkPage(rel, html, path) {
     } else {
       const canonicalHref = html.match(/<link rel="canonical" href="([^"]+)"/);
       checkCanonicalOrigin(rel, 'rel=canonical', canonicalHref?.[1]);
+      // Astro emits the error page as `404.html`, but Cloudflare serves it at
+      // the clean `/404` URL. `/404/` is a 307, so advertising it would point
+      // crawlers at a non-200 URL (AIN-1052).
+      if (rel.endsWith('/404.html') && canonicalHref?.[1] !== `${CANONICAL_ORIGIN}/404`) {
+        console.error(
+          `❌ ${rel}: canonical is ${canonicalHref?.[1] ?? 'missing'}, expected ${CANONICAL_ORIGIN}/404`,
+        );
+        errors++;
+      }
     }
 
     // 4. Open Graph tags
@@ -296,6 +305,12 @@ function checkPage(rel, html, path) {
     } else {
       const ogUrlMatch = html.match(/<meta property="og:url" content="([^"]+)"/);
       checkCanonicalOrigin(rel, 'og:url', ogUrlMatch?.[1]);
+      if (rel.endsWith('/404.html') && ogUrlMatch?.[1] !== `${CANONICAL_ORIGIN}/404`) {
+        console.error(
+          `❌ ${rel}: og:url is ${ogUrlMatch?.[1] ?? 'missing'}, expected ${CANONICAL_ORIGIN}/404`,
+        );
+        errors++;
+      }
     }
     const twitterUrlMatch = html.match(/<meta name="twitter:url" content="([^"]+)"/);
     if (twitterUrlMatch) checkCanonicalOrigin(rel, 'twitter:url', twitterUrlMatch[1]);

@@ -163,6 +163,38 @@ await check('explicit /index.html 301s to the directory URL', async () => {
   }
 });
 
+// Astro emits `404.html` and Cloudflare serves it at the clean `/404` URL with
+// a 200. The duplicate spellings must 301 straight to that URL instead of
+// chaining through the asset handler's temporary redirects (AIN-1052).
+await check('404 page duplicates 301 to the clean /404 URL in one hop', async () => {
+  for (const path of ['/404/', '/404.html', '/404/index.html', '//404//']) {
+    const res = await call(`https://news.lesbass.com${path}`);
+    assert.equal(res.status, 301, path);
+    assert.equal(res.headers.get('location'), 'https://news.lesbass.com/404', path);
+  }
+});
+
+await check('the clean /404 URL is served, not redirected', async () => {
+  const res = await call('https://news.lesbass.com/404');
+  assert.equal(res.status, 200);
+  assert.equal(res.headers.get('location'), null);
+  assert.equal(await res.text(), ASSETS_BODY);
+});
+
+// Plain HTTP requests that also need path normalisation used to redirect to
+// HTTPS first and canonicalise the path on a second hop (AIN-1052).
+await check('http requests reach the canonical HTTPS URL in a single redirect', async () => {
+  for (const [url, expected] of [
+    ['http://news.lesbass.com/index.html', 'https://news.lesbass.com/'],
+    ['http://news.lesbass.com//articles//', 'https://news.lesbass.com/articles/'],
+    ['http://news.lesbass.com/404.html', 'https://news.lesbass.com/404'],
+  ]) {
+    const res = await call(url);
+    assert.equal(res.status, 301, url);
+    assert.equal(res.headers.get('location'), expected, url);
+  }
+});
+
 await check('_redirects page destinations skip the extra trailing-slash hop', async () => {
   const redirectAssets = {
     fetch: () =>

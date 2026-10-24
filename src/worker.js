@@ -12,11 +12,19 @@ function isPageRoute(pathname) {
 	return lastSegment.length > 0 && !lastSegment.includes('.');
 }
 
+// Astro emits the error page as `404.html`, and Cloudflare serves that asset at
+// the clean `/404` URL with a 200. Every other spelling of it (`/404/`,
+// `/404.html`, `/404/index.html`) is a duplicate that the asset handler answers
+// with a 307 or a redirect chain, so collapse them straight onto `/404`.
+const NOT_FOUND_URL = '/404';
+
 // Requests that still carry duplicate slashes or an explicit `/index.html`
 // reach the ASSETS binding and get a 307 (temporary) redirect. Return the
 // canonical directory path so the Worker can answer with a 301 instead.
 function canonicalPagePath(pathname) {
 	const collapsed = pathname.replace(/\/{2,}/g, '/').replace(/\/index\.html$/i, '/');
+	const lower = collapsed.toLowerCase();
+	if (lower === `${NOT_FOUND_URL}/` || lower === `${NOT_FOUND_URL}.html`) return NOT_FOUND_URL;
 	return collapsed === pathname ? null : collapsed;
 }
 
@@ -73,14 +81,19 @@ function isAliasHost(hostname) {
 export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
-		if (url.protocol === 'http:' && !LOCAL_HOSTNAMES.has(url.hostname)) {
-			url.protocol = 'https:';
-			return Response.redirect(url.href, 301);
-		}
 		// `/index.html` and paths with duplicate slashes are duplicate copies of
 		// a directory URL. The ASSETS binding would answer them with a temporary
 		// 307, so emit a permanent 301 to the canonical path instead.
 		const canonicalPath = canonicalPagePath(url.pathname);
+		// Upgrade the scheme and canonicalise the path in the same redirect. Doing
+		// them in sequence costs an extra round trip for every plain-HTTP request
+		// that also needs path normalisation (`http://host/index.html`,
+		// `http://host//articles//`).
+		if (url.protocol === 'http:' && !LOCAL_HOSTNAMES.has(url.hostname)) {
+			url.protocol = 'https:';
+			if (canonicalPath) url.pathname = canonicalPath;
+			return Response.redirect(url.href, 301);
+		}
 		if (canonicalPath) {
 			url.pathname = canonicalPath;
 			return Response.redirect(url.href, 301);

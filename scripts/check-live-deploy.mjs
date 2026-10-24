@@ -289,6 +289,85 @@ try {
   fail(`${baseUrl}/index.html could not be fetched (${e.message})`);
 }
 
+// Astro emits the error page as `404.html` and Cloudflare serves it at the
+// clean `/404` URL with a 200. Canonicals and aliases must agree on that URL:
+// advertising `/404/` (a 307) sends crawlers to a non-200 target, and the
+// duplicate spellings must resolve in one permanent hop (AIN-1052).
+try {
+  const resp = await fetch(`${baseUrl}/404`, {
+    headers: { 'Cache-Control': 'no-cache' },
+  });
+  if (!resp.ok) {
+    fail(`${baseUrl}/404 returned HTTP ${resp.status}`);
+  } else {
+    const html = await resp.text();
+    const expected = `${CANONICAL_ORIGIN}/404`;
+    const canonical = html.match(/<link[^>]+rel="canonical"[^>]+href="([^"]+)"/i)?.[1];
+    const ogUrl = html.match(/<meta[^>]+property="og:url"[^>]+content="([^"]+)"/i)?.[1];
+    if (canonical === expected) {
+      pass(`404 rel=canonical is ${expected}`);
+    } else {
+      fail(`404 rel=canonical is ${canonical ?? 'missing'}, expected ${expected}`);
+    }
+    if (ogUrl === expected) {
+      pass(`404 og:url is ${expected}`);
+    } else {
+      fail(`404 og:url is ${ogUrl ?? 'missing'}, expected ${expected}`);
+    }
+  }
+} catch (e) {
+  fail(`${baseUrl}/404 could not be fetched (${e.message})`);
+}
+
+for (const path of ['/404/', '/404.html']) {
+  try {
+    const resp = await fetch(`${baseUrl}${path}`, {
+      redirect: 'manual',
+      headers: { 'Cache-Control': 'no-cache' },
+    });
+    const location = resp.headers.get('location') || '';
+    let target = null;
+    try {
+      target = new URL(location, baseUrl).href;
+    } catch { /* unparsable Location — reported below */ }
+    if (resp.status === 301 && target === `${CANONICAL_ORIGIN}/404`) {
+      pass(`${path} 301s to ${CANONICAL_ORIGIN}/404 in one hop`);
+    } else {
+      fail(`${path} returned HTTP ${resp.status} with Location "${location}", expected 301 to ${CANONICAL_ORIGIN}/404`);
+    }
+  } catch (e) {
+    fail(`${baseUrl}${path} could not be fetched (${e.message})`);
+  }
+}
+
+// Plain HTTP requests that also need path normalisation must reach the final
+// HTTPS canonical URL in a single redirect, not scheme-first then path (AIN-1052).
+if (baseUrl === CANONICAL_ORIGIN) {
+  for (const [url, expected] of [
+    ['http://news.lesbass.com/index.html', 'https://news.lesbass.com/'],
+    ['http://news.lesbass.com//articles//', 'https://news.lesbass.com/articles/'],
+  ]) {
+    try {
+      const resp = await fetch(url, {
+        redirect: 'manual',
+        headers: { 'Cache-Control': 'no-cache' },
+      });
+      const location = resp.headers.get('location') || '';
+      let target = null;
+      try {
+        target = new URL(location, url).href;
+      } catch { /* unparsable Location — reported below */ }
+      if (resp.status === 301 && target === expected) {
+        pass(`${url} 301s to ${expected} in one hop`);
+      } else {
+        fail(`${url} returned HTTP ${resp.status} with Location "${location}", expected one 301 to ${expected}`);
+      }
+    } catch (e) {
+      fail(`${url} could not be fetched (${e.message})`);
+    }
+  }
+}
+
 if (failures.length > 0) {
   console.error(`❌ live-deploy verification failed (${failures.length} issue${failures.length === 1 ? '' : 's'})`);
   process.exit(1);
