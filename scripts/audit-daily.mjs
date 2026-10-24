@@ -71,6 +71,7 @@ const checks = [
   ['TypeCheck', 'npm run check'],
   ['Lint', 'npm run lint'],
   ['Links', 'npm run test:links'],
+  ['LinkFixtures', 'npm run test:links-fixtures'],
   ['Mobile', 'npm run test:mobile'],
   ['SEO', 'npm run test:seo'],
   ['FeedSitemap', 'npm run test:feed-sitemap'],

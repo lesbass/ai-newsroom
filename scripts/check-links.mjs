@@ -99,6 +99,60 @@ function isWorkerRedirected(pathname) {
 
 const pagePaths = [...walkPages(dist)];
 
+// Cross-page fragments need their own check. A link such as
+// `/editorial-standards/#high-risk-claims` passes the path gate even when the
+// target heading is renamed: the browser loads the page and silently stays at
+// the top. Map every built HTML page to its file so the fragment can be
+// resolved against the real document instead of trusting the path alone.
+const htmlFilesByPath = new Map();
+function registerPagePath(pathname, file) {
+  htmlFilesByPath.set(pathname, file);
+  if (pathname.length > 1) htmlFilesByPath.set(pathname.replace(/\/$/, ''), file);
+}
+for (const path of pagePaths) {
+  if (!path.endsWith('.html')) continue;
+  const relPath = path.slice(dist.length).replace(/\\/g, '/');
+  if (relPath.endsWith('/index.html')) {
+    registerPagePath(relPath.slice(0, -'index.html'.length), path);
+  } else {
+    registerPagePath(relPath, path);
+  }
+}
+
+const fragmentTargets = new Map();
+function hasFragmentTarget(file, fragment) {
+  if (fragment === 'top') return true; // implicit browser target
+  let ids = fragmentTargets.get(file);
+  if (!ids) {
+    const text = readFileSync(file, 'utf-8');
+    ids = new Set(
+      [...text.matchAll(/\b(?:id|name)\s*=\s*["']([^"']+)["']/g)].map((m) => m[1]),
+    );
+    fragmentTargets.set(file, ids);
+  }
+  return ids.has(fragment);
+}
+
+function checkCrossPageFragment(sourceRel, pathname, hash) {
+  if (!pathname || !hash || hash === '#') return;
+  const file =
+    htmlFilesByPath.get(pathname) ?? htmlFilesByPath.get(pathname.replace(/\/$/, ''));
+  // Redirects and worker-served paths have no built document to inspect; their
+  // path resolution is already covered above.
+  if (!file) return;
+  let fragment;
+  try {
+    fragment = decodeURIComponent(hash.slice(1));
+  } catch {
+    fragment = hash.slice(1);
+  }
+  if (!fragment) return;
+  if (!hasFragmentTarget(file, fragment)) {
+    console.error(`❌ ${sourceRel} → broken cross-page anchor: ${pathname}#${fragment}`);
+    errors++;
+  }
+}
+
 if (pagePaths.length === 0 && baseUrl) {
   console.log(`ℹ No HTML pages in dist/ — checking links from ${baseUrl}`);
   const pages = ['/', '/articles/', '/tags/', '/corrections/',
@@ -137,12 +191,20 @@ for (const path of pagePaths) {
   for (const href of hrefs) {
     // Same-origin absolute links must resolve to a built file or a redirect rule.
     if (href === CANONICAL_ORIGIN || href.startsWith(CANONICAL_ORIGIN + '/')) {
-      let pathname;
-      try { pathname = new URL(href).pathname; } catch { continue; }
-      if (pathname === '/') continue;
-      if (resolvesToBuiltFile(pathname) || isRedirected(pathname) || isWorkerRedirected(pathname)) continue;
-      console.error(`❌ ${rel} → broken absolute link: ${href}`);
-      errors++;
+      let url;
+      try { url = new URL(href); } catch { continue; }
+      const pathname = url.pathname;
+      if (
+        pathname !== '/' &&
+        !resolvesToBuiltFile(pathname) &&
+        !isRedirected(pathname) &&
+        !isWorkerRedirected(pathname)
+      ) {
+        console.error(`❌ ${rel} → broken absolute link: ${href}`);
+        errors++;
+        continue;
+      }
+      checkCrossPageFragment(rel, pathname, url.hash);
       continue;
     }
     if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('data:')) continue;
@@ -170,11 +232,16 @@ for (const path of pagePaths) {
       const dir = dirname(rel);
       target = resolve('/', dir, target).replace(/\\/g, '/');
     }
+    const hashIndex = href.indexOf('#');
+    const fragment = hashIndex === -1 ? '' : href.slice(hashIndex);
+    const lookupPath = target;
     if (target.endsWith('/')) target = target + 'index.html';
     const exists = files.has(target) || files.has(target + '/index.html') || files.has(target.replace(/\/$/, '') + '.html');
     if (!exists) {
       console.error(`❌ ${rel} → broken link: ${href}`);
       errors++;
+    } else {
+      checkCrossPageFragment(rel, lookupPath, fragment);
     }
   }
 }
