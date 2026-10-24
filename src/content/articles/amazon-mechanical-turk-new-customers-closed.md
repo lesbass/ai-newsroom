@@ -85,7 +85,7 @@ Mechanical Turk's niche — fast, cheap, public, ad-hoc judgement calls — is t
 - **No Amazon press release.** The announcement lives on `mturk.com` and AWS docs, not on `press.aboutamazon.com`.
 - **Closed to new customers, not shut down.** The workforce continues for existing customers; calling this a "shutdown" overstates it.
 - **The 33–46% worker-LLM figure is from 2023.** A 2023 measurement of an abstract-summarisation task, not a current platform read. Generalisation to less LLM-friendly HITs is open in the source paper itself.
-- **TechCrunch is a secondary source** in the commissioning brief; the date, the wording, and the structural framing are anchored to Amazon's own surfaces.
+- **TechCrunch is a secondary source**; the date, the wording, and the structural framing are anchored to Amazon's own surfaces.
 - **The 2026-06-30 maintenance-table entry and the 2026-07-30 effective date are two different dates.** Keep them straight.
 - **Amazon's docs note does not give a reason.** Speculating about motivation is editorialising.
 

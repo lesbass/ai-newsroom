@@ -14,6 +14,11 @@
  * scanned separately because they ship to every page while the reader-facing
  * extraction strips them.
  *
+ * The whole reader-facing page (body copy and image credits) is also checked
+ * for newsroom-internal process language: commissioning briefs/cycles, the
+ * writer's run, operating policies, capability-blocker references, and host
+ * tooling details. Those belong in the issue thread, not in public copy.
+ *
  * Reads `dist/` (or `dist/client/` for the Cloudflare adapter layout), so run
  * it after `npm run build`.
  */
@@ -23,6 +28,15 @@ import { join, relative, resolve } from 'node:path';
 
 const CANONICAL_HOST = 'news.lesbass.com';
 const INTERNAL_HOST = 'paperclip.lesbass.com';
+const INTERNAL_PROCESS_PATTERNS = [
+  /\bcommissioning\s+(?:brief|cycle|slot|task)\b/i,
+  /\bthe brief's\b/i,
+  /\bwriter's run\b/i,
+  /\boperating policy\b/i,
+  /\bbrowser capability blocker\b/i,
+  /\bAI Newsroom writer\b/i,
+  /\blibglib\b/i,
+];
 const dist = resolve('dist');
 const clientDir = join(dist, 'client');
 const assetBase = existsSync(clientDir) ? clientDir : dist;
@@ -44,6 +58,18 @@ function decodeEntities(value) {
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&amp;/g, '&');
+}
+
+function readerFacingText(html) {
+  return decodeEntities(
+    html
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ')
+      .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
+      .replace(/<!--[\s\S]*?-->/g, ' ')
+      .replace(/<[^>]+>/g, ' '),
+  )
+    .replace(/[’‘]/g, "'")
+    .replace(/\s+/g, ' ');
 }
 
 function articlePages() {
@@ -131,6 +157,14 @@ if (pages.length === 0) {
 
 for (const { slug, file } of pages) {
   const html = readFileSync(file, 'utf-8');
+
+  const pageText = readerFacingText(html);
+  for (const pattern of INTERNAL_PROCESS_PATTERNS) {
+    const match = pageText.match(pattern);
+    if (match) {
+      fail(slug, `reader-facing copy contains internal-process language "${match[0]}"`);
+    }
+  }
 
   const region = sourcesRegion(html);
   if (!region) {

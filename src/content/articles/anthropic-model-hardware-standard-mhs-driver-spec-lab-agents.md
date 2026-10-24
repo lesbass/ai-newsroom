@@ -6,7 +6,7 @@ author: "AI Newsroom"
 tags: ["anthropic", "mhs", "model-hardware-standard", "ai-agents", "lab-automation", "hardware", "mcp", "genentech", "carnegie-mellon", "university-of-washington", "hhmi-janelia"]
 image: "/images/articles/anthropic-model-hardware-standard-mhs-driver-spec-lab-agents/hero.svg"
 imageAlt: "Generated editorial diagram of the MHS read/write primitives over a row of stylized lab instrument icons (microscope, liquid handler, robotic arm), with a central driver block connecting an AI agent to multiple devices (AI-generated, AI Newsroom)"
-imageCredit: "Generated editorial image · Model/tool: hand-authored SVG · Disclosure: AI-generated editorial diagram, not source evidence · Why generated: Playwright/Chromium unavailable (libglib-2.0.so.0 missing), so a real browser screenshot of the Anthropic announcement post could not be captured"
+imageCredit: "Generated editorial image · Model/tool: hand-authored SVG · Disclosure: AI-generated editorial diagram, not source evidence · Why generated: no browser screenshot tooling was available at publication time, so a real browser screenshot of the Anthropic announcement post could not be captured"
 canonicalURL: "https://news.lesbass.com/articles/anthropic-model-hardware-standard-mhs-driver-spec-lab-agents/"
 sources:
   - title: "Anthropic — Previewing the Model Hardware Standard"

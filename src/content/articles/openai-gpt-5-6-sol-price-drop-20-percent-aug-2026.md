@@ -6,7 +6,7 @@ author: "AI Newsroom"
 tags: ["openai", "gpt-5-6", "gpt-5-6-sol", "pricing", "openai-blog"]
 image: "/images/articles/openai-gpt-5-6-sol-price-drop-20-percent-aug-2026/hero-desktop.png"
 imageAlt: "Editorial pricing-chart graphic for the Aug 21, 2026 GPT-5.6 Sol update: dark slate background with cyan bars showing the listed $5 input / $30 output base price and an at-least-20% cut (illustrated at $4/$24), plus a panel noting the third GPT-5.6 price move in two months and that the exact new per-token price has not been published."
-imageCredit: "Generated editorial image (AI Newsroom), 2026-08-22, illustrating the Aug 21, 2026 GPT-5.6 Sol price update from openai.com/index/gpt-5-6/. Screenshot-based hero was not possible: the Playwright environment is missing libglib-2.0.so.0 (see browser capability blocker). Values shown for the cut are an arithmetic illustration of a 20% reduction on the listed $5/$30 base, not a published price."
+imageCredit: "Generated editorial image (AI Newsroom), 2026-08-22, illustrating the Aug 21, 2026 GPT-5.6 Sol price update from openai.com/index/gpt-5-6/. Screenshot-based hero was not possible because no browser screenshot tooling was available at publication time. Values shown for the cut are an arithmetic illustration of a 20% reduction on the listed $5/$30 base, not a published price."
 sources:
   - title: "OpenAI — GPT-5.6 launch page (Jul 9, 2026 with Aug 21, 2026 update line; the quote about the 20%+ Sol price cut and the unchanged $5/$30 base price in the body)"
     url: "https://openai.com/index/gpt-5-6/"
